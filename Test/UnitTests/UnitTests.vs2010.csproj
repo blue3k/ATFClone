@@ -122,9 +122,7 @@
     <Compile Include="Sce.Atf\Applications\TestCommandLineArgsService.cs" />
     <Compile Include="Sce.Atf\Applications\TestCommands.cs" />
     <Compile Include="Sce.Atf\Applications\TestRenameCommand.cs" />
-    <Compile Include="Sce.Atf\Applications\TestSkinService.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Sce.Atf\Applications\TestSkinService.cs" />
     <Compile Include="Sce.Atf\Applications\TestStandardFileCommands.cs" />
     <Compile Include="Sce.Atf\Controls\PropertyEditing\TestBoundPropertyDescriptor.cs" />
     <Compile Include="Sce.Atf\Controls\PropertyEditing\TestLongEnumEditor.cs" />
