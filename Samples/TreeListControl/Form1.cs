@@ -47,6 +47,7 @@ namespace TreeListControlDemo
 
             treeListControl.Columns.Add(new TreeListView.Column("MPG",  80));
             treeListControl.Columns.Add(new TreeListView.Column("Weight", 80));
+            treeListControl.Columns.Add(new TreeListView.Column("AWD", 50));
             treeListControl.Columns.Add(new TreeListView.Column("Color", 80));
             treeListControl.Columns.Add(new TreeListView.Column("MSRP", 80));
             treeListControl.ExpandAll();
@@ -68,14 +69,18 @@ namespace TreeListControlDemo
             {
                 editedElement.Attribute("color").Value = e.EditedData.ToString();
             }
+            else if (e.EditedData.Name == "AWD")
+            {
+                editedElement.Attribute("awd").Value = e.EditedData.ToString();
+            }
             e.Node.TreeControl.Invalidate();         
         }
 
         void PrintData(TreeListControl.NodeEditEventArgs e)
         {
-            var editedXMLNode = e.Node.Tag as XElement;
-            System.Diagnostics.Trace.TraceInformation(" {0}: {1} changed {2}", editedXMLNode.Attribute("name"), 
-                e.EditedData.Name,e.EditedData.ToString());
+            //var editedXMLNode = e.Node.Tag as XElement;
+            //System.Diagnostics.Trace.TraceInformation(" {0}: {1} changed {2}", editedXMLNode.Attribute("name"), 
+            //    e.EditedData.Name,e.EditedData.ToString());
 
         }
     }
