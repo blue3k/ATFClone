@@ -4,6 +4,6 @@
 
 #pragma once
 
-#include <Windows.h>
+#include <windows.h>
 #include <Shlobj.h>
 #include <ddraw.h>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="CustomToolDomGen.VS2015.2K Games.15521358-c838-465b-ac8c-f39147d13e44" Version="1.0" Language="en-US" Publisher="KyungKun Ko." />
+    <DisplayName>CustomToolDomGen.VS2015</DisplayName>
+    <Description xml:space="preserve">ATF CustomToolDomGen VSIX Project.</Description>
+    <MoreInfo>https://github.com/blue3k/ATF</MoreInfo>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0]" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+  </Dependencies>
+</PackageManifest>
