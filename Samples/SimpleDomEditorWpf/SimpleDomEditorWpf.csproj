@@ -20,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\Debug.vs2010\</OutputPath>
+    <OutputPath>..\..\bin\Debug.vs2015\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -31,7 +31,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\Release.vs2010\</OutputPath>
+    <OutputPath>..\..\bin\Release.vs2015\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -115,10 +115,12 @@
     </None>
     <AppDesigner Include="Properties\" />
     <EmbeddedResource Include="Resources\About.rtf" />
-    <EmbeddedResource Include="schemas\eventSequence.xsd">
+    <None Include="schemas\eventSequence.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
+      <Generator>CustomToolDomGen</Generator>
+      <CustomToolNamespace>DomGen</CustomToolNamespace>
+    </None>
     <EmbeddedResource Include="Resources\ja\About.rtf" />
     <None Include="schemas\GenSchemaDef.bat" />
   </ItemGroup>

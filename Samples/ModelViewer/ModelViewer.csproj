@@ -11,6 +11,7 @@
     <RootNamespace>ModelViewerSample</RootNamespace>
     <AssemblyName>ModelViewer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+	<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -20,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\Debug.vs2010\</OutputPath>
+    <OutputPath>..\..\bin\Debug.vs2015\</OutputPath>
     <IntermediateOutputPath>obj\Debug.vs2010\</IntermediateOutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -33,7 +34,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\Release.vs2010\</OutputPath>
+    <OutputPath>..\..\bin\Release.vs2015\</OutputPath>
     <IntermediateOutputPath>obj\Release.vs2010\</IntermediateOutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>

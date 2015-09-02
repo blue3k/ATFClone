@@ -15,6 +15,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio;
+using Sce.Atf;
 
 namespace DomGen
 {
@@ -46,7 +47,7 @@ namespace DomGen
             }
             catch (Exception e)
             {
-                Debug.WriteLine(Strings.GetDefaultExtensionFailed);
+                Debug.WriteLine("Default Extension Failed".Localize());
                 Debug.WriteLine(e.ToString());
                 pbstrDefaultExtension = string.Empty;
                 return VSConstants.E_FAIL;

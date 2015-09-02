@@ -179,7 +179,7 @@ namespace DomGen
         /// <returns>The VSLangProj.VSProjectItem of the project item the code generator was called on</returns>
         protected VSProjectItem GetVSProjectItem()
         {
-            return (VSProjectItem)GetProjectItem().Object;
+            return (VSProjectItem)(object)GetProjectItem().Object;
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace DomGen
         /// </returns>
         protected VSProject GetVSProject()
         {
-            return (VSProject)GetProject().Object;
+            return (VSProject)(object)GetProject().Object;
         }
     }
 }
