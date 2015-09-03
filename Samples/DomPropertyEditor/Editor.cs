@@ -26,15 +26,15 @@ namespace DomPropertyEditorSample
             m_mainform.Shown += (sender, e) =>
                 {
                     // create root node.
-                    var rootNode = new DomNode(Schema.gameType.Type, Schema.gameRootElement);
-                    rootNode.SetAttribute(Schema.gameType.nameAttribute, "Game");
+                    var rootNode = new DomNode(GameSchema.gameType.Type, GameSchema.gameRootElement);
+                    rootNode.SetAttribute(GameSchema.gameType.nameAttribute, "Game");
 
                     // create Orc game object and add it to rootNode.
                     var orc = CreateOrc();
-                    rootNode.GetChildList(Schema.gameType.gameObjectChild).Add(orc);
+                    rootNode.GetChildList(GameSchema.gameType.gameObjectChild).Add(orc);
 
                     // add a child Orc.
-                    var orcChildList = orc.GetChildList(Schema.orcType.orcChild);
+                    var orcChildList = orc.GetChildList(GameSchema.orcType.orcChild);
                     orcChildList.Add(CreateOrc("Child Orc1"));
 
                     rootNode.InitializeExtensions();
@@ -54,17 +54,17 @@ namespace DomPropertyEditorSample
         /// Helper method to create instance of orcType.</summary>
         private static DomNode CreateOrc(string name = "Orc")
         {
-            var orc = new DomNode(Schema.orcType.Type);
-            orc.SetAttribute(Schema.orcType.nameAttribute, name);
-            orc.SetAttribute(Schema.orcType.TextureRevDateAttribute, DateTime.Now);
-            orc.SetAttribute(Schema.orcType.resourceFolderAttribute,System.Windows.Forms.Application.StartupPath);
-            orc.SetAttribute(Schema.orcType.skinColorAttribute, System.Drawing.Color.DarkGray.ToArgb());
-            orc.SetAttribute(Schema.orcType.healthAttribute, 80);
-            var armorList = orc.GetChildList(Schema.orcType.armorChild);
+            var orc = new DomNode(GameSchema.orcType.Type);
+            orc.SetAttribute(GameSchema.orcType.nameAttribute, name);
+            orc.SetAttribute(GameSchema.orcType.TextureRevDateAttribute, DateTime.Now);
+            orc.SetAttribute(GameSchema.orcType.resourceFolderAttribute,System.Windows.Forms.Application.StartupPath);
+            orc.SetAttribute(GameSchema.orcType.skinColorAttribute, System.Drawing.Color.DarkGray.ToArgb());
+            orc.SetAttribute(GameSchema.orcType.healthAttribute, 80);
+            var armorList = orc.GetChildList(GameSchema.orcType.armorChild);
 
             armorList.Add(CreateArmor("Iron breast plate",20,300));
 
-            var clubList = orc.GetChildList(Schema.orcType.clubChild);
+            var clubList = orc.GetChildList(GameSchema.orcType.clubChild);
             clubList.Add(CreateClub(true, 20, 30));
 
             return orc;
@@ -72,19 +72,19 @@ namespace DomPropertyEditorSample
 
         private static DomNode CreateArmor(string name, int defense, int price)
         {
-            var armor = new DomNode(Schema.armorType.Type);
-            armor.SetAttribute(Schema.armorType.nameAttribute, name);
-            armor.SetAttribute(Schema.armorType.defenseAttribute, defense);
-            armor.SetAttribute(Schema.armorType.priceAttribute, price);
+            var armor = new DomNode(GameSchema.armorType.Type);
+            armor.SetAttribute(GameSchema.armorType.nameAttribute, name);
+            armor.SetAttribute(GameSchema.armorType.defenseAttribute, defense);
+            armor.SetAttribute(GameSchema.armorType.priceAttribute, price);
             return armor;
         }
 
         private static DomNode CreateClub(bool hasSpikes, int damage, float weight)
         {
-            var club = new DomNode(Schema.clubType.Type);
-            club.SetAttribute(Schema.clubType.spikesAttribute, hasSpikes);
-            club.SetAttribute(Schema.clubType.DamageAttribute, damage);
-            club.SetAttribute(Schema.clubType.wieghtAttribute, weight);
+            var club = new DomNode(GameSchema.clubType.Type);
+            club.SetAttribute(GameSchema.clubType.spikesAttribute, hasSpikes);
+            club.SetAttribute(GameSchema.clubType.DamageAttribute, damage);
+            club.SetAttribute(GameSchema.clubType.wieghtAttribute, weight);
             return club;
         }
     

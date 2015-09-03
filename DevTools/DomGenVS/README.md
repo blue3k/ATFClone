@@ -1,5 +1,9 @@
 ATF DOM generator plugin for VS2015
 ===
 
-Run DomGenVS.vsix in bin\Release after build.
+This is ATF DOM generator plug-in for Visual Studio 2015.
+
+You need Visual Studio 2015 with Visual Studio SDK.
+
+Run DomGenVS.vsix to install in bin\Release after build.
 

@@ -18,6 +18,37 @@ using Sce.Atf.Dom;
 namespace Sce.Atf.Dom.Gen
 {
     /// <summary>
+    /// Local xml url resolver
+    /// </summary>
+    public class LocalXmlUrlResolver : XmlUrlResolver
+    {
+        /// <summary>
+        /// Base search path
+        /// </summary>
+        string m_BasePath;
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="basePath">Uri base</param>
+        public LocalXmlUrlResolver(string basePath)
+        {
+            m_BasePath = basePath;
+        }
+
+        /// <summary>
+        /// Override ResolveUri method
+        /// </summary>
+        /// <param name="baseUri"></param>
+        /// <param name="relativeUri"></param>
+        /// <returns></returns>
+        public override Uri ResolveUri(Uri baseUri, string relativeUri)
+        {
+            return new Uri(Path.Combine(m_BasePath, relativeUri));
+        }
+    }
+
+    /// <summary>
     /// Generator class for ATF DOM
     /// </summary>
     [ComVisible(true)]
@@ -26,6 +57,10 @@ namespace Sce.Atf.Dom.Gen
     [ProvideObject(typeof(DomGenVS))]
     public class DomGenVS : IVsSingleFileGenerator
     {
+        /// <summary>
+        /// Debug output
+        /// </summary>
+        public static StreamWriter debugOut = null;
         /// <summary>
         /// Implements the IVsSingleFileGenerator.Generate method.
         /// Return default extension
@@ -51,6 +86,7 @@ namespace Sce.Atf.Dom.Gen
         {
             if (bstrInputFileContents == null)
             {
+                debugOut.Flush();
                 throw new ArgumentNullException(bstrInputFileContents);
             }
 
@@ -68,9 +104,11 @@ namespace Sce.Atf.Dom.Gen
                 string className = Path.GetFileNameWithoutExtension(InputFilePath);
 
                 SchemaLoader typeLoader = new SchemaLoader();
-                typeLoader.Load(new MemoryStream(Encoding.UTF8.GetBytes(bstrInputFileContents)));
-                string[] fakeArgs = { "DomGenVS", InputFilePath, className + ".cs", className, FileNameSpace };
 
+                typeLoader.SchemaResolver = new LocalXmlUrlResolver(Path.GetDirectoryName(InputFilePath));
+                typeLoader.Load(new MemoryStream(Encoding.UTF8.GetBytes(bstrInputFileContents)));
+
+                string[] fakeArgs = { "DomGenVS", Path.GetFileName(InputFilePath), className + ".cs", className, FileNameSpace };
                 string bodyString = SchemaGen.Generate(typeLoader, "", FileNameSpace, className, fakeArgs);
 
                 if (string.IsNullOrEmpty(bodyString))

@@ -7,6 +7,8 @@ This is modified version of https://github.com/SonyWWS/ATF for Visual Studio 201
 2. DOM generator for VS2015 is update. See readme in DevTools\DomGenVS
 3. And some minor changes
 
+NOTE: Build & Install DevTool\DomGenVS Visual Studio 2015 plug-in before you open a project file with DOM generation.
+
 
 ### [What's New](https://github.com/SonyWWS/ATF/wiki/ATF-News) ###
 

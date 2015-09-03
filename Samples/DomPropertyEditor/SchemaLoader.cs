@@ -83,12 +83,12 @@ namespace DomPropertyEditorSample
             {
                 m_namespace = typeCollection.TargetNamespace;
                 m_typeCollection = typeCollection;
-                Schema.Initialize(typeCollection);
+                GameSchema.Initialize(typeCollection);
 
 
                 // register extensions
-                Schema.gameType.Type.Define(new ExtensionInfo<GameEditingContext>());
-                Schema.gameType.Type.Define(new ExtensionInfo<UniqueIdValidator>());
+                GameSchema.gameType.Type.Define(new ExtensionInfo<GameEditingContext>());
+                GameSchema.gameType.Type.Define(new ExtensionInfo<UniqueIdValidator>());
 
 
                 // Add required property descriptors to GameObject and OrcType so it can be edited 
@@ -113,7 +113,7 @@ namespace DomPropertyEditorSample
                 var armorDescriptors = new PropertyDescriptorCollection(null);
                 armorDescriptors.Add(new AttributePropertyDescriptor(
                            "Name".Localize(),
-                           Schema.armorType.nameAttribute,
+                           GameSchema.armorType.nameAttribute,
                            general,
                            "Armor name".Localize() + " " + url,
                            false
@@ -121,7 +121,7 @@ namespace DomPropertyEditorSample
 
                 armorDescriptors.Add(new AttributePropertyDescriptor(
                            "Defense".Localize(),
-                           Schema.armorType.defenseAttribute,
+                           GameSchema.armorType.defenseAttribute,
                            general,
                            "Armor defense".Localize() + " " + url,
                            false,
@@ -130,20 +130,20 @@ namespace DomPropertyEditorSample
 
                 armorDescriptors.Add(new AttributePropertyDescriptor(
                            "Price".Localize(),
-                           Schema.armorType.priceAttribute,
+                           GameSchema.armorType.priceAttribute,
                            general,
                            "Armor price in gold".Localize() + " " + url,
                            false,
                            new NumericEditor(typeof(int))
                     ));
 
-                Schema.armorType.Type.SetTag(armorDescriptors);
+                GameSchema.armorType.Type.SetTag(armorDescriptors);
                 
                 // club type property descriptors.
                 var clubDescriptors = new PropertyDescriptorCollection(null);
                 clubDescriptors.Add(new AttributePropertyDescriptor(
                          "Spike".Localize(),
-                         Schema.clubType.spikesAttribute,
+                         GameSchema.clubType.spikesAttribute,
                          general,
                          "Club Has Spikes".Localize() + " " + url,
                          false,
@@ -153,7 +153,7 @@ namespace DomPropertyEditorSample
 
                 clubDescriptors.Add(new AttributePropertyDescriptor(
                        "Damage".Localize(),
-                       Schema.clubType.DamageAttribute,
+                       GameSchema.clubType.DamageAttribute,
                        general,
                        "Amount of damage per strike".Localize() + " " + url,
                        false,
@@ -162,20 +162,20 @@ namespace DomPropertyEditorSample
 
                 clubDescriptors.Add(new AttributePropertyDescriptor(
                         "Weight".Localize(),
-                        Schema.clubType.wieghtAttribute,
+                        GameSchema.clubType.wieghtAttribute,
                         general,
                         "Weight of the club".Localize() + " " + url,
                         false,
                         new NumericEditor(typeof(float))
                  ));
 
-                Schema.clubType.Type.SetTag(clubDescriptors);
+                GameSchema.clubType.Type.SetTag(clubDescriptors);
                
                 var gobDescriptors = new PropertyDescriptorCollection(null);
                 gobDescriptors.Add(
                      new AttributePropertyDescriptor(
                            "Name".Localize(),
-                            Schema.gameObjectType.nameAttribute,
+                            GameSchema.gameObjectType.nameAttribute,
                             null,
                             "Object name".Localize() + " " + url,
                             false
@@ -185,7 +185,7 @@ namespace DomPropertyEditorSample
                 gobDescriptors.Add(
                      new AttributePropertyDescriptor(
                             "Visible".Localize(),
-                            Schema.gameObjectType.visibleAttribute,
+                            GameSchema.gameObjectType.visibleAttribute,
                             null,
                             "Show/Hide object in editor".Localize() + " " + url,
                             false,
@@ -200,7 +200,7 @@ namespace DomPropertyEditorSample
                 gobDescriptors.Add(
                     new AttributePropertyDescriptor(
                            "Translate".Localize(),
-                           Schema.gameObjectType.translateAttribute,
+                           GameSchema.gameObjectType.translateAttribute,
                            xformCategory,
                            "Object's position".Localize() + " " + url,
                            false,
@@ -212,7 +212,7 @@ namespace DomPropertyEditorSample
                 gobDescriptors.Add(
                     new AttributePropertyDescriptor(
                            "Scale".Localize(),
-                           Schema.gameObjectType.scaleAttribute,
+                           GameSchema.gameObjectType.scaleAttribute,
                            xformCategory,
                            "Object's scale".Localize() + " " + url,
                            false,
@@ -225,14 +225,14 @@ namespace DomPropertyEditorSample
                 gobDescriptors.Add(
                     new AttributePropertyDescriptor(
                            "Rotation".Localize(),
-                           Schema.gameObjectType.rotateAttribute,
+                           GameSchema.gameObjectType.rotateAttribute,
                            xformCategory,
                            "Object's orientation".Localize() + " " + url,
                            false,
                            rotationEditor
                            ));
 
-                Schema.gameObjectType.Type.SetTag(gobDescriptors);
+                GameSchema.gameObjectType.Type.SetTag(gobDescriptors);
 
                 // Defines property descriptors for orcType.
                 var orcDescriptors = new PropertyDescriptorCollection(null);
@@ -242,7 +242,7 @@ namespace DomPropertyEditorSample
                 orcDescriptors.Add(
                     new AttributePropertyDescriptor(
                            "Skill".Localize(),
-                           Schema.orcType.skillAttribute,
+                           GameSchema.orcType.skillAttribute,
                            chCategory,
                            "Skill".Localize() + " " + url,
                            false,
@@ -254,7 +254,7 @@ namespace DomPropertyEditorSample
                 orcDescriptors.Add(
                    new AttributePropertyDescriptor(
                           "Weight".Localize(),
-                          Schema.orcType.weightAttribute,
+                          GameSchema.orcType.weightAttribute,
                           chCategory,
                           "Weight".Localize() + " " + url,
                           false,                          
@@ -265,7 +265,7 @@ namespace DomPropertyEditorSample
                 // Enum can be stored as string or as int.
                 //  OrcLevel is stored as int
                 //  OrcEmotion is stored as string.
-                //  please see the schema.
+                //  please see the GameSchema.
                 
                 
                 // Create image for showing character level.                
@@ -286,7 +286,7 @@ namespace DomPropertyEditorSample
                 orcDescriptors.Add(
                   new AttributePropertyDescriptor(
                          "Level".Localize(),
-                         Schema.orcType.levelAttribute,
+                         GameSchema.orcType.levelAttribute,
                          chCategory,
                          "Character level".Localize() + " " + url,
                          false,
@@ -308,7 +308,7 @@ namespace DomPropertyEditorSample
                 orcDescriptors.Add(
                   new AttributePropertyDescriptor(
                          "Emotion".Localize(),
-                         Schema.orcType.emotionAttribute,
+                         GameSchema.orcType.emotionAttribute,
                          chCategory,
                          "Emotion".Localize() + " " + url,
                          false,
@@ -324,7 +324,7 @@ namespace DomPropertyEditorSample
                 orcDescriptors.Add(
                  new AttributePropertyDescriptor(
                         "Goals".Localize(),
-                        Schema.orcType.goalsAttribute,
+                        GameSchema.orcType.goalsAttribute,
                         chCategory,
                         "Goals".Localize() + " " + url,
                         false,
@@ -336,7 +336,7 @@ namespace DomPropertyEditorSample
                 orcDescriptors.Add(
                 new AttributePropertyDescriptor(
                        "Health".Localize(),
-                       Schema.orcType.healthAttribute,
+                       GameSchema.orcType.healthAttribute,
                        chCategory,
                        "Orc's health".Localize() + " " + url,
                        false,
@@ -407,7 +407,7 @@ namespace DomPropertyEditorSample
                 orcDescriptors.Add(
                  new ChildPropertyDescriptor(
                         "Armor".Localize(),
-                        Schema.orcType.armorChild,
+                        GameSchema.orcType.armorChild,
                         weaponCategory,
                         "Armors".Localize() + " " + url,
                         false,
@@ -417,7 +417,7 @@ namespace DomPropertyEditorSample
                 orcDescriptors.Add(
                 new ChildPropertyDescriptor(
                        "Club".Localize(),
-                       Schema.orcType.clubChild,
+                       GameSchema.orcType.clubChild,
                        weaponCategory,
                        "Club".Localize() + " " + url,
                        false,
@@ -427,7 +427,7 @@ namespace DomPropertyEditorSample
                 orcDescriptors.Add(
                 new ChildPropertyDescriptor(
                        "Orcs".Localize(),
-                       Schema.orcType.orcChild,
+                       GameSchema.orcType.orcChild,
                        "Children".Localize(),
                        "Orc children".Localize() + " " + url,
                        false,
@@ -443,7 +443,7 @@ namespace DomPropertyEditorSample
                  orcDescriptors.Add(
                   new AttributePropertyDescriptor(
                          "Skin".Localize(),
-                         Schema.orcType.skinColorAttribute,
+                         GameSchema.orcType.skinColorAttribute,
                          renderingCategory,
                          "Skin color".Localize() + " " + url,
                          false,
@@ -456,7 +456,7 @@ namespace DomPropertyEditorSample
                  orcDescriptors.Add(
                   new AttributePropertyDescriptor(
                          "Texture file".Localize(),
-                         Schema.orcType.textureFileAttribute,
+                         GameSchema.orcType.textureFileAttribute,
                          renderingCategory,
                          "Texture file".Localize() + " " + url,
                          false,
@@ -468,7 +468,7 @@ namespace DomPropertyEditorSample
                  orcDescriptors.Add(
                   new AttributePropertyDescriptor(
                          "Texture Transform".Localize(),
-                         Schema.orcType.textureTransformAttribute,
+                         GameSchema.orcType.textureTransformAttribute,
                          renderingCategory,
                          "Texture Transform".Localize() + " " + url,
                          false,
@@ -481,7 +481,7 @@ namespace DomPropertyEditorSample
                 orcDescriptors.Add(
                   new AttributePropertyDescriptor(
                          "Texture Array".Localize(),
-                         Schema.orcType.textureArrayAttribute,
+                         GameSchema.orcType.textureArrayAttribute,
                          renderingCategory,
                          "Texture Array".Localize() + " " + url,
                          false,
@@ -494,7 +494,7 @@ namespace DomPropertyEditorSample
                 orcDescriptors.Add(
                  new AttributePropertyDescriptor(
                         "Revision data".Localize(),
-                        Schema.orcType.TextureRevDateAttribute,
+                        GameSchema.orcType.TextureRevDateAttribute,
                         renderingCategory,
                         "Texture revision data and time".Localize() + " " + url,
                         true
@@ -505,14 +505,14 @@ namespace DomPropertyEditorSample
                 orcDescriptors.Add(
                  new AttributePropertyDescriptor(
                         "Resource Folder".Localize(),
-                        Schema.orcType.resourceFolderAttribute,
+                        GameSchema.orcType.resourceFolderAttribute,
                         renderingCategory,
                         "Resource folder".Localize() + " " + url,
                         false,
                         new FolderUriEditor()
                         ));
                 
-                Schema.orcType.Type.SetTag(orcDescriptors);
+                GameSchema.orcType.Type.SetTag(orcDescriptors);
                
                 // only one namespace
                 break;
