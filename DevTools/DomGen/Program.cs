@@ -7,6 +7,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Xml.Schema;
 using System.Xml;
+using Sce.Atf.Dom.Gen;
 
 namespace DomGen
 {

@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using Microsoft.CustomTool;
 using Microsoft.Win32;
+using Sce.Atf.Dom.Gen;
 
 namespace DomGen
 {

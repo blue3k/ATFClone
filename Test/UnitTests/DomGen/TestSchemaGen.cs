@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 using Sce.Atf;
 using DomGen;
+using Sce.Atf.Dom.Gen;
 
 namespace UnitTests.Atf
 {
