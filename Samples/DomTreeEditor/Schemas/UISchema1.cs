@@ -1,6 +1,6 @@
 // -------------------------------------------------------------------------------------------------------------------
 // Generated code, do not edit
-// Command Line:  DomGen "UISchema.xsd" "UISchema.cs" "IdolMinds.UI" "DomTreeEditorSample"
+// Command Line:  DomGen "DomGenVS" "UISchema.xsd" "UISchema.cs" "UISchema" "DomTreeEditorSample"
 // -------------------------------------------------------------------------------------------------------------------
 
 using System;

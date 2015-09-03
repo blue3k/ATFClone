@@ -1,6 +1,6 @@
 // -------------------------------------------------------------------------------------------------------------------
 // Generated code, do not edit
-// Command Line:  DomGen "game.xsd" "Schema.cs" "GameWorld" "DomPropertyEditorSample"
+// Command Line:  DomGen "DomGenVS" "GameSchema.xsd" "GameSchema.cs" "GameSchema" "DomPropertyEditorSample"
 // -------------------------------------------------------------------------------------------------------------------
 
 using System;
@@ -10,7 +10,7 @@ using Sce.Atf.Dom;
 
 namespace DomPropertyEditorSample
 {
-    public static class Schema
+    public static class GameSchema
     {
         public const string NS = "GameWorld";
 

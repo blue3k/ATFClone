@@ -70,10 +70,17 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchemaLoader.cs" />
-    <Compile Include="Schemas\Schema.cs" />
+    <Compile Include="Schemas\GameSchema.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameSchema.xsd</DependentUpon>
+    </Compile>
     <None Include="app.config" />
-    <EmbeddedResource Include="Schemas\game.xsd">
+    <EmbeddedResource Include="Schemas\GameSchema.xsd">
       <SubType>Designer</SubType>
+      <Generator>DomGenVS</Generator>
+      <LastGenOutput>GameSchema.cs</LastGenOutput>
+      <CustomToolNamespace>DomPropertyEditorSample</CustomToolNamespace>
     </EmbeddedResource>
     <None Include="Schemas\GenSchemaDef.cmd" />
   </ItemGroup>

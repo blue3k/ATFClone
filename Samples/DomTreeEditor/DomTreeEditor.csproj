@@ -59,6 +59,11 @@
     <Compile Include="ControlPoint.cs" />
     <Compile Include="CurveLimitValidator.cs" />
     <Compile Include="HelpAboutCommand.cs" />
+    <Compile Include="Schemas\UISchema1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UISchema.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Validator.cs" />
     <Compile Include="Curve.cs" />
     <Compile Include="EmptyRef.cs" />
@@ -100,9 +105,11 @@
     </None>
     <EmbeddedResource Include="Resources\About.rtf" />
     <None Include="Schemas\GenSchemaDef.bat" />
-    <EmbeddedResource Include="Schemas\CurveSchema.xsd">
-    </EmbeddedResource>
+    <EmbeddedResource Include="Schemas\CurveSchema.xsd" />
     <EmbeddedResource Include="Schemas\UISchema.xsd">
+      <Generator>DomGenVS</Generator>
+      <LastGenOutput>UISchema1.cs</LastGenOutput>
+      <CustomToolNamespace>DomTreeEditorSample</CustomToolNamespace>
     </EmbeddedResource>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -110,7 +117,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Resources.cs" />
-    <Compile Include="Schemas\UISchema.cs" />
     <Compile Include="SchemaLoader.cs" />
   </ItemGroup>
   <ItemGroup>
