@@ -1,6 +1,7 @@
 //Copyright ?2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
@@ -27,11 +28,23 @@ namespace Sce.Atf.Dom
         /// <returns>XmlSchema read from the schema file</returns>
         public XmlSchema Load(string schemaFileName)
         {
+            using (var schemaFileStream = new FileStream(schemaFileName, FileMode.Open))
+            {
+                return Load(schemaFileStream);
+            }
+        }
+
+        /// <summary>Loads and registers a schema, given a schema file name. Searches culture-specific
+        /// subdirectories first.</summary>
+        /// <param name="schemaFileName">Schema file name</param>
+        /// <returns>XmlSchema read from the schema file</returns>
+        public XmlSchema Load(Stream schemaFileStream)
+        {
             XmlSchema schema = null;
 
             XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
             xmlReaderSettings.XmlResolver = m_schemaResolver;
-            using (XmlReader xmlReader = XmlReader.Create(schemaFileName, xmlReaderSettings))
+            using (XmlReader xmlReader = XmlReader.Create(schemaFileStream, xmlReaderSettings))
             {
                 schema = XmlSchema.Read(xmlReader, null);
                 XmlSchemaSet schemaSet = new XmlSchemaSet();
