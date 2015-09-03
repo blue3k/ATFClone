@@ -1,5 +1,12 @@
-ATF
+ATF for VS2015
 ===
+
+### Note ###
+This is modified version of https://github.com/SonyWWS/ATF for Visual Studio 2015.
+1. Projects are converted for VS2015.
+2. DOM generator for VS2015 is update. See readme in DevTools\DomGenVS
+3. And some minor changes
+
 
 ### [What's New](https://github.com/SonyWWS/ATF/wiki/ATF-News) ###
 

@@ -1,4 +1,4 @@
-//Copyright � 2014 Sony Computer Entertainment America LLC. See License.txt.
+﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 namespace Sce.Atf.VectorMath
 {
