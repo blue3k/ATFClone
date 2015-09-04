@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomGenVS", "DomGenVS.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atf.Core", "..\..\Framework\Atf.Core\Atf.Core.csproj", "{9D1835B6-D1C2-44BA-BAE1-05C6EC442D2F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomGen", "..\DomGen\DomGen.csproj", "{FE3CA2EA-2F56-49A5-AD02-E5DEC8694457}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{9D1835B6-D1C2-44BA-BAE1-05C6EC442D2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D1835B6-D1C2-44BA-BAE1-05C6EC442D2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D1835B6-D1C2-44BA-BAE1-05C6EC442D2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE3CA2EA-2F56-49A5-AD02-E5DEC8694457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE3CA2EA-2F56-49A5-AD02-E5DEC8694457}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE3CA2EA-2F56-49A5-AD02-E5DEC8694457}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE3CA2EA-2F56-49A5-AD02-E5DEC8694457}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

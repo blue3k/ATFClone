@@ -177,6 +177,10 @@
       <Project>{9d1835b6-d1c2-44ba-bae1-05c6ec442d2f}</Project>
       <Name>Atf.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DomGen\DomGen.csproj">
+      <Project>{fe3ca2ea-2f56-49a5-ad02-e5dec8694457}</Project>
+      <Name>DomGen</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <!--
