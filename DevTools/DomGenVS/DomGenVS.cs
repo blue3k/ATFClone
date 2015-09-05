@@ -58,6 +58,10 @@ namespace Sce.Atf.Dom.Gen
     public class DomGenVS : IVsSingleFileGenerator
     {
         /// <summary>
+        /// Debug output
+        /// </summary>
+        public static StreamWriter debugOut = null;
+        /// <summary>
         /// Implements the IVsSingleFileGenerator.Generate method.
         /// Return default extension
         /// </summary>
@@ -82,6 +86,7 @@ namespace Sce.Atf.Dom.Gen
         {
             if (bstrInputFileContents == null)
             {
+                debugOut.Flush();
                 throw new ArgumentNullException(bstrInputFileContents);
             }
 
