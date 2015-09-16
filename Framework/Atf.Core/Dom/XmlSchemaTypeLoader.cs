@@ -53,6 +53,7 @@ namespace Sce.Atf.Dom
                 }
             }
 
+            // Now load from the resource
             using (var schemaFileStream = assembly.GetManifestResourceStream(schemaFileName))
             {
                 return Load(schemaFileStream);

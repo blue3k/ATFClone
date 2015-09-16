@@ -164,7 +164,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DomGenVS.cs" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <AppDesigner Include="Project\" />
