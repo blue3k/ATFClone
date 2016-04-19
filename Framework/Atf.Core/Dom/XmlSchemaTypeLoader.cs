@@ -2,6 +2,7 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
@@ -29,6 +30,31 @@ namespace Sce.Atf.Dom
         public XmlSchema Load(string schemaFileName)
         {
             using (var schemaFileStream = new FileStream(schemaFileName, FileMode.Open))
+            {
+                return Load(schemaFileStream);
+            }
+        }
+
+        /// <summary>Loads and registers a schema from given assembly, given a schema file name. Searches culture-specific
+        /// subdirectories first.</summary>
+        /// <param name="schemaFileName">Schema file name</param>
+        /// <returns>XmlSchema read from the schema file</returns>
+        public XmlSchema Load(Assembly assembly, string schemaFileName)
+        {
+            // search resource name in the assembly
+            schemaFileName = schemaFileName.ToLower();
+            foreach (var resName in assembly.GetManifestResourceNames())
+            {
+                string lowerName = resName.ToLower();
+                if (lowerName.EndsWith(schemaFileName))
+                {
+                    schemaFileName = resName;
+                    break;
+                }
+            }
+
+            // Now load from the resource
+            using (var schemaFileStream = assembly.GetManifestResourceStream(schemaFileName))
             {
                 return Load(schemaFileStream);
             }
