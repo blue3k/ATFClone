@@ -94,13 +94,13 @@ namespace Sce.Atf.Applications
         {
             get
             {
-                MemoryStream stream = new MemoryStream();
+                var stream = new MemoryStream();
                 Serialize(stream);
                 return stream;
             }
             set
             {
-                MemoryStream stream = value as MemoryStream;
+                var stream = value as MemoryStream;
                 if (stream == null)
                     throw new ArgumentException("Not a valid memento");
                 stream.Position = 0;
@@ -115,17 +115,17 @@ namespace Sce.Atf.Applications
             get
             {
                 // Collect all the pairs of property descriptors and the current value of that property
-                List<Pair<PropertyDescriptor, object>> values = new List<Pair<PropertyDescriptor, object>>();
+                var values = new List<Pair<PropertyDescriptor, object>>();
                 foreach (PropertyDescriptor propertyDescriptor in UserPropertyDescriptors)
-                    values.Add(new Pair<PropertyDescriptor, object>(propertyDescriptor, propertyDescriptor.GetValue(null)));
+                    values.Add(new Pair<PropertyDescriptor, object>(propertyDescriptor, propertyDescriptor.GetValue(s_unusedComponent)));
                 return values;
             }
             set
             {
                 // Restore the state by setting the properties to their former values
-                List<Pair<PropertyDescriptor, object>> values = (List<Pair<PropertyDescriptor, object>>)value;
+                var values = (List<Pair<PropertyDescriptor, object>>)value;
                 foreach (Pair<PropertyDescriptor, object> pair in values)
-                    pair.First.SetValue(null, pair.Second);
+                    pair.First.SetValue(s_unusedComponent, pair.Second);
             }
         }
 
@@ -139,11 +139,17 @@ namespace Sce.Atf.Applications
                 foreach (SettingsInfo.Setting setting in info.Settings.Values)
                 {
                     if (setting.PropertyDescriptor != null &&
-                        setting.PropertyDescriptor.CanResetValue(null))
+                        setting.PropertyDescriptor.CanResetValue(s_unusedComponent))
                     {
-                        setting.PropertyDescriptor.ResetValue(null);
+                        setting.PropertyDescriptor.ResetValue(s_unusedComponent);
                     }
                 }
+            }
+            // Load default settings if exist.            
+            if (File.Exists(m_defaultSettingsPath))
+            {
+                using (Stream stream = File.OpenRead(m_defaultSettingsPath))
+                    Deserialize(stream);
             }
         }
 
@@ -238,7 +244,7 @@ namespace Sce.Atf.Applications
             int index = 0;
             foreach (Tree<object> node in folder.Children)
             {
-                UserSettingsInfo info = node.Value as UserSettingsInfo;
+                var info = node.Value as UserSettingsInfo;
                 if (info != null)
                 {
                     if (info.Name == name)
@@ -259,7 +265,7 @@ namespace Sce.Atf.Applications
             }
             else
             {
-                Tree<object> node = new Tree<object>(new UserSettingsInfo(name, settings));
+                var node = new Tree<object>(new UserSettingsInfo(name, settings));
                 folder.Children.Insert(index, node);
             }
         }
@@ -270,7 +276,7 @@ namespace Sce.Atf.Applications
         /// <param name="pathName">Path of settings to display initially, or null</param>
         public virtual void PresentUserSettings(string pathName)
         {
-            using (SettingsDialog settingsDialog = new SettingsDialog(this, GetDialogOwner(), pathName))
+            using (var settingsDialog = new SettingsDialog(this, GetDialogOwner(), pathName))
             {
                 settingsDialog.Settings = m_propertyViewState;
                 settingsDialog.Text = UserSettingsTitle;
@@ -339,7 +345,7 @@ namespace Sce.Atf.Applications
                         break;
 
                     case CommandId.EditImportExportSettings:
-                        SettingsLoadSaveDialog settingsLoadSaveDialog = new SettingsLoadSaveDialog(this);
+                        var settingsLoadSaveDialog = new SettingsLoadSaveDialog(this);
                         settingsLoadSaveDialog.ShowDialog(MainWindow.DialogOwner);
                         break;
                 }
@@ -363,7 +369,7 @@ namespace Sce.Atf.Applications
             string tempNew = string.Empty;
 
             string mutexName = GetMutexName(m_settingsPath);
-            using (Mutex saveMutex = new Mutex(false, mutexName))
+            using (var saveMutex = new Mutex(false, mutexName))
             {
                 try
                 {
@@ -503,7 +509,7 @@ namespace Sce.Atf.Applications
                     PropertyDescriptor descriptor = setting.PropertyDescriptor;
                     if (descriptor != null)
                     {
-                        object value = descriptor.GetValue(null);
+                        object value = descriptor.GetValue(s_unusedComponent);
                         if (CanWriteValue(value))
                             WriteValue(descriptor.Name, value, block);
                     }
@@ -517,7 +523,7 @@ namespace Sce.Atf.Applications
                     root.AppendChild(block);
             }
 
-            XmlWriterSettings settings = new XmlWriterSettings();
+            var settings = new XmlWriterSettings();
             settings.CloseOutput = false;
             settings.Indent = true;
 
@@ -539,7 +545,7 @@ namespace Sce.Atf.Applications
             OnLoading();
             try
             {
-                XmlDocument xmlDoc = new XmlDocument();
+                var xmlDoc = new XmlDocument();
                 xmlDoc.Load(stream);
 
                 XmlElement root = xmlDoc.DocumentElement;
@@ -623,7 +629,7 @@ namespace Sce.Atf.Applications
         // for use by SettingsDialog only
         internal List<PropertyDescriptor> GetProperties(Tree<object> tree)
         {
-            UserSettingsInfo info = tree.Value as UserSettingsInfo;
+            var info = tree.Value as UserSettingsInfo;
             if (info != null)
                 return info.Settings;
 
@@ -638,22 +644,22 @@ namespace Sce.Atf.Applications
 
             // first node is the settings tree root
             Tree<object> node = m_userSettings;
-            path[0] = m_userSettings.Value;
+            path[0] = m_userSettings;
 
             // middle nodes are folders
             for (int i = 1; i < path.Length - 1; i++)
             {
                 node = GetOrCreateFolder(pathSegments[i - 1], node);
-                path[i] = node.Value;
+                path[i] = node;
             }
 
             // leaf node is user settings object
             foreach (Tree<object> leaf in node.Children)
-            {
-                UserSettingsInfo info = node.Value as UserSettingsInfo;
+            {                
+                UserSettingsInfo info = leaf.Value as UserSettingsInfo; 
                 if (info != null && info.Name == pathSegments[pathSegments.Length - 1])
                 {
-                    path[path.Length - 1] = leaf.Value;
+                    path[path.Length - 1] = leaf;
                     break;
                 }
             }
@@ -768,8 +774,8 @@ namespace Sce.Atf.Applications
             else if (type.IsSerializable)
             {
                 // serialize
-                BinaryFormatter formatter = new BinaryFormatter();
-                using (MemoryStream stream = new MemoryStream())
+                var formatter = new BinaryFormatter();
+                using (var stream = new MemoryStream())
                 {
                     formatter.Serialize(stream, value);
                     valueString = Convert.ToBase64String(stream.GetBuffer());
@@ -789,7 +795,7 @@ namespace Sce.Atf.Applications
             if (temp != null)
             {
                 // remove xml declaration if exists
-                XmlDeclaration decl = temp.FirstChild as XmlDeclaration;
+                var decl = temp.FirstChild as XmlDeclaration;
                 if (decl != null)
                     temp.RemoveChild(decl);
                 elmValue.InnerXml = temp.DocumentElement.OuterXml;
@@ -826,9 +832,9 @@ namespace Sce.Atf.Applications
                 {
                     // deserialize
                     byte[] data = Convert.FromBase64String(valueString);
-                    using (MemoryStream stream = new MemoryStream(data))
+                    using (var stream = new MemoryStream(data))
                     {
-                        BinaryFormatter formatter = new BinaryFormatter();
+                        var formatter = new BinaryFormatter();
                         value = formatter.Deserialize(stream);
                     }
                 }
@@ -875,7 +881,7 @@ namespace Sce.Atf.Applications
             {
                 foreach (Tree<object> node in m_userSettings.Children)
                 {
-                    UserSettingsInfo info = node.Value as UserSettingsInfo;
+                    var info = node.Value as UserSettingsInfo;
                     if (info != null)
                     {
                         foreach (PropertyDescriptor property in info.Settings)
@@ -986,7 +992,7 @@ namespace Sce.Atf.Applications
                         return;
 
                     object value = GetValue(PropertyDescriptor.PropertyType, ValueString);
-                    PropertyDescriptor.SetValue(null, value);
+                    PropertyDescriptor.SetValue(s_unusedComponent, value);
                 }
 
                 public string Name;
@@ -1053,7 +1059,7 @@ namespace Sce.Atf.Applications
                 }
                 else
                 {
-                    UserSettingsInfo settingsInfo = value as UserSettingsInfo;
+                    var settingsInfo = value as UserSettingsInfo;
                     info.Label = settingsInfo.Name;
                     info.AllowLabelEdit = false;
                     info.ImageIndex = info.GetImageList().Images.IndexOfKey(Resources.PreferencesImage);
@@ -1074,6 +1080,10 @@ namespace Sce.Atf.Applications
         private readonly TreeView m_userSettings = new TreeView(string.Empty);
         private bool m_allowUserLoadSave = true;
         private bool m_allowUserEdits = true;
+
+        //To avoid passing null into PropertyDescriptor's GetValue or SetValue, we need some
+        //  kind of dummy object.
+        private static readonly object s_unusedComponent = new object();
 
         private static readonly char[] s_delimiters = new[] { '/', '.', '\\' };
     }

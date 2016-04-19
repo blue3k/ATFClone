@@ -73,6 +73,23 @@
     <Compile Include="CircuitReader.cs" />
     <Compile Include="CircuitRenderer.cs" />
     <Compile Include="CircuitWriter.cs" />
+    <Compile Include="Expression\DynamicDomNode.cs" />
+    <Compile Include="Expression\Expression.cs" />
+    <Compile Include="Expression\ExpressionCommands.cs" />
+    <Compile Include="Expression\ExpressionDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Expression\ExpressionDlg.designer.cs">
+      <DependentUpon>ExpressionDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Expression\ExpressionManager.cs" />
+    <Compile Include="Resources\DynamicPropertyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Resources\DynamicPropertyForm.Designer.cs">
+      <DependentUpon>DynamicPropertyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicPropertyCommands.cs" />
     <Compile Include="DocVersionTransforms\Migrator.cs" />
     <Compile Include="DocVersionTransforms\upgrades\CircuitEditor1to2.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -84,6 +101,7 @@
     <Compile Include="LayeringCommands.cs" />
     <Compile Include="MissingModule.cs" />
     <Compile Include="ModuleElementInfo.cs" />
+    <Compile Include="ModuleProperties.cs" />
     <Compile Include="ModuleReference.cs" />
     <Compile Include="Prototype.cs" />
     <Compile Include="PrototypeFolder.cs" />
@@ -115,6 +133,9 @@
     <Compile Include="Resources.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Expression\ExpressionDlg.resx">
+      <DependentUpon>ExpressionDlg.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\and_16.png" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +175,9 @@
     <EmbeddedResource Include="Resources\speaker_32.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\DynamicPropertyForm.resx">
+      <DependentUpon>DynamicPropertyForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="schemas\Circuit.xsd" />
   </ItemGroup>
   <ItemGroup>

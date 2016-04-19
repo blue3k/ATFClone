@@ -45,6 +45,12 @@ namespace CircuitEditorSample
             Application.SetCompatibleTextRenderingDefault(false);
             Application.DoEvents(); // see http://www.codeproject.com/buglist/EnableVisualStylesBug.asp?df=100&forumid=25268&exp=0&select=984714
 
+
+            // Switch to Japanese
+            //var jp = new System.Globalization.CultureInfo("ja-JP");
+            //Thread.CurrentThread.CurrentCulture = jp;
+            //Thread.CurrentThread.CurrentUICulture = jp;
+
             // Set up localization support early on, so that user-readable strings will be localized
             //  during the initialization phase below. Use XML files that are embedded resources.
             Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CurrentCulture;
@@ -116,6 +122,8 @@ namespace CircuitEditorSample
                 //typeof(TemplatingSupervisor),         // templated instances copy-on-edit support(optionally)
 
                 typeof(AnnotatingCommands),             // annotating commands
+                typeof(DynamicPropertyCommands),        // context commands for user-defined properties in the property editors
+                typeof(ExpressionCommands),             // 
                 typeof(CircuitTestCommands),            // circuit tester commands
 
                 typeof(PythonService),                  // scripting service for automated tests

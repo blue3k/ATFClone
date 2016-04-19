@@ -81,6 +81,7 @@ namespace Sce.Atf.Controls.Timelines.Direct2D
 
             base.AllowDrop = (timelineDocument != null);
             base.AutoScroll = true;
+            base.DrawSelectionRectangleUsingGdi = false;
 
             if (timelineRenderer == null)
             {
@@ -177,6 +178,9 @@ namespace Sce.Atf.Controls.Timelines.Direct2D
 
             // Goes last to give event handlers a chance to draw on top.
             DrawingD2d.Raise(this, EventArgs.Empty);
+
+            if (IsMultiSelecting)
+                DrawSelectionRectangle();
 
             if (m_timeline != null)
                 UpdateScrollBars(VerticalScrollBar, HorizontalScrollBar);
@@ -1036,8 +1040,8 @@ namespace Sce.Atf.Controls.Timelines.Direct2D
         }
 
         /// <summary>
-        /// Calculates the matrix for transforming objects in the last timeline of a given path to
-        /// the world coordinate system</summary>
+        /// Creates the matrix for transforming objects in the last timeline of a given path to
+        /// the world coordinate system. The caller must dispose of this matrix.</summary>
         /// <param name="path">The path of timeline references, from top-most parent to leaf</param>
         /// <returns>Matrix for transforming objects in the last timeline of the given path
         /// to the world coordinate system</returns>
@@ -1067,9 +1071,11 @@ namespace Sce.Atf.Controls.Timelines.Direct2D
             out float worldEnd)
         {
             IEvent curr = (IEvent)path.Last;
-            Matrix localToWorld = CalculateLocalToWorld(path);
-            worldStart = GdiUtil.Transform(localToWorld, curr.Start);
-            worldEnd = GdiUtil.Transform(localToWorld, curr.Start + curr.Length);
+            using (Matrix localToWorld = CalculateLocalToWorld(path))
+            {
+                worldStart = GdiUtil.Transform(localToWorld, curr.Start);
+                worldEnd = GdiUtil.Transform(localToWorld, curr.Start + curr.Length);
+            }
         }
 
         /// <summary>
@@ -1116,6 +1122,14 @@ namespace Sce.Atf.Controls.Timelines.Direct2D
                 return IsDragging;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the color of the border of the selection rectangle.</summary>
+        public Color SelectionBorderColor = Color.DodgerBlue;
+
+        /// <summary>
+        /// Gets or sets the color used to fill the selection rectangle.</summary>
+        public Color SelectionFillColor = Color.FromArgb(64, Color.DodgerBlue);//25% opaque
 
         #region Obsolete. Exists only for backwards compatibility with apps like CoreText Editor.
         /// <summary>
@@ -1474,6 +1488,10 @@ namespace Sce.Atf.Controls.Timelines.Direct2D
                 m_lastMouseMove.Location == e.Location)
                 return;
 
+            // Cause a paint event so that the selection rectangle will be drawn.
+            if (IsMultiSelecting)
+                Invalidate();
+
             m_lastMouseMove = e;
 
             // The retarded way of resetting a hover. can't believe this is necessary.
@@ -1687,6 +1705,28 @@ namespace Sce.Atf.Controls.Timelines.Direct2D
                 clientPoint.Y - tolerance,
                 2 * tolerance,
                 2 * tolerance);
+        }
+
+        private void DrawSelectionRectangle()
+        {
+            // Replace transform and anti-aliasing setting.
+            Matrix3x2F xform = m_d2dGraphics.Transform;
+            m_d2dGraphics.Transform = Matrix3x2F.Identity;
+            D2dAntialiasMode oldAA = m_d2dGraphics.AntialiasMode;
+            m_d2dGraphics.AntialiasMode = D2dAntialiasMode.Aliased;
+
+            // Draw the selection rectangle.
+            Rectangle rect = GdiUtil.MakeRectangle(
+                new Point(FirstMouseDragPoint.X, FirstMouseDragPoint.Y),
+                new Point(CurrentMouseDragPoint.X, CurrentMouseDragPoint.Y));
+            rect.Intersect(ClientRectangle);
+            var rectF = new RectangleF(rect.X, rect.Y, rect.Width, rect.Height);
+            m_d2dGraphics.DrawRectangle(rectF, SelectionBorderColor, 1.0f, null);
+            m_d2dGraphics.FillRectangle(rectF, SelectionFillColor);
+
+            // Restore D2dGraphics settings.
+            m_d2dGraphics.Transform = xform;
+            m_d2dGraphics.AntialiasMode = oldAA;
         }
 
         // Gets the tooltip text for the given object. GetEventTooltipText is the customization
