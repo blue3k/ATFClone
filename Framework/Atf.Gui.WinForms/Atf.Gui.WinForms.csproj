@@ -480,6 +480,15 @@
     <Compile Include="Controls\PropertyEditing\PropertyView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\PropertyEditing\TagLabelControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PropertyEditing\TagLabelControl.Designer.cs">
+      <DependentUpon>TagLabelControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PropertyEditing\TagLabelListControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\PropertyEditing\TypeDescriptorContext.cs" />
     <Compile Include="Controls\PropertyEditing\UniformArrayEditor.cs" />
     <Compile Include="Controls\PropertyEditing\WinFormsPropertyUtils.cs" />
@@ -627,6 +636,11 @@
     <Compile Include="Interop\MouseEventArgsInterop.cs" />
     <Compile Include="KeysUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Rendering\CameraController.cs" />
     <Compile Include="Rendering\Controller.cs" />
     <Compile Include="Rendering\WinFormsControlSchemes.cs" />
@@ -743,6 +757,9 @@
     <EmbeddedResource Include="Controls\PropertyEditing\NestedCollectionEditorForm.resx">
       <DependentUpon>NestedCollectionEditorForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PropertyEditing\TagLabelControl.resx">
+      <DependentUpon>TagLabelControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\TabbedControlSelectorDialog.resx">
       <DependentUpon>TabbedControlSelectorDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -767,6 +784,10 @@
     <EmbeddedResource Include="Applications\SkinService\Skin.tmpl" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ja\Localization.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>

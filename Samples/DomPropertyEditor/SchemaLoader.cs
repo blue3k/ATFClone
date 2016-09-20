@@ -33,7 +33,7 @@ namespace DomPropertyEditorSample
             m_propertyEditor = propertyEditor;
             // set resolver to locate embedded .xsd file
             SchemaResolver = new ResourceStreamResolver(Assembly.GetExecutingAssembly(), "DomPropertyEditorSample/Schemas");
-            Load("game.xsd");
+            Load(Assembly.GetExecutingAssembly(), "GameSchema.xsd");
         }
 
 

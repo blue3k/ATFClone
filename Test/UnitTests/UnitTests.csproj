@@ -28,7 +28,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
-	<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -277,13 +277,13 @@
       <Project>{d0fc856e-5d1b-4af5-aa3c-e3218f36a99f}</Project>
       <Name>MsBuildUtils</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Atgi\Atf.Atgi.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Atgi\Atf.Atgi.csproj">
       <Project>{d1fa9a85-9359-4725-a50f-8a67a77d700c}</Project>
-      <Name>Atf.Atgi.vs2010</Name>
+      <Name>Atf.Atgi</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Collada\Atf.Collada.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Collada\Atf.Collada.csproj">
       <Project>{6f80048b-e81f-4e06-9438-26c23487777c}</Project>
-      <Name>Atf.Collada.vs2010</Name>
+      <Name>Atf.Collada</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.vs2010.csproj">
       <Project>{9D1835B6-D1C2-44BA-BAE1-05C6EC442D2F}</Project>
@@ -293,21 +293,21 @@
       <Project>{7C36A258-9102-420D-B80A-5EB5717644B6}</Project>
       <Name>Atf.Gui.WinForms</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Gui.Wpf\Atf.Gui.Wpf.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Gui.Wpf\Atf.Gui.Wpf.csproj">
       <Project>{050fc659-553f-4911-a609-5ba1be4edbf8}</Project>
-      <Name>Atf.Gui.Wpf.vs2010</Name>
+      <Name>Atf.Gui.Wpf</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Framework\Atf.Gui\Atf.Gui.vs2010.csproj">
       <Project>{4765C2A7-F989-40DB-BC12-FCD67025B93F}</Project>
       <Name>Atf.Gui</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Perforce\Atf.Perforce.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Perforce\Atf.Perforce.csproj">
       <Project>{c7a306e0-32ae-4053-8882-e1a1e702c139}</Project>
-      <Name>Atf.Perforce.vs2010</Name>
+      <Name>Atf.Perforce</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Subversion\Atf.Subversion.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Subversion\Atf.Subversion.csproj">
       <Project>{ad8b5500-d8e2-4609-beca-c405ea22b1ae}</Project>
-      <Name>Atf.Subversion.vs2010</Name>
+      <Name>Atf.Subversion</Name>
     </ProjectReference>
     <ProjectReference Include="..\NativeTestHelpers\NativeTestHelpers.vcxproj">
       <Project>{fa4aab2f-8d6b-40f1-ae2d-e4793ae1b2df}</Project>

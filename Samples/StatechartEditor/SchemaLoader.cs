@@ -26,7 +26,7 @@ namespace StatechartEditorSample
         {
             // set resolver to locate embedded .xsd file
             SchemaResolver = new ResourceStreamResolver(Assembly.GetExecutingAssembly(), "StatechartEditorSample/schemas");
-            Load("Statechart.xsd");
+            Load(Assembly.GetExecutingAssembly(), "Statechart.xsd");
         }
 
         /// <summary>

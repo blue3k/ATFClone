@@ -29,7 +29,6 @@ namespace Sce.Atf.Controls.PropertyEditing
             base.DoubleBuffered = true;
             base.AllowDrop = true; // otherwise, embedded child controls can't accept drops
 
-            FilterPattern = "";
         }
 
         /// <summary>
@@ -369,17 +368,18 @@ namespace Sce.Atf.Controls.PropertyEditing
 
         #endregion
 
-        private string m_filterPattern;
+        private HashSet<string> m_filterPatterns = new HashSet<string>();
         /// <summary>
-        /// Gets or sets the filter pattern</summary>
-        public string FilterPattern
+        /// Gets or sets the filter patterns</summary>
+        public HashSet<string> FilterPatterns
         {
-            get { return m_filterPattern; }
-            set
-            {
-                m_filterPattern = value;
-                UpdateEditingContext();
-            }
+            get { return m_filterPatterns; }
+            set { m_filterPatterns = value; UpdateEditingContext(); }
+        }
+
+        public void OnFilterPatternUpdated()
+        {
+            UpdateEditingContext();
         }
 
         #region Reset Current and All Properties
@@ -688,11 +688,28 @@ namespace Sce.Atf.Controls.PropertyEditing
                 PropertyDescriptor descriptor = descriptors[i];
                 if (!descriptor.IsBrowsable) 
                     continue;
-                if (FilterPattern.Length == 0 || descriptor.Name.ToLower().Contains(FilterPattern.ToLower()))
+
+                bool descriptorReflected = descriptor.GetType().Name == "ReflectPropertyDescriptor";
+
+                var filterPatterns = FilterPatterns;
+                int searchAttempted = 0;
+                bool matchFound = false;
+                foreach (var filterPattern in filterPatterns)
+                {
+                    if (string.IsNullOrEmpty(filterPattern)) continue;
+                    var filterPatternLwr = filterPattern.ToLower();
+                    searchAttempted++;
+                    if (!descriptor.Name.ToLower().Contains(filterPatternLwr)) continue;
+                    if (!descriptor.Name.ToLower().Contains(filterPatternLwr)) continue;
+
+                    matchFound = true;
+                    break;
+                }
+
+                if(searchAttempted == 0 || matchFound)
                 {
                     Property property = BuildProperty(descriptor, index++);
 
-                    bool descriptorReflected = descriptor.GetType().Name == "ReflectPropertyDescriptor";
                     AddChildProperty(property, descriptorReflected, ref index);
                 }
             }

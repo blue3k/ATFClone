@@ -171,14 +171,14 @@ namespace DomTreeEditorSample
             if (e.AttributeInfo.Equivalent(UISchema.UIObjectType.nameAttribute))
             {
                 ReferenceValidator validator = this.As<ReferenceValidator>();
-                foreach (Pair<DomNode, AttributeInfo> reference in validator.GetReferences(e.DomNode))
-                {
-                    if ((reference.First.Type == UISchema.UIRefType.Type) &&
-                        (reference.Second.Equivalent(UISchema.UIRefType.refAttribute)))
-                    {
-                        ItemChanged.Raise(this, new ItemChangedEventArgs<object>(reference.First));
-                    }
-                }
+                //foreach (Pair<DomNode, AttributeInfo> reference in validator.GetReferences(e.DomNode))
+                //{
+                //    if ((reference.First.Type == UISchema.UIRefType.Type) &&
+                //        (reference.Second.Equivalent(UISchema.UIRefType.refAttribute)))
+                //    {
+                //        ItemChanged.Raise(this, new ItemChangedEventArgs<object>(reference.First));
+                //    }
+                //}
             }
         }
 

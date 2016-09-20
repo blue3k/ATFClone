@@ -34,6 +34,7 @@ namespace Sce.Atf.Dom
         /// <param name="childInfo">ChildInfo identifying child</param>
         /// <param name="category">Category of property</param>
         /// <param name="description">Description of property</param>
+        /// <param name="tags">Property tags</param>
         /// <param name="isReadOnly">Whether or not property is read-only</param>
         /// <param name="editor">The editor used to edit the property</param>
         public ChildPropertyDescriptor(

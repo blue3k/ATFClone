@@ -131,6 +131,14 @@ namespace Sce.Atf.Dom
         }
 
         /// <summary>
+        /// String tags for the property</summary>
+        public virtual string[] Tags
+        {
+            get { return m_tags; }
+            set { m_tags = value; }
+        }
+
+        /// <summary>
         /// When overridden in a derived class, gets a value indicating whether this property is read-only</summary>
         public override bool IsReadOnly
         {
@@ -338,6 +346,7 @@ namespace Sce.Atf.Dom
 
                 }
             }
+
             return desc;
         }
 
@@ -479,6 +488,7 @@ namespace Sce.Atf.Dom
         private readonly Type m_type;
         private readonly string m_category;
         private readonly string m_description;
+        private string[] m_tags;
         private readonly object m_editor;
         private readonly TypeConverter m_typeConverter;
         private readonly bool m_isReadOnly;

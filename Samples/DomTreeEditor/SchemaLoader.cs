@@ -29,7 +29,7 @@ namespace DomTreeEditorSample
         {
             // set resolver to locate embedded .xsd file
             SchemaResolver = new ResourceStreamResolver(Assembly.GetExecutingAssembly(), "DomTreeEditorSample/Schemas");
-            Load("UISchema.xsd");
+            Load(Assembly.GetExecutingAssembly(), "UISchema.xsd");
         }
 
         /// <summary>

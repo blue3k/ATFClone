@@ -215,13 +215,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.csproj">
       <Project>{9D1835B6-D1C2-44BA-BAE1-05C6EC442D2F}</Project>
-      <Name>Atf.Core.vs2010</Name>
+      <Name>Atf.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Gui.WinForms\Atf.Gui.WinForms.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Gui.WinForms\Atf.Gui.WinForms.csproj">
       <Project>{7C36A258-9102-420D-B80A-5EB5717644B6}</Project>
-      <Name>Atf.Gui.WinForms.vs2010</Name>
+      <Name>Atf.Gui.WinForms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

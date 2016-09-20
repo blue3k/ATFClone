@@ -75,6 +75,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Resources\About.rtf" />
+    <EmbeddedResource Include="Statechart.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.csproj">

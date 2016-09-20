@@ -116,6 +116,25 @@ namespace Sce.Atf.Controls.PropertyEditing
                 m_patternTextBox.MaximumWidth = 1080;
                 m_patternTextBox.KeyUp += patternTextBox_KeyUp;
                 m_patternTextBox.TextBox.PreviewKeyDown += patternTextBox_PreviewKeyDown;
+                m_patternTextBox.AutoCompleteMode = AutoCompleteMode.Suggest;
+                m_patternTextBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                var source = new AutoCompleteStringCollection();
+                source.AddRange(new string[]
+                                {
+                        "January",
+                        "February",
+                        "March",
+                        "April",
+                        "May",
+                        "June",
+                        "July",
+                        "August",
+                        "September",
+                        "October",
+                        "November",
+                        "December"
+                                });
+                m_patternTextBox.AutoCompleteCustomSource = source;
 
                 var clearSearchButton = new ToolStripButton();
                 clearSearchButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
@@ -169,6 +188,7 @@ namespace Sce.Atf.Controls.PropertyEditing
 
             SuspendLayout();
 
+
             if ((mode & PropertyGridMode.DisplayTooltips) != 0)
                 m_propertyGridView.AllowTooltips = true;
 
@@ -195,6 +215,14 @@ namespace Sce.Atf.Controls.PropertyEditing
                 m_descriptionTextBox.ClearDescription();
             }
 
+            // create tag panel
+            m_TagPanel = new TagLabelListControl();
+            m_TagPanel.Dock = DockStyle.Top;
+            // Use same filter pattern list
+            m_propertyGridView.FilterPatterns = m_TagPanel.TagList;
+            m_TagPanel.OnTagListUpdated += m_propertyGridView.OnFilterPatternUpdated;
+            Controls.Add(m_TagPanel);
+
             if (m_toolStrip.Items.Count > 0)
             {
                 UpdateToolstripItems();
@@ -212,6 +240,7 @@ namespace Sce.Atf.Controls.PropertyEditing
             ResumeLayout(false);
             PerformLayout();            
         }
+
 
         /// <summary>
         /// Binds the control to the selected object</summary>
@@ -525,12 +554,18 @@ namespace Sce.Atf.Controls.PropertyEditing
         private void clearSearchButton_Click(object sender, System.EventArgs e)
         {
             m_patternTextBox.Text = string.Empty;
-            m_propertyGridView.FilterPattern = m_patternTextBox.Text;
+            m_TagPanel.ClearAllTags();
         }
 
         private void patternTextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            m_propertyGridView.FilterPattern = m_patternTextBox.Text;
+            if (e.KeyData == Keys.Enter)
+            {
+                m_TagPanel.AddTag(m_patternTextBox.Text);
+                m_patternTextBox.Text = string.Empty;
+            }
+            //TODO: auto completion
+            //m_propertyGridView.FilterPattern = m_patternTextBox.Text;
         }
 
         private void patternTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -938,6 +973,7 @@ namespace Sce.Atf.Controls.PropertyEditing
         private readonly ToolStripDropDownButton m_propertyOrganization;
         private readonly ToolStripButton m_navigateOut;
         private readonly ToolStrip m_toolStrip;
+        private readonly TagLabelListControl m_TagPanel;
         private readonly PropertyGridView m_propertyGridView;
         private readonly DescriptionControl m_descriptionTextBox;
         private static readonly Image s_categoryImage = Sce.Atf.ResourceUtil.GetImage16(Resources.ByCategoryImage);

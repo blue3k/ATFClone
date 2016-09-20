@@ -59,9 +59,7 @@
     <Compile Include="ControlPoint.cs" />
     <Compile Include="CurveLimitValidator.cs" />
     <Compile Include="HelpAboutCommand.cs" />
-    <Compile Include="Schemas\UISchema1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
+    <Compile Include="Schemas\UISchema.cs">
       <DependentUpon>UISchema.xsd</DependentUpon>
     </Compile>
     <Compile Include="Validator.cs" />

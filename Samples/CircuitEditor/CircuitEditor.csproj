@@ -79,6 +79,17 @@
     <Compile Include="DocVersionTransforms\upgrades\CircuitEditor1to2.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="DynamicPropertyCommands.cs" />
+    <Compile Include="Expression\DynamicDomNode.cs" />
+    <Compile Include="Expression\Expression.cs" />
+    <Compile Include="Expression\ExpressionCommands.cs" />
+    <Compile Include="Expression\ExpressionDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Expression\ExpressionDlg.Designer.cs">
+      <DependentUpon>ExpressionDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Expression\ExpressionManager.cs" />
     <Compile Include="GroupingCommands.cs" />
     <Compile Include="GroupReference.cs" />
     <Compile Include="HelpAboutCommand.cs" />
@@ -86,6 +97,7 @@
     <Compile Include="LayeringCommands.cs" />
     <Compile Include="MissingModule.cs" />
     <Compile Include="ModuleElementInfo.cs" />
+    <Compile Include="ModuleProperties.cs" />
     <Compile Include="ModuleReference.cs" />
     <Compile Include="Prototype.cs" />
     <Compile Include="PrototypeFolder.cs" />
@@ -101,6 +113,12 @@
     <Compile Include="LayeringContext.cs" />
     <Compile Include="Pin.cs" />
     <Compile Include="CircuitValidator.cs" />
+    <Compile Include="Resources\DynamicPropertyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Resources\DynamicPropertyForm.Designer.cs">
+      <DependentUpon>DynamicPropertyForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Template.cs" />
     <Compile Include="TemplateFolder.cs" />
     <Compile Include="TemplatingCommands.cs" />
@@ -117,6 +135,9 @@
     <Compile Include="Resources.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Expression\ExpressionDlg.resx">
+      <DependentUpon>ExpressionDlg.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\and_16.png" />
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +153,9 @@
     <EmbeddedResource Include="Resources\button_32.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\DynamicPropertyForm.resx">
+      <DependentUpon>DynamicPropertyForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\light_16.png" />
   </ItemGroup>
   <ItemGroup>
