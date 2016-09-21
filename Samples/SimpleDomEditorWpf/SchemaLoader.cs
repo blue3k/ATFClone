@@ -30,7 +30,7 @@ namespace SimpleDomEditorWpfSample
         {
             // set resolver to locate embedded .xsd file
             SchemaResolver = new ResourceStreamResolver(Assembly.GetExecutingAssembly(), "SimpleDomEditorWpfSample/schemas");
-            Load("eventSequence.xsd");
+            Load(Assembly.GetExecutingAssembly(), "eventSequence.xsd");
         }
 
         /// <summary>

@@ -22,7 +22,7 @@ namespace UnitTests.Atf
             loader.SchemaResolver = new ResourceStreamResolver(
                 Assembly.GetExecutingAssembly(),
                 "UnitTests.Atf/Resources");
-            loader.Load("testComplexTypes.xsd");
+            loader.Load(Assembly.GetExecutingAssembly(), "testComplexTypes.xsd");
 
             DomNodeType abstractType = loader.GetNodeType("test:abstractType");
             Assert.IsTrue(abstractType != null);

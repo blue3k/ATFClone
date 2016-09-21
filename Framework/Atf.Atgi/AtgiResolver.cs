@@ -34,7 +34,7 @@ namespace Sce.Atf.Atgi
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             m_loader.SchemaResolver = new ResourceStreamResolver(assembly, assembly.GetName().Name + "/schemas");
-            m_loader.Load("atgi.xsd");
+            m_loader.Load(Assembly.GetAssembly(typeof(AtgiResolver)), "atgi.xsd");
         }
 
         #endregion

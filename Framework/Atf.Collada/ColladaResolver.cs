@@ -32,7 +32,7 @@ namespace Sce.Atf.Collada
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             m_loader.SchemaResolver = new ResourceStreamResolver(assembly, "Sce.Atf.Collada/schemas");
-            m_loader.Load("collada.xsd");
+            m_loader.Load(Assembly.GetAssembly(typeof(ColladaResolver)), "collada.xsd");
         }
 
         #endregion

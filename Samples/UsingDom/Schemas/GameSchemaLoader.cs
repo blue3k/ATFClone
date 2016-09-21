@@ -18,7 +18,7 @@ namespace UsingDom
         {
             // set resolver to locate embedded .xsd file
             SchemaResolver = new ResourceStreamResolver(Assembly.GetExecutingAssembly(), "UsingDom/Schemas");
-            Load("game.xsd");
+            Load(Assembly.GetExecutingAssembly(), "game.xsd");
         }
 
         /// <summary>

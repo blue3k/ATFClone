@@ -74,7 +74,7 @@ namespace UnitTests.Atf.Dom
             XmlSchemaTypeLoader loader = new XmlSchemaTypeLoader();
             loader.SchemaResolver = new ResourceStreamResolver(Assembly.GetExecutingAssembly(),
                 "UnitTests.Atf/Resources");
-            loader.Load("testSubstitutionGroups.xsd");
+            loader.Load(Assembly.GetExecutingAssembly(), "testSubstitutionGroups.xsd");
 
             return loader;
         }

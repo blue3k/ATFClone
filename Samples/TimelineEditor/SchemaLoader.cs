@@ -25,7 +25,7 @@ namespace TimelineEditorSample
         {
             // set resolver to locate embedded .xsd file
             SchemaResolver = new ResourceStreamResolver(Assembly.GetExecutingAssembly(), "TimelineEditorSample.schemas");
-            Load("timeline.xsd");
+            Load(Assembly.GetExecutingAssembly(), "timeline.xsd");
         }
 
         /// <summary>

@@ -33,7 +33,7 @@ namespace FsmEditorSample
             m_propertyEditor = propertyEditor;
             // set resolver to locate embedded .xsd file
             SchemaResolver = new ResourceStreamResolver(Assembly.GetExecutingAssembly(), "FsmEditorSample/schemas");
-            Load("FSM_customized.xsd");
+            Load(Assembly.GetExecutingAssembly(), "FSM_customized.xsd");
         }
 
         #region IInitializable Members

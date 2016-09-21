@@ -115,12 +115,10 @@
     </None>
     <AppDesigner Include="Properties\" />
     <EmbeddedResource Include="Resources\About.rtf" />
-    <None Include="schemas\eventSequence.xsd">
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="schemas\eventSequence.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Generator>CustomToolDomGen</Generator>
       <CustomToolNamespace>DomGen</CustomToolNamespace>
-    </None>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ja\About.rtf" />
     <None Include="schemas\GenSchemaDef.bat" />
   </ItemGroup>
