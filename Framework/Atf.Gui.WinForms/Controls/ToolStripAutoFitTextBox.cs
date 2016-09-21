@@ -1,6 +1,7 @@
 ﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -14,6 +15,7 @@ namespace Sce.Atf.Applications
     /// Formerly known as the 'ToolStripSpringTextBox' in legacy</remarks>
     public class ToolStripAutoFitTextBox : ToolStripTextBox
     {
+
         /// <summary>
         /// Gets preferred ToolStripAutoFitTextBox size</summary>
         /// <param name="constrainingSize">Suggested size</param>
@@ -45,5 +47,39 @@ namespace Sce.Atf.Applications
 
         private int m_minimumWidth = 50;
         private int m_maximumWidth = 200;
+
+
+        #region Custom Auto Complition
+
+        TextBoxSuggestionPopupWindow m_suggestionPopup;
+
+        public List<string> SuggestionSource
+        {
+            get { return m_suggestionPopup != null ? m_suggestionPopup.SuggestionSource : null; }
+            set
+            {
+                if (m_suggestionPopup == null)
+                    m_suggestionPopup = new TextBoxSuggestionPopupWindow(TextBox);
+                m_suggestionPopup.SuggestionSource = value;
+            }
+        }
+        
+
+        protected override void OnTextChanged(EventArgs e)
+        {
+            // Activate only when suggestion source is exist
+            if(m_suggestionPopup != null && SuggestionSource != null)
+            {
+                if (string.IsNullOrEmpty(Text))
+                    m_suggestionPopup.Hide();
+                else
+                    m_suggestionPopup.ShowSuggestionList();
+            }
+        }
+
+        #endregion
+
     }
+
+    
 }

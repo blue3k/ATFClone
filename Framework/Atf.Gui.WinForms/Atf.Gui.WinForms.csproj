@@ -544,6 +544,9 @@
     <Compile Include="Controls\TabbedControlSelectorDialog.Designer.cs">
       <DependentUpon>TabbedControlSelectorDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TextBoxSuggestionPopupWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Controls\ThreadSafeProgressDialog.cs" />
     <Compile Include="Controls\ThumbnailControl.cs">
       <SubType>Component</SubType>

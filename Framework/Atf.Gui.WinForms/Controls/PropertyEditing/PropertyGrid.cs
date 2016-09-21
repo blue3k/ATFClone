@@ -116,26 +116,7 @@ namespace Sce.Atf.Controls.PropertyEditing
                 m_patternTextBox.MaximumWidth = 1080;
                 m_patternTextBox.KeyUp += patternTextBox_KeyUp;
                 m_patternTextBox.TextBox.PreviewKeyDown += patternTextBox_PreviewKeyDown;
-                m_patternTextBox.AutoCompleteMode = AutoCompleteMode.Suggest;
-                m_patternTextBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
-                var source = new AutoCompleteStringCollection();
-                source.AddRange(new string[]
-                                {
-                        "January",
-                        "February",
-                        "March",
-                        "April",
-                        "May",
-                        "June",
-                        "July",
-                        "August",
-                        "September",
-                        "October",
-                        "November",
-                        "December"
-                                });
-                m_patternTextBox.AutoCompleteCustomSource = source;
-
+                
                 var clearSearchButton = new ToolStripButton();
                 clearSearchButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
                 clearSearchButton.Image = ResourceUtil.GetImage16(Resources.DeleteImage);
@@ -481,6 +462,24 @@ namespace Sce.Atf.Controls.PropertyEditing
             System.Diagnostics.Process.Start(url);
         }
 
+        void UpdateSuggestionList()
+        {
+            var editingContext = m_propertyGridView.EditingContext;
+            if (editingContext == null) return;
+
+            var suggestionList = new List<string>();
+            foreach (var propertyDescriptor in editingContext.PropertyDescriptors)
+            {
+                var descriptorName = propertyDescriptor.Name;
+                suggestionList.Add(descriptorName);
+            }
+
+            if (suggestionList.Count == 0) return;
+
+            m_patternTextBox.SuggestionSource = suggestionList;
+
+        }
+
         #region Event Handlers
 
         private void propertyGrid_EditingContextChanged(object sender, EventArgs e)
@@ -489,6 +488,8 @@ namespace Sce.Atf.Controls.PropertyEditing
             {
                 m_navigateOut.Enabled = m_propertyGridView.CanNavigateBack;
             }
+
+            UpdateSuggestionList();
         }
 
         private void propertyGrid_MouseUp(object sender, MouseEventArgs e)
@@ -564,8 +565,6 @@ namespace Sce.Atf.Controls.PropertyEditing
                 m_TagPanel.AddTag(m_patternTextBox.Text);
                 m_patternTextBox.Text = string.Empty;
             }
-            //TODO: auto completion
-            //m_propertyGridView.FilterPattern = m_patternTextBox.Text;
         }
 
         private void patternTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
