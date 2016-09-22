@@ -11,6 +11,9 @@ using Sce.Atf.Controls.PropertyEditing;
 using Sce.Atf.Dom;
 
 using PropertyDescriptor = Sce.Atf.Dom.PropertyDescriptor;
+using System.Collections.Generic;
+using System.Xml;
+using System;
 
 namespace SimpleDomEditorSample
 {
@@ -27,7 +30,7 @@ namespace SimpleDomEditorSample
         {
             // set resolver to locate embedded .xsd file
             SchemaResolver = new ResourceStreamResolver(Assembly.GetExecutingAssembly(), "SimpleDomEditorSample/schemas");
-            Load("schemas/eventSequence.xsd");
+            Load(Assembly.GetExecutingAssembly(), "Schema.xsd");
         }
 
         /// <summary>
@@ -61,53 +64,12 @@ namespace SimpleDomEditorSample
                 m_typeCollection = typeCollection;
                 Schema.Initialize(typeCollection);
 
-                // register extensions
-                Schema.eventSequenceType.Type.Define(new ExtensionInfo<EventSequenceDocument>());
-                Schema.eventSequenceType.Type.Define(new ExtensionInfo<EventSequenceContext>());
-                Schema.eventSequenceType.Type.Define(new ExtensionInfo<MultipleHistoryContext>());
-                Schema.eventSequenceType.Type.Define(new ExtensionInfo<EventSequence>());
-                Schema.eventSequenceType.Type.Define(new ExtensionInfo<ReferenceValidator>());
-                Schema.eventSequenceType.Type.Define(new ExtensionInfo<UniqueIdValidator>());
-                Schema.eventSequenceType.Type.Define(new ExtensionInfo<DomNodeQueryable>());
-
-                Schema.eventType.Type.Define(new ExtensionInfo<Event>());
-                Schema.eventType.Type.Define(new ExtensionInfo<EventContext>());
-
-                Schema.resourceType.Type.Define(new ExtensionInfo<Resource>());
-
-                // Set some defaults in a localization-friendly way.
-                Schema.eventType.nameAttribute.DefaultValue = "Event".Localize();
-                Schema.animationResourceType.nameAttribute.DefaultValue = "Animation".Localize();
-                Schema.geometryResourceType.nameAttribute.DefaultValue = "Geometry".Localize();
-
 
                 // Enable metadata driven property editing for events and resources
                 var creator = new AdapterCreator<CustomTypeDescriptorNodeAdapter>();
                 Schema.eventType.Type.AddAdapterCreator(creator);
                 Schema.resourceType.Type.AddAdapterCreator(creator);
 
-                // annotate types with display information for palette
-
-                Schema.eventType.Type.SetTag(
-                    new NodeTypePaletteItem(
-                        Schema.eventType.Type,
-                        (string)Schema.eventType.nameAttribute.DefaultValue,
-                        "Event in a sequence".Localize(),
-                        Resources.EventImage));
-
-                Schema.animationResourceType.Type.SetTag(
-                    new NodeTypePaletteItem(
-                        Schema.animationResourceType.Type,
-                        (string)Schema.animationResourceType.nameAttribute.DefaultValue,
-                        "Animation resource".Localize(),
-                        Resources.AnimationImage));
-
-                Schema.geometryResourceType.Type.SetTag(
-                    new NodeTypePaletteItem(
-                        Schema.geometryResourceType.Type,
-                        (string)Schema.geometryResourceType.nameAttribute.DefaultValue,
-                        "Geometry resource".Localize(),
-                        Resources.GeometryImage));
 
                 // register property descriptors on state, transition, folder types
 
@@ -226,5 +188,7 @@ namespace SimpleDomEditorSample
                 break; // schema only defines one type collection
             }
         }
+
+
     }
 }

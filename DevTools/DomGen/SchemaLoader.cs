@@ -2,9 +2,18 @@
 using System.Xml;
 using System.Xml.Schema;
 using Sce.Atf.Dom;
+using System;
 
 namespace Sce.Atf.Dom.Gen
 {
+    /// <summary>
+    /// Preparsed annotation info
+    /// </summary>
+    public struct NodeAnnotationInfo
+    {
+        public bool DomgenInclude;
+    }
+
     /// <summary>
     /// Schema loader capturing sce.domgen annotations</summary>
     public class SchemaLoader : XmlSchemaTypeLoader
@@ -19,14 +28,24 @@ namespace Sce.Atf.Dom.Gen
         {
             base.ParseAnnotations(schemaSet, annotations);
 
-            DomGenAnnotations = new Dictionary<string, XmlNode>();
+            DomGenAnnotations = new Dictionary<string, NodeAnnotationInfo>();
             foreach (var annotation in annotations)
             {
                 string typeName = annotation.Key.Name;
                 foreach (XmlNode xmlNode in annotation.Value)
                 {
+                    NodeAnnotationInfo annotationInfo = new NodeAnnotationInfo();
+                    DomGenAnnotations.TryGetValue(typeName, out annotationInfo);
                     if (xmlNode.Name == "sce.domgen")
-                        DomGenAnnotations.Add(typeName, xmlNode);
+                    {
+                        foreach (XmlAttribute attribute in xmlNode.Attributes)
+                        {
+                            if (attribute.Name == "include")
+                                annotationInfo.DomgenInclude = Boolean.Parse(attribute.Value); // will throw if value is not a valid boolean
+                        }
+                    }
+
+                    DomGenAnnotations[typeName] = annotationInfo;
                 }
             }
         }
@@ -37,6 +56,6 @@ namespace Sce.Atf.Dom.Gen
         /// is the sce.domgen annotation Xml node for this type if one exists,
         /// null otherwise. Types without sce.domgen annotation are not
         /// included in this dictionary.</remarks>
-        public IDictionary<string, XmlNode> DomGenAnnotations { get; private set; }
+        public IDictionary<string, NodeAnnotationInfo> DomGenAnnotations { get; private set; }
     }
 }

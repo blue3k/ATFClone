@@ -96,4 +96,40 @@ namespace Sce.Atf.Dom
             return new T();
         }
     }
+
+
+    /// <summary>
+    /// Metadata for extensions, which can be any type. Use extensions to extend DOM
+    /// data when it is in memory. Extensions that implement IAdapter can be retrieved
+    /// through the IAdaptable interface of DomNode.</summary>
+    /// <typeparam name="T">Type of extension; type must have default constructor</typeparam>
+    public class ExtensionInfoByType : ExtensionInfo
+    {
+        Type m_extensionType;
+
+        /// <summary>
+        /// Constructor</summary>
+        /// <remarks>The extension's Name will be the type's FullName (e.g., "MyCompany.MyApp.MyContext")</remarks>
+        public ExtensionInfoByType(Type extensionType)
+            : base(extensionType.FullName)
+        {
+            m_extensionType = extensionType;
+        }
+
+        /// <summary>
+        /// Gets the extension's type</summary>
+        public override Type Type
+        {
+            get { return m_extensionType; }
+        }
+
+        /// <summary>
+        /// Creates an instance of the extension</summary>
+        /// <param name="node">DOM node being extended</param>
+        /// <returns>Instance of the extension</returns>
+        public override object Create(DomNode node)
+        {
+            return Activator.CreateInstance(m_extensionType);
+        }
+    }
 }

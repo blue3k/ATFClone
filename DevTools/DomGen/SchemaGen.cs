@@ -87,21 +87,15 @@ namespace Sce.Atf.Dom.Gen
             Dictionary<string, string> classNameToDomNodeType = new Dictionary<string, string>(nodeTypes.Count);
             foreach (DomNodeType nodeType in nodeTypes)
             {
+                NodeAnnotationInfo annotationInfo = new NodeAnnotationInfo();
+                typeLoader.DomGenAnnotations.TryGetValue(nodeType.Name, out annotationInfo);
+
                 // Determine if the type should be included or skipped
                 // If the -annotatedOnly argument is set: types will be included
                 //   ONLY IF <sce.domgen include="true"> is defined for this type, all other types will be skipped
                 // If -annotatedOnly is NOT set: types will be included by default
                 //   UNLESS <sce.domgen include="false" is explicitly set for this type
-                bool include = !annotatedOnly;
-                XmlNode annotation;
-                if (typeLoader.DomGenAnnotations.TryGetValue(nodeType.Name, out annotation))
-                {
-                    foreach (XmlAttribute attribute in annotation.Attributes)
-                    {
-                        if (attribute.Name == "include")
-                            include = Boolean.Parse(attribute.Value); // will throw if value is not a valid boolean
-                    }
-                }
+                bool include = !annotatedOnly || annotationInfo.DomgenInclude;
                 if (!include)
                     continue; // skip this type if it's not to be included
                 
@@ -304,6 +298,81 @@ namespace Sce.Atf.Dom.Gen
                 string childInfoName = CreateIdentifier(childInfo.Name + "Child");
                 WriteLine(sb, "            {1}.{0} = {1}.Type.GetChildInfo(\"{2}\");", childInfoName, typeName, childInfo.Name);
             }
+
+            var localTags = nodeType.GetTagLocal<IEnumerable<XmlNode>>();
+            if(localTags != null)
+            {
+                foreach(var tag in localTags)
+                {
+                    if (tag.Name == "scea.dom.extension")
+                    {
+                        var extension = tag.Attributes["name"];
+                        if (extension != null && !string.IsNullOrEmpty(extension.Value))
+                        {
+                            WriteLine(sb, "            {0}.Type.Define(new ExtensionInfo<{1}>());", typeName, extension.Value);
+                        }
+                    }
+                    else if (tag.Name == "scea.dom.editors.attribute")
+                    {
+                        var attrName = tag.Attributes["name"];
+                        if (attrName == null || attrName.Value == null) continue;
+
+                        AttributeInfo attribute = nodeType.GetAttributeInfo(attrName.Value);
+                        if (attribute == null) continue;
+
+                        var attrValue = tag.Attributes["default"];
+                        if (attrValue != null && !string.IsNullOrEmpty(attrValue.Value))
+                        {
+                            if(attribute.Type.ClrType == typeof(string))
+                            {
+                                WriteLine(sb, "            {0}.{1}Attribute.DefaultValue = \"{2}\".Localize();", typeName, attribute.Name, attrValue.Value);
+                            }
+                            else
+                            {
+                                WriteLine(sb, "            {0}.{1}Attribute.DefaultValue = {2};", typeName, attribute.Name, attrValue.Value );
+                            }
+                        }
+                    }
+                    else if(tag.Name == "scea.dom.editors.objectPalette")
+                    {
+                        var attrCategory = tag.Attributes["category"];
+                        string strCategory = null;
+                        if (attrCategory != null) strCategory = attrCategory.Value;
+
+                        var attrDisplayName = tag.Attributes["displayName"];
+                        if (attrDisplayName == null || attrDisplayName.Value == null) continue;
+                        string displayName = attrDisplayName.Value;
+                        if (string.IsNullOrEmpty(displayName))
+                            displayName = typeName;
+
+                        var attrIcon = tag.Attributes["icon"];
+                        if (attrIcon == null || attrIcon.Value == null) continue;
+
+                        string paletteName = typeName;
+                        AttributeInfo attribute = nodeType.GetAttributeInfo("name");
+                        if (attribute != null && attribute.Type.ClrType == typeof(string) && !string.IsNullOrEmpty((string)attribute.DefaultValue))
+                            paletteName = (string)attribute.DefaultValue;
+
+                        if(string.IsNullOrEmpty(strCategory))
+                        {
+                            WriteLine(sb, "            {0}.Type.SetTag(new NodeTypePaletteItem({0}.Type, \"{1}\", \"{2}\".Localize(), {3}));",
+                                    typeName, paletteName, displayName, attrIcon.Value );
+                        }
+                        else
+                        {
+                            WriteLine(sb, "            {0}.Type.SetTag(new NodeTypePaletteItem({0}.Type, \"{1}\", \"{2}\".Localize(), {3}, {4}. {5}));",
+                                    typeName, paletteName, displayName, attrIcon.Value, strCategory, paletteName);
+                        }
+                    }
+                }
+            }
+            //if (annotationInfo.Extensions != null)
+            //{
+            //    foreach(var extension in annotationInfo.Extensions)
+            //    {
+            //        WriteLine(sb, "            {0}.Type.Define(new ExtensionInfo<{1}>());", typeName, extension);
+            //    }
+            //}
         }
 
         private static XmlSchemaTypeCollection GetTypeCollection(XmlSchemaTypeLoader typeLoader, string schemaNamespace)
@@ -389,6 +458,7 @@ namespace Sce.Atf.Dom.Gen
             WriteLine(sb, "using System;");
             WriteLine(sb, "using System.Collections.Generic;");
             WriteLine(sb, "");
+            WriteLine(sb, "using Sce.Atf;");
             WriteLine(sb, "using Sce.Atf.Dom;");
             WriteLine(sb, "");
             WriteLine(sb, "namespace {0}", codeNamespace);

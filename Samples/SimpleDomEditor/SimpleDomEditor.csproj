@@ -62,12 +62,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="schemas\Schema.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Schema.xsd</DependentUpon>
+    </Compile>
     <None Include="app.config" />
     <None Include="schemas\GenSchemaDef.bat" />
-    <EmbeddedResource Include="schemas\eventSequence.xsd">
-      <SubType>
-      </SubType>
+    <EmbeddedResource Include="schemas\Schema.xsd">
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>DomGenVS</Generator>
+      <CustomToolNamespace>SimpleDomEditorSample</CustomToolNamespace>
+      <LastGenOutput>Schema.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\About.rtf" />
     <Compile Include="DomNodeNameSearchControl.cs">
@@ -90,7 +97,6 @@
     <Compile Include="HelpAboutCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.cs" />
-    <Compile Include="schemas\Schema.cs" />
     <Compile Include="SchemaLoader.cs" />
     <Compile Include="Program.cs">
       <SubType>Code</SubType>

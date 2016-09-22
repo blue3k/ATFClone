@@ -7,6 +7,11 @@
 
   <!--Abstract base type for resources-->
   <xs:complexType name="resourceType" abstract="true">
+    <xs:annotation>
+      <xs:appinfo>
+        <scea.dom.extension name="Resource"/>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:attribute name="name" type="xs:string" use="required"/>
     <xs:attribute name="size" type="xs:integer" use="required"/>
     <xs:attribute name="compressed" type="xs:boolean"/>
@@ -14,6 +19,14 @@
 
   <!--Event, with name, start time, duration and a list of resources-->
   <xs:complexType name ="eventType">
+    <xs:annotation>
+      <xs:appinfo>
+        <scea.dom.extension name="Event"/>
+        <scea.dom.extension name="EventContext"/>
+        <scea.dom.editors.attribute name="name" default="Event"/>
+        <scea.dom.editors.objectPalette category="" displayName="Event in a sequence" icon="Resources.EventImage"/>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:sequence>
       <xs:element name="resource" type="resourceType" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -24,6 +37,12 @@
 
   <!--Derive an animation resource type-->
   <xs:complexType name="animationResourceType">
+    <xs:annotation>
+      <xs:appinfo>
+        <scea.dom.editors.attribute name="name" default="Animation"/>
+        <scea.dom.editors.objectPalette category="" displayName="Animation resource" icon="Resources.AnimationImage"/>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:complexContent>
       <xs:extension base="resourceType">
         <xs:attribute name="tracks" type="xs:integer"/>
@@ -48,6 +67,12 @@
   
   <!--Derive a geometry resource type-->
   <xs:complexType name="geometryResourceType">
+    <xs:annotation>
+      <xs:appinfo>
+        <scea.dom.editors.attribute name="name" default="Geometry"/>
+        <scea.dom.editors.objectPalette category="" displayName="Geometry resource" icon="Resources.GeometryImage"/>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:complexContent>
       <xs:extension base="resourceType">
         <xs:attribute name="bones" type="xs:integer"/>
@@ -59,6 +84,17 @@
 
   <!--Event sequence, a sequence of events-->
   <xs:complexType name ="eventSequenceType">
+    <xs:annotation>
+      <xs:appinfo>
+        <scea.dom.extension name="EventSequenceDocument"/>
+        <scea.dom.extension name="EventSequenceContext"/>
+        <scea.dom.extension name="Sce.Atf.Dom.MultipleHistoryContext"/>
+        <scea.dom.extension name="EventSequence"/>
+        <scea.dom.extension name="Sce.Atf.Dom.ReferenceValidator"/>
+        <scea.dom.extension name="Sce.Atf.Dom.UniqueIdValidator"/>
+        <scea.dom.extension name="Sce.Atf.Dom.DomNodeQueryable"/>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:sequence>
       <xs:element name="event" type="eventType" maxOccurs="unbounded"/>
     </xs:sequence>
