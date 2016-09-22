@@ -35,11 +35,16 @@
       <xs:appinfo>
         <scea.dom.extension name="Event"/>
         <scea.dom.extension name="EventContext"/>
+        <!-- If you want to register an object to object palette, define scea.dom.editors.objectPalette-->
         <scea.dom.editors.objectPalette category="" displayName="Event in a sequence" icon="Resources.EventImage"/>
+        <!-- Default property attributes will be assigned, however, you can customize with scea.dom.editors.attribute-->
         <scea.dom.editors.attribute name="name" displayName="Name" description="Name of item" default="Event"/>
         <scea.dom.editors.attribute name="EventType" displayName="event type" description="event type desc"
-          editor="Sce.Atf.Controls.PropertyEditing.LongEnumEditor,Atf.Gui.WinForms:Pixie,Ghost,Gollum,Robot,Skeleton,Big bird"
+          editor="Sce.Atf.Controls.PropertyEditing.LongEnumEditor"
           converter="Sce.Atf.Controls.PropertyEditing.ExclusiveEnumTypeConverter" />
+        <scea.dom.editors.attribute name="ShaderID" displayName="Shader ID" description="Shader ID"
+          editor="Sce.Atf.Controls.PropertyEditing.BoundedIntEditor,Atf.Gui.WinForms:10,1000"
+          converter="Sce.Atf.Controls.PropertyEditing.BoundedIntConverter" />
       </xs:appinfo>
     </xs:annotation>
     <xs:sequence>
@@ -49,6 +54,7 @@
     <xs:attribute name="EventType" type="eventEnumType"/>
     <xs:attribute name="time" type="xs:integer"/>
     <xs:attribute name="duration" type="xs:integer"/>
+    <xs:attribute name="ShaderID" type="xs:integer"/>
   </xs:complexType>
 
   <!--Derive an animation resource type-->
@@ -67,7 +73,7 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:simpleType name="primitiveType">
+  <xs:simpleType name="PrimitiveEnumType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Lines"/>
       <xs:enumeration value="Line_Strips"/>
@@ -91,9 +97,9 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="resourceType">
-        <xs:attribute name="bones" type="xs:integer"/>
+        <xs:attribute name="bones" type="xs:integer" default="0"/>
         <xs:attribute name="vertices" type="xs:integer"/>
-        <xs:attribute name="primitiveType" type="primitiveType"/>
+        <xs:attribute name="primitiveType" type="PrimitiveEnumType"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

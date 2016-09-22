@@ -246,7 +246,7 @@ namespace Sce.Atf.Dom.Gen
                                 if (values.Length > 0)
                                     sb.Length = sb.Length - 1;
 
-                                WriteLine(sb, "        }}");
+                                WriteLine(sb, "        }}\r");
 
                             }
                         }
@@ -397,25 +397,56 @@ namespace Sce.Atf.Dom.Gen
         private static void SelectEditorNConvertorForAttribute(AttributeInfo attribute, ref string editor, ref string convertor)
         {
             var clrType = attribute.Type.ClrType;
+            string attrTypeName = attribute.Type.Name;
+            int separator = attrTypeName.IndexOf(':');
+            if (separator > 0) attrTypeName = attrTypeName.Substring(separator+1);
+
+            StringEnumRule rule = attribute.Type.Rules.FirstOrDefault(x => x is StringEnumRule) as StringEnumRule;
+            bool isEnumAttribute = attribute.Type.ClrType == typeof(string) && rule != null;
+
             if (!string.IsNullOrEmpty(editor))
             {
+                string parameters = "";
                 // cut off parameter
                 // parse editor type
                 int param = editor.IndexOf(':');
-                if (param > 0) editor = editor.Substring(0, param);
-                int separator = editor.IndexOf(',');
+                if (param > 0)
+                {
+                    parameters = editor.Substring(param+1);
+                    editor = editor.Substring(0, param);
+                }
+                separator = editor.IndexOf(',');
                 if (separator > 0) editor = editor.Substring(0, separator);
+
+                if (isEnumAttribute && string.IsNullOrEmpty(parameters))
+                {
+                    editor = string.Format("new {0}(typeof({1}))", editor, attrTypeName);
+                }
+                else
+                    editor = string.Format("new {0}({1})", editor, parameters);
             }
             else
             {
-                if(attribute.Type.ClrType == typeof(string))
+                if (isEnumAttribute)
                 {
+                    editor = string.Format("new Sce.Atf.Controls.PropertyEditing.LongEnumEditor(typeof({0}))", attrTypeName);
+                    convertor = "Sce.Atf.Controls.PropertyEditing.ExclusiveEnumTypeConverter";
                 }
-                else if(attribute.Type.ClrType == typeof(string))
-                {
+            }
 
+            if(string.IsNullOrEmpty(convertor))
+            {
+                if (isEnumAttribute)
+                {
+                    convertor = string.Format("new Sce.Atf.Controls.PropertyEditing.ExclusiveEnumTypeConverter(typeof({0})", attrTypeName);
                 }
-                editor = 
+            }
+            else
+            {
+                if (isEnumAttribute)
+                    convertor = string.Format("new {0}(typeof({1}))", convertor, attrTypeName);
+                else
+                    convertor = string.Format("new {0}()", convertor);
             }
         }
 
@@ -432,8 +463,8 @@ namespace Sce.Atf.Dom.Gen
                 string category = null;
                 string description = null;
                 bool readOnly = false;
-                string editor = null;
-                string convertor = null;
+                string editer = null;
+                string converter = null;
                 XmlNode tag;
                 if (attributeTags.TryGetValue(attribute.Name, out tag))
                 {
@@ -441,20 +472,20 @@ namespace Sce.Atf.Dom.Gen
                     category = GetXmlAttribute(tag, "category");
                     description = GetXmlAttribute(tag, "description");
                     readOnly = GetXmlAttribute(tag, "readOnly") == "true";
-                    editor = GetXmlAttribute(tag, "editor");
-                    convertor = GetXmlAttribute(tag, "converter");
+                    editer = GetXmlAttribute(tag, "editor");
+                    converter = GetXmlAttribute(tag, "converter");
                 }
 
-                SelectEditorNConvertorForAttribute(attribute, ref editor, ref convertor);
+                SelectEditorNConvertorForAttribute(attribute, ref editer, ref converter);
 
                 if (string.IsNullOrEmpty(displayName)) displayName = attribute.Name;
                 if (string.IsNullOrEmpty(category)) category = "null";
                 if (string.IsNullOrEmpty(description)) description = attribute.Name;
-                if (string.IsNullOrEmpty(editor)) editor = "null";
-                if (string.IsNullOrEmpty(convertor)) convertor = "null";
+                if (string.IsNullOrEmpty(editer)) editer = "null";
+                if (string.IsNullOrEmpty(converter)) converter = "null";
 
-                WriteLine(sb, "                 new AttributePropertyDescriptor(\"{2}\".Localize(), {0}.{1}Attribute, {3}, \"{4}\".Localize(), {5}, {6}, {7}),",
-                    typeName, attribute.Name, displayName, category, description, readOnly ? "true" : "false", editor, convertor);
+                WriteLine(sb, "                 new AttributePropertyDescriptor(\"{2}\".Localize(), {0}.{1}Attribute, {3}, \"{4}\".Localize(), {5}, {6}, {7} ),",
+                    typeName, attribute.Name, displayName, category, description, readOnly ? "true" : "false", editer, converter);
             }
             WriteLine(sb, "            }}));");
 

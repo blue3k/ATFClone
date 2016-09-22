@@ -108,7 +108,7 @@ namespace Sce.Atf.Dom.Gen
                 typeLoader.SchemaResolver = new LocalXmlUrlResolver(Path.GetDirectoryName(InputFilePath));
                 typeLoader.Load(new MemoryStream(Encoding.UTF8.GetBytes(bstrInputFileContents)));
 
-                string[] fakeArgs = { "DomGenVS", Path.GetFileName(InputFilePath), className + ".cs", className, FileNameSpace };
+                string[] fakeArgs = { "DomGenVS", Path.GetFileName(InputFilePath), className + ".cs", className, FileNameSpace, "-enums" };
                 string bodyString = SchemaGen.Generate(typeLoader, "", FileNameSpace, className, fakeArgs);
 
                 if (string.IsNullOrEmpty(bodyString))
