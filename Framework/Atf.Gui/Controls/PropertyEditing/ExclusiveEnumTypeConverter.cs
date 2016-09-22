@@ -36,6 +36,20 @@ namespace Sce.Atf.Controls.PropertyEditing
             DefineEnum(names, values);
         }
 
+        static int[] GetIntegerValueArray(System.Type enumType)
+        {
+            var valueArray = enumType.GetEnumValues();
+            var intValues = new int[valueArray.Length];
+            for (int iValue = 0; iValue < valueArray.Length; iValue++)
+                intValues[iValue] = (int)valueArray.GetValue(iValue);
+            return intValues;
+        }
+        
+        public ExclusiveEnumTypeConverter(System.Type enumType)
+            : this(enumType.GetEnumNames(), GetIntegerValueArray(enumType))
+        {
+        }
+
         /// <summary>
         /// Returns whether this object supports a standard set of values that can be picked from a list, using the specified context</summary>
         /// <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context that can be

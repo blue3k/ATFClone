@@ -16,6 +16,18 @@
     <xs:attribute name="size" type="xs:integer" use="required"/>
     <xs:attribute name="compressed" type="xs:boolean"/>
   </xs:complexType>
+  
+  <xs:simpleType name="eventEnumType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Pixie1"/>
+      <xs:enumeration value="Pixie2"/>
+      <xs:enumeration value="Pixie3"/>
+      <xs:enumeration value="Pixie4"/>
+      <xs:enumeration value="Pixie5"/>
+      <xs:enumeration value="Bigbird"/>
+    </xs:restriction>
+  </xs:simpleType>
+
 
   <!--Event, with name, start time, duration and a list of resources-->
   <xs:complexType name ="eventType">
@@ -23,14 +35,18 @@
       <xs:appinfo>
         <scea.dom.extension name="Event"/>
         <scea.dom.extension name="EventContext"/>
-        <scea.dom.editors.attribute name="name" default="Event"/>
         <scea.dom.editors.objectPalette category="" displayName="Event in a sequence" icon="Resources.EventImage"/>
+        <scea.dom.editors.attribute name="name" displayName="Name" description="Name of item" default="Event"/>
+        <scea.dom.editors.attribute name="EventType" displayName="event type" description="event type desc"
+          editor="Sce.Atf.Controls.PropertyEditing.LongEnumEditor,Atf.Gui.WinForms:Pixie,Ghost,Gollum,Robot,Skeleton,Big bird"
+          converter="Sce.Atf.Controls.PropertyEditing.ExclusiveEnumTypeConverter" />
       </xs:appinfo>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="resource" type="resourceType" maxOccurs="unbounded"/>
     </xs:sequence>
     <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="EventType" type="eventEnumType"/>
     <xs:attribute name="time" type="xs:integer"/>
     <xs:attribute name="duration" type="xs:integer"/>
   </xs:complexType>

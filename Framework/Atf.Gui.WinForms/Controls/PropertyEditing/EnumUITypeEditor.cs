@@ -39,6 +39,20 @@ namespace Sce.Atf.Controls.PropertyEditing
             DefineEnum(names, values);
         }
 
+        static int[] GetIntegerValueArray(System.Type enumType)
+        {
+            var valueArray = enumType.GetEnumValues();
+            var intValues = new int[valueArray.Length];
+            for (int iValue = 0; iValue < valueArray.Length; iValue++)
+                intValues[iValue] = (int)valueArray.GetValue(iValue);
+            return intValues;
+        }
+
+        public EnumUITypeEditor(System.Type enumType)
+            : this(enumType.GetEnumNames(), GetIntegerValueArray(enumType))
+        {
+        }
+
         /// <summary>
         /// Defines the enum names and values</summary>
         /// <param name="names">Enum names array</param>

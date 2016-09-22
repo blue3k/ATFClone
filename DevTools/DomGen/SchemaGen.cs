@@ -275,6 +275,16 @@ namespace Sce.Atf.Dom.Gen
             WriteLine(sb, "        }}");
         }
 
+        static string GetXmlAttribute(XmlNode xmlNode, string attrName, string defaultValue = null)
+        {
+            if (xmlNode == null) return defaultValue;
+
+            var attribute = xmlNode.Attributes[attrName];
+            if (attribute == null) return defaultValue;
+
+            return string.IsNullOrEmpty(attribute.Value) ? defaultValue : attribute.Value;
+        }
+
         private static void GenerateInitializers(DomNodeType nodeType, string typeName, StringBuilder sb)
         {
             string ns = "";
@@ -299,6 +309,7 @@ namespace Sce.Atf.Dom.Gen
                 WriteLine(sb, "            {1}.{0} = {1}.Type.GetChildInfo(\"{2}\");", childInfoName, typeName, childInfo.Name);
             }
 
+            Dictionary<string, XmlNode> attributeTags = new Dictionary<string, XmlNode>();
             var localTags = nodeType.GetTagLocal<IEnumerable<XmlNode>>();
             if(localTags != null)
             {
@@ -306,73 +317,147 @@ namespace Sce.Atf.Dom.Gen
                 {
                     if (tag.Name == "scea.dom.extension")
                     {
-                        var extension = tag.Attributes["name"];
-                        if (extension != null && !string.IsNullOrEmpty(extension.Value))
+                        var extension = GetXmlAttribute(tag, "name");
+                        if (extension != null)
                         {
-                            WriteLine(sb, "            {0}.Type.Define(new ExtensionInfo<{1}>());", typeName, extension.Value);
+                            WriteLine(sb, "            {0}.Type.Define(new ExtensionInfo<{1}>());", typeName, extension);
                         }
                     }
                     else if (tag.Name == "scea.dom.editors.attribute")
                     {
-                        var attrName = tag.Attributes["name"];
-                        if (attrName == null || attrName.Value == null) continue;
+                        var attrName = GetXmlAttribute(tag, "name");
+                        if (attrName == null) return;
 
-                        AttributeInfo attribute = nodeType.GetAttributeInfo(attrName.Value);
-                        if (attribute == null) continue;
-
-                        var attrValue = tag.Attributes["default"];
-                        if (attrValue != null && !string.IsNullOrEmpty(attrValue.Value))
-                        {
-                            if(attribute.Type.ClrType == typeof(string))
-                            {
-                                WriteLine(sb, "            {0}.{1}Attribute.DefaultValue = \"{2}\".Localize();", typeName, attribute.Name, attrValue.Value);
-                            }
-                            else
-                            {
-                                WriteLine(sb, "            {0}.{1}Attribute.DefaultValue = {2};", typeName, attribute.Name, attrValue.Value );
-                            }
-                        }
+                        GenerateAttributeDefault(nodeType, typeName, tag, sb);
+                        attributeTags.Add(attrName, tag);
                     }
                     else if(tag.Name == "scea.dom.editors.objectPalette")
                     {
-                        var attrCategory = tag.Attributes["category"];
-                        string strCategory = null;
-                        if (attrCategory != null) strCategory = attrCategory.Value;
-
-                        var attrDisplayName = tag.Attributes["displayName"];
-                        if (attrDisplayName == null || attrDisplayName.Value == null) continue;
-                        string displayName = attrDisplayName.Value;
-                        if (string.IsNullOrEmpty(displayName))
-                            displayName = typeName;
-
-                        var attrIcon = tag.Attributes["icon"];
-                        if (attrIcon == null || attrIcon.Value == null) continue;
-
-                        string paletteName = typeName;
-                        AttributeInfo attribute = nodeType.GetAttributeInfo("name");
-                        if (attribute != null && attribute.Type.ClrType == typeof(string) && !string.IsNullOrEmpty((string)attribute.DefaultValue))
-                            paletteName = (string)attribute.DefaultValue;
-
-                        if(string.IsNullOrEmpty(strCategory))
-                        {
-                            WriteLine(sb, "            {0}.Type.SetTag(new NodeTypePaletteItem({0}.Type, \"{1}\", \"{2}\".Localize(), {3}));",
-                                    typeName, paletteName, displayName, attrIcon.Value );
-                        }
-                        else
-                        {
-                            WriteLine(sb, "            {0}.Type.SetTag(new NodeTypePaletteItem({0}.Type, \"{1}\", \"{2}\".Localize(), {3}, {4}. {5}));",
-                                    typeName, paletteName, displayName, attrIcon.Value, strCategory, paletteName);
-                        }
+                        GeneratePaletteTag(nodeType, typeName, tag, sb);
                     }
                 }
             }
-            //if (annotationInfo.Extensions != null)
-            //{
-            //    foreach(var extension in annotationInfo.Extensions)
-            //    {
-            //        WriteLine(sb, "            {0}.Type.Define(new ExtensionInfo<{1}>());", typeName, extension);
-            //    }
-            //}
+
+            GenerateAttributeProperties(nodeType, typeName, attributeTags, sb);
+        }
+        private static void GenerateAttributeDefault(DomNodeType nodeType, string typeName, XmlNode tag, StringBuilder sb)
+        {
+            var attrName = GetXmlAttribute(tag, "name");
+            if (attrName == null) return;
+
+            AttributeInfo attribute = nodeType.GetAttributeInfo(attrName);
+            if (attribute == null) return;
+
+            var attrValue = GetXmlAttribute(tag, "default");
+            if (attrValue != null)
+            {
+                if (attribute.Type.ClrType == typeof(string))
+                {
+                    WriteLine(sb, "            {0}.{1}Attribute.DefaultValue = \"{2}\".Localize();", typeName, attribute.Name, attrValue);
+                }
+                else
+                {
+                    WriteLine(sb, "            {0}.{1}Attribute.DefaultValue = {2};", typeName, attribute.Name, attrValue);
+                }
+            }
+        }
+
+        private static void GeneratePaletteTag(DomNodeType nodeType, string typeName, XmlNode tag, StringBuilder sb)
+        {
+            var attrCategory = tag.Attributes["category"];
+            string strCategory = null;
+            if (attrCategory != null) strCategory = attrCategory.Value;
+
+            var attrDisplayName = tag.Attributes["displayName"];
+            if (attrDisplayName == null || attrDisplayName.Value == null) return;
+            string displayName = attrDisplayName.Value;
+            if (string.IsNullOrEmpty(displayName))
+                displayName = typeName;
+
+            var attrIcon = tag.Attributes["icon"];
+            if (attrIcon == null || attrIcon.Value == null) return;
+
+            string paletteName = typeName;
+            AttributeInfo attribute = nodeType.GetAttributeInfo("name");
+            if (attribute != null && attribute.Type.ClrType == typeof(string) && !string.IsNullOrEmpty((string)attribute.DefaultValue))
+                paletteName = (string)attribute.DefaultValue;
+
+            if (string.IsNullOrEmpty(strCategory))
+            {
+                WriteLine(sb, "            {0}.Type.SetTag(new NodeTypePaletteItem({0}.Type, \"{1}\", \"{2}\".Localize(), {3}));",
+                        typeName, paletteName, displayName, attrIcon.Value);
+            }
+            else
+            {
+                WriteLine(sb, "            {0}.Type.SetTag(new NodeTypePaletteItem({0}.Type, \"{1}\", \"{2}\".Localize(), {3}, {4}. {5}));",
+                        typeName, paletteName, displayName, attrIcon.Value, strCategory, paletteName);
+            }
+        }
+
+        private static void SelectEditorNConvertorForAttribute(AttributeInfo attribute, ref string editor, ref string convertor)
+        {
+            var clrType = attribute.Type.ClrType;
+            if (!string.IsNullOrEmpty(editor))
+            {
+                // cut off parameter
+                // parse editor type
+                int param = editor.IndexOf(':');
+                if (param > 0) editor = editor.Substring(0, param);
+                int separator = editor.IndexOf(',');
+                if (separator > 0) editor = editor.Substring(0, separator);
+            }
+            else
+            {
+                if(attribute.Type.ClrType == typeof(string))
+                {
+                }
+                else if(attribute.Type.ClrType == typeof(string))
+                {
+
+                }
+                editor = 
+            }
+        }
+
+        private static void GenerateAttributeProperties(DomNodeType nodeType, string typeName, Dictionary<string, XmlNode> attributeTags, StringBuilder sb)
+        {
+            int attributeCount = Enumerable.Count(nodeType.Attributes);
+            if (attributeCount <= 0) return;
+
+            WriteLine(sb, @"            {0}.Type.SetTag(new System.ComponentModel.PropertyDescriptorCollection(new PropertyDescriptor[] {{", typeName);
+            // Create attribute properties
+            foreach (var attribute in nodeType.Attributes)
+            {
+                string displayName = null;
+                string category = null;
+                string description = null;
+                bool readOnly = false;
+                string editor = null;
+                string convertor = null;
+                XmlNode tag;
+                if (attributeTags.TryGetValue(attribute.Name, out tag))
+                {
+                    displayName = GetXmlAttribute(tag, "displayName");
+                    category = GetXmlAttribute(tag, "category");
+                    description = GetXmlAttribute(tag, "description");
+                    readOnly = GetXmlAttribute(tag, "readOnly") == "true";
+                    editor = GetXmlAttribute(tag, "editor");
+                    convertor = GetXmlAttribute(tag, "converter");
+                }
+
+                SelectEditorNConvertorForAttribute(attribute, ref editor, ref convertor);
+
+                if (string.IsNullOrEmpty(displayName)) displayName = attribute.Name;
+                if (string.IsNullOrEmpty(category)) category = "null";
+                if (string.IsNullOrEmpty(description)) description = attribute.Name;
+                if (string.IsNullOrEmpty(editor)) editor = "null";
+                if (string.IsNullOrEmpty(convertor)) convertor = "null";
+
+                WriteLine(sb, "                 new AttributePropertyDescriptor(\"{2}\".Localize(), {0}.{1}Attribute, {3}, \"{4}\".Localize(), {5}, {6}, {7}),",
+                    typeName, attribute.Name, displayName, category, description, readOnly ? "true" : "false", editor, convertor);
+            }
+            WriteLine(sb, "            }}));");
+
         }
 
         private static XmlSchemaTypeCollection GetTypeCollection(XmlSchemaTypeLoader typeLoader, string schemaNamespace)
