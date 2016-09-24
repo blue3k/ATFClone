@@ -164,6 +164,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DomGenVS.cs" />
+    <Compile Include="XSDGenVS.cs" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
