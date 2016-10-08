@@ -218,6 +218,8 @@ namespace Sce.Atf.Controls
         /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs" /> instance containing the event data</param>
         protected override void OnMouseUp(MouseEventArgs e)
         {
+            if(m_columnResizing)
+                AllowDrop = m_orgAllowDrop;
             m_columnResizing = false;
             Cursor = Cursors.Default;
 
@@ -271,6 +273,8 @@ namespace Sce.Atf.Controls
                 {
                     AutoResizeColumns = false;
                     m_columnResizing = true;
+                    m_orgAllowDrop = AllowDrop;
+                    AllowDrop = false;
                     m_oldColumnWidths = new int[Columns.Count];
                     for (int i = 0; i < Columns.Count; ++i)
                     {
@@ -528,5 +532,6 @@ namespace Sce.Atf.Controls
         private int m_treeWidth= 200;
         private bool m_columnResizing;
         private bool m_autoResizeColumns = true;
+        private bool m_orgAllowDrop = false;
     }
 }

@@ -85,6 +85,7 @@
     <Compile Include="Applications\ImageThumbnailResolver.cs" />
     <Compile Include="Applications\IMainWindow.cs" />
     <Compile Include="Applications\Listers\FilteredTreeControlEditor.cs" />
+    <Compile Include="Applications\Listers\FilteredTreeListControlEditor.cs" />
     <Compile Include="Applications\Listers\FilteredTreeView.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -352,6 +353,7 @@
     <Compile Include="Controls\DataEditing\ColorDataEditor.cs" />
     <Compile Include="Controls\DataEditing\DataEditor.cs" />
     <Compile Include="Controls\DataEditing\DataEditorTheme.cs" />
+    <Compile Include="Controls\DataEditing\PropertyDataEditor.cs" />
     <Compile Include="Controls\DataEditing\FloatDataEditor.cs" />
     <Compile Include="Controls\DataEditing\StringDataEditor.cs" />
     <Compile Include="Controls\Direct2DControl.cs">
@@ -480,15 +482,16 @@
     <Compile Include="Controls\PropertyEditing\PropertyView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\PropertyEditing\TagLabelControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\PropertyEditing\TagLabelControl.Designer.cs">
-      <DependentUpon>TagLabelControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\PropertyEditing\TagLabelListControl.cs">
+    <Compile Include="Controls\SearchAndReplace\StringTagSearchInputUI.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\TagLabelControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TagLabelControl.Designer.cs">
+      <DependentUpon>TagLabelControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TagLabelListControl.cs" />
     <Compile Include="Controls\PropertyEditing\TypeDescriptorContext.cs" />
     <Compile Include="Controls\PropertyEditing\UniformArrayEditor.cs" />
     <Compile Include="Controls\PropertyEditing\WinFormsPropertyUtils.cs" />
@@ -760,7 +763,7 @@
     <EmbeddedResource Include="Controls\PropertyEditing\NestedCollectionEditorForm.resx">
       <DependentUpon>NestedCollectionEditorForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PropertyEditing\TagLabelControl.resx">
+    <EmbeddedResource Include="Controls\TagLabelControl.resx">
       <DependentUpon>TagLabelControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TabbedControlSelectorDialog.resx">

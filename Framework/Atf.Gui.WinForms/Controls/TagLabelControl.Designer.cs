@@ -1,4 +1,4 @@
-﻿namespace Sce.Atf.Controls.PropertyEditing
+﻿namespace Sce.Atf.Controls
 {
     partial class TagLabelControl
     {

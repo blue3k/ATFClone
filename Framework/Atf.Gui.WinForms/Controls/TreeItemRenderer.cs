@@ -137,11 +137,16 @@ namespace Sce.Atf.Controls
 
         /// <summary>
         /// Gets or sets the search (filtering) pattern</summary>
-        public string FilteringPattern { get; set; }
+        public TagListSet FilteringPattern { get; set; }
 
         /// <summary>
         /// Callback function to get current node filtering status</summary>
         public Func<TreeControl.Node, NodeFilteringStatus> FilteringStatus;
+
+        public TreeItemRenderer()
+        {
+
+        }
 
         /// <summary>
         /// Measures the dimensions of the label in pixels. Must be in sync with DrawLabel.</summary>
@@ -194,7 +199,7 @@ namespace Sce.Atf.Controls
             
             Font font = GetDefaultFont(node, g);
 
-            if (!string.IsNullOrEmpty(FilteringPattern) && node.Label != null)
+            if (FilteringPattern != null && FilteringPattern.Count > 0 && node.Label != null)
             {
                 int regularStart = 0;
                 int matchStart;
@@ -203,17 +208,18 @@ namespace Sce.Atf.Controls
                 do
                 {
                     // highlight the background of matched text 
-                    matchStart = node.Label.IndexOf(FilteringPattern, regularStart, StringComparison.CurrentCultureIgnoreCase);
+                    int patternLength = 0;
+                    matchStart = FilteringPattern.IndexOfTag(node.Label, regularStart, out patternLength);
                     if (matchStart >= 0)
                     {
                         // non-matched substring 
                         string regularString = node.Label.Substring(regularStart, matchStart - regularStart);
                         SizeF regularSize = MeasureDisplayStringWidth(g, regularString, font);
                         textLoc.X += regularSize.Width;
-                        regularStart = matchStart + FilteringPattern.Length; // advance string offset
+                        regularStart = matchStart + patternLength; // advance string offset
 
                         // matched substring 
-                        string matchedString = node.Label.Substring(matchStart, FilteringPattern.Length);
+                        string matchedString = node.Label.Substring(matchStart, patternLength);
                         SizeF matchedSize = MeasureDisplayStringWidth(g, matchedString, font);
                         RectangleF matchedRect = new RectangleF(textLoc, matchedSize);
 
@@ -223,6 +229,7 @@ namespace Sce.Atf.Controls
                         g.FillRectangle(MatchedHighlightBrush, matchedRect);
                         textLoc.X += matchedSize.Width;
                     }
+
                 } while (matchStart >= 0);
             }
 
@@ -257,7 +264,7 @@ namespace Sce.Atf.Controls
         public virtual void DrawBackground(TreeControl.Node node, Graphics g, int x, int y)
         {
 
-            if (FilteringStatus != null && !string.IsNullOrEmpty(FilteringPattern))
+            if (FilteringStatus != null && FilteringPattern != null && FilteringPattern.Count > 0)
             {
                 if ((FilteringStatus(node) & NodeFilteringStatus.Visible) == 0)
                 {

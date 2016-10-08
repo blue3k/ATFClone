@@ -20,7 +20,8 @@ namespace Sce.Atf.Controls.PropertyEditing
     public abstract class PropertyView : Control, IPropertyEditingControlOwner
     {
         /// <summary>
-        /// Constructor</summary>
+        /// Constructor
+        /// </summary>
         public PropertyView()
         {
             UpdateFonts();
@@ -368,16 +369,16 @@ namespace Sce.Atf.Controls.PropertyEditing
 
         #endregion
 
-        private HashSet<string> m_filterPatterns = new HashSet<string>();
+        private TagListSet m_filterPatterns = new TagListSet();
         /// <summary>
         /// Gets or sets the filter patterns</summary>
-        public HashSet<string> FilterPatterns
+        public TagListSet FilterPatterns
         {
             get { return m_filterPatterns; }
             set { m_filterPatterns = value; UpdateEditingContext(); }
         }
 
-        public void OnFilterPatternUpdated()
+        public void OnFilterPatternUpdated(object sender, EventArgs e)
         {
             UpdateEditingContext();
         }
@@ -699,7 +700,6 @@ namespace Sce.Atf.Controls.PropertyEditing
                     if (string.IsNullOrEmpty(filterPattern)) continue;
                     var filterPatternLwr = filterPattern.ToLower();
                     searchAttempted++;
-                    if (!descriptor.Name.ToLower().Contains(filterPatternLwr)) continue;
                     if (!descriptor.Name.ToLower().Contains(filterPatternLwr)) continue;
 
                     matchFound = true;

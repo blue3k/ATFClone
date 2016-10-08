@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Sce.Atf.Controls.PropertyEditing
+namespace Sce.Atf.Controls
 {
     public partial class TagLabelControl : UserControl
     {

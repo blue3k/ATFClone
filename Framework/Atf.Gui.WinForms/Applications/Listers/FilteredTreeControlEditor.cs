@@ -8,6 +8,8 @@ using System.Windows.Forms;
 
 using Sce.Atf.Adaptation;
 using Sce.Atf.Controls;
+using Sce.Atf.Controls.PropertyEditing;
+using System.Collections.Generic;
 
 namespace Sce.Atf.Applications
 {
@@ -28,6 +30,22 @@ namespace Sce.Atf.Applications
 
 
         /// <summary>
+        /// Gets or sets the filter patterns</summary>
+        public HashSet<string> FilterPatterns
+        {
+            get { return m_TagPanel.TagList; }
+            set
+            {
+                m_TagPanel.TagList.Clear();
+                foreach(var tag in value)
+                    m_TagPanel.TagList.Add(tag);
+
+                UpdateFiltering(this,null);
+            }
+        }
+
+
+        /// <summary>
         /// Create and configure TreeControl</summary>
         /// <param name="treeControl">New TreeControl</param>
         /// <param name="treeControlAdapter">Adapter for TreeControl</param>
@@ -35,14 +53,22 @@ namespace Sce.Atf.Applications
         {
             base.Configure(out treeControl, out treeControlAdapter);
 
-            m_searchInput = new StringSearchInputUI();
-            m_searchInput.Updated += UpdateFiltering;
             m_control = new UserControl();
             m_control.Dock = DockStyle.Fill;
             m_control.SuspendLayout();
             m_control.Name = "Tree View".Localize();
             m_control.Text = "Tree View".Localize();
-            m_control.Controls.Add(m_searchInput);
+
+
+            // create tag panel
+            m_TagPanel = new TagLabelListControl();
+            m_TagPanel.Dock = DockStyle.Top;
+            m_TagPanel.OnTagListUpdated += UpdateFiltering;
+            m_control.Controls.Add(m_TagPanel);
+
+            m_TagInput = new StringTagSearchInputUI(m_TagPanel);
+            m_control.Controls.Add(m_TagInput);
+
             m_control.Controls.Add(TreeControl);
             m_control.Layout += controls_Layout;
             m_control.ResumeLayout();
@@ -53,13 +79,6 @@ namespace Sce.Atf.Applications
             TreeControl.ItemRendererChanged += (sender, e) => UpdateTreeItemRenderer();
         }
         
-        /// <summary>
-        /// Gets StringSearchInputUI instance</summary>
-        public StringSearchInputUI SearchInputUI
-        {
-            get { return m_searchInput; }
-        }
-
 
         /// <summary>
         /// Gets the control that hosts the tree view</summary>
@@ -78,11 +97,11 @@ namespace Sce.Atf.Applications
         {
             bool result = true;
             IItemView itemView = TreeView.As<IItemView>();
-            if(!SearchInputUI.IsNullOrEmpty())
+            if(m_TagPanel.TagList.Count != 0)
             {
                 ItemInfo info = new WinFormsItemInfo();
                 itemView.GetInfo(item, info);
-                result = info.Label != null && SearchInputUI.Matches(info.Label);
+                result = info.Label != null && m_TagPanel.Matches(info.Label);
             }
             return result;
         }
@@ -106,12 +125,18 @@ namespace Sce.Atf.Applications
             if (filteredTreeView == null || TreeControl == null || filteredTreeView.Root == null)
                 return;
 
+            // Layout need to be updated when tag input height is changed
+            int yoffset = m_TagInput.Height;
+            yoffset += m_TagPanel.Visible ? m_TagPanel.Height /*+ TreeControl.Margin.Top*/ : 0;
+            if (m_LastTagInputHeight != yoffset)
+                UpdateLayout();
+
             UpdateTreeItemRenderer();            
 
             try
             {
                 m_updating = true;
-                bool search = !m_searchInput.IsNullOrEmpty();
+                bool search = FilterPatterns.Count != 0;
                 if (search)
                 {
                     if (!m_searching)
@@ -147,10 +172,18 @@ namespace Sce.Atf.Applications
             }
         }
 
+
+        void UpdateLayout()
+        {
+            int yoffset = m_TagInput.Height;
+            yoffset += m_TagPanel.Visible ? m_TagPanel.Height /*+ TreeControl.Margin.Top*/ : 0;
+            m_LastTagInputHeight = yoffset;
+            TreeControl.Bounds = new Rectangle(0, yoffset, m_control.Width, m_control.Height - yoffset);
+        }
+
         private void controls_Layout(object sender, LayoutEventArgs e)
         {
-            int yoffset = m_searchInput.Visible ? m_searchInput.Height /*+ TreeControl.Margin.Top*/ : 0;
-            TreeControl.Bounds = new Rectangle(0, yoffset, m_control.Width, m_control.Height - yoffset);
+            UpdateLayout();
         }
 
         private void UpdateTreeItemRenderer()
@@ -159,7 +192,7 @@ namespace Sce.Atf.Applications
             if(filteredTreeView != null)
             {
                 TreeItemRenderer itemRenderer = TreeControl.ItemRenderer;
-                itemRenderer.FilteringPattern = m_searchInput.SearchPattern;
+                itemRenderer.FilteringPattern = m_TagPanel.TagList;
                 itemRenderer.FilteringStatus = filteredTreeView.GetNodeFilteringStatus;
             }
         }
@@ -239,8 +272,6 @@ namespace Sce.Atf.Applications
 
         private void TreeControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (e.KeyData == Keys.Escape && m_searching)
-                SearchInputUI.ClearSearch();
         }
 
         
@@ -258,7 +289,9 @@ namespace Sce.Atf.Applications
             }
         }
         private UserControl m_control;
-        private StringSearchInputUI m_searchInput;
+        StringTagSearchInputUI m_TagInput;
+        TagLabelListControl m_TagPanel;
+        int m_LastTagInputHeight = 0;
         private bool m_searching = false;
         private bool m_updating = false;
     }

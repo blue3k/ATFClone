@@ -38,6 +38,20 @@ namespace Sce.Atf.Applications
             m_treeControlAdapter.LastHitChanged += TreeControlAdapterLastHitChanged;
         }
 
+        protected virtual TreeControl CreateControl()
+        {
+            return new TreeControl
+            {
+                ImageList = ResourceUtil.GetImageList16(),
+                StateImageList = ResourceUtil.GetImageList16()
+            };
+        }
+
+        protected virtual TreeControlAdapter CreateAdapter(TreeControl treeControl)
+        {
+            return new TreeControlAdapter(treeControl);
+        }
+
         /// <summary>
         /// Configures the editor</summary>
         /// <param name="treeControl">Control to display data</param>
@@ -49,19 +63,13 @@ namespace Sce.Atf.Applications
             out TreeControl treeControl,
             out TreeControlAdapter treeControlAdapter)
         {
-            treeControl =
-                new TreeControl
-                    {
-                        ImageList = ResourceUtil.GetImageList16(),
-                        StateImageList = ResourceUtil.GetImageList16()
-                    };
-
-            treeControlAdapter = new TreeControlAdapter(treeControl);
+            treeControl = CreateControl();
+            treeControlAdapter = CreateAdapter(treeControl);
         }
 
         /// <summary>
         /// Gets or sets the tree view displayed by the editor</summary>
-        public ITreeView TreeView
+        public virtual ITreeView TreeView
         {
             get { return m_treeControlAdapter.TreeView; }
             set { m_treeControlAdapter.TreeView = value; }

@@ -652,6 +652,8 @@ namespace Sce.Atf.Controls.PropertyEditing
                         SubscribeItemEvents(itemControl);
                         
                         itemControl.Selected = false;
+
+                        UpdateItemsCountLabel();
                     }
 
                     Height = top; // update height of main collection control

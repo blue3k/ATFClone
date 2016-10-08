@@ -24,6 +24,7 @@ namespace Sce.Atf.Controls
             ByTextBox, // editing through the default text box
             ByClick,   // editing that occurs when the data is left-clicked, such as bool editor
             BySlider,  // editing by moving a value indicator
+            ByPropertyEditor, // editing that uses property editor, arbitrary control 
             ByExternalControl // editing that uses external, arbitrary control 
         }
 
