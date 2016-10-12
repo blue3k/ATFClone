@@ -4,6 +4,8 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
+using System.Windows.Forms.Design;
 
 using Sce.Atf.Applications;
 
@@ -12,7 +14,7 @@ namespace Sce.Atf.Controls
     /// <summary>
     /// A Tree Control to display and edit hierarchical data in a tree view with details in columns. 
     /// The TreeListItemRenderer decides how to draw the columns.</summary>
-    public class TreeListControl : TreeControl
+    public class TreeListControl : TreeControl, IWindowsFormsEditorService
     {
         /// <summary>
         /// Constructor of a Visual Studio-like tree control, with default rendering using a single font
@@ -55,6 +57,7 @@ namespace Sce.Atf.Controls
 
             Controls.Add(m_editTextBox);
             m_seperatorPen = new Pen(Color.DarkGray,1);
+            m_brush = new SolidBrush(Color.White);
             ResumeLayout();
         }
 
@@ -85,15 +88,26 @@ namespace Sce.Atf.Controls
         /// <param name="e">Event args</param>
         protected override void OnPaint(PaintEventArgs e)
         {
+            Region oldClip = e.Graphics.Clip;
+            Rectangle clip = e.ClipRectangle;
+            clip.Width = TreeWidth;
+            e.Graphics.SetClip(clip);
+            base.OnPaint(e);
+
+            e.Graphics.Clip = oldClip;
+
             // draw column names
             int leftOffset = TreeWidth;
             if (Columns.Count > 0)
             {
+                e.Graphics.FillRectangle(m_brush, 0, 0, 
+                    ActualClientSize.Width, ContentVerticalOffset + 2);
+
                 for (int i = 0; i < Columns.Count; ++i)
                 {
                     var column = Columns[i];
                     Rectangle textRect = new Rectangle(leftOffset + 3, Margin.Top, column.ActualWidth, ContentVerticalOffset);
-                    if (i== Columns.Count-1)
+                    if (i == Columns.Count - 1)
                         textRect.Width = ActualClientSize.Width - leftOffset; // extends last column 
                     e.Graphics.DrawString(column.Label, Font, TreeListItemRenderer.TextBrush, textRect);
 
@@ -106,14 +120,6 @@ namespace Sce.Atf.Controls
                 e.Graphics.DrawLine(m_seperatorPen, 0, ContentVerticalOffset + 2, ActualClientSize.Width,
                     ContentVerticalOffset + 2);
             }
-
-            Region oldClip = e.Graphics.Clip;
-            Rectangle clip = e.ClipRectangle;
-            clip.Width = TreeWidth;
-            e.Graphics.SetClip(clip);
-            base.OnPaint(e);
-
-            e.Graphics.Clip = oldClip;
         }
 
         /// <summary>
@@ -288,6 +294,8 @@ namespace Sce.Atf.Controls
                     HitRecord hitRecord = Pick(p);
                     if (hitRecord.Node != null)
                     {
+                        // always select editing node
+                        SetSelection(hitRecord.Node);
 
                         var dataEditor = GetDataEditor(hitRecord.Node, p);
                         if (dataEditor != null && (!dataEditor.ReadOnly))
@@ -477,7 +485,7 @@ namespace Sce.Atf.Controls
                 {
                     m_editData.TextBox = m_editTextBox;
                     m_editData.Bounds = GetEditArea(info, m_editData);
-                    m_editData.BeginDataEdit();
+                    m_editData.BeginDataEdit(this);
                     Invalidate();
                     break;
 
@@ -489,11 +497,13 @@ namespace Sce.Atf.Controls
         {
             if (m_dataEditNode != null)
             {
-                if (m_editData.EndDataEdit())
+                bool dataChanged = m_editData.EndDataEdit();
+                if (dataChanged)
                 {
                     OnNodeDataEdited(new NodeEditEventArgs(m_dataEditNode, m_editData));
+                    m_editData.OnValueChanged();
                 }
-                 
+
                 m_dataEditNode = null;
                 m_editData = null;
                 TreeListItemRenderer.TrackingEditor = null;
@@ -519,12 +529,175 @@ namespace Sce.Atf.Controls
             return new Rectangle(xLeft, nodeLayoutInfo.Y, width, height);
         }
 
+
+
+        #region IWindowsFormsEditorService Members
+
+
+        private DropDownForm m_dropDownForm;
+        private bool m_closingDropDown;
+
+        /// <summary>
+        /// Drops down editor control</summary>
+        /// <param name="control">The control to drop down</param>
+        public void DropDownControl(Control control)
+        {
+            if(m_dropDownForm == null) m_dropDownForm = new DropDownForm(this);
+            m_dropDownForm.SetControl(control);
+
+            if(m_editData != null)
+            {
+                Point rightBottom = new Point(m_editData.Bounds.Right, m_editData.Bounds.Bottom);
+                rightBottom = PointToScreen(rightBottom);
+                Rectangle bounds = new Rectangle(
+                    rightBottom.X - control.Width, rightBottom.Y, control.Width, control.Height);
+
+                //Rectangle workingArea = Screen.FromControl(this).WorkingArea;
+                m_dropDownForm.Bounds = bounds;
+            }
+            else
+            {
+                Point rightBottom = new Point(base.Right, base.Bottom);
+                rightBottom = base.Parent.PointToScreen(rightBottom);
+                Rectangle bounds = new Rectangle(
+                    rightBottom.X - control.Width, rightBottom.Y, control.Width, control.Height);
+
+                //Rectangle workingArea = Screen.FromControl(this).WorkingArea;
+                m_dropDownForm.Bounds = bounds;
+            }
+
+            Applications.SkinService.ApplyActiveSkin(control);
+            m_dropDownForm.Visible = true;
+
+            control.Focus();
+
+            while (m_dropDownForm.Visible)
+            {
+                Application.DoEvents();
+                MsgWaitForMultipleObjects(0, 0, true, 250, 255);
+            }
+        }
+
+        /// <summary>
+        /// Closes the dropped down editor</summary>
+        public void CloseDropDown()
+        {
+            if (m_closingDropDown)
+                return;
+
+            // set the focus back to the text box right here so this control never loses focus
+            //EnableTextBox();
+
+            try
+            {
+                m_closingDropDown = true;
+                if (m_dropDownForm.Visible)
+                {
+                    m_dropDownForm.SetControl(null);
+                    m_dropDownForm.Visible = false;
+                }
+            }
+            finally
+            {
+                m_closingDropDown = false;
+            }
+        }
+
+        /// <summary>
+        /// Opens a dialog editor</summary>
+        /// <param name="dialog">The dialog to open</param>
+        /// <returns>Result of user interaction with dialog</returns>
+        public DialogResult ShowDialog(Form dialog)
+        {
+            dialog.ShowDialog(this);
+            return dialog.DialogResult;
+        }
+
+        [DllImport("user32.dll")]
+        private static extern int MsgWaitForMultipleObjects(
+            int nCount,           // number of handles in array
+            int pHandles,         // object-handle array
+            bool bWaitAll,        // wait option
+            int dwMilliseconds,   // time-out interval
+            int dwWakeMask        // input-event type
+            );
+
+        #endregion
+
+
+
+        private class DropDownForm : Form
+        {
+            public DropDownForm(TreeListControl parent)
+            {
+                m_parent = parent;
+
+                base.StartPosition = FormStartPosition.Manual;
+                base.ShowInTaskbar = false;
+                base.ControlBox = false;
+                base.MinimizeBox = false;
+                base.MaximizeBox = false;
+                base.FormBorderStyle = FormBorderStyle.None;
+                base.Visible = false;
+            }
+
+            protected override void OnMouseDown(MouseEventArgs e)
+            {
+                if (e.Button == MouseButtons.Left)
+                    m_parent.CloseDropDown();
+
+                base.OnMouseDown(e);
+            }
+
+            protected override void OnClosed(EventArgs e)
+            {
+                if (Visible)
+                    m_parent.CloseDropDown();
+
+                base.OnClosed(e);
+            }
+
+            protected override void OnDeactivate(EventArgs e)
+            {
+                if (Visible)
+                    m_parent.CloseDropDown();
+
+                base.OnDeactivate(e);
+            }
+
+            public void SetControl(Control control)
+            {
+                if (m_control != null)
+                {
+                    Controls.Remove(m_control);
+                    m_control = null;
+                }
+                if (control != null)
+                {
+                    //control.Width = Math.Max(m_parent.Width, control.Width);
+                    //Size = control.Size;
+
+                    m_control = control;
+                    Controls.Add(m_control);
+
+                    m_control.Location = new Point(0, 0);
+                    m_control.Visible = true;
+                }
+                Enabled = m_control != null;
+            }
+
+            private Control m_control;
+            private readonly TreeListControl m_parent;
+        }
+
+
         private Node m_dataEditNode;
         private readonly TextBox m_editTextBox;
         private DataEditor m_editData;
 
         private readonly TreeListView.ColumnCollection m_columns;
         private Pen m_seperatorPen;
+        private SolidBrush m_brush;
         private Point m_firstPoint;
         private Point m_currentPoint;
         private int m_currentColumn;

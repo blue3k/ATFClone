@@ -146,6 +146,7 @@ namespace Sce.Atf.Dom
             get { return m_clrType.IsArray; }
         }
 
+
         /// <summary>
         /// Gets or sets the attribute rules for this type, which constrain the allowable
         /// values</summary>
@@ -171,6 +172,16 @@ namespace Sce.Atf.Dom
             if (m_rules == null)
                 m_rules = new List<AttributeRule>();
             m_rules.Add(rule);
+        }
+
+        public AttributeRuleT GetRule<AttributeRuleT>() where AttributeRuleT : AttributeRule
+        {
+            foreach (var rule in Rules)
+            {
+                var myRule = rule as AttributeRuleT;
+                if (myRule != null) return myRule;
+            }
+            return null;
         }
 
         /// <summary>

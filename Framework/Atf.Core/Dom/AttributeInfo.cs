@@ -78,6 +78,15 @@ namespace Sce.Atf.Dom
                 return EmptyEnumerable<AttributeRule>.Instance;
             }
         }
+        public AttributeRuleT GetRule<AttributeRuleT>() where AttributeRuleT : AttributeRule
+        {
+            foreach (var rule in Rules)
+            {
+                var myRule = rule as AttributeRuleT;
+                if (myRule != null) return myRule;
+            }
+            return null;
+        }
 
         /// <summary>
         /// Adds a rule to the attribute. This rule will not be used automatically to validate data

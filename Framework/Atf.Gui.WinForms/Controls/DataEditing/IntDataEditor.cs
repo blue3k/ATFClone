@@ -1,6 +1,7 @@
 //Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
@@ -11,39 +12,35 @@ namespace Sce.Atf.Controls
 {
     /// <summary>
     /// Class to edit a float value using a Textbox, optionally with a slider tool.</summary>
-    public class FloatDataEditor : DataEditor
+    public class IntDataEditor : DataEditor
     {
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FloatDataEditor"/> class.</summary>
         /// <param name="theme">The visual theme to use</param>
-        public FloatDataEditor(DataEditorTheme theme)
+        public IntDataEditor(DataEditorTheme theme)
             : base(theme)
         {
             SliderWidth = theme.DefaultSliderWidth;
-            Epsilon = 0.000001f;
         }
 
-        /// <summary>
-        /// Get or set absolute margin of difference for the two float values to be considered equal.</summary>
-        public float Epsilon { get; set; }
 
         /// <summary>
         /// The float value to display and edit.</summary>
-        public float Value;
+        public int Value;
 
         /// <summary>
         /// The minimum value allowed.</summary>
-        public float Min;
+        public int Min;
         /// <summary>
         /// The maximum value allowed.</summary>
-        public float Max;
+        public int Max;
 
         /// <summary>
         /// Whether to show the slider.</summary>
         public bool ShowSlider;
 
-        private float m_startValue;
+        private int m_startValue;
 
 
         /// <summary>
@@ -131,7 +128,7 @@ namespace Sce.Atf.Controls
         public override void OnContextChanged()
         {
             if (EditingContext == null) return;
-            Value = (float)EditingContext.GetValue();
+            Value = (int)Convert.ChangeType(EditingContext.GetValue(), typeof(int));
         }
 
         /// <summary>
@@ -152,7 +149,7 @@ namespace Sce.Atf.Controls
             if (EditingMode == EditMode.ByTextBox)
             {
                 int textBoxOffset = ShowSlider ? SliderWidth + Theme.Padding.Left : 0;
-                TextBox.Text = Value.ToString("F");
+                TextBox.Text = Value.ToString();
                 TextBox.Bounds = new Rectangle(Bounds.Left + textBoxOffset, Bounds.Top, Bounds.Width - textBoxOffset, Bounds.Height);
                 TextBox.SelectAll();
                 TextBox.Show();
@@ -171,7 +168,7 @@ namespace Sce.Atf.Controls
             {
                 Parse(TextBox.Text);
             }
-            return (!(m_startValue == Value || (Math.Abs(Value - m_startValue) < Epsilon)));
+            return (!(m_startValue == Value || Value == m_startValue));
         }
 
 
@@ -181,7 +178,7 @@ namespace Sce.Atf.Controls
         public override void OnMouseMove(MouseEventArgs e)
         {
             if (ShowSlider && EditingMode == EditMode.BySlider)
-                Value = GetSliderFloatValue(e.X);
+                Value = (int)GetSliderFloatValue(e.X);
         }
 
         /// <summary>
@@ -190,7 +187,7 @@ namespace Sce.Atf.Controls
         public override void OnMouseDown(MouseEventArgs e)
         {
             if (ShowSlider && EditingMode == EditMode.BySlider)
-                Value = GetSliderFloatValue(e.X);
+                Value = (int)GetSliderFloatValue(e.X);
         }
 
         private float GetSliderFloatValue(int x)
@@ -219,7 +216,7 @@ namespace Sce.Atf.Controls
         /// A <see cref="System.String" /> that represents this instance.</returns>
         public override string ToString()
         {
-            return Value.ToString("F");
+            return Value.ToString();
         }
 
         /// <summary>
@@ -227,8 +224,8 @@ namespace Sce.Atf.Controls
         /// <param name="s">String to parse</param>
         public override void Parse(string s)
         {
-            float singleResult;
-            if (Single.TryParse(s, NumberStyles.Float, CultureInfo.CurrentCulture, out singleResult))
+            int singleResult;
+            if (int.TryParse(s, out singleResult))
             {
                 if (Min == 0F && Max == 0F) // range not set
                     Value = singleResult;

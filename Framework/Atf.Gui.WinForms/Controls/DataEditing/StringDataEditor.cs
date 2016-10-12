@@ -1,6 +1,7 @@
 ﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System.Drawing;
+using System.Windows.Forms.Design;
 
 namespace Sce.Atf.Controls
 {
@@ -56,8 +57,26 @@ namespace Sce.Atf.Controls
         }
 
         /// <summary>
+        /// When context is changed
+        /// </summary>
+        public override void OnContextChanged()
+        {
+            if (EditingContext == null) return;
+            Value = (string)EditingContext.GetValue();
+        }
+
+        /// <summary>
+        /// Called when value is changed
+        /// </summary>
+        public override void OnValueChanged()
+        {
+            if (EditingContext == null) return;
+            EditingContext.SetValue(Value);
+        }
+
+        /// <summary>
         /// Begins an edit operation.</summary>
-        public override void BeginDataEdit()
+        public override void BeginDataEdit(IWindowsFormsEditorService editorService)
         {
             if (EditingMode == EditMode.ByTextBox)
             {

@@ -352,9 +352,11 @@
     <Compile Include="Controls\DataEditing\BoolDataEditor.cs" />
     <Compile Include="Controls\DataEditing\ColorDataEditor.cs" />
     <Compile Include="Controls\DataEditing\DataEditor.cs" />
+    <Compile Include="Controls\DataEditing\DataEditorPropertyContext.cs" />
     <Compile Include="Controls\DataEditing\DataEditorTheme.cs" />
-    <Compile Include="Controls\DataEditing\PropertyDataEditor.cs" />
+    <Compile Include="Controls\DataEditing\EnumDataEditor.cs" />
     <Compile Include="Controls\DataEditing\FloatDataEditor.cs" />
+    <Compile Include="Controls\DataEditing\IntDataEditor.cs" />
     <Compile Include="Controls\DataEditing\StringDataEditor.cs" />
     <Compile Include="Controls\Direct2DControl.cs">
       <SubType>Component</SubType>

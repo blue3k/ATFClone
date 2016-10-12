@@ -2,10 +2,13 @@
 
 using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Windows.Forms.Design;
 
 namespace Sce.Atf.Controls
 {
+    
     /// <summary>
     /// Abstract base class that can provide a user interface (UI) for representing and editing 
     /// the values of objects of the supported data types.
@@ -16,6 +19,14 @@ namespace Sce.Atf.Controls
     ///  • Override the PaintValue method to implement the display of the value's representation</summary>
     public abstract class DataEditor
     {
+        private DataEditorPropertyContext m_editingContext;
+
+        public DataEditorPropertyContext EditingContext
+        {
+            get { return m_editingContext; }
+            set { m_editingContext = value; OnContextChanged(); }
+        }
+
         /// <summary>
         /// Enumeration for editing mode.</summary>
         public enum EditMode
@@ -24,7 +35,6 @@ namespace Sce.Atf.Controls
             ByTextBox, // editing through the default text box
             ByClick,   // editing that occurs when the data is left-clicked, such as bool editor
             BySlider,  // editing by moving a value indicator
-            ByPropertyEditor, // editing that uses property editor, arbitrary control 
             ByExternalControl // editing that uses external, arbitrary control 
         }
 
@@ -100,10 +110,24 @@ namespace Sce.Atf.Controls
         public virtual void SetEditingMode(Point p)
         {
         }
-     
+
+        /// <summary>
+        /// When context is changed
+        /// </summary>
+        public virtual void OnContextChanged()
+        {
+        }
+
+        /// <summary>
+        /// Update value
+        /// </summary>
+        public virtual void OnValueChanged()
+        {
+        }
+
         /// <summary>
         /// Begins an edit operation.</summary>
-        public virtual void BeginDataEdit()
+        public virtual void BeginDataEdit(IWindowsFormsEditorService editorService)
         {
         }
 

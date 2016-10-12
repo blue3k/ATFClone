@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using Sce.Atf.Adaptation;
 using Sce.Atf.Applications;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms.Design;
+using System.Runtime.InteropServices;
 
 namespace Sce.Atf.Controls
 {
@@ -339,7 +341,7 @@ namespace Sce.Atf.Controls
             //        }
             //    }
             //}
-            
+
             private void ListTreeViewMouseMove(object sender, MouseEventArgs e)
             {
                 // Taken from MSDN for an issue with the ListView control
@@ -876,6 +878,9 @@ namespace Sce.Atf.Controls
                     iter = iter.Parent;
                 }
             }
+
+
+
 
             //[DllImport("user32.dll")]
             //private static extern IntPtr GetDC(IntPtr hwnd);

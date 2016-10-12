@@ -3,6 +3,7 @@
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
+using System.Windows.Forms.Design;
 
 namespace Sce.Atf.Controls.DataEditing
 {
@@ -22,6 +23,24 @@ namespace Sce.Atf.Controls.DataEditing
         /// <summary>
         /// The color value to display and edit.</summary>
         public Color Value;
+
+        /// <summary>
+        /// When context is changed
+        /// </summary>
+        public override void OnContextChanged()
+        {
+            if (EditingContext == null) return;
+            Value = (Color)EditingContext.GetValue();
+        }
+
+        /// <summary>
+        /// Called when value is changed
+        /// </summary>
+        public override void OnValueChanged()
+        {
+            if (EditingContext == null) return;
+            EditingContext.SetValue(Value);
+        }
 
         /// <summary>
         /// Parses the specified string representation and sets the data value.</summary>
@@ -67,7 +86,7 @@ namespace Sce.Atf.Controls.DataEditing
 
         /// <summary>
         /// Begins an edit operation.</summary>
-        public override void BeginDataEdit()
+        public override void BeginDataEdit(IWindowsFormsEditorService editorService)
         {
             m_startValue = Value;
             if (EditingMode == EditMode.ByExternalControl)

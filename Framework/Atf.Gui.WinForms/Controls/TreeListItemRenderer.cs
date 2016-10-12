@@ -50,7 +50,7 @@ namespace Sce.Atf.Controls
 
             Region oldClip = g.Clip;
 
-            UpdateColumnWidths(node, info, g);
+            //UpdateColumnWidths(node, info, g);
             int xOffset = treeListControl.TreeWidth;
             for (int i = 0; i < info.Properties.Length; ++i) 
             {
