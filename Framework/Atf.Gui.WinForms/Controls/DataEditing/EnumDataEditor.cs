@@ -85,7 +85,7 @@ namespace Sce.Atf.Controls
         public override void OnContextChanged()
         {
             if (EditingContext == null) return;
-            Value = (string)EditingContext.GetValue();
+            Value = EditingContext.GetValue().ToString();
         }
 
         /// <summary>

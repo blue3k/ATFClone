@@ -242,6 +242,7 @@ namespace Sce.Atf.Applications
                 }
             }
         }
+
         private void TreeControl_NodeExpandedChanged(object sender, TreeControl.NodeEventArgs e)
         {            
             var treeView = TreeView.As<FilteredTreeView>();
@@ -288,10 +289,11 @@ namespace Sce.Atf.Applications
                 TreeView.GetChildren(TreeControl.Root.Tag).ForEach(child => TreeControlAdapter.Refresh(child));
             }
         }
+
         private UserControl m_control;
-        StringTagSearchInputUI m_TagInput;
-        TagLabelListControl m_TagPanel;
-        int m_LastTagInputHeight = 0;
+        private StringTagSearchInputUI m_TagInput;
+        private TagLabelListControl m_TagPanel;
+        private int m_LastTagInputHeight = 0;
         private bool m_searching = false;
         private bool m_updating = false;
     }

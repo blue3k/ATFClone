@@ -745,6 +745,38 @@ namespace Sce.Atf.Dom
             return copy;
         }
 
+        public void CopyAttributesFrom(DomNode from)
+        {
+            if (from.Type != this.Type)
+                throw new Exception("Invalid operation");
+
+            foreach(var attrInfo in from.Type.Attributes)
+            {
+                var newValue = from.GetAttribute(attrInfo);
+                var oldValue = GetAttribute(attrInfo);
+
+                // Avoid unnecessary event call
+                if (newValue == oldValue) continue;
+                if (newValue != null && newValue.Equals(oldValue)) continue;
+
+                SetAttribute(attrInfo, newValue);
+            }
+        }
+
+        public void ResetAttributes()
+        {
+            foreach (var attrInfo in Type.Attributes)
+            {
+                var newValue = GetAttribute(attrInfo);
+
+                // Avoid unnecessary event call
+                if (newValue == attrInfo.DefaultValue) continue;
+                if (newValue != null && newValue.Equals(attrInfo.DefaultValue)) continue;
+
+                SetAttribute(attrInfo, attrInfo.DefaultValue);
+            }
+        }
+
         private void UpdateReferences(IDictionary<DomNode, DomNode> originalToCopyMap)
         {
             foreach (AttributeInfo attributeInfo in Type.Attributes)

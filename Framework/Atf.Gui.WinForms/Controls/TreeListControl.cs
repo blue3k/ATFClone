@@ -97,6 +97,7 @@ namespace Sce.Atf.Controls
             e.Graphics.Clip = oldClip;
 
             // draw column names
+            // This need to be after main draw otherwise tree contents will be drawn on the column names
             int leftOffset = TreeWidth;
             if (Columns.Count > 0)
             {
@@ -296,6 +297,7 @@ namespace Sce.Atf.Controls
                     {
                         // always select editing node
                         SetSelection(hitRecord.Node);
+                        OnSelectionChanged(EventArgs.Empty);
 
                         var dataEditor = GetDataEditor(hitRecord.Node, p);
                         if (dataEditor != null && (!dataEditor.ReadOnly))
@@ -395,23 +397,32 @@ namespace Sce.Atf.Controls
                     m_treeWidth = m_currentPoint.X;
                 else
                 {
-                    int newWitdh = m_oldColumnWidths[m_currentColumn] - delta;
-                    const int minWidth = 8;
-                    if (newWitdh >= minWidth)
+                    if (Control.ModifierKeys == Keys.Control)
                     {
-
-                        // need to adjust preceding column width
-                        int adjust = m_oldColumnWidths[m_currentColumn - 1] + delta;
-                        if (adjust < minWidth)
+                        // change only that column
+                        int newWitdh = m_oldColumnWidths[m_currentColumn] - delta;
+                        const int minWidth = 8;
+                        if (newWitdh >= minWidth)
                         {
-                            newWitdh += adjust;
-                            if (newWitdh < minWidth)
-                                return;
-                            adjust = minWidth;
-                        }
-                        Columns[m_currentColumn - 1].ActualWidth = adjust;
-                        Columns[m_currentColumn].ActualWidth = newWitdh;
+                            // need to adjust preceding column width
+                            int adjust = m_oldColumnWidths[m_currentColumn - 1] + delta;
+                            if (adjust < minWidth)
+                            {
+                                newWitdh += adjust;
+                                if (newWitdh < minWidth)
+                                    return;
+                                adjust = minWidth;
+                            }
+                            Columns[m_currentColumn - 1].ActualWidth = adjust;
+                            Columns[m_currentColumn].ActualWidth = newWitdh;
 
+                        }
+                    }
+                    else
+                    {
+                        // Move all subsequent column together 
+                        Columns[m_currentColumn - 1].ActualWidth += delta;
+                        m_firstPoint.X = m_currentPoint.X;
                     }
                 }
 
@@ -547,12 +558,13 @@ namespace Sce.Atf.Controls
 
             if(m_editData != null)
             {
-                Point rightBottom = new Point(m_editData.Bounds.Right, m_editData.Bounds.Bottom);
-                rightBottom = PointToScreen(rightBottom);
-                Rectangle bounds = new Rectangle(
-                    rightBottom.X - control.Width, rightBottom.Y, control.Width, control.Height);
+                Point location = new Point(m_editData.Bounds.Left, m_editData.Bounds.Bottom);
+                location = PointToScreen(location);
+                int width = Math.Max(control.Width, m_editData.Bounds.Width);
+                int height = control.Height;
+                Rectangle bounds;
+                bounds = new Rectangle(location.X, location.Y, width, height);
 
-                //Rectangle workingArea = Screen.FromControl(this).WorkingArea;
                 m_dropDownForm.Bounds = bounds;
             }
             else
@@ -562,7 +574,6 @@ namespace Sce.Atf.Controls
                 Rectangle bounds = new Rectangle(
                     rightBottom.X - control.Width, rightBottom.Y, control.Width, control.Height);
 
-                //Rectangle workingArea = Screen.FromControl(this).WorkingArea;
                 m_dropDownForm.Bounds = bounds;
             }
 

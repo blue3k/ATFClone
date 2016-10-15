@@ -377,6 +377,9 @@ namespace Sce.Atf.Controls
         public enum LabelEditModes
         {
             /// <summary>
+            /// Disable label edit mode</summary>
+            Disable = 0x00,
+            /// <summary>
             /// Click the selected node to start editing</summary>
             EditOnClick = 0x01,
             /// <summary>

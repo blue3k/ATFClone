@@ -33,6 +33,19 @@ namespace Sce.Atf.Controls
         /// Active data editor that may want to tracking mouse movement, such as a slider.</summary>
         internal DataEditor TrackingEditor { get; set; }
 
+
+        /// <summary>
+        /// Draws the text of a tree node's label at the specified location and the same size
+        /// that MeasureLabel() would calculate for this node</summary>
+        /// <param name="node">The tree control's node whose label is to be drawn</param>
+        /// <param name="g">The current GDI+ graphics object</param>
+        /// <param name="x">The x-coordinate of the upper-left corner of the drawn text</param>
+        /// <param name="y">The y-coordinate of the upper-left corner of the drawn text</param>
+        public override void DrawLabel(TreeControl.Node node, Graphics g, int x, int y)
+        {
+            base.DrawLabel(node, g, x, y);
+        }
+
         /// <summary>
         /// Draws the data of a tree node at the specified location.</summary>
         /// <param name="node">The tree control's node whose data is to be drawn</param>
@@ -52,7 +65,7 @@ namespace Sce.Atf.Controls
 
             //UpdateColumnWidths(node, info, g);
             int xOffset = treeListControl.TreeWidth;
-            for (int i = 0; i < info.Properties.Length; ++i) 
+            for (int i = 0; i < info.Properties.Length; ++i)
             {
                 var dataEditor = info.Properties[i] as DataEditor;
                 if (dataEditor != null) // show object data details in columns
@@ -61,12 +74,18 @@ namespace Sce.Atf.Controls
                         (TrackingEditor.Name == dataEditor.Name))
                         dataEditor = TrackingEditor;
                     var clip = new Rectangle(xOffset, y, treeListControl.Columns[i].ActualWidth, treeListControl.GetRowHeight(node));
-                    if (i == info.Properties.Length-1) // extends last column 
+                    if (i == info.Properties.Length - 1) // extends last column 
                         clip.Width = node.TreeControl.ActualClientSize.Width - xOffset;
                     g.SetClip(clip);
                     dataEditor.PaintValue(g, clip);
                 }
                 xOffset += treeListControl.Columns[i].ActualWidth;
+            }
+
+            if (node.Selected)
+            {
+                g.SetClip(new Rectangle(0, y, treeListControl.Width+1, node.LabelHeight+1));
+                g.DrawRectangle(s_BorderPen, 0, y, treeListControl.Width, node.LabelHeight);
             }
 
             g.Clip = oldClip;
@@ -101,5 +120,6 @@ namespace Sce.Atf.Controls
         }
 
         private readonly IItemView m_itemView;
+        private static readonly Pen s_BorderPen = Pens.Black;
     }
 }

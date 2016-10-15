@@ -116,6 +116,10 @@ namespace Sce.Atf.Applications
             
             dialog.ForcedInitialDirectory = GetInitialDirectory();
 
+            // Use Initial directory when force initial is empty
+            if (string.IsNullOrEmpty(dialog.ForcedInitialDirectory))
+                dialog.ForcedInitialDirectory = InitialDirectory;
+
             DialogResult result = dialog.ShowDialog(GetDialogOwner());
             if (result == DialogResult.OK)
                 pathName = dialog.FileName;
