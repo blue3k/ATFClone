@@ -1038,6 +1038,7 @@ namespace Sce.Atf.Perforce
                     m_infoCache[path] = info = new FileInfo(uri);
             lock (m_pendingRequests)
                 m_pendingRequests.Enqueue(new PerforceRequest(info, doRequest));
+            Interlocked.Increment(ref m_requestCount);
             m_queryRequestedEvent.Set(); // Trigger the worker thread to talk to the Perforce server.
         }
 
@@ -1050,6 +1051,7 @@ namespace Sce.Atf.Perforce
 
         private void CreateBackgroundThread()
         {
+            m_requestCount = 0;
             m_perforceThread = new Thread(PerforceThreadStart);
             m_perforceThread.Name = "Perforce querying thread";
             m_perforceThread.IsBackground = true; //so that the thread can be killed if app dies.
@@ -1075,7 +1077,10 @@ namespace Sce.Atf.Perforce
 
                 // Execute all of the Perforce commands.
                 foreach (PerforceRequest request in requests)
+                {
                     request.Execute();
+                    Interlocked.Decrement(ref m_requestCount);
+                }
 
                 // Update the status of the paths.
                 GetInfo(requests.Select(x => x.Uri));
@@ -1089,7 +1094,7 @@ namespace Sce.Atf.Perforce
             get
             {
                 lock (m_pendingRequests)
-                    return m_pendingRequests.Count > 0;
+                    return m_pendingRequests.Count == 0 && Interlocked.Read(ref m_requestCount) == 0;
             }
         }
 
@@ -1213,6 +1218,7 @@ namespace Sce.Atf.Perforce
         //  to copy its contents and then synchronously query the Perforce server. The main
         //  GUI thread locks it to append new requests.
         private readonly Queue<PerforceRequest> m_pendingRequests = new Queue<PerforceRequest>();
+        private long m_requestCount;
 
         private Image[] m_statusImages;
 
