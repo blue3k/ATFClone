@@ -85,7 +85,8 @@ namespace Sce.Atf.Applications
                     if (m_treeView.GetChildren(node.Tag).Any(IsMatched))
                         stat |= NodeFilteringStatus.ChildVisible;
                 }               
-            }                
+            }
+
             return stat;
         }
               
@@ -124,11 +125,15 @@ namespace Sce.Atf.Applications
                
 
         internal bool IsMatched(object node)
-        {            
+        {
+            bool cachedValue;
             // if not filtering or the node is already in the matched set.
-            if (!IsFiltering || m_matchedNodes.Contains(node)) 
+            if (!IsFiltering) 
                 return true;
-               
+
+            if (m_matchedNodes.TryGetValue(node, out cachedValue))
+                return cachedValue;
+
             bool result = false;            
             try
             {
@@ -153,7 +158,11 @@ namespace Sce.Atf.Applications
         private List<object> m_tmpNodelist = new List<object>();
         private bool MatchRecv(object node)
         {            
-            bool result = false;            
+            bool result;
+            if (m_matchedNodes.TryGetValue(node, out result))
+                return result;
+
+            result = false;
             m_tmpNodelist.Add(node);            
             foreach (object child in m_treeView.GetChildren(node))
             {
@@ -164,9 +173,17 @@ namespace Sce.Atf.Applications
             if (!result && m_filterFunc(node))
             {
                 for (int i = m_tmpNodelist.Count - 1; i >= 0; i--)
-                    if (!m_matchedNodes.Add(m_tmpNodelist[i])) break;
+                {
+                    if (m_matchedNodes.ContainsKey(m_tmpNodelist[i])) break;
+                    m_matchedNodes.Add(m_tmpNodelist[i], true);
+                }
                 result = true;
-            }            
+            }
+            else
+            {
+                if(!m_matchedNodes.ContainsKey(node))
+                    m_matchedNodes.Add(node, false);
+            }
             m_tmpNodelist.RemoveAt(m_tmpNodelist.Count - 1);           
             return result;
         }
@@ -272,7 +289,7 @@ namespace Sce.Atf.Applications
         private readonly Predicate<object> m_filterFunc;
 
         //re-entry guard
-        private bool m_matching; 
+        private bool m_matching;
 
         // exempted from filtering.
         // used for caching all the items that are exempt from filtering.
@@ -283,7 +300,7 @@ namespace Sce.Atf.Applications
 
         // Used for caching all the nodes that matches current filter.
         // it must be cleared whenever search pattern changeds.
-        private HashSet<object> m_matchedNodes = new HashSet<object>();
+        private Dictionary<object, bool> m_matchedNodes = new Dictionary<object, bool>();
 
         // Maps subtree item to list of expanded items in the subtree.
         // This map used for restoring the expansion staste of a subtree.               

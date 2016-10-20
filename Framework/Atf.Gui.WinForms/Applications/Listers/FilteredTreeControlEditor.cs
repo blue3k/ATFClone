@@ -28,6 +28,14 @@ namespace Sce.Atf.Applications
         {
         }
 
+        /// <summary>
+        /// Filter pattern tag suggestion
+        /// </summary>
+        public List<string> TagInputSuggestion
+        {
+            get { return m_TagInput.SuggestionSource; }
+            set { m_TagInput.SuggestionSource = value; }
+        }
 
         /// <summary>
         /// Gets or sets the filter patterns</summary>

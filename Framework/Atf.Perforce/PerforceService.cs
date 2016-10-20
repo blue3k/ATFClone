@@ -1029,7 +1029,7 @@ namespace Sce.Atf.Perforce
 
   
 
-        private void AddPerforceFileRequest(Uri uri, Func<Uri, bool> doRequest)
+        private void AddPerforceFileRequest(Uri uri, Func<Uri, bool> doRequest, Action<Uri, bool> onRequestEnd = null)
         {
             var path = uri.Path();
             FileInfo info;

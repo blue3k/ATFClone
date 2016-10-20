@@ -2,6 +2,7 @@
 
 using Sce.Atf.Controls;
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -110,8 +111,21 @@ namespace Sce.Atf.Applications
                 clearSearchButton_Click(sender, e);
         }
 
+
+        #region Custom Auto Complition
+        public List<string> SuggestionSource
+        {
+            get { return m_patternTextBox != null ? m_patternTextBox.SuggestionSource : null; }
+            set
+            {
+                m_patternTextBox.SuggestionSource = value;
+            }
+        }
+
+        #endregion
+
         private readonly ToolStripAutoFitTextBox m_patternTextBox;
         private bool m_textBoxEmpty=true;
-        TagLabelListControl m_tagListControl;
+        private TagLabelListControl m_tagListControl;
     }
 }

@@ -12,7 +12,7 @@ namespace Sce.Atf.Perforce
         /// Constructor</summary>
         /// <param name="info"></param>
         /// <param name="doRequest">Requested perforce command</param>
-        public PerforceRequest(FileInfo info, Func<Uri, bool> doRequest) 
+        public PerforceRequest(FileInfo info, Func<Uri, bool> doRequest, Action<Uri, bool> onRequestEnd = null) 
         { 
             Info = info; 
             DoRequest = doRequest;
@@ -22,6 +22,8 @@ namespace Sce.Atf.Perforce
         {
             bool result = (DoRequest != null) && DoRequest(Uri);
             Info.MarkAsDirty();
+            if (OnRequestEnd != null)
+                OnRequestEnd(Uri, result);
             return result; 
         }
 
@@ -29,5 +31,6 @@ namespace Sce.Atf.Perforce
         public Uri Uri { get { return Info.Uri; } }
 
         private Func<Uri, bool> DoRequest { get; set; }
+        private Action<Uri, bool> OnRequestEnd { get; set; }
     }
 }
