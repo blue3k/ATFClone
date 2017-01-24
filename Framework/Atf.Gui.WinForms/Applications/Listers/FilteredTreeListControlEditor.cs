@@ -9,7 +9,7 @@ using Sce.Atf.Adaptation;
 using Sce.Atf.Applications;
 using Sce.Atf.Controls;
 
-namespace GameDataSettingEditor
+namespace Sce.Atf.Applications
 {
     /// <summary>
     /// Displays a tree view of the DOM data. Uses the context registry to track
