@@ -160,7 +160,7 @@ namespace UnitTests
 		static void TestBITMAP()
 		{
 			::BITMAP nativeInfo;
-			Sce::Atf::BITMAP managedInfo;
+			Sce::Atf::Windows::BITMAP managedInfo;
 			Assert::AreEqual(Marshal::SizeOf(managedInfo), (int)sizeof(nativeInfo));
 			Assert::AreEqual(
 				(int) Marshal::OffsetOf(managedInfo.GetType(), "bmType"),
@@ -189,7 +189,7 @@ namespace UnitTests
 		static void TestBITMAPINFO_FLAT()
 		{
 			::BITMAPINFOHEADER nativeInfo;
-			Sce::Atf::BITMAPINFO_FLAT managedInfo;
+			Sce::Atf::Windows::BITMAPINFOHEADER managedInfo;
 			// BITMAPINFO_FLAT has the header in the top plus space at the bottom.
 			// Let's make sure the header portion matches.
 			//Assert::AreEqual(Marshal::SizeOf(managedInfo), (int)sizeof(nativeInfo));
@@ -232,7 +232,7 @@ namespace UnitTests
 		static void TestBITMAPINFOHEADER()
 		{
 			::BITMAPINFOHEADER nativeInfo;
-			Sce::Atf::BITMAPINFOHEADER ^managedInfo = gcnew Sce::Atf::BITMAPINFOHEADER();
+			Sce::Atf::Windows::BITMAPINFOHEADER ^managedInfo = gcnew Sce::Atf::Windows::BITMAPINFOHEADER();
 			Assert::AreEqual(Marshal::SizeOf(managedInfo), (int)sizeof(nativeInfo));
 			Assert::AreEqual(
 				(int) Marshal::OffsetOf(managedInfo->GetType(), "biSize"),
@@ -317,7 +317,7 @@ namespace UnitTests
 		static void TestPOINT()
 		{
 			POINT nativeInfo;
-			Sce::Atf::User32::POINT managedInfo;
+			Sce::Atf::Windows::POINT managedInfo;
 			Assert::AreEqual(Marshal::SizeOf(managedInfo), (int)sizeof(nativeInfo));
 			Assert::AreEqual(
 				(int) Marshal::OffsetOf(managedInfo.GetType(), "X"),
@@ -332,7 +332,7 @@ namespace UnitTests
 		static void TestRECT()
 		{
 			RECT nativeInfo;
-			Sce::Atf::User32::RECT managedInfo;
+			Sce::Atf::Windows::RECT managedInfo;
 			Assert::AreEqual(Marshal::SizeOf(managedInfo), (int)sizeof(nativeInfo));
 			Assert::AreEqual(
 				(int) Marshal::OffsetOf(managedInfo.GetType(), "Left"),
@@ -352,7 +352,7 @@ namespace UnitTests
 		static void TestMINMAXINFO()
 		{
 			MINMAXINFO nativeInfo;
-			Sce::Atf::User32::MINMAXINFO managedInfo;
+			Sce::Atf::Windows::MINMAXINFO managedInfo;
 			Assert::AreEqual(Marshal::SizeOf(managedInfo), (int)sizeof(nativeInfo));
 			Assert::AreEqual(
 				(int) Marshal::OffsetOf(managedInfo.GetType(), "ptReserved"),
@@ -375,7 +375,7 @@ namespace UnitTests
 		static void TestMSG()
 		{
 			MSG nativeInfo;
-			Sce::Atf::User32::MSG managedInfo;
+			Sce::Atf::Windows::MSG managedInfo;
 			Assert::AreEqual(Marshal::SizeOf(managedInfo), (int)sizeof(nativeInfo));
 			Assert::AreEqual(
 				(int) Marshal::OffsetOf(managedInfo.GetType(), "hWnd"),
@@ -401,7 +401,7 @@ namespace UnitTests
 		static void TestTRACKMOUSEEVENT()
 		{
 			TRACKMOUSEEVENT nativeInfo;
-			Sce::Atf::User32::TRACKMOUSEEVENT managedInfo;
+			Sce::Atf::Windows::TRACKMOUSEEVENT managedInfo;
 			Assert::AreEqual(Marshal::SizeOf(managedInfo), (int)sizeof(nativeInfo));
 			Assert::AreEqual(
 				(int) Marshal::OffsetOf(managedInfo.GetType(), "cbSize"),
@@ -421,7 +421,7 @@ namespace UnitTests
 		static void TestNMHDR()
 		{
 			NMHDR nativeInfo;
-			Sce::Atf::User32::NMHDR managedInfo;
+			Sce::Atf::Windows::NMHDR managedInfo;
 			Assert::AreEqual(Marshal::SizeOf(managedInfo), (int)sizeof(nativeInfo));
 			Assert::AreEqual(
 				(int) Marshal::OffsetOf(managedInfo.GetType(), "hwndFrom"),
@@ -438,7 +438,7 @@ namespace UnitTests
 		static void TestWINDOWPOS()
 		{
 			WINDOWPOS nativeInfo;
-			Sce::Atf::User32::WINDOWPOS managedInfo;
+			Sce::Atf::Windows::WINDOWPOS managedInfo;
 			Assert::AreEqual(Marshal::SizeOf(managedInfo), (int)sizeof(nativeInfo));
 			Assert::AreEqual(
 				(int) Marshal::OffsetOf(managedInfo.GetType(), "hwnd"),

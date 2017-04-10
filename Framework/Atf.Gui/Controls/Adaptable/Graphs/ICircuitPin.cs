@@ -26,6 +26,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         int Index
         {
             get;
+            set;
         }
     }
 }

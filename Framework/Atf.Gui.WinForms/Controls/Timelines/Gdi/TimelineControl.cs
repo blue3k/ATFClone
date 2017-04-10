@@ -1343,7 +1343,7 @@ namespace Sce.Atf.Controls.Timelines
             // Otherwise, our hovers would only be triggered after the first time by alt+tab'ing
             // to another app that would cause a refresh of the Control or by using the middle
             // mouse button/wheel!
-            User32.TRACKMOUSEEVENT tme = new User32.TRACKMOUSEEVENT(Handle);
+            Windows.TRACKMOUSEEVENT tme = new Windows.TRACKMOUSEEVENT(Handle);
             User32.TrackMouseEvent(ref tme);
 
             // have to manually turn-off tooltips when mouse moves because we seem to have to use

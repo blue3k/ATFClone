@@ -98,6 +98,9 @@
     <Compile Include="ICrashLogger.cs" />
     <Compile Include="IObservableCollection.cs" />
     <Compile Include="IPropertyValueValidator.cs" />
+    <Compile Include="Windows\Gdi32.cs" />
+    <Compile Include="Windows\Gdi32Types.cs" />
+    <Compile Include="Windows\Kernel32Types.cs" />
     <Compile Include="LiveConnectService.cs" />
     <Compile Include="LocalizedDescriptionAttribute.cs" />
     <Compile Include="LocalizedNameAttribute.cs" />
@@ -275,7 +278,7 @@
     <Compile Include="Dom\DomNodeType.cs" />
     <Compile Include="Dom\XmlSchemaTypeCollection.cs" />
     <Compile Include="Dom\XmlSchemaTypeLoader.cs" />
-    <Compile Include="Kernel32.cs" />
+    <Compile Include="Windows\Kernel32.cs" />
     <Compile Include="VectorMath\AngleAxisF.cs" />
     <Compile Include="VectorMath\BezierCurve.cs" />
     <Compile Include="VectorMath\BezierCurve2F.cs" />
@@ -313,6 +316,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UniqueNamer.cs" />
     <Compile Include="WeakKey.cs" />
+    <Compile Include="Windows\DwmapiTypes.cs" />
+    <Compile Include="Windows\Dwmapi.cs" />
+    <Compile Include="Windows\User32.cs" />
+    <Compile Include="Windows\User32Types.cs" />
+    <Compile Include="Windows\Uxtheme.cs" />
+    <Compile Include="Windows\UxthemeTypes.cs" />
     <Compile Include="XmlStringLocalizer.cs" />
   </ItemGroup>
   <ItemGroup>

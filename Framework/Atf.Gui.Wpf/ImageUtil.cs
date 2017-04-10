@@ -200,10 +200,10 @@ namespace Sce.Atf.Wpf
             IntPtr hDC = User32.GetDC(hwnd);
             if (hDC != IntPtr.Zero)
             {
-                var rect = new User32.RECT();
-                User32.GetWindowRect(hwnd, ref rect);
-                int width = rect.Right - rect.Left;
-                int height = rect.Bottom - rect.Top;
+                var rect = new Windows.RECT();
+                User32.GetWindowRect(hwnd, out rect);
+                int width = rect.Width;
+                int height = rect.Height;
                 var bmp = new System.Drawing.Bitmap(width, height);
 
                 using (var destGraphics = System.Drawing.Graphics.FromImage(bmp))

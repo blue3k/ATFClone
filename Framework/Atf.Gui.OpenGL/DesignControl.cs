@@ -438,7 +438,7 @@ namespace Sce.Atf.Rendering.Dom
         /// <param name="msg">Windows message</param>
         protected override void WndProc(ref Message msg)
         {
-            if (msg.Msg == Sce.Atf.User32.WM_MOUSEMOVE)
+            if (msg.Msg == (int)Windows.WM.WM_MOUSEMOVE)
             {
                 // first, determine if the mouse has really moved. there are many spurious messages, potentially.
                 int xy = msg.LParam.ToInt32();
@@ -447,13 +447,13 @@ namespace Sce.Atf.Rendering.Dom
                 s_oldXY = xy;
 
                 // secondly, determine if there is a newer mouse move message available already.
-                Sce.Atf.User32.MSG newerMsg;
-                if (Sce.Atf.User32.PeekMessage(out newerMsg, 0, Sce.Atf.User32.WM_MOUSEMOVE, Sce.Atf.User32.WM_MOUSEMOVE,
+                Sce.Atf.Windows.MSG newerMsg;
+                if (Sce.Atf.User32.PeekMessage(out newerMsg, 0, (int)Windows.WM.WM_MOUSEMOVE, (int)Windows.WM.WM_MOUSEMOVE,
                     Sce.Atf.User32.PM_NOREMOVE | Sce.Atf.User32.PM_QS_INPUT | Sce.Atf.User32.PM_NOYIELD))
                 {
                     // Documentation says that PeekMessage does not filter out WM_QUIT messages, so let's
                     // make sure that we have a mouse move message.
-                    if (newerMsg.msg == Sce.Atf.User32.WM_MOUSEMOVE)
+                    if (newerMsg.message == Windows.WM.WM_MOUSEMOVE)
                         return;
                 }
             }

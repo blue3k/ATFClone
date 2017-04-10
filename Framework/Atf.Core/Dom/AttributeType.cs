@@ -825,12 +825,28 @@ namespace Sce.Atf.Dom
         private static readonly AttributeType s_stringType = new AttributeType("string", typeof(string), 1);
 
         /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR string</summary>
+        public static AttributeType StringArrayType
+        {
+            get { return s_stringArrayType; }
+        }
+        private static readonly AttributeType s_stringArrayType = new AttributeType("string[]", typeof(string[]), Int32.MaxValue);
+
+        /// <summary>
         /// Gets a generic AttributeType that specifies a CLR int</summary>
         public static AttributeType IntType
         {
             get { return s_intType; }
         }
         private static readonly AttributeType s_intType = new AttributeType("int", typeof(int), 1);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR int</summary>
+        public static AttributeType IntArrayType
+        {
+            get { return s_intArrayType; }
+        }
+        private static readonly AttributeType s_intArrayType = new AttributeType("int[]", typeof(int[]), Int32.MaxValue);
 
         /// <summary>
         /// Gets a generic AttributeType that specifies a CLR float</summary>
@@ -841,12 +857,28 @@ namespace Sce.Atf.Dom
         private static readonly AttributeType s_floatType = new AttributeType("float", typeof(float), 1);
 
         /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR float</summary>
+        public static AttributeType FloatArrayType
+        {
+            get { return s_floatArrayType; }
+        }
+        private static readonly AttributeType s_floatArrayType = new AttributeType("float[]", typeof(float[]), Int32.MaxValue);
+
+        /// <summary>
         /// Gets a generic AttributeType that specifies a CLR Boolean</summary>
         public static AttributeType BooleanType
         {
             get { return s_booleanType; }
         }
         private static readonly AttributeType s_booleanType = new AttributeType("boolean", typeof(bool), 1);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR Boolean</summary>
+        public static AttributeType BooleanArrayType
+        {
+            get { return s_booleanArrayType; }
+        }
+        private static readonly AttributeType s_booleanArrayType = new AttributeType("boolean[]", typeof(bool[]), Int32.MaxValue);
 
         private object GetDefaultArrayValue<T>()
         {

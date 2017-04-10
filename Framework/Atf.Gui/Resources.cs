@@ -542,6 +542,78 @@ namespace Sce.Atf
 
         #endregion
 
+
+        #region Chrome task tab Images
+
+        /// <summary>
+        /// Chrome task tab image Add
+        /// </summary>
+        [ImageResource("ChromeAdd.png")]
+        public static readonly string ChromeAddImage;
+
+        /// <summary>
+        /// Chrome task tab image 
+        /// </summary>
+        [ImageResource("ChromeAddHover.png")]
+        public static readonly string ChromeAddHoverImage;
+
+        /// <summary>
+        /// Chrome task tab image 
+        /// </summary>
+        [ImageResource("ChromeBackground.png")]
+        public static readonly string ChromeBackgroundImage;
+
+        /// <summary>
+        /// Chrome task tab image 
+        /// </summary>
+        [ImageResource("ChromeCenter.png")]
+        public static readonly string ChromeCenterImage;
+
+        /// <summary>
+        /// Chrome task tab image 
+        /// </summary>
+        [ImageResource("ChromeClose.png")]
+        public static readonly string ChromeCloseImage;
+
+        /// <summary>
+        /// Chrome task tab image 
+        /// </summary>
+        [ImageResource("ChromeCloseHover.png")]
+        public static readonly string ChromeCloseHoverImage;
+
+        /// <summary>
+        /// Chrome task tab image 
+        /// </summary>
+        [ImageResource("ChromeInactiveCenter.png")]
+        public static readonly string ChromeInactiveCenterImage;
+
+        /// <summary>
+        /// Chrome task tab image 
+        /// </summary>
+        [ImageResource("ChromeInactiveLeft.png")]
+        public static readonly string ChromeInactiveLeftImage;
+
+        /// <summary>
+        /// Chrome task tab image 
+        /// </summary>
+        [ImageResource("ChromeInactiveRight.png")]
+        public static readonly string ChromeInactiveRightImage;
+
+        /// <summary>
+        /// Chrome task tab image 
+        /// </summary>
+        [ImageResource("ChromeLeft.png")]
+        public static readonly string ChromeLeftImage;
+
+        /// <summary>
+        /// Chrome task tab image 
+        /// </summary>
+        [ImageResource("ChromeRight.png")]
+        public static readonly string ChromeRightImage;
+
+        #endregion
+
+
         /// <summary>
         /// Constructor</summary>
         static Resources()

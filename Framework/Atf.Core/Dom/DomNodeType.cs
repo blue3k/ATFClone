@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-
+using System.Collections.Concurrent;
 using Sce.Atf.Adaptation;
 
 namespace Sce.Atf.Dom
@@ -673,7 +673,7 @@ namespace Sce.Atf.Dom
         {
             DomNodeType nodeType = node.Type;
             if (nodeType.m_adapterCreatorCache == null)
-                nodeType.m_adapterCreatorCache = new Dictionary<Type, IEnumerable<IAdapterCreator>>();
+                nodeType.m_adapterCreatorCache = new ConcurrentDictionary<Type, IEnumerable<IAdapterCreator>>();
 
             IEnumerable<IAdapterCreator> adapterCreators;
             if (!nodeType.m_adapterCreatorCache.TryGetValue(type, out adapterCreators))
@@ -698,7 +698,7 @@ namespace Sce.Atf.Dom
                 adapterCreators = (creators.Count > 0) ? creators.ToArray() : EmptyEnumerable<IAdapterCreator>.Instance;
 
                 // cache the result for subsequent searches
-                node.Type.m_adapterCreatorCache.Add(type, adapterCreators);
+                node.Type.m_adapterCreatorCache.TryAdd(type, adapterCreators);
             }
 
             return adapterCreators;
@@ -857,7 +857,7 @@ namespace Sce.Atf.Dom
         private Definitions m_definitions = new Definitions();
 
         private List<IAdapterCreator> m_adapterCreators;
-        private Dictionary<Type, IEnumerable<IAdapterCreator>> m_adapterCreatorCache;
+        private ConcurrentDictionary<Type, IEnumerable<IAdapterCreator>> m_adapterCreatorCache;
         private bool m_isAbstract;
 
         private static readonly DomNodeType s_baseOfAllTypes;

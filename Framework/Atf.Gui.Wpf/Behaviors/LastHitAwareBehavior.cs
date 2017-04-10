@@ -80,10 +80,10 @@ namespace Sce.Atf.Wpf.Behaviors
         public static extern bool SetCursorPos(int x, int y);
 
         [DllImport("user32.dll")]
-        private static extern bool GetCursorPos(ref User32.POINT pt);
+        private static extern bool GetCursorPos(ref Windows.POINT pt);
 
         [DllImport("user32.dll")]
-        private static extern bool ScreenToClient(IntPtr hwnd, ref User32.POINT pt);
+        private static extern bool ScreenToClient(IntPtr hwnd, ref Windows.POINT pt);
 
         /// <summary>
         /// Get corrected cursor coordinates relative to Visual</summary>
@@ -91,9 +91,9 @@ namespace Sce.Atf.Wpf.Behaviors
         /// <returns>Cursor position in current coordinate system of the Visual</returns>
         public static Point CorrectGetPosition(Visual relativeTo)
         {
-            var w32Mouse = new User32.POINT();
+            var w32Mouse = new Windows.POINT();
             GetCursorPos(ref w32Mouse);
-            return relativeTo.PointFromScreen(new Point(w32Mouse.X, w32Mouse.Y));
+            return relativeTo.PointFromScreen(new Point(w32Mouse.x, w32Mouse.y));
         }
     }
 }

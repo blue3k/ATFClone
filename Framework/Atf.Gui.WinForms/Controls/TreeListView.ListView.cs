@@ -225,7 +225,7 @@ namespace Sce.Atf.Controls
             {
                 switch (m.Msg)
                 {
-                    case User32.WM_PAINT:
+                    case (int)Windows.WM.WM_PAINT:
                     {
                         try
                         {
@@ -255,8 +255,8 @@ namespace Sce.Atf.Controls
                     }
                     break;
 
-                    case User32.WM_VSCROLL:
-                    case User32.WM_MOUSEWHEEL:
+                    case (int)Windows.WM.WM_VSCROLL:
+                    case (int)Windows.WM.WM_MOUSEWHEEL:
                     {
                         base.WndProc(ref m);
 
@@ -265,7 +265,7 @@ namespace Sce.Atf.Controls
                     }
                     break;
 
-                    case User32.WM_HSCROLL:
+                    case (int)Windows.WM.WM_HSCROLL:
                     {
                         base.WndProc(ref m);
 
@@ -274,7 +274,7 @@ namespace Sce.Atf.Controls
                     }
                     break;
 
-                    case User32.WM_KEYDOWN:
+                    case (int)Windows.WM.WM_KEYDOWN:
                     {
                         base.WndProc(ref m);
 

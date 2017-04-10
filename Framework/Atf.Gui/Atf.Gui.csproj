@@ -507,13 +507,11 @@
     <Compile Include="Applications\StandardLockCommands.cs" />
     <Compile Include="Applications\StandardMenu.cs" />
     <Compile Include="Applications\StandardSelectionCommands.cs" />
-    <Compile Include="Gdi32.cs" />
     <Compile Include="ImageResourceAttribute.cs" />
     <Compile Include="Applications\IStatusText.cs" />
     <Compile Include="KeysUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.cs" />
-    <Compile Include="User32.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\4WAY05.CUR" />
@@ -818,6 +816,19 @@
     <EmbeddedResource Include="Resources\selection_find16x16.png" />
     <EmbeddedResource Include="Resources\selection_find24x24.png" />
     <EmbeddedResource Include="Resources\selection_find32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ChromeAdd.png" />
+    <EmbeddedResource Include="Resources\ChromeAddHover.png" />
+    <EmbeddedResource Include="Resources\ChromeBackground.png" />
+    <EmbeddedResource Include="Resources\ChromeCenter.png" />
+    <EmbeddedResource Include="Resources\ChromeClose.png" />
+    <EmbeddedResource Include="Resources\ChromeCloseHover.png" />
+    <EmbeddedResource Include="Resources\ChromeInactiveCenter.png" />
+    <EmbeddedResource Include="Resources\ChromeInactiveLeft.png" />
+    <EmbeddedResource Include="Resources\ChromeInactiveRight.png" />
+    <EmbeddedResource Include="Resources\ChromeLeft.png" />
+    <EmbeddedResource Include="Resources\ChromeRight.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

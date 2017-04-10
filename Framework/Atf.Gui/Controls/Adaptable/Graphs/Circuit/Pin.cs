@@ -46,11 +46,12 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
         #region ElementType.Pin Members
 
+        // Actually overriding this property is way far away
         /// <summary>
         /// Gets whether connection fan in to pin is allowed</summary>
         public virtual bool AllowFanIn
         {
-            get { return false; }
+            get { return true; }
         }
 
         /// <summary>

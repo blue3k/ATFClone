@@ -4,7 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Windows;
 using System.Windows.Forms;
+
+using Sce.Atf.Windows;
 
 namespace Sce.Atf
 {
@@ -327,8 +330,8 @@ namespace Sce.Atf
         public struct WINDOWINFO
         {
             public uint cbSize;
-            public User32.RECT rcWindow;
-            public User32.RECT rcClient;
+            public RECT rcWindow;
+            public RECT rcClient;
             public uint dwStyle;
             public uint dwExStyle;
             public uint dwWindowStatus;

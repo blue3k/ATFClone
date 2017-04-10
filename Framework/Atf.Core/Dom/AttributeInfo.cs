@@ -132,6 +132,20 @@ namespace Sce.Atf.Dom
             return null;
         }
 
+        public AttributeInfo Clone(string newName)
+        {
+            AttributeInfo newAttr = new AttributeInfo(newName, m_type);
+            if(m_rules != null)
+            {
+                foreach (var rule in m_rules)
+                {
+                    var newRule = rule;
+                    newAttr.AddRule(newRule);
+                }
+            }
+            return newAttr;
+        }
+
         private readonly AttributeType m_type;
         private object m_defaultValue;
         private List<AttributeRule> m_rules;

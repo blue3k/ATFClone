@@ -98,22 +98,31 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             get
             {
-                ICircuitElementType result= null;
+                if (m_elementType != null)
+                    return m_elementType;
+
                 if (DomNode.Is<ICircuitElement>()) // favor domNode direct support
                 {
                     var circuitElement = DomNode.Cast<ICircuitElement>();
                     if (circuitElement != this) // the check is needed to prevent from self-loop
-                        result = DomNode.Cast<ICircuitElement>().Type;
+                    {
+                        m_elementType = DomNode.Cast<ICircuitElement>().Type;
+                    }
                 }
-                  
-                if (result == null) // now try domNode type tag
-                {
-                    if (m_elementType == null)
-                        m_elementType = DomNode.Type.GetTag<ICircuitElementType>();
-                    result = m_elementType; 
-                }
-                Debug.Assert(result != null);
-                return result;
+
+                // search in extensions
+                if (m_elementType == null)
+                    m_elementType = DomNode.As<ICircuitElementType>();
+
+                // search in tags
+                if (m_elementType == null)
+                    m_elementType = DomNode.GetTag(typeof(ICircuitElementType)) as ICircuitElementType;
+
+                if (m_elementType == null) // now try domNode type tag
+                    m_elementType = DomNode.Type.GetTag<ICircuitElementType>();
+
+                Debug.Assert(m_elementType != null);
+                return m_elementType;
             }
         }
 

@@ -1,5 +1,6 @@
 //Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
+using Sce.Atf.Adaptation;
 using System;
 using System.Collections.Generic;
 
@@ -79,6 +80,19 @@ namespace Sce.Atf.Dom
             m_rules.Add(rule);
         }
 
+        public T GetRule<T>() where T : ChildRule
+        {
+            if (m_rules == null) return null;
+
+            foreach(var rule in m_rules)
+            {
+                var ruleType = rule.As<T>();
+                if (ruleType != null) return ruleType;
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Checks whether a child node is valid (i.e., passes all the rules) for a given parent</summary>
         /// <param name="parent">Parent DOM node</param>
@@ -118,6 +132,19 @@ namespace Sce.Atf.Dom
                 return OwningType.BaseType.GetChildInfo(Index);
 
             return null;
+        }
+
+        public ChildInfo Clone(string newName, bool isList)
+        {
+            var newChild = new ChildInfo(newName, m_type, isList);
+            if(m_rules != null)
+            {
+                foreach (var rule in m_rules)
+                {
+                    newChild.AddRule(rule);
+                }
+            }
+            return newChild;
         }
 
         private readonly DomNodeType m_type;

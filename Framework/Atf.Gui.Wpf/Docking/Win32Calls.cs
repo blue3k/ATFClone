@@ -10,13 +10,13 @@ namespace Sce.Atf.Wpf.Docking
     {
         internal static Point GetPosition(Visual relativeTo)
         {
-            var w32Mouse = new User32.POINT();
+            var w32Mouse = new Windows.POINT();
             GetCursorPos(ref w32Mouse);
-            return relativeTo.PointFromScreen(new Point(w32Mouse.X, w32Mouse.Y));
+            return relativeTo.PointFromScreen(new Point(w32Mouse.x, w32Mouse.y));
         }
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool GetCursorPos(ref User32.POINT pt);
+        internal static extern bool GetCursorPos(ref Windows.POINT pt);
     }
 }

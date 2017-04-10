@@ -174,7 +174,7 @@ namespace Sce.Atf.Dom
             }
 
             int index = type.Name.LastIndexOf(':');
-            string typeNS = type.Name.Substring(0, index);
+            string typeNS = index >= 0 ? type.Name.Substring(0, index) : "";
 
             DomNode node = new DomNode(type, nodeInfo);
 

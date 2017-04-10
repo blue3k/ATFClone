@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 using Sce.Atf.Adaptation;
 using Sce.Atf.Controls;
+using Sce.Atf.Dom;
 
 namespace Sce.Atf.Applications
 {

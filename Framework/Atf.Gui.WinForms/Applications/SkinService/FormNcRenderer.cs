@@ -9,6 +9,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 
+using Sce.Atf.Windows;
+
 namespace Sce.Atf.Applications
 {
     /// <summary>
@@ -589,13 +591,13 @@ namespace Sce.Atf.Applications
 
         private void UpdateBounds()
         {           
-            var scrRect = new User32.RECT();
+            var scrRect = new RECT();
             GetWindowRect(m_form.Handle, ref scrRect);
             int w = scrRect.Width;
             int h = scrRect.Height;            
             m_winRect = new Rectangle(0, 0, w, h);
 
-            var clRect = new User32.RECT();
+            var clRect = new RECT();
             GetClientRect(m_form.Handle, ref clRect);
             int cw = clRect.Width;
             int ch = clRect.Height;
@@ -882,11 +884,11 @@ namespace Sce.Atf.Applications
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool GetWindowRect(IntPtr hWnd, ref User32.RECT lpRect);
+        public static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool GetClientRect(IntPtr hWnd, ref User32.RECT lpRect);
+        public static extern bool GetClientRect(IntPtr hWnd, ref RECT lpRect);
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetDCEx(IntPtr hwnd, IntPtr hrgnclip, uint fdwOptions);
@@ -990,40 +992,40 @@ namespace Sce.Atf.Applications
             public int Y;
         }
 
-        /// <summary>
-        /// Structure for rectangle</summary>
-        [StructLayout(LayoutKind.Sequential)]
-        [Obsolete("Please use User32.RECT instead")]
-        public struct RECT
-        {
-            public int Left;
-            public int Top;
-            public int Right;
-            public int Bottom;
-            public int Width
-            {
-                get { return Right - Left; }
-            }
-            public int Height
-            {
-                get { return Bottom - Top; }
-            }
-        }
+        ///// <summary>
+        ///// Structure for rectangle</summary>
+        //[StructLayout(LayoutKind.Sequential)]
+        //[Obsolete("Please use User32.RECT instead")]
+        //public struct RECT
+        //{
+        //    public int Left;
+        //    public int Top;
+        //    public int Right;
+        //    public int Bottom;
+        //    public int Width
+        //    {
+        //        get { return Right - Left; }
+        //    }
+        //    public int Height
+        //    {
+        //        get { return Bottom - Top; }
+        //    }
+        //}
 
-        /// <summary>
-        /// Information about a window's maximized size and position and its minimum and maximum tracking size.
-        /// </summary>
-        /// <remarks>For details, see http://msdn.microsoft.com/en-us/library/windows/desktop/ms632605%28v=vs.85%29.aspx. </remarks>
-        [StructLayout(LayoutKind.Sequential)]
-        [Obsolete("Please use User32.MINMAXINFO instead")]
-        public struct MINMAXINFO
-        {
-            public POINT ptReserved;
-            public POINT ptMaxSize;
-            public POINT ptMaxPosition;
-            public POINT ptMinTrackSize;
-            public POINT ptMaxTrackSize;
-        }
+        ///// <summary>
+        ///// Information about a window's maximized size and position and its minimum and maximum tracking size.
+        ///// </summary>
+        ///// <remarks>For details, see http://msdn.microsoft.com/en-us/library/windows/desktop/ms632605%28v=vs.85%29.aspx. </remarks>
+        //[StructLayout(LayoutKind.Sequential)]
+        //[Obsolete("Please use User32.MINMAXINFO instead")]
+        //public struct MINMAXINFO
+        //{
+        //    public POINT ptReserved;
+        //    public POINT ptMaxSize;
+        //    public POINT ptMaxPosition;
+        //    public POINT ptMinTrackSize;
+        //    public POINT ptMaxTrackSize;
+        //}
 
         /// <summary>
         /// Information that an application can use while processing the WM_NCCALCSIZE message to calculate 
@@ -1032,9 +1034,9 @@ namespace Sce.Atf.Applications
         [StructLayout(LayoutKind.Sequential)]
         public struct NCCALCSIZE_PARAMS
         {
-            public User32.RECT rect0;
-            public User32.RECT rect1;
-            public User32.RECT rect2;
+            public RECT rect0;
+            public RECT rect1;
+            public RECT rect2;
             public IntPtr lppos; //a pointer to a WINDOWPOS
         };
 

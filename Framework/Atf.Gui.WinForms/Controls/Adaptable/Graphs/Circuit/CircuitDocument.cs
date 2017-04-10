@@ -57,6 +57,12 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 var versionValue = DomNode.GetAttribute(VersionAttribute) as string;
                 return new Version(versionValue);
             }
+            set
+            {
+                if (VersionAttribute == null) return;
+
+                DomNode.SetAttribute(VersionAttribute, value);
+            }
         }
 
         /// <summary>

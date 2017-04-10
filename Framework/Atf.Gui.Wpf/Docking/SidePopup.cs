@@ -154,9 +154,9 @@ namespace Sce.Atf.Wpf.Docking
 
                     if (PART_Popup.IsOpen && !PART_Popup.Resizing)
                     {
-                        var pt32 = new User32.POINT();
+                        var pt32 = new Windows.POINT();
                         Win32Calls.GetCursorPos(ref pt32);
-                        Point mousePos = new Point(pt32.X, pt32.Y);
+                        Point mousePos = new Point(pt32.x, pt32.y);
                         Point pos = PointToScreen(new Point(0, 0));
                         Matrix m = PresentationSource.FromVisual(Window.GetWindow(this)).CompositionTarget.TransformToDevice;
                         if (m != Matrix.Identity)

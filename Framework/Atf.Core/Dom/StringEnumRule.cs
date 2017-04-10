@@ -12,6 +12,15 @@ namespace Sce.Atf.Dom
         /// <summary>
         /// Constructor</summary>
         /// <param name="values">Enumeration values</param>
+        public StringEnumRule(string enumTypeName, string[] values)
+            : this(values)
+        {
+            m_EnumTypeName = enumTypeName;
+        }
+
+        /// <summary>
+        /// Constructor</summary>
+        /// <param name="values">Enumeration values</param>
         public StringEnumRule(string[] values)
         {
             if (values == null || values.Length == 0)
@@ -34,6 +43,11 @@ namespace Sce.Atf.Dom
             return false;
         }
 
+        public string EnumTypeName
+        {
+            get { return m_EnumTypeName; }
+        }
+
         /// <summary>
         /// Gets the enumeration values</summary>
         public IEnumerable<string> Values
@@ -41,6 +55,7 @@ namespace Sce.Atf.Dom
             get { return m_values; }
         }
 
+        private readonly string m_EnumTypeName = null;
         private readonly string[] m_values;
     }
 }

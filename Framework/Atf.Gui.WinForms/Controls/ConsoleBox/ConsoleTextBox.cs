@@ -239,7 +239,7 @@ namespace Sce.Atf.Controls.ConsoleBox
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if ((msg.Msg == User32.WM_KEYDOWN) || (msg.Msg == User32.WM_SYSKEYDOWN))
+            if ((msg.Msg == (int)Windows.WM.WM_KEYDOWN) || (msg.Msg == (int)Windows.WM.WM_SYSKEYDOWN))
             {
                 switch (keyData)
                 {
@@ -336,25 +336,25 @@ namespace Sce.Atf.Controls.ConsoleBox
         {
             switch (m.Msg)
             {
-                case User32.WM_CUT:
+                case (int)Windows.WM.WM_CUT:
                     Cut();
                     return;
 
-                case User32.WM_COPY:
+                case (int)Windows.WM.WM_COPY:
                     Copy();
                     return;
 
-                case User32.WM_PASTE:
+                case (int)Windows.WM.WM_PASTE:
                     string text = Clipboard.GetText();
                     InsertTextAtCaret(text);
                     return;
 
-                case User32.WM_SETTEXT:
+                case (int)Windows.WM.WM_SETTEXT:
                     if (!IsCaretAtWritablePosition)
                         MoveCaretToEnd();
                     break;
 
-                case User32.WM_CLEAR:
+                case (int)Windows.WM.WM_CLEAR:
                     return;
             }
 

@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using Sce.Atf.VectorMath;
+using Sce.Atf.Windows;
 
 namespace Sce.Atf
 {
@@ -772,11 +773,11 @@ namespace Sce.Atf
             if (hdc == IntPtr.Zero)
                 return null;
 
-            User32.RECT rect = new User32.RECT();
-            User32.GetWindowRect(handle, ref rect);
+            RECT rect = new RECT();
+            User32.GetWindowRect(handle, out rect);
 
-            int width = rect.Right - rect.Left;
-            int height = rect.Bottom - rect.Top;
+            int width = rect.right - rect.left;
+            int height = rect.bottom - rect.top;
 
             Bitmap bitmap = new Bitmap(width, height);
 

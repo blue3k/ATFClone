@@ -108,6 +108,8 @@ namespace Sce.Atf.Controls
 
             m_listViewItemSorter = new ListViewItemSorter();
             m_control.ListViewItemSorter = m_listViewItemSorter;
+
+            m_sorter = m_defaultSorter;
         }
 
         /// <summary>
@@ -178,12 +180,16 @@ namespace Sce.Atf.Controls
         }
 
         /// <summary>
-        /// Gets or sets the comparer to use when sorting nodes</summary>
+        /// Gets or sets the comparer to use when sorting nodes
+        /// Disable sorting when null is assigned
+        /// </summary>
         public IComparer<Node> NodeSorter
         {
-            get { return m_sorter ?? m_defaultSorter; }
+            get { return m_sorter; }
             set { m_sorter = value; }
         }
+
+        public bool IsSortingEnabled { get; private set; }
 
         /// <summary>
         /// Gets or sets the column to sort</summary>
@@ -196,7 +202,10 @@ namespace Sce.Atf.Controls
 
                 return m_sortColumn;
             }
+        }
 
+        public int SetSortColumn
+        { 
             set
             {
                 if (m_control.TheStyle == Style.VirtualList)
@@ -212,6 +221,13 @@ namespace Sce.Atf.Controls
                     throw new ArgumentOutOfRangeException("value");
 
                 m_sortColumn = value;
+
+                IsSortingEnabled = false;
+                if (m_sortColumn > 0)
+                {
+                    IsSortingEnabled = true;
+                }
+
                 Sort();
             }
         }
@@ -1123,8 +1139,10 @@ namespace Sce.Atf.Controls
                         ? SortOrder.Descending
                         : SortOrder.Ascending;
             }
-
-            m_sortColumn = e.Column;
+            else
+            {
+                SetSortColumn = e.Column;
+            }
             m_defaultSorter.SortOrder = m_sortOrder;
 
             Sort();
@@ -1549,7 +1567,7 @@ namespace Sce.Atf.Controls
             if (m_control.TheStyle == Style.VirtualList)
                 throw new InvalidOperationException(ExceptionTextAddingNotAllowedInVirtualList);
 
-            node.Visible = true;
+            node.Visible = node.Parent != null ? node.Parent.Visible && node.Parent.Expanded : true;
 
             // No duplicates... for now.
             if (m_itemMap.ContainsKey(node))
@@ -2152,11 +2170,11 @@ namespace Sce.Atf.Controls
 
         private static string GetObjectString(object value)
         {
+            if (value == null) return "";
             var formattable = value as IFormattable;
-            return
-                formattable != null
-                    ? formattable.ToString(null, null)
-                    : value.ToString();
+            if (formattable != null) return formattable.ToString(null, null);
+
+            return value.ToString();
         }
 
         private static bool IsSet(NodeChangeTypes type, NodeChangeTypes changes)
@@ -2260,7 +2278,7 @@ namespace Sce.Atf.Controls
         private bool m_disposed;
         private object m_lastHit;
 
-        private int m_sortColumn;
+        private int m_sortColumn = 0;
         private int m_updateCount;
         private bool m_addingColumn;
         private bool m_sorting;

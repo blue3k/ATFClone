@@ -154,6 +154,12 @@ namespace Sce.Atf.Applications
             set { m_treeListView.PersistedSettings = value; }
         }
 
+        bool m_ExpandWhenNewChildAdded = false;
+        public bool ExpandWhenNewChildAdded { get { return m_ExpandWhenNewChildAdded; } set { m_ExpandWhenNewChildAdded = value; } }
+
+        bool m_KeepExpandedForUpdatedNode = false;
+        public bool KeepExpandedForUpdatedNode { get { return m_KeepExpandedForUpdatedNode; } set { m_KeepExpandedForUpdatedNode = value; } }
+
         /// <summary>
         /// Get adapted user data at a point</summary>
         /// <param name="clientPoint">Point</param>
@@ -928,6 +934,8 @@ namespace Sce.Atf.Applications
                     m_treeListView.StateImageList,
                     m_dictNodes);
 
+            bool expand = nodeParent != null && m_ExpandWhenNewChildAdded;
+
             m_dictNodes.Add(item, node);
 
             // Recursively add any children
@@ -955,9 +963,10 @@ namespace Sce.Atf.Applications
             // Add to tree
             collection.Add(node);
 
-            if (nodeParent != null)
+            if (expand)
                 nodeParent.Expanded = true;
         }
+
 
         private void UpdateItem(object item)
         {
@@ -972,8 +981,12 @@ namespace Sce.Atf.Applications
                     m_treeListView.ImageList,
                     m_treeListView.StateImageList);
 
-            UpdateNodeFromItemInfo(node, item, info);
+            if(KeepExpandedForUpdatedNode)
+            {
+                info.IsExpandedInView = node.Expanded;
+            }
 
+            UpdateNodeFromItemInfo(node, item, info);
             m_treeListView.Invalidate(node);
         }
 

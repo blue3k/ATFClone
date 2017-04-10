@@ -406,7 +406,8 @@ namespace Sce.Atf.Controls
             /// <param name="comparer">The comparer to use when sorting</param>
             internal void Sort(IComparer<Node> comparer)
             {
-                m_nodes.Sort(comparer);
+                if(comparer != null)
+                    m_nodes.Sort(comparer);
             }
 
             #region ICollection<Node> Interface
@@ -449,6 +450,7 @@ namespace Sce.Atf.Controls
                     return;
 
                 m_nodes.Add(item);
+                m_nodeMaps.Add(item);
 
                 NodeAdded.Raise(this, new NodeEventArgs(item));
             }
@@ -474,6 +476,7 @@ namespace Sce.Atf.Controls
                 NodesRemoving.Raise(this, new NodesRemovingEventArgs(Owner, children));
 
                 m_nodes.Clear();
+                m_nodeMaps.Clear();
             }
 
             /// <summary>
@@ -485,7 +488,7 @@ namespace Sce.Atf.Controls
                 if (item == null)
                     throw new ArgumentNullException("item");
 
-                return m_nodes.Contains(item);
+                return m_nodeMaps.Contains(item);
             }
 
             /// <summary>
@@ -521,7 +524,9 @@ namespace Sce.Atf.Controls
 
                 NodeRemoving.Raise(this, new NodeEventArgs(item));
 
-                return m_nodes.Remove(item);
+                var removed = m_nodes.Remove(item);
+                m_nodeMaps.Remove(item);
+                return removed;
             }
 
             /// <summary>
@@ -559,6 +564,7 @@ namespace Sce.Atf.Controls
 
             private readonly Node m_owner;
             private readonly List<Node> m_nodes = new List<Node>();
+            private readonly HashSet<Node> m_nodeMaps = new HashSet<Node>();
         }
 
         /// <summary>
