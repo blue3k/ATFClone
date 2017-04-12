@@ -644,9 +644,6 @@
     <Compile Include="TitleBarTab\BaseTabRenderer.cs" />
     <Compile Include="TitleBarTab\ChromeTabRenderer.cs" />
     <Compile Include="TitleBarTab\DisplayType.cs" />
-    <Compile Include="TitleBarTab\ListItemEventArgs.cs" />
-    <Compile Include="TitleBarTab\ListModification.cs" />
-    <Compile Include="TitleBarTab\ListModificationEventArgs.cs" />
     <Compile Include="TitleBarTab\ListRangeEventArgs.cs" />
     <Compile Include="TitleBarTab\ListWithEvents.cs" />
     <Compile Include="TitleBarTab\TitleBarTabItem.cs" />

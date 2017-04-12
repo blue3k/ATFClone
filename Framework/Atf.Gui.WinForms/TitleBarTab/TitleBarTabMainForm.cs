@@ -11,6 +11,7 @@ using Point = System.Drawing.Point;
 using Size = System.Drawing.Size;
 
 using Sce.Atf.Windows;
+using System.Collections.Specialized;
 
 namespace Sce.Atf.Gui.TitleBarTab
 {
@@ -598,15 +599,15 @@ namespace Sce.Atf.Gui.TitleBarTab
 		/// <summary>Callback that is invoked whenever anything is added or removed from <see cref="Tabs" /> so that we can trigger a redraw of the tabs.</summary>
 		/// <param name="sender">Object for which this event was raised.</param>
 		/// <param name="e">Arguments associated with the event.</param>
-		private void _tabs_CollectionModified(object sender, ListModificationEventArgs e)
+		private void _tabs_CollectionModified(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			SetFrameSize();
 
-			if (e.Modification == ListModification.ItemAdded || e.Modification == ListModification.RangeAdded)
+			if (e.Action == NotifyCollectionChangedAction.Add)
 			{
-				for (int i = 0; i < e.Count; i++)
+				for (int i = 0; i < e.NewItems.Count; i++)
 				{
-					TitleBarTabItem currentTab = Tabs[i + e.StartIndex];
+					TitleBarTabItem currentTab = Tabs[i + e.NewStartingIndex];
 
 					currentTab.Content.TextChanged += Content_TextChanged;
 					currentTab.Closing += TitleBarTabs_Closing;

@@ -80,7 +80,7 @@ namespace Sce.Atf.Gui.TitleBarTab
 
 			tabRenderer.ShowAddButton = false;
 			tabRenderer.Render(
-				new List<TitleBarTabItem>
+				new ListWithEvents<TitleBarTabItem>
 				{
 					tab
 				}, tabGraphics, new Point(0, 0), new Point(0, 0), true);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -315,7 +316,7 @@ namespace Sce.Atf.Gui.TitleBarTab
 		/// </summary>
 		/// <param name="sender">List of tabs in the <see cref="_parentWindow" />.</param>
 		/// <param name="e">Arguments associated with the event.</param>
-		private void Tabs_CollectionModified(object sender, ListModificationEventArgs e)
+		private void Tabs_CollectionModified(object sender, NotifyCollectionChangedEventArgs e)
 		{
             ListWithEvents<TitleBarTabItem> tabs = (ListWithEvents<TitleBarTabItem>) sender;
 
@@ -458,7 +459,7 @@ namespace Sce.Atf.Gui.TitleBarTab
 		/// <param name="cursor">Current location of the cursor on the screen.</param>
 		/// <param name="forceRedraw">Flag indicating whether or not the redraw should be forced.</param>
 		/// <param name="offset">Offset within <paramref name="graphicsContext" /> that the tabs should be rendered.</param>
-		public virtual void Render(List<TitleBarTabItem> tabs, Graphics graphicsContext, Point offset, Point cursor, bool forceRedraw = false)
+		public virtual void Render(ListWithEvents<TitleBarTabItem> tabs, Graphics graphicsContext, Point offset, Point cursor, bool forceRedraw = false)
 		{
 			if (_suspendRendering)
 			{
