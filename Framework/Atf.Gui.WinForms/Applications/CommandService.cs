@@ -60,6 +60,10 @@ namespace Sce.Atf.Applications
         /// <param name="client">Client that handles the command</param>
         public override void RegisterCommand(CommandInfo info, ICommandClient client)
         {
+            // Use cloned one if the command info is already taken by somebody else
+            if (info.CommandService != null)
+                info = info.Clone();
+
             base.RegisterCommand(info, client);
             if (info != null && client != null && info.CheckCanDoClients.Contains(client))
             {

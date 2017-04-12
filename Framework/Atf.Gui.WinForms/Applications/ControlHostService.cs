@@ -138,8 +138,10 @@ namespace Sce.Atf.Applications
             }
             else
             {
+                // I can't find any reason for this flag to be set true. Maybe legacy code?
+                // Disabling for TitleBarTab
                 // main form needs to be MDI container
-                m_mainForm.IsMdiContainer = true;
+                //m_mainForm.IsMdiContainer = true;
 
                 m_mainForm.Controls.Add(m_dockPanel);
             }

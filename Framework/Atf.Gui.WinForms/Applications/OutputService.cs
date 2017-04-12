@@ -304,8 +304,8 @@ namespace Sce.Atf.Applications
         {
             if (m_commandService != null)
             {
-                m_commandService.RegisterCommand(StandardCommand.EditCopy, CommandVisibility.All, this);
-                m_commandService.RegisterCommand(StandardCommand.EditSelectAll, CommandVisibility.Menu, this);
+                m_commandService.RegisterCommand(CommandInfo.EditCopy, CommandVisibility.All, this);
+                m_commandService.RegisterCommand(CommandInfo.EditSelectAll, CommandVisibility.Menu, this);
             }
         }
 

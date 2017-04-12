@@ -1087,60 +1087,13 @@ namespace Sce.Atf.Applications
                 "Get information about application".Localize());
 
         /// <summary>
-        /// Gets the CommandInfo that was created for the given StandardCommand</summary>
-        /// <param name="command">Command</param>
-        /// <returns>CommandInfo for the given command</returns>
-        /// <remarks>If registering commands, consider extension method on ICommandService
-        /// that accepts a StandardCommand</remarks>
-        public static CommandInfo GetStandardCommand(StandardCommand command)
+        /// Create clone of current command info
+        /// </summary>
+        /// <returns></returns>
+        public CommandInfo Clone()
         {
-            switch (command)
-            {
-                case StandardCommand.FileClose: return FileClose;
-                case StandardCommand.FileSave: return FileSave;
-                case StandardCommand.FileSaveAs: return FileSaveAs;
-                case StandardCommand.FileSaveAll: return FileSaveAll;
-                case StandardCommand.FileExit: return FileExit;
-                case StandardCommand.PageSetup: return FilePageSetup;
-                case StandardCommand.PrintPreview: return FilePrintPreview;
-                case StandardCommand.Print: return FilePrint;
-                case StandardCommand.EditUndo: return EditUndo;
-                case StandardCommand.EditRedo: return EditRedo;
-                case StandardCommand.EditCut: return EditCut;
-                case StandardCommand.EditCopy: return EditCopy;
-                case StandardCommand.EditPaste: return EditPaste;
-                case StandardCommand.EditDelete: return EditDelete;
-                case StandardCommand.EditSelectAll: return EditSelectAll;
-                case StandardCommand.EditDeselectAll: return EditDeselectAll;
-                case StandardCommand.EditInvertSelection: return EditInvertSelection;
-                case StandardCommand.EditLock: return EditLock;
-                case StandardCommand.EditUnlock: return EditUnlock;
-                case StandardCommand.EditGroup: return EditGroup;
-                case StandardCommand.EditUngroup: return EditUngroup;
-                case StandardCommand.ViewFrameSelection: return ViewFrameSelection;
-                case StandardCommand.ViewFrameAll: return ViewFrameAll;
-                case StandardCommand.ViewZoomIn: return ViewZoomIn;
-                case StandardCommand.ViewZoomOut: return ViewZoomOut;
-                case StandardCommand.ViewZoomExtents: return ViewZoomExtents;
-                case StandardCommand.FormatAlignLefts: return FormatAlignLefts;
-                case StandardCommand.FormatAlignRights: return FormatAlignRights;
-                case StandardCommand.FormatAlignCenters: return FormatAlignCenters;
-                case StandardCommand.FormatAlignTops: return FormatAlignTops;
-                case StandardCommand.FormatAlignBottoms: return FormatAlignBottoms;
-                case StandardCommand.FormatAlignMiddles: return FormatAlignMiddles;
-                case StandardCommand.FormatAlignToGrid: return FormatAlignToGrid;
-                case StandardCommand.FormatMakeSizeEqual: return FormatMakeSizeEqual;
-                case StandardCommand.FormatMakeWidthEqual: return FormatMakeWidthEqual;
-                case StandardCommand.FormatMakeHeightEqual: return FormatMakeHeightEqual;
-                case StandardCommand.FormatSizeToGrid: return FormatSizeToGrid;
-                case StandardCommand.WindowSplitHoriz: return WindowSplitHoriz;
-                case StandardCommand.WindowSplitVert: return WindowSplitVert;
-                case StandardCommand.WindowRemoveSplit: return WindowRemoveSplit;
-                case StandardCommand.HelpAbout: return HelpAbout;
-                case StandardCommand.UILock: return UILock;
-                default:
-                    throw new NotImplementedException();
-            }
+            var newInfo = new CommandInfo(CommandTag, MenuTag, GroupTag, MenuText, Description, Shortcuts, ImageName, Visibility, HelpUrl);
+            return newInfo;
         }
 
         private bool IsEmptyOrNone(IList<Keys> shortcuts)

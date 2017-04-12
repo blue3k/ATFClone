@@ -22,12 +22,15 @@ namespace Sce.Atf.Applications
     [Export(typeof(SettingsService))]
     [Export(typeof(ISettingsPathsProvider))]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    public class SettingsService : ISettingsService, ICommandClient, IPartImportsSatisfiedNotification, ISettingsPathsProvider
+    public class SettingsService : ISettingsService, IPartImportsSatisfiedNotification, ISettingsPathsProvider
     {
         /// <summary>
         /// Constructor</summary>
-        public SettingsService()
+        [ImportingConstructor]
+        public SettingsService(IMainWindow mainWnd)
         {
+            MainWindow = mainWnd;
+
             Assembly assembly = Assembly.GetEntryAssembly();
 
             // Can be null if called from unmanaged code, like in UnitTests.
@@ -308,60 +311,7 @@ namespace Sce.Atf.Applications
         public event EventHandler Reloaded;
 
         #endregion
-
-        #region ICommandClient Members
-
-        /// <summary>
-        /// Checks if the client can do the command</summary>
-        /// <param name="tag">Command</param>
-        /// <returns>True if client can do the command</returns>
-        public virtual bool CanDoCommand(object tag)
-        {
-            bool enabled = false;
-            if (tag is CommandId)
-            {
-                switch ((CommandId)tag)
-                {
-                    case CommandId.EditPreferences:
-                    case CommandId.EditImportExportSettings:
-                        enabled = true;
-                        break;
-                }
-            }
-            return enabled;
-        }
-
-        /// <summary>
-        /// Does a command</summary>
-        /// <param name="tag">Command</param>
-        public virtual void DoCommand(object tag)
-        {
-            if (tag is CommandId)
-            {
-                switch ((CommandId)tag)
-                {
-                    case CommandId.EditPreferences:
-                        PresentUserSettings(null);
-                        break;
-
-                    case CommandId.EditImportExportSettings:
-                        var settingsLoadSaveDialog = new SettingsLoadSaveDialog(this);
-                        settingsLoadSaveDialog.ShowDialog(MainWindow.DialogOwner);
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Updates command state for given command</summary>
-        /// <param name="commandTag">Command</param>
-        /// <param name="state">Command state to update</param>
-        public virtual void UpdateCommand(object commandTag, CommandState state)
-        {
-        }
-
-        #endregion
-
+        
         /// <summary>
         /// Saves application settings safely and creates a backup in the process</summary>
         public void SaveSettings()
@@ -457,11 +407,6 @@ namespace Sce.Atf.Applications
         }
 
         /// <summary>
-        /// Gets whether menu commands should be registered. The default is 'true'. A derived class
-        /// can return 'false' to prevent all menu commands from being registered.</summary>
-        protected virtual bool RegisterMenuCommands { get { return true; } }
-
-        /// <summary>
         /// Gets the title of the user settings dialog box (the SettingsDialog class).</summary>
         protected virtual string UserSettingsTitle
         {
@@ -469,20 +414,15 @@ namespace Sce.Atf.Applications
         }
 
         /// <summary>
-        /// Gets or sets the command service used to register commands. May be null.</summary>
-        [Import(AllowDefault = true)]
-        protected ICommandService CommandService;
-
-        /// <summary>
         /// Gets or sets the IMainWindow that is used to know when the application has launched
         /// or is shutting down. Either MainWindow or MainForm must not be null.</summary>
-        [Import(AllowDefault = true)]
+        //[Import(AllowDefault = true)]
         protected IMainWindow MainWindow;
 
         /// <summary>
         /// Gets or sets the Form that is used to know when the application has launched
         /// or is shutting down. Either MainWindow or MainForm must not be null.</summary>
-        [Import(AllowDefault = true)]
+        //[Import(AllowDefault = true)]
         protected Form MainForm;
 
         // for use by SettingsLoadSaveDialog only
@@ -682,32 +622,6 @@ namespace Sce.Atf.Applications
         /// Registers commands and calls LoadSettings().</summary>
         protected virtual void Initialize()
         {
-            // register our menu commands
-            if (CommandService != null && RegisterMenuCommands)
-            {
-                if (m_allowUserEdits)
-                {
-                    CommandService.RegisterCommand(
-                        CommandId.EditPreferences,
-                        StandardMenu.Edit,
-                        StandardCommandGroup.EditPreferences,
-                        "Preferences...".Localize("Edit user preferences"),
-                        "Edit user preferences".Localize(),
-                        this);
-                }
-
-                if (m_allowUserLoadSave)
-                {
-                    CommandService.RegisterCommand(
-                        CommandId.EditImportExportSettings,
-                        StandardMenu.Edit,
-                        StandardCommandGroup.EditPreferences,
-                        "Load or Save Settings...".Localize(),
-                        "User can save or load application settings from files".Localize(),
-                        this);
-                }
-            }
-
             // load settings as late as possible, so that other components have a chance to
             //  register their settings first
             LoadSettings();

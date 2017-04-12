@@ -174,6 +174,7 @@
       <DependentUpon>SettingsLoadSaveDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Applications\SettingsService.cs" />
+    <Compile Include="Applications\SettingsServiceCommands.cs" />
     <Compile Include="Applications\SingleInstanceService.cs" />
     <Compile Include="Applications\SkinService\ControlGradient.cs" />
     <Compile Include="Applications\SkinService\DockColors.cs" />
@@ -648,14 +649,14 @@
     <Compile Include="TitleBarTab\ListModificationEventArgs.cs" />
     <Compile Include="TitleBarTab\ListRangeEventArgs.cs" />
     <Compile Include="TitleBarTab\ListWithEvents.cs" />
-    <Compile Include="TitleBarTab\TitleBarTab.cs" />
+    <Compile Include="TitleBarTab\TitleBarTabItem.cs" />
     <Compile Include="TitleBarTab\TitleBarTabCancelEventArgs.cs" />
     <Compile Include="TitleBarTab\TitleBarTabEventArgs.cs" />
-    <Compile Include="TitleBarTab\TitleBarTabs.cs">
+    <Compile Include="TitleBarTab\TitleBarTabMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TitleBarTab\TitleBarTabs.designer.cs">
-      <DependentUpon>TitleBarTabs.cs</DependentUpon>
+    <Compile Include="TitleBarTab\TitleBarTabMainForm.designer.cs">
+      <DependentUpon>TitleBarTabMainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="TitleBarTab\TitleBarTabsApplicationContext.cs" />
     <Compile Include="TitleBarTab\TitleBarTabsOverlay.cs">
@@ -814,8 +815,8 @@
     <EmbeddedResource Include="TitleBarTab\TitleBarTornTabForm.resx">
       <DependentUpon>TitleBarTornTabForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TitleBarTab\TitleBarTabs.resx">
-      <DependentUpon>TitleBarTabs.cs</DependentUpon>
+    <EmbeddedResource Include="TitleBarTab\TitleBarTabMainForm.resx">
+      <DependentUpon>TitleBarTabMainForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -842,7 +843,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="TitleBarTab\README.md" />
-    <None Include="packages.config" />
     <None Include="Resources\ja\Atf.Gui.WinForms.resources.dll" />
   </ItemGroup>
   <ItemGroup>

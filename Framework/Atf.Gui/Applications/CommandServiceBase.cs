@@ -18,18 +18,56 @@ namespace Sce.Atf.Applications
     /// Service to handle commands in menus and toolbars</summary>
     public abstract class CommandServiceBase : ICommandService, ICommandClient, IInitializable
     {
+
+        /// <summary>
+        /// Standard File Menu</summary>
+        public MenuInfo MenuInfoFile =
+            new MenuInfo(StandardMenu.File, "File".Localize("this is the name of a menu"), "File Commands".Localize());
+
+        /// <summary>
+        /// Standard Edit Menu</summary>
+        public MenuInfo MenuInfoEdit =
+            new MenuInfo(StandardMenu.Edit, "Edit".Localize("this is the name of a menu"), "Editing Commands".Localize());
+
+        /// <summary>
+        /// Standard View Menu</summary>
+        public MenuInfo MenuInfoView =
+            new MenuInfo(StandardMenu.View, "View".Localize("this is the name of a menu"),
+                "View Commands".Localize("'View' is a noun. This text is a description of the View menu"));
+
+        /// <summary>
+        /// Standard Modify Menu</summary>
+        public MenuInfo MenuInfoModify =
+            new MenuInfo(StandardMenu.Modify, "Modify".Localize("this is the name of a menu"), "Modify Commands".Localize());
+
+        /// <summary>
+        /// Standard Format Menu</summary>
+        public MenuInfo MenuInfoFormat =
+            new MenuInfo(StandardMenu.Format, "Format".Localize("this is the name of a menu"), "Formatting Commands".Localize());
+
+        /// <summary>
+        /// Standard Window Menu</summary>
+        public MenuInfo MenuInfoWindow =
+            new MenuInfo(StandardMenu.Window, "Window".Localize("this is the name of a menu"), "Window Management Commands".Localize());
+
+        /// <summary>
+        /// Standard Help Menu</summary>
+        public MenuInfo MenuInfoHelp =
+            new MenuInfo(StandardMenu.Help, "Help".Localize("this is the name of a menu"), "Help Commands".Localize());
+
+
         /// <summary>
         /// Constructor</summary>
         public CommandServiceBase()
         {
             // create built-in menus and commands first
-            RegisterMenuInfo(MenuInfo.File);
-            RegisterMenuInfo(MenuInfo.Edit);
-            RegisterMenuInfo(MenuInfo.View);
-            RegisterMenuInfo(MenuInfo.Modify);
-            RegisterMenuInfo(MenuInfo.Format);
-            RegisterMenuInfo(MenuInfo.Window);
-            RegisterMenuInfo(MenuInfo.Help);
+            RegisterMenuInfo(MenuInfoFile);
+            RegisterMenuInfo(MenuInfoEdit);
+            RegisterMenuInfo(MenuInfoView);
+            RegisterMenuInfo(MenuInfoModify);
+            RegisterMenuInfo(MenuInfoFormat);
+            RegisterMenuInfo(MenuInfoWindow);
+            RegisterMenuInfo(MenuInfoHelp);
         }
 
         #region IInitializable Members

@@ -175,11 +175,11 @@ namespace Sce.Atf.Applications
         /// <returns>Menu/Toolbar command information</returns>
         public static CommandInfo RegisterCommand(
             this ICommandService commandService,
-            StandardCommand commandTag,
+            CommandInfo commandInfo,
             CommandVisibility visibility,
             ICommandClient client)
         {
-            CommandInfo info = CommandInfo.GetStandardCommand(commandTag);
+            CommandInfo info = commandInfo.Clone();
             commandService.RegisterCommand(info, client);
             info.Visibility = visibility;
             return info;

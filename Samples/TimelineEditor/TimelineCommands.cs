@@ -80,7 +80,7 @@ namespace TimelineEditorSample
                 CommandVisibility.Menu,
                 this);
 
-            m_commandService.RegisterCommand(StandardCommand.ViewZoomExtents, CommandVisibility.All, this);
+            m_commandService.RegisterCommand(CommandInfo.ViewZoomExtents, CommandVisibility.All, this);
         }
 
         #endregion

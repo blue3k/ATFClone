@@ -34,42 +34,6 @@ namespace Sce.Atf.Applications
         }
 
         /// <summary>
-        /// Standard File Menu</summary>
-        public static MenuInfo File =
-            new MenuInfo(StandardMenu.File, "File".Localize("this is the name of a menu"), "File Commands".Localize());
-
-        /// <summary>
-        /// Standard Edit Menu</summary>
-        public static MenuInfo Edit =
-            new MenuInfo(StandardMenu.Edit, "Edit".Localize("this is the name of a menu"), "Editing Commands".Localize());
-
-        /// <summary>
-        /// Standard View Menu</summary>
-        public static MenuInfo View =
-            new MenuInfo(StandardMenu.View, "View".Localize("this is the name of a menu"),
-                "View Commands".Localize("'View' is a noun. This text is a description of the View menu"));
-
-        /// <summary>
-        /// Standard Modify Menu</summary>
-        public static MenuInfo Modify =
-            new MenuInfo(StandardMenu.Modify, "Modify".Localize("this is the name of a menu"), "Modify Commands".Localize());
-
-        /// <summary>
-        /// Standard Format Menu</summary>
-        public static MenuInfo Format =
-            new MenuInfo(StandardMenu.Format, "Format".Localize("this is the name of a menu"), "Formatting Commands".Localize());
-
-        /// <summary>
-        /// Standard Window Menu</summary>
-        public static MenuInfo Window =
-            new MenuInfo(StandardMenu.Window, "Window".Localize("this is the name of a menu"), "Window Management Commands".Localize());
-
-        /// <summary>
-        /// Standard Help Menu</summary>
-        public static MenuInfo Help =
-            new MenuInfo(StandardMenu.Help, "Help".Localize("this is the name of a menu"), "Help Commands".Localize());
-
-        /// <summary>
         /// Constructor with parameters</summary>
         /// <param name="menuTag">Menu tag object</param>
         /// <param name="menuText">Menu text visible in UI</param>
