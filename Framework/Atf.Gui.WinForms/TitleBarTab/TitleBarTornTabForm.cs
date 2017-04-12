@@ -138,7 +138,7 @@ namespace Sce.Atf.Gui.TitleBarTab
                                 WParam = wParam,
                                 Msg = (int)WM.WM_MOUSEMOVE,
                             };
-                            m_messageFilter.PreFilterMessage(ref msg);
+                            Invoke(new Action(()=> m_messageFilter.PreFilterMessage(ref msg)));
                         }
                         break;
                     case WM.WM_LBUTTONUP:
@@ -150,7 +150,7 @@ namespace Sce.Atf.Gui.TitleBarTab
                                 WParam = wParam,
                                 Msg = (int)WM.WM_LBUTTONUP,
                             };
-                            m_messageFilter.PreFilterMessage(ref msg);
+                            Invoke(new Action(() => m_messageFilter.PreFilterMessage(ref msg)));
                         }
                         break;
                     default:

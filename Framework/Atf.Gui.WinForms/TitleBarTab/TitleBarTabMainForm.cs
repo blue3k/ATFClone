@@ -315,7 +315,10 @@ namespace Sce.Atf.Gui.TitleBarTab
 				_overlay.MouseUp += TabRenderer.Overlay_MouseUp;
 				_overlay.MouseDown += TabRenderer.Overlay_MouseDown;
 			}
-		}
+
+            if(Tabs.Count > 0 && SelectedTabIndex < 0)
+                SelectedTabIndex = 0;
+        }
 
 		/// <summary>
 		/// When the window's state (maximized, minimized, or restored) changes, this sets the size of the non-client area at the top of the window properly so
@@ -785,7 +788,7 @@ namespace Sce.Atf.Gui.TitleBarTab
 					if (!(hitResult == HT.HTCLOSE || hitResult == HT.HTMINBUTTON || hitResult == HT.HTMAXBUTTON || hitResult == HT.HTMENU ||
 					      hitResult == HT.HTSYSMENU))
 					{
-						m.Result = new IntPtr((int) HitTest(m));
+						m.Result = new IntPtr((int) HitTest(new Point((int)m.LParam), m.HWnd));
 					}
 
 					callDwp = false;
@@ -800,7 +803,7 @@ namespace Sce.Atf.Gui.TitleBarTab
 					}
 
 					break;
-			}
+            }
 
 			if (callDwp)
 			{
@@ -860,15 +863,6 @@ namespace Sce.Atf.Gui.TitleBarTab
 			}
 		}
 
-		private HT HitTest(Message m)
-		{
-			// Get the point that the user clicked
-			int lParam = (int) m.LParam;
-			Point point = new Point(lParam);
-
-            return HitTest(point, m.HWnd);
-		}
-
 		/// <summary>Called when a <see cref="WM.WM_NCHITTEST" /> message is received to see where in the non-client area the user clicked.</summary>
 		/// <param name="point">Screen location that we are to test.</param>
 		/// <param name="windowHandle">Handle to the window for which we are performing the test.</param>
@@ -884,25 +878,29 @@ namespace Sce.Atf.Gui.TitleBarTab
 			int column = 1;
 			bool onResizeBorder = false;
 
-			// Determine if we are on the top or bottom border
-			if (point.Y >= area.Top && point.Y < area.Top + SystemInformation.VerticalResizeBorderThickness + _nonClientAreaHeight - 2)
+            // For some reason, actual thickness is twice thicker than the system information
+            var verticalThickness = SystemInformation.VerticalResizeBorderThickness * 2;
+            var horizontalThickness = SystemInformation.HorizontalResizeBorderThickness * 2;
+
+            // Determine if we are on the top or bottom border
+            if (point.Y >= area.Top && point.Y < area.Top + verticalThickness + _nonClientAreaHeight - 2)
 			{
-				onResizeBorder = point.Y < (area.Top + SystemInformation.VerticalResizeBorderThickness);
+				onResizeBorder = point.Y < (area.Top + verticalThickness);
 				row = 0;
 			}
 
-			else if (point.Y < area.Bottom && point.Y > area.Bottom - SystemInformation.VerticalResizeBorderThickness)
+			else if (point.Y < area.Bottom && point.Y > area.Bottom - verticalThickness)
 			{
 				row = 2;
 			}
 
 			// Determine if we are on the left border or the right border
-			if (point.X >= area.Left && point.X < area.Left + SystemInformation.HorizontalResizeBorderThickness)
+			if (point.X >= area.Left && point.X < area.Left + horizontalThickness)
 			{
 				column = 0;
 			}
 
-			else if (point.X < area.Right && point.X >= area.Right - SystemInformation.HorizontalResizeBorderThickness)
+			else if (point.X < area.Right && point.X >= area.Right - horizontalThickness)
 			{
 				column = 2;
 			}

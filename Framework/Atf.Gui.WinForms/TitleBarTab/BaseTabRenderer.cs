@@ -317,7 +317,7 @@ namespace Sce.Atf.Gui.TitleBarTab
 		/// <param name="e">Arguments associated with the event.</param>
 		private void Tabs_CollectionModified(object sender, ListModificationEventArgs e)
 		{
-			ListWithEvents<TitleBarTabItem> tabs = (ListWithEvents<TitleBarTabItem>) sender;
+            ListWithEvents<TitleBarTabItem> tabs = (ListWithEvents<TitleBarTabItem>) sender;
 
 			if (tabs.Count == 0)
 			{

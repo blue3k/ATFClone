@@ -10,6 +10,7 @@ namespace Sce.Atf.Gui.TitleBarTab
 	[Serializable]
 	[DebuggerDisplay("Count = {Count}")]
 	public class ListWithEvents<T> : List<T>, IList
+        where T : class
 	{
 		/// <summary>Synchronization root for thread safety.</summary>
 		private readonly object _syncRoot = new object();
@@ -69,9 +70,9 @@ namespace Sce.Atf.Gui.TitleBarTab
 						equal = base[index].Equals(value);
 					}
 
-					else if (base[index] == null && value == null)
+					else
 					{
-						equal = true;
+						equal = base[index] == value;
 					}
 					// ReSharper restore CompareNonConstrainedGenericWithNull
 

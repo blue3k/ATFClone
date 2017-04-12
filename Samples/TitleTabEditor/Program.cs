@@ -27,9 +27,9 @@ namespace TitleTabEditor
     {
         static ToolMainForm m_toolMainForm;
         static List<object> m_SharedComponents = new List<object>();
-        static List<CompositionContainer> m_Containers = new List<CompositionContainer>();
+        static CompositionContainer m_SharedContainer = null;
 
-        static CompositionContainer CreateSharedMain()
+        static void CreateSharedMain()
         {
             // Create a type catalog with the types of components we want in the application
             TypeCatalog catalog = new TypeCatalog(
@@ -39,6 +39,8 @@ namespace TitleTabEditor
                 typeof(FileDialogService),              // standard Windows file dialogs
                 typeof(ErrorDialogService)             // displays errors to the user in a message box
                 );
+
+            StandardEditCommands.UseSystemClipboard = true;
 
             CompositionContainer sharedContainer = new CompositionContainer(catalog);
 
@@ -61,8 +63,7 @@ namespace TitleTabEditor
             m_SharedComponents.Add(sharedContainer.GetExportedValue<IFileDialogService>());
             m_SharedComponents.Add(sharedContainer.GetExportedValue<ErrorDialogService>());
 
-            m_Containers.Add(sharedContainer);
-            return sharedContainer;
+            m_SharedContainer = sharedContainer;
         }
 
         static void AddTool1()
@@ -117,64 +118,31 @@ namespace TitleTabEditor
                 typeof(StatechartEditorSample.SchemaLoader),    // loads statechart schema and extends types
                 typeof(StatechartEditorSample.PaletteClient),   // component which adds palette items
 
-                //typeof(CircuitEditorSample.Editor),             // sample circuit editor
-                //typeof(CircuitEditorSample.SchemaLoader),       // loads circuit schema and extends types
-                //typeof(CircuitEditorSample.GroupingCommands),   // circuit group/ungroup commands
-                //typeof(CircuitControlRegistry),                 // circuit controls management
-                //typeof(CircuitEditorSample.ModulePlugin),       // component that defines circuit module types
-                //typeof(LayeringCommands),                       // "Add Layer" context menu command for the Layer Lister
-
-                //typeof(FsmEditorSample.Editor),                 // editor which manages FSM documents and controls
-                //typeof(FsmEditorSample.PaletteClient),          // component which adds palette items
-                //typeof(FsmEditorSample.SchemaLoader),           // loads FSM schema and extends types
-
                 typeof(PythonService),                          // scripting service for automated tests
                 typeof(AtfScriptVariables),                     // exposes common ATF services as script variables
                 typeof(ScriptConsole),                          // provides a dockable command console for entering Python commands
                 typeof(AutomationService)                       // provides facilities to run an automated script using the .NET remoting service
                 );
 
-            StandardEditCommands.UseSystemClipboard = true;
-
-            // Set up the MEF container with these components
-            var container = new CompositionContainer(catalog);
-
             // Configure the main Form
-            var batch = new CompositionBatch();
             var mainForm = new MainForm(new ToolStripContainer())
             {
-                Text = "Diagram Editor 1".Localize(),
+                Text = "State Chart Editor".Localize(),
                 Icon = GdiUtil.CreateIcon(ResourceUtil.GetImage(Sce.Atf.Resources.AtfIconImage))
             };
 
+            var batchObjects = m_SharedComponents != null ? new List<object>(m_SharedComponents) : new List<object>();
+            batchObjects.Add(new WebHelpCommands("https://github.com/SonyWWS/ATF/wiki/ATF-Diagram-Editor-Sample".Localize()));
 
-            // Add the main Form instance to the container
-            if (m_SharedComponents != null)
-            {
-                foreach (var part in m_SharedComponents)
-                {
-                    batch.AddPart(part);
-                }
-            }
+            mainForm.InitializeComposition(catalog, batchObjects);
 
-            batch.AddPart(mainForm);
-            batch.AddPart(new WebHelpCommands("https://github.com/SonyWWS/ATF/wiki/ATF-Diagram-Editor-Sample".Localize()));
-            container.Compose(batch);
+            //InitializeScriptingVariables(mainForm.ComponentContainer);
 
-            // Initialize components that require it. Initialization often can't be done in the constructor,
-            //  or even after imports have been satisfied by MEF, since we allow circular dependencies between
-            //  components, via the System.Lazy class. IInitializable allows components to defer some operations
-            //  until all MEF composition has been completed.
-            container.InitializeAll();
-            InitializeScriptingVariables(container);
-
-
+            // Add to tab
             m_toolMainForm.Tabs.Add(new Sce.Atf.Gui.TitleBarTab.TitleBarTabItem(m_toolMainForm)
             {
                 Content = mainForm,
             });
-
-            m_Containers.Add(container);
         }
 
         static void AddTool2()
@@ -225,10 +193,6 @@ namespace TitleTabEditor
                 typeof(DefaultTabCommands),             // provides the default commands related to document tab Controls
 
                 //// Editors
-                //typeof(StatechartEditorSample.Editor),          // sample statechart editor
-                //typeof(StatechartEditorSample.SchemaLoader),    // loads statechart schema and extends types
-                //typeof(StatechartEditorSample.PaletteClient),   // component which adds palette items
-
                 typeof(CircuitEditorSample.Editor),             // sample circuit editor
                 typeof(CircuitEditorSample.SchemaLoader),       // loads circuit schema and extends types
                 typeof(CircuitEditorSample.GroupingCommands),   // circuit group/ungroup commands
@@ -246,48 +210,25 @@ namespace TitleTabEditor
                 typeof(AutomationService)                       // provides facilities to run an automated script using the .NET remoting service
                 );
 
-            StandardEditCommands.UseSystemClipboard = true;
-
-            // Set up the MEF container with these components
-            var container = new CompositionContainer(catalog);
-
             // Configure the main Form
-            var batch = new CompositionBatch();
             var mainForm = new MainForm(new ToolStripContainer())
             {
-                Text = "Diagram Editor 2".Localize(),
+                Text = "CircuitEditor".Localize(),
                 Icon = GdiUtil.CreateIcon(ResourceUtil.GetImage(Sce.Atf.Resources.AtfIconImage))
             };
 
+            var batchObjects = m_SharedComponents != null ? new List<object>(m_SharedComponents) : new List<object>();
+            batchObjects.Add(new WebHelpCommands("https://github.com/SonyWWS/ATF/wiki/ATF-Diagram-Editor-Sample".Localize()));
 
-            // Add the main Form instance to the container
-            if (m_SharedComponents != null)
-            {
-                foreach (var part in m_SharedComponents)
-                {
-                    batch.AddPart(part);
-                }
-            }
+            mainForm.InitializeComposition(catalog, batchObjects);
 
-            batch.AddPart(mainForm);
-            batch.AddPart(new WebHelpCommands("https://github.com/SonyWWS/ATF/wiki/ATF-Diagram-Editor-Sample".Localize()));
-
-            container.Compose(batch);
-
-            // Initialize components that require it. Initialization often can't be done in the constructor,
-            //  or even after imports have been satisfied by MEF, since we allow circular dependencies between
-            //  components, via the System.Lazy class. IInitializable allows components to defer some operations
-            //  until all MEF composition has been completed.
-            container.InitializeAll();
-            InitializeScriptingVariables(container);
+            //InitializeScriptingVariables(mainForm.ComponentContainer);
 
 
             m_toolMainForm.Tabs.Add(new Sce.Atf.Gui.TitleBarTab.TitleBarTabItem(m_toolMainForm)
             {
                 Content = mainForm,
             });
-
-            m_Containers.Add(container);
         }
 
         /// <summary>
@@ -309,20 +250,10 @@ namespace TitleTabEditor
             // Enable metadata driven property editing for the DOM
             DomNodeType.BaseOfAllTypes.AddAdapterCreator(new AdapterCreator<CustomTypeDescriptorNodeAdapter>());
 
-
-            var sharedContainer = CreateSharedMain();
-            var sharedComponentBatch = new CompositionBatch();
-            foreach(var sharedObj in sharedContainer.GetExportedValues<object>())
-            {
-                if (sharedObj == m_toolMainForm) continue;
-                sharedComponentBatch.AddPart(sharedObj);
-            }
-
+            CreateSharedMain();
 
             AddTool1();
             AddTool2();
-
-            m_toolMainForm.SelectedTabIndex = 0;
 
             var applicationContext = new Sce.Atf.Gui.TitleBarTab.TitleBarTabsApplicationContext();
             applicationContext.Start(m_toolMainForm);
@@ -332,12 +263,7 @@ namespace TitleTabEditor
             Application.Run(applicationContext);
 
             // Give components a chance to clean up.
-            //container.Dispose();
-
-            foreach(var container in m_Containers)
-            {
-                container.Dispose();
-            }
+            m_SharedContainer.Dispose();
         }
 
         /// <summary>

@@ -11,6 +11,7 @@ using System.Xml;
 using System.Linq;
 using Sce.Atf.Adaptation;
 using Sce.Atf.Controls.PropertyEditing;
+using System.ComponentModel.Composition.Hosting;
 
 namespace Sce.Atf.Applications
 {
@@ -191,6 +192,19 @@ namespace Sce.Atf.Applications
         }
 
         /// <summary>
+        /// Raised when the form is closed
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            // cleanup component container
+            if (m_componentContainer != null)
+                m_componentContainer.Dispose();
+        }
+
+        /// <summary>
         /// Raises the form SizeChanged event</summary>
         /// <param name="e">Event args</param>
         protected override void OnSizeChanged(System.EventArgs e)
@@ -242,7 +256,8 @@ namespace Sce.Atf.Applications
             set
             {
                 // Make sure the MainForm is visible. Setting Bounds sets m_mainFormBounds via SetBounds()
-                if (WinFormsUtil.IsOnScreen(value))
+                // and it's the top level
+                if (WinFormsUtil.IsOnScreen(value) && Parent == null)
                     Bounds = value;
             }
         }
@@ -479,6 +494,38 @@ namespace Sce.Atf.Applications
             }
         }
 
+        /// <summary>
+        /// Accessors for component container
+        /// </summary>
+        public CompositionContainer ComponentContainer {  get { return m_componentContainer; } }
+
+        /// <summary>
+        /// Initialize composition. 
+        /// When you need to manage your components with this mainform, you can ask MainForm to initialize your components
+        /// </summary>
+        /// <param name="catalog">Type catalog to initialize</param>
+        /// <param name="sharedComponent">Shared component or pre-created batch objects</param>
+        public void InitializeComposition(TypeCatalog catalog, List<object> sharedComponent)
+        {
+            var container = new CompositionContainer(catalog);
+
+            CompositionBatch compositionBatch = new CompositionBatch();
+            if (sharedComponent != null)
+            {
+                foreach (var part in sharedComponent)
+                {
+                    compositionBatch.AddPart(part);
+                }
+            }
+            compositionBatch.AddPart(this);
+
+            container.Compose(compositionBatch);
+
+            container.InitializeAll();
+
+            m_componentContainer = container;
+        }
+
         private void PrepareLoadPanelState(
             ToolStripPanel panel,
             Dictionary<string, ToolStrip> toolStrips,
@@ -552,6 +599,7 @@ namespace Sce.Atf.Applications
             }
         }
 
+
         private class ElementSortComparer<T> : IComparer<XmlElement>
         {
             int IComparer<XmlElement>.Compare(XmlElement element1, XmlElement element2)
@@ -577,6 +625,8 @@ namespace Sce.Atf.Applications
         private Rectangle m_mainFormBounds;
         private bool m_maximizeWindow;
         private bool m_mainFormLoaded;
+
+        private CompositionContainer m_componentContainer = null;
 
         #region Windows Form Designer generated code
         /// <summary>

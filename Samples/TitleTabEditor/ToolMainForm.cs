@@ -45,7 +45,10 @@ namespace TitleTabEditor
             {
                 // Make sure the MainForm is visible. Setting Bounds sets m_mainFormBounds via SetBounds()
                 if (WinFormsUtil.IsOnScreen(value))
+                {
+                    m_mainFormBounds = value;
                     Bounds = value;
+                }
             }
         }
 
@@ -191,6 +194,33 @@ namespace TitleTabEditor
         #endregion
 
 
+
+        /// <summary>
+        /// Raises the form SizeChanged event</summary>
+        /// <param name="e">Event args</param>
+        protected override void OnSizeChanged(System.EventArgs e)
+        {
+            SetBounds();
+            base.OnSizeChanged(e);
+        }
+
+        /// <summary>
+        /// Raises the form LocationChanged event</summary>
+        /// <param name="e">Event args</param>
+        protected override void OnLocationChanged(System.EventArgs e)
+        {
+            SetBounds();
+            base.OnLocationChanged(e);
+        }
+
+        private void SetBounds()
+        {
+            // Only set our shadow of the main form's bounds if in normal state
+            if (WindowState == FormWindowState.Normal)
+                m_mainFormBounds = Bounds;
+        }
+
+
         /// <summary>
         /// Raises the form Shown event</summary>
         /// <param name="e">Event args</param>
@@ -203,8 +233,6 @@ namespace TitleTabEditor
             // Loaded event because we still processing Loading event.
             if (!m_loading)
                 Loaded.Raise(this, e);
-
-            Invalidate();
         }
 
     }
