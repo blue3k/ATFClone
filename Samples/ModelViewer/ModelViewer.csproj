@@ -11,7 +11,7 @@
     <RootNamespace>ModelViewerSample</RootNamespace>
     <AssemblyName>ModelViewer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-	<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -90,10 +90,6 @@
     <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.csproj">
       <Project>{9D1835B6-D1C2-44BA-BAE1-05C6EC442D2F}</Project>
       <Name>Atf.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Gui.OpenGL\Atf.Gui.OpenGL.csproj">
-      <Project>{52D35323-1AA1-4205-A1B0-26C5E5E8D543}</Project>
-      <Name>Atf.Gui.OpenGL</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Framework\Atf.Gui.WinForms\Atf.Gui.WinForms.csproj">
       <Project>{7C36A258-9102-420D-B80A-5EB5717644B6}</Project>

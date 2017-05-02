@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.Threading;
@@ -42,6 +42,7 @@ namespace TargetManager
 
             var catalog = new TypeCatalog(
                 typeof(SettingsService),            // persistent settings and user preferences dialog
+                typeof(SettingsServiceCommands),        // Setting service commands
                 typeof(FileDialogService),          // proivdes standard Windows file dialogs, to let the user open and close files. Used by SkinService.
                 typeof(SkinService),                // allows for customization of an application’s appearance by using inheritable properties that can be applied at run-time
                 typeof(StatusService),              // status bar at bottom of main Form

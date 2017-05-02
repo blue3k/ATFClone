@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.ComponentModel.Composition;
@@ -48,6 +48,7 @@ namespace DomTreeEditorSample
             // Create a type catalog with the types of components we want in the application
             var catalog = new TypeCatalog(
                 typeof(SettingsService),                // persistent settings and user preferences dialog
+                typeof(SettingsServiceCommands),        // Setting service commands
                 typeof(StatusService),                  // status bar at bottom of main Form
                 typeof(Outputs),                        // service that provides static methods for writing to IOutputWriter objects.
                 typeof(OutputService),                  // rich text box for displaying error and warning messages. Implements IOutputWriter.                

@@ -103,8 +103,8 @@
       <Project>{9D1835B6-D1C2-44BA-BAE1-05C6EC442D2F}</Project>
       <Name>Atf.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Atf.Gui.OpenGL\Atf.Gui.OpenGL.vs2010.csproj">
-      <Project>{52D35323-1AA1-4205-A1B0-26C5E5E8D543}</Project>
+    <ProjectReference Include="..\Atf.Gui.OpenGL\Atf.Gui.OpenGL.csproj">
+      <Project>{52d35323-1aa1-4205-a1b0-26c5e5e8d543}</Project>
       <Name>Atf.Gui.OpenGL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Atf.Gui\Atf.Gui.vs2010.csproj">

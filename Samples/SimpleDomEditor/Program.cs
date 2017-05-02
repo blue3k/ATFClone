@@ -1,4 +1,4 @@
-//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright Â© 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.ComponentModel.Composition;
@@ -41,6 +41,7 @@ namespace SimpleDomEditorSample
 
             var catalog = new TypeCatalog(
                 typeof(SettingsService),                // persistent settings and user preferences dialog
+                typeof(SettingsServiceCommands),        // Setting service commands
                 typeof(StatusService),                  // status bar at bottom of main Form
                 typeof(CommandService),                 // handles commands in menus and toolbars
                 typeof(ControlHostService),             // docking control host

@@ -137,8 +137,10 @@ namespace Sce.Atf.Dom.Gen
             string tempPath = Path.GetTempPath();
             string outputFilePath = Path.Combine(tempPath,Path.ChangeExtension(Path.GetFileName(wszInputFilePath), ".cs"));
             string FileNameSpace = wszDefaultNamespace;
+            string errorFilePath = Path.Combine(tempPath, Path.ChangeExtension(Path.GetFileName(wszInputFilePath), ".error.txt"));
 
-            try {
+            try
+            {
 
                 var splitedNameSpec = wszDefaultNamespace.Split(',');
                 string languageName = splitedNameSpec.Length > 0 ? splitedNameSpec[0] : "CS";
@@ -163,22 +165,25 @@ namespace Sce.Atf.Dom.Gen
 
                 m_RunningProcess.Start();
                 var output = m_RunningProcess.StandardOutput.ReadToEnd();
+                if(m_RunningProcess.ExitCode != 0)
+                {
+                    pGenerateProgress.GeneratorError(0, 0, output, 0, 0);
+                    throw new Exception(string.Format("XSD process returned error {0}, {1}", m_RunningProcess.ExitCode, output));
+                }
 
                 using (var outFileStream = new FileStream(outputFilePath, FileMode.Open))
                 {
                     if(outFileStream == null || outFileStream.Length == 0)
                     {
                         rgbOutputFileContents = null;
-                        pcbOutput = 0;
-                        return VSConstants.E_FAIL;
+                        throw new Exception("Opening output file is failed");
                     }
                     byte[] buffer = new byte[outFileStream.Length];
                     int readSize = outFileStream.Read(buffer, 0, buffer.Length);
                     if (readSize != buffer.Length)
                     {
                         rgbOutputFileContents = null;
-                        pcbOutput = 0;
-                        return VSConstants.E_FAIL;
+                        throw new Exception("Writing file is failed");
                     }
 
                     int outputLength = buffer.Length;
@@ -188,10 +193,20 @@ namespace Sce.Atf.Dom.Gen
                     return VSConstants.S_OK;
                 }
 
+                if (File.Exists(errorFilePath))
+                    File.Delete(errorFilePath);
+
             }
             catch(Exception exp)
             {
                 pGenerateProgress.GeneratorError(0, 0, exp.Message, 0, 0);
+
+                using (var outFileStream = new FileStream(errorFilePath, FileMode.Create))
+                {
+                    var bytes = Encoding.UTF8.GetBytes(exp.Message);
+                    outFileStream.Write(bytes, 0, bytes.Length);
+                }
+
                 rgbOutputFileContents = null;
                 pcbOutput = 0;
                 return VSConstants.E_FAIL;

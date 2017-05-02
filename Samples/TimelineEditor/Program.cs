@@ -1,4 +1,4 @@
-//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright Â© 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.ComponentModel.Composition;
@@ -49,6 +49,7 @@ namespace TimelineEditorSample
 
             var catalog = new TypeCatalog(
                 typeof(SettingsService),                // persistent settings and user preferences dialog
+                typeof(SettingsServiceCommands),        // Setting service commands
                 typeof(StatusService),                  // status bar at bottom of main Form
                 typeof(LiveConnectService),             // allows easy interop between apps on same router subnet
                 typeof(Outputs),                        // passes messages to all IOutputWriter components
@@ -84,7 +85,7 @@ namespace TimelineEditorSample
                 typeof(PerformanceMonitor),             // displays the frame rate and memory usage
                 typeof(FileWatcherService),                // service to watch for changes to files
                 typeof(DefaultTabCommands),             // provides the default commands related to document tab Controls
-                typeof(SkinService),                    // allows for customization of an application’s appearance by using inheritable properties that can be applied at run-time
+                typeof(SkinService),                    // allows for customization of an applicationâ€™s appearance by using inheritable properties that can be applied at run-time
                 
                 // Client-specific plug-ins
                 typeof(TimelineEditor),                 // timeline editor component
