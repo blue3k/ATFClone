@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.Collections.Generic;
@@ -68,8 +68,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             get
             {
-                ICircuitPin pin = IsInputSide ? PinTarget.LeafDomNode.Cast<ICircuitElement>().Type.GetInputPin(PinTarget.LeafPinIndex) :
-                                                PinTarget.LeafDomNode.Cast<ICircuitElement>().Type.GetOutputPin(PinTarget.LeafPinIndex);
+                ICircuitPin pin = IsInputSide ? PinTarget.LeafDomNode.Cast<ICircuitElement>().ElementType.GetInputPin(PinTarget.LeafPinIndex) :
+                                                PinTarget.LeafDomNode.Cast<ICircuitElement>().ElementType.GetOutputPin(PinTarget.LeafPinIndex);
                 return pin.AllowFanIn;
             }
         }
@@ -80,8 +80,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             get
             {
-                ICircuitPin pin = IsInputSide ? PinTarget.LeafDomNode.Cast<ICircuitElement>().Type.GetInputPin(PinTarget.LeafPinIndex) :
-                                                PinTarget.LeafDomNode.Cast<ICircuitElement>().Type.GetOutputPin(PinTarget.LeafPinIndex);
+                ICircuitPin pin = IsInputSide ? PinTarget.LeafDomNode.Cast<ICircuitElement>().ElementType.GetInputPin(PinTarget.LeafPinIndex) :
+                                                PinTarget.LeafDomNode.Cast<ICircuitElement>().ElementType.GetOutputPin(PinTarget.LeafPinIndex);
                 return pin.AllowFanOut;
             }
         }

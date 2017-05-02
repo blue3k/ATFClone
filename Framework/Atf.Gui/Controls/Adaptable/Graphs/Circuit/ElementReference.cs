@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.Collections.Generic;
@@ -80,9 +80,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         }
         /// <summary>
         /// Gets the ICircuitElementType of the module instance</summary>
-        public override ICircuitElementType Type
+        public override ICircuitElementType ElementType
         {
-            get { return Element.Type; }
+            get { return Element.ElementType; }
         }
 
 
@@ -91,7 +91,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// to be read-only.</summary>
         public IList<ICircuitPin> Inputs
         {
-            get { return Element.Type.Inputs; }
+            get { return Element.ElementType.Inputs; }
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// to be read-only.</summary>
         public IList<ICircuitPin> Outputs
         {
-            get { return Element.Type.Outputs; }
+            get { return Element.ElementType.Outputs; }
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <returns>Input pin for given pin index</returns>
         public override ICircuitPin InputPin(int pinIndex)
         {
-            return Element.Type.GetInputPin(pinIndex);            
+            return Element.ElementType.GetInputPin(pinIndex);            
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <returns>Output pin for given pin index</returns>
         public override ICircuitPin OutputPin(int pinIndex)
         {
-            return Element.Type.GetOutputPin(pinIndex);            
+            return Element.ElementType.GetOutputPin(pinIndex);            
         }
 
         /// <summary>

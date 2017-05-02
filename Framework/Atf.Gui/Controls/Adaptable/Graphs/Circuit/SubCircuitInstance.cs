@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using Sce.Atf.Dom;
@@ -24,7 +24,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
         /// <summary>
         /// Gets the instance as a ICircuitElementType</summary>
-        public override ICircuitElementType Type
+        public override ICircuitElementType ElementType
         {
             get { return SubCircuit; }
         }

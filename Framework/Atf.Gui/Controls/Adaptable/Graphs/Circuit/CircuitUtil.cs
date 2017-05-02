@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System.Collections.Generic;
 using System.IO;
@@ -120,7 +120,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             var element = reference.Target.As<Element>();
             if (element == null)
                 return false;
-            return element.Type is MissingElementType;
+            return element.ElementType is MissingElementType;
         }
 
         /// <summary>

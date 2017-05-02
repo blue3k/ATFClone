@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.Collections.Generic;
@@ -260,7 +260,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             outputPinIndex = OutputPin.Index; // GetAttribute<int>(OutputPinAttribute);
             inputPinIndex = InputPin.Index;   // GetAttribute<int>(InputPinAttribute);
-            return OutputElement.Type.GetOutputPin(outputPinIndex) != null &&  InputElement.Type.GetInputPin(inputPinIndex) != null;
+            return OutputElement.ElementType.GetOutputPin(outputPinIndex) != null &&  InputElement.ElementType.GetInputPin(inputPinIndex) != null;
         }
 
         private PinTarget m_inputPinTarget;

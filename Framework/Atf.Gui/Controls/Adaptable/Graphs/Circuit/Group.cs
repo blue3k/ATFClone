@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 //#define DEBUG_VERBOSE 
 
 using System;
@@ -206,7 +206,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <summary>
         /// Gets the element type of this group</summary>
         /// <remarks>Each group element is treated as a unique type</remarks>
-        public override ICircuitElementType Type
+        public override ICircuitElementType ElementType
         {
             get { return this; }
         }
@@ -1088,7 +1088,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 //Debug.Assert(grpPin.Position.Y >= 0, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "has negative Y");
                 //Debug.Assert(grpPin.Position.Y <= 4096 && grpPin.Position.Y >= -4096, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "has suspicious large Y greater than 4k");
                 // validate InternalPinIndex
-                Debug.Assert(grpPin.InternalPinIndex >= 0 && grpPin.InternalPinIndex < grpPin.InternalElement.Type.GetAllInputPins().Count(),
+                Debug.Assert(grpPin.InternalPinIndex >= 0 && grpPin.InternalPinIndex < grpPin.InternalElement.ElementType.GetAllInputPins().Count(),
                     "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "InternalPinIndex is out of range");
             }
             foreach (var grpPin in OutputGroupPins)
@@ -1101,7 +1101,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 //Debug.Assert(grpPin.Position.Y >= 0, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "has negative Y");
                 //Debug.Assert(grpPin.Position.Y <= 4096 && grpPin.Position.Y >= -4096, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "has suspicious large Y greater than 4k");
                 // validate InternalPinIndex
-                Debug.Assert(grpPin.InternalPinIndex >= 0 && grpPin.InternalPinIndex < grpPin.InternalElement.Type.GetAllOutputPins().Count(),
+                Debug.Assert(grpPin.InternalPinIndex >= 0 && grpPin.InternalPinIndex < grpPin.InternalElement.ElementType.GetAllOutputPins().Count(),
                     "SubGraph " + Name + " Output Group Pin" + grpPin.Name + "InternalPinIndex is out of range");
             }
 
@@ -1116,7 +1116,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             foreach (var module in Elements)
             {
                 // input group pins
-                foreach (var inputPin in module.Type.Inputs)
+                foreach (var inputPin in module.ElementType.Inputs)
                 {
                     if (CanExposePin(module, inputPin, Wires, true))
                     {
@@ -1131,7 +1131,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 }
 
                 // output group pins
-                foreach (var outputPin in module.Type.Outputs)
+                foreach (var outputPin in module.ElementType.Outputs)
                 {
                     if (CanExposePin(module, outputPin, Wires, false))
                     {
@@ -1161,7 +1161,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 {
                     var leafModule = grpPin.PinTarget.LeafDomNode.Cast<Element>();
                     //var leafPin = leafModule.Type.Inputs[grpPin.PinTarget.LeafPinIndex];
-                    var leafPin = leafModule.Type.GetInputPin(grpPin.PinTarget.LeafPinIndex);
+                    var leafPin = leafModule.ElementType.GetInputPin(grpPin.PinTarget.LeafPinIndex);
                     if (!leafPin.AllowFanIn)
                     {
                         GroupPin pin = grpPin;
@@ -1186,7 +1186,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 foreach (var grpPin in m_outputs)
                 {
                     var leafModule = grpPin.PinTarget.LeafDomNode.Cast<Element>();
-                    var leafPin = leafModule.Type.GetOutputPin(grpPin.PinTarget.LeafPinIndex);
+                    var leafPin = leafModule.ElementType.GetOutputPin(grpPin.PinTarget.LeafPinIndex);
                     if (!leafPin.AllowFanOut)
                     {
                         GroupPin pin = grpPin;
@@ -1387,7 +1387,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             // push in nodes that connects to this node's input
             int pinIndex = 0;
 
-            foreach (var inputPin in outputNode.Type.Inputs)
+            foreach (var inputPin in outputNode.ElementType.Inputs)
             {
                 if (CanExposePin(outputNode, inputPin, internalConnections, true)) // reach the group pin
                 {

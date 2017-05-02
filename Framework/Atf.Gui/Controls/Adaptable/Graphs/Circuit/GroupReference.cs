@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.Collections.Generic;
@@ -64,7 +64,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 if (m_targetGroup == null) //using MissingElementType
                 {
                     var missingElement = Template.Target.As<Element>();
-                    return missingElement.Type.Inputs;
+                    return missingElement.ElementType.Inputs;
                 }
 
                 var inputs = m_inputs.OrderBy(n => n.Index).Where(n => n.Visible).ToArray();
@@ -81,7 +81,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 if (m_targetGroup == null) //using MissingElementType
                 {
                     var missingElement = Template.Target.As<Element>();
-                    return missingElement.Type.Outputs;
+                    return missingElement.ElementType.Outputs;
                 }
 
                 var outputs = m_outputs.OrderBy(n => n.Index).Where(n => n.Visible).ToArray();
@@ -124,7 +124,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             if (m_targetGroup == null) //using MissingElementType
             {
                 var missingElement = Template.Target.As<Element>();
-                return missingElement.Type.GetInputPin(pinIndex);
+                return missingElement.ElementType.GetInputPin(pinIndex);
             }
             var pin = m_inputs.FirstOrDefault(x => x.Index == pinIndex);
             return pin;
@@ -139,7 +139,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             if (m_targetGroup == null)//using MissingElementType
             {
                 var missingElement = Template.Target.As<Element>();
-                return missingElement.Type.GetOutputPin(pinIndex);
+                return missingElement.ElementType.GetOutputPin(pinIndex);
             }
             var pin = m_outputs.FirstOrDefault(x => x.Index == pinIndex);
             return pin;
@@ -153,7 +153,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             get
             {
                 IReference<Group> group = this;
-                if (group.Target.Type is MissingElementType)
+                if (group.Target.ElementType is MissingElementType)
                     return false;
                 return m_expanded;
             }
@@ -162,7 +162,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 IReference<Group> group = this;
                 if (value != m_expanded)
                 {
-                    if (!(group.Target.Type is MissingElementType))
+                    if (!(group.Target.ElementType is MissingElementType))
                     {
                         m_expanded = value;
                         OnChanged(EventArgs.Empty);

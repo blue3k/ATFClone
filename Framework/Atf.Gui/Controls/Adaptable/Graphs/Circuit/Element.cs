@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.Collections.Generic;
@@ -94,7 +94,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
         /// <summary>
         /// Gets the circuit element type</summary>
-        public virtual ICircuitElementType Type
+        public virtual ICircuitElementType ElementType
         {
             get
             {
@@ -106,7 +106,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     var circuitElement = DomNode.Cast<ICircuitElement>();
                     if (circuitElement != this) // the check is needed to prevent from self-loop
                     {
-                        m_elementType = DomNode.Cast<ICircuitElement>().Type;
+                        m_elementType = circuitElement.ElementType;
                     }
                 }
 
@@ -148,7 +148,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             if (this.Is<Group>())
                 return this.Cast<Group>().HasInputPin(pin);
-            return Type.Inputs.Contains(pin);       
+            return ElementType.Inputs.Contains(pin);       
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             if (this.Is<Group>())
                 return this.Cast<Group>().HasOutputPin(pin);
-            return Type.Outputs.Contains(pin);
+            return ElementType.Outputs.Contains(pin);
 
         }
 
@@ -169,7 +169,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <returns>Input pin for pin index</returns>
         public virtual ICircuitPin InputPin(int pinIndex)
         {
-            return Type.GetInputPin(pinIndex);            
+            return ElementType.GetInputPin(pinIndex);            
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <returns>Output pin for pin index</returns>
         public virtual ICircuitPin OutputPin(int pinIndex)
         {
-            return Type.GetOutputPin(pinIndex);            
+            return ElementType.GetOutputPin(pinIndex);            
         }
 
 
@@ -187,7 +187,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// (if this is a Group).</summary>
         public virtual IEnumerable<ICircuitPin> AllInputPins
         {
-            get { return Type.Inputs; }
+            get { return ElementType.Inputs; }
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// (if this is a Group).</summary>
         public virtual IEnumerable<ICircuitPin> AllOutputPins
         {
-            get { return Type.Outputs; }
+            get { return ElementType.Outputs; }
         }
 
         /// <summary>
@@ -209,8 +209,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             var result = new Pair<Element, ICircuitPin>();
             if (pinTarget != null &&  pinTarget.LeafDomNode == DomNode) // an element must be a leaf node in a circuit hierarchy
             {                
-                var  pin = inputSide ? Type.GetInputPin(pinTarget.LeafPinIndex)
-                                        : Type.GetOutputPin(pinTarget.LeafPinIndex);
+                var  pin = inputSide ? ElementType.GetInputPin(pinTarget.LeafPinIndex)
+                                        : ElementType.GetOutputPin(pinTarget.LeafPinIndex);
                 if (pin != null)
                 {
                     result.First = this;
