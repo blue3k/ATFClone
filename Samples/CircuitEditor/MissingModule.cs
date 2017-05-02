@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using Sce.Atf;
 using Sce.Atf.Controls.Adaptable.Graphs;
@@ -16,7 +16,7 @@ namespace CircuitEditorSample
 
         /// <summary>
         /// Gets ICircuitElementType type</summary>
-        public override ICircuitElementType Type
+        public override ICircuitElementType ElementType
         {
             get { return m_missingElementType; }
         }

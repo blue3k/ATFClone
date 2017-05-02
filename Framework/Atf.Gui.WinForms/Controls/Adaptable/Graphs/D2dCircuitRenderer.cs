@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.Collections.Generic;
@@ -78,7 +78,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <returns>String to use on title bar of circuit element</returns>
         protected virtual string GetElementTitle(TElement element)
         {
-            return element.Type.Name;
+            return element.ElementType.Name;
         }
 
         /// <summary>
@@ -724,7 +724,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             p.Offset(WorldOffset(m_graphPath));
 
             RectangleF bounds = new RectangleF(p, info.Size);
-            ICircuitElementType type = element.Type;
+            ICircuitElementType type = element.ElementType;
 
             bool groupExpanded = false;
             var group = element.As<ICircuitGroupType<TElement, TWire, TPin>>();
@@ -1213,12 +1213,12 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             if (inputSide)
             {
                 visiblePins = visibleInputs;
-                allPins = element.Type.Inputs;
+                allPins = element.ElementType.Inputs;
             }
             else
             {
                 visiblePins = visibleOutputs;
-                allPins = element.Type.Outputs;
+                allPins = element.ElementType.Outputs;
             }
 
             int pickTolerance = m_theme.PickTolerance;
@@ -1560,7 +1560,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         protected ElementTypeInfo GetElementTypeInfo(TElement element, D2dGraphics g)
         {
             // look it up in the cache
-            ICircuitElementType type = element.Type;
+            ICircuitElementType type = element.ElementType;
             string title = GetElementTitle(element);
             var group = element.As<ICircuitGroupType<TElement, TWire, TPin>>();
 
@@ -1808,7 +1808,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                                                        subNode.Cast
                                                            <ICircuitGroupType<TElement, TWire, TPin>>(),
                                                        g)
-                                                   : GetElementSizeInfo(subNode.Type, g, GetElementTitle(subNode));
+                                                   : GetElementSizeInfo(subNode.ElementType, g, GetElementTitle(subNode));
 
                     //if this is the first time through, then lets just set the location and size to
                     //be the current node. Then the box will take the minimum space to hold all of the subnodes.
@@ -1919,14 +1919,14 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
         private IList<ICircuitPin> GetVisibleInputPins(ICircuitElement element)
         {
-            ICircuitElementType type = element.Type;
+            ICircuitElementType type = element.ElementType;
             IList<ICircuitPin> visiblePins = type.Inputs;
 
             if (!element.ElementInfo.ShowUnconnectedPins)
             {
                 visiblePins = new List<ICircuitPin>();
                 IList<TWire> wires = m_graphHelper.GetInputWires((TElement) element);
-                foreach (var pin in element.Type.Inputs)
+                foreach (var pin in element.ElementType.Inputs)
                 {
                     for (int iWire = wires.Count; --iWire >= 0; ) // performance-critical loop
                     {
@@ -1947,7 +1947,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                             for (int iGroupPin = groupPins.Count; --iGroupPin >= 0; )
                             {
                                 var groupPin = (ICircuitGroupPin<TElement>)groupPins[iGroupPin];
-                                if (groupPin.InternalElement.Type.GetInputPin(groupPin.InternalPinIndex) == pin)
+                                if (groupPin.InternalElement.ElementType.GetInputPin(groupPin.InternalPinIndex) == pin)
                                 {
                                     visiblePins.Add(pin);
                                     foundConnectingWire = true;
@@ -1966,14 +1966,14 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
         private IList<ICircuitPin> GetVisibleOutputPins(ICircuitElement element)
         {
-            ICircuitElementType type = element.Type;
+            ICircuitElementType type = element.ElementType;
             IList<ICircuitPin> visiblePins = type.Outputs;
 
             if (!element.ElementInfo.ShowUnconnectedPins)
             {
                 visiblePins = new List<ICircuitPin>();
                 IList<TWire> wires = m_graphHelper.GetOutputWires((TElement)element);
-                foreach (var pin in element.Type.Outputs)
+                foreach (var pin in element.ElementType.Outputs)
                 {
                     for (int iWire = wires.Count; --iWire >= 0; ) // performance-critical loop
                     {
@@ -1994,7 +1994,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                             for (int iGroupPin = groupPins.Count; --iGroupPin >= 0; )
                             {
                                 var groupPin = (ICircuitGroupPin<TElement>)groupPins[iGroupPin];
-                                if (groupPin.InternalElement.Type.GetOutputPin(groupPin.InternalPinIndex) == pin)
+                                if (groupPin.InternalElement.ElementType.GetOutputPin(groupPin.InternalPinIndex) == pin)
                                 {
                                     visiblePins.Add(pin);
                                     foundConnectingWire = true;
@@ -2127,7 +2127,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             if (inputSide)
             {
-                var pin = element.Type.GetInputPin(pinIndex);
+                var pin = element.ElementType.GetInputPin(pinIndex);
                 if (pin.Is<ICircuitGroupPin<TElement>>())
                 {
                     var group = element.Cast<ICircuitGroupType<TElement, TWire, TPin>>();
@@ -2142,7 +2142,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             }
             else
             {
-                var pin = element.Type.GetOutputPin(pinIndex);
+                var pin = element.ElementType.GetOutputPin(pinIndex);
                 if (pin.Is<ICircuitGroupPin<TElement>>())
                 {
                     var group = element.Cast<ICircuitGroupType<TElement, TWire, TPin>>();
@@ -2693,7 +2693,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     {
                         TElement internalElement = groupPin.InternalElement;
                         m_elementToHelper[internalElement].InputWires.Add(wire);
-                        groupPin = internalElement.Type.GetInputPin(groupPin.InternalPinIndex).As<ICircuitGroupPin<TElement>>();
+                        groupPin = internalElement.ElementType.GetInputPin(groupPin.InternalPinIndex).As<ICircuitGroupPin<TElement>>();
                     } while (groupPin != null);
                 }
 
@@ -2709,7 +2709,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     {
                         TElement internalElement = groupPin.InternalElement;
                         m_elementToHelper[internalElement].OutputWires.Add(wire);
-                        groupPin = internalElement.Type.GetOutputPin(groupPin.InternalPinIndex).As<ICircuitGroupPin<TElement>>();
+                        groupPin = internalElement.ElementType.GetOutputPin(groupPin.InternalPinIndex).As<ICircuitGroupPin<TElement>>();
                     } while (groupPin != null);
                 }
             }

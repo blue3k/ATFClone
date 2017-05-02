@@ -40,6 +40,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileExplorer", "..\Samples\FileExplorer\FileExplorer.csproj", "{8E848B2F-8E69-4558-AB56-1B58881B302B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FsmEditor", "..\Samples\FsmEditor\FsmEditor.csproj", "{2BAC39F7-E53F-488C-9F55-4BB35FAED8E2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D1FA9A85-9359-4725-A50F-8A67A77D700C} = {D1FA9A85-9359-4725-A50F-8A67A77D700C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDomEditor", "..\Samples\SimpleDomEditor\SimpleDomEditor.csproj", "{323C6B4C-DCF6-49EB-8A74-3A18BE0B0DE7}"
 EndProject

@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -133,7 +133,7 @@ namespace CircuitEditorSample
                 EmptyArray<ElementType.Pin>.Instance,
                 new ElementType.Pin[]
                 {
-                    new ElementType.Pin("Out".Localize(), BooleanPinTypeName, 0)
+                    new ElementType.Pin("Out".Localize(), BooleanPinTypeName, 0, allowFanIn : false, allowFanOut : true)
                 },
                 m_schemaLoader);
 
@@ -144,7 +144,7 @@ namespace CircuitEditorSample
                 Resources.LightImage,
                 new ElementType.Pin[]
                 {
-                    new ElementType.Pin("In".Localize(), BooleanPinTypeName, 0)
+                    new ElementType.Pin("In".Localize(), BooleanPinTypeName, 0, allowFanIn : false, allowFanOut : true)
                 },
                 EmptyArray<ElementType.Pin>.Instance,
                 m_schemaLoader);
@@ -156,7 +156,7 @@ namespace CircuitEditorSample
                 Resources.SpeakerImage,
                 new ElementType.Pin[]
                 {
-                    new ElementType.Pin("In".Localize(), FloatPinTypeName, 0),
+                    new ElementType.Pin("In".Localize(), FloatPinTypeName, 0, allowFanIn : false, allowFanOut : true),
                 },
                 EmptyArray<ElementType.Pin>.Instance,
                 m_schemaLoader);
@@ -180,13 +180,13 @@ namespace CircuitEditorSample
                 Resources.SoundImage,
                 new ElementType.Pin[]
                 {
-                    new ElementType.Pin("On".Localize(), "boolean", 0),
-                    new ElementType.Pin("Reset".Localize(), "boolean", 1),
-                    new ElementType.Pin("Pause".Localize(), "boolean", 2),
+                    new ElementType.Pin("On".Localize(), "boolean", 0, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Reset".Localize(), "boolean", 1, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Pause".Localize(), "boolean", 2, allowFanIn : false, allowFanOut : true),
                 },
                 new ElementType.Pin[]
                 {
-                    new ElementType.Pin("Out".Localize(), "float", 0),
+                    new ElementType.Pin("Out".Localize(), "float", 0, allowFanIn : false, allowFanOut : true),
                 },
                 m_schemaLoader);
 
@@ -197,12 +197,12 @@ namespace CircuitEditorSample
                 Resources.AndImage,
                 new ElementType.Pin[]
                 {
-                    new ElementType.Pin("In1".Localize("input pin #1"), "boolean", 0),
-                    new ElementType.Pin("In2".Localize("input pin #2"), "boolean", 1),
+                    new ElementType.Pin("In1".Localize("input pin #1"), "boolean", 0, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In2".Localize("input pin #2"), "boolean", 1, allowFanIn : false, allowFanOut : true),
                 },
                 new ElementType.Pin[]
                 {
-                    new ElementType.Pin("Out".Localize(), "boolean", 0),
+                    new ElementType.Pin("Out".Localize(), "boolean", 0, allowFanIn : false, allowFanOut : true),
                 },
                 m_schemaLoader);
 
@@ -213,12 +213,12 @@ namespace CircuitEditorSample
                 Resources.OrImage,
                 new ElementType.Pin[]
                 {
-                    new ElementType.Pin("In1".Localize("input pin #1"), "boolean", 0),
-                    new ElementType.Pin("In2".Localize("input pin #2"), "boolean", 1),
+                    new ElementType.Pin("In1".Localize("input pin #1"), "boolean", 0, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In2".Localize("input pin #2"), "boolean", 1, allowFanIn : false, allowFanOut : true),
                 },
                 new ElementType.Pin[]
                 {
-                    new ElementType.Pin("Out".Localize(), "boolean", 0),
+                    new ElementType.Pin("Out".Localize(), "boolean", 0, allowFanIn : false, allowFanOut : true),
                 },
                 m_schemaLoader);
 
@@ -229,30 +229,30 @@ namespace CircuitEditorSample
                 Resources.AndImage,
                 new ElementType.Pin[]
                 {
-                    new ElementType.Pin("In1".Localize("input pin #1"), "boolean", 0),
-                    new ElementType.Pin("In2".Localize("input pin #2"), "boolean", 1),
-                    new ElementType.Pin("In3".Localize(), "boolean", 2),
-                    new ElementType.Pin("In4".Localize(), "boolean", 3),
-                    new ElementType.Pin("In5".Localize(), "boolean", 4),
-                    new ElementType.Pin("In6".Localize(), "boolean", 5),
-                    new ElementType.Pin("In7".Localize(), "boolean", 6),
-                    new ElementType.Pin("In8".Localize(), "boolean", 7),
-                    new ElementType.Pin("In9".Localize(), "boolean", 8),
-                    new ElementType.Pin("In10".Localize(), "boolean", 9),
-                    new ElementType.Pin("In11".Localize(), "boolean", 10),
-                    new ElementType.Pin("In12".Localize(), "boolean", 11),
-                    new ElementType.Pin("In13".Localize(), "boolean", 12),
-                    new ElementType.Pin("In14".Localize(), "boolean", 13),
-                    new ElementType.Pin("In15".Localize(), "boolean", 14),
-                    new ElementType.Pin("In16".Localize(), "boolean", 15),
-                    new ElementType.Pin("Select1".Localize("The name of a pin on a circuit element"), "boolean", 16),
-                    new ElementType.Pin("Select2".Localize("The name of a pin on a circuit element"), "boolean", 17),
-                    new ElementType.Pin("Select3".Localize("The name of a pin on a circuit element"), "boolean", 18),
-                    new ElementType.Pin("Select4".Localize("The name of a pin on a circuit element"), "boolean", 19),
+                    new ElementType.Pin("In1".Localize("input pin #1"), "boolean", 0, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In2".Localize("input pin #2"), "boolean", 1, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In3".Localize(), "boolean", 2, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In4".Localize(), "boolean", 3, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In5".Localize(), "boolean", 4, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In6".Localize(), "boolean", 5, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In7".Localize(), "boolean", 6, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In8".Localize(), "boolean", 7, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In9".Localize(), "boolean", 8, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In10".Localize(), "boolean", 9, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In11".Localize(), "boolean", 10, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In12".Localize(), "boolean", 11, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In13".Localize(), "boolean", 12, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In14".Localize(), "boolean", 13, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In15".Localize(), "boolean", 14, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("In16".Localize(), "boolean", 15, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Select1".Localize("The name of a pin on a circuit element"), "boolean", 16, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Select2".Localize("The name of a pin on a circuit element"), "boolean", 17, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Select3".Localize("The name of a pin on a circuit element"), "boolean", 18, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Select4".Localize("The name of a pin on a circuit element"), "boolean", 19, allowFanIn : false, allowFanOut : true),
                 },
                 new ElementType.Pin[]
                 {
-                    new ElementType.Pin("Out".Localize(), "boolean", 0),
+                    new ElementType.Pin("Out".Localize(), "boolean", 0, allowFanIn : false, allowFanOut : true),
                 },
                 m_schemaLoader);
 
@@ -263,30 +263,30 @@ namespace CircuitEditorSample
                 Resources.OrImage,
                 new ElementType.Pin[]
                 {
-                    new ElementType.Pin("Data".Localize(), "boolean", 0),
-                    new ElementType.Pin("Select1".Localize("The name of a pin on a circuit element"), "boolean", 1),
-                    new ElementType.Pin("Select2".Localize("The name of a pin on a circuit element"), "boolean", 2),
-                    new ElementType.Pin("Select3".Localize("The name of a pin on a circuit element"), "boolean", 3),
-                    new ElementType.Pin("Select4".Localize("The name of a pin on a circuit element"), "boolean", 4),
+                    new ElementType.Pin("Data".Localize(), "boolean", 0, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Select1".Localize("The name of a pin on a circuit element"), "boolean", 1, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Select2".Localize("The name of a pin on a circuit element"), "boolean", 2, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Select3".Localize("The name of a pin on a circuit element"), "boolean", 3, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Select4".Localize("The name of a pin on a circuit element"), "boolean", 4, allowFanIn : false, allowFanOut : true),
                 },
                 new ElementType.Pin[]
                 {
-                    new ElementType.Pin("Out1".Localize(), "boolean", 0),
-                    new ElementType.Pin("Out2".Localize(), "boolean", 1),
-                    new ElementType.Pin("Out3".Localize(), "boolean", 2),
-                    new ElementType.Pin("Out4".Localize(), "boolean", 3),
-                    new ElementType.Pin("Out5".Localize(), "boolean", 4),
-                    new ElementType.Pin("Out6".Localize(), "boolean", 5),
-                    new ElementType.Pin("Out7".Localize(), "boolean", 6),
-                    new ElementType.Pin("Out8".Localize(), "boolean", 7),
-                    new ElementType.Pin("Out9".Localize(), "boolean", 8),
-                    new ElementType.Pin("Out10".Localize(), "boolean", 9),
-                    new ElementType.Pin("Out11".Localize(), "boolean", 10),
-                    new ElementType.Pin("Out12".Localize(), "boolean", 11),
-                    new ElementType.Pin("Out13".Localize(), "boolean", 12),
-                    new ElementType.Pin("Out14".Localize(), "boolean", 13),
-                    new ElementType.Pin("Out15".Localize(), "boolean", 14),
-                    new ElementType.Pin("Out16".Localize(), "boolean", 15),
+                    new ElementType.Pin("Out1".Localize(), "boolean", 0, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Out2".Localize(), "boolean", 1, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Out3".Localize(), "boolean", 2, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Out4".Localize(), "boolean", 3, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Out5".Localize(), "boolean", 4, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Out6".Localize(), "boolean", 5, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Out7".Localize(), "boolean", 6, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Out8".Localize(), "boolean", 7, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Out9".Localize(), "boolean", 8, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Out10".Localize(), "boolean", 9, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Out11".Localize(), "boolean", 10, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Out12".Localize(), "boolean", 11, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Out13".Localize(), "boolean", 12, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Out14".Localize(), "boolean", 13, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Out15".Localize(), "boolean", 14, allowFanIn : false, allowFanOut : true),
+                    new ElementType.Pin("Out16".Localize(), "boolean", 15, allowFanIn : false, allowFanOut : true),
                 },
                 m_schemaLoader);
         }

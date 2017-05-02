@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.Collections.Generic;
@@ -148,13 +148,13 @@ namespace CircuitEditorSample
                     {
                         // input pin, i.e. pin on element that receives connection as input
                         int pinIndex = connection.InputPin.Index;
-                        connection.InputPin = replacedModule.Type.GetInputPin(pinIndex);
+                        connection.InputPin = replacedModule.ElementType.GetInputPin(pinIndex);
                         connection.InputElement = replacedModule;
                         connection.InputPinTarget = null; // reset
                     }
                     else if (connection.OutputElement.DomNode == originalModule.DomNode)//output pin, i.e., pin on element that receives connection as output
                     {
-                        connection.OutputPin = replacedModule.Type.GetOutputPin(connection.OutputPin.Index);
+                        connection.OutputPin = replacedModule.ElementType.GetOutputPin(connection.OutputPin.Index);
                         connection.OutputElement = replacedModule;
                         connection.OutputPinTarget = null; 
                    
@@ -245,13 +245,13 @@ namespace CircuitEditorSample
                     {
                         // input pin, i.e. pin on element that receives connection as input
                         int pinIndex = connection.InputPin.Index;
-                        connection.InputPin = copy.Cast<Module>().Type.GetInputPin(pinIndex);
+                        connection.InputPin = copy.Cast<Module>().ElementType.GetInputPin(pinIndex);
                         connection.InputElement = copy.Cast<Module>();
                         connection.InputPinTarget = null; // reset
                     }
                     else if (connection.OutputElement.DomNode == originalRefs[i])//output pin, i.e., pin on element that receives connection as output
                     {
-                        connection.OutputPin = copy.Cast<Module>().Type.GetOutputPin(connection.OutputPin.Index);
+                        connection.OutputPin = copy.Cast<Module>().ElementType.GetOutputPin(connection.OutputPin.Index);
                         connection.OutputElement = copy.Cast<Module>();
                         connection.OutputPinTarget = null;
 

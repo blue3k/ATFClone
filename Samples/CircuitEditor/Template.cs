@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 
@@ -32,7 +32,7 @@ namespace CircuitEditorSample
                     var module = Target.Cast<Module>();
                     Name = module.Name;
                     if (string.IsNullOrEmpty(Name))
-                        Name = module.Type.Name;
+                        Name = module.ElementType.Name;
 
                 }
             }

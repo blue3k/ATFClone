@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.Collections.Generic;
@@ -344,7 +344,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
                     if (input && output) // still an internal edge of the container (not a container-crossing link)
                     {
-                        if (wire.InputElement.Type is MissingElementType || wire.OutputElement.Type is MissingElementType)
+                        if (wire.InputElement.ElementType is MissingElementType || wire.OutputElement.ElementType is MissingElementType)
                             continue; // skip wires connected to missing types
                         
                         var matchedInput = new Pair<Element, ICircuitPin>();
@@ -458,7 +458,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             foreach (var edge in graph.Edges)
             {
-                if (edge.InputElement.Type is MissingElementType || edge.OutputElement.Type is MissingElementType)
+                if (edge.InputElement.ElementType is MissingElementType || edge.OutputElement.ElementType is MissingElementType)
                     continue; // skip wires connected to missing types
 
                 // an edge should connect two nodes at the same level

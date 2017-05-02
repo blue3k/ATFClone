@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.Collections.Generic;
@@ -279,7 +279,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             // clip to window
             if (g.ClipBounds.IntersectsWith(bounds))
             {
-                ICircuitElementType type = element.Type;
+                ICircuitElementType type = element.ElementType;
 
                 if (info.Path == null)
                     BuildGraphics(type, info, g);
@@ -362,7 +362,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             {
                 if (info.Path == null)
                 {
-                    ICircuitElementType type = element.Type;
+                    ICircuitElementType type = element.ElementType;
                     BuildGraphics(type, info, g);
                 }
 
@@ -383,7 +383,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             ElementTypeInfo info = GetElementTypeInfo(element, g);
             if (info.Path == null)
             {
-                ICircuitElementType type = element.Type;
+                ICircuitElementType type = element.ElementType;
                 BuildGraphics(type, info, g);
             }
 
@@ -427,7 +427,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             Rectangle bounds = new Rectangle(x, y, width, m_pinSize);
             int pickTolerance = m_theme.PickTolerance;
             bounds.Inflate(pickTolerance, pickTolerance);
-            ICircuitElementType type = element.Type;
+            ICircuitElementType type = element.ElementType;
             foreach (TPin input in type.Inputs)
             {
                 if (bounds.Contains(p.X, p.Y))
@@ -455,7 +455,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             Rectangle bounds = new Rectangle(x, y, width, m_pinSize);
             int pickTolerance = m_theme.PickTolerance;
             bounds.Inflate(pickTolerance, pickTolerance);
-            ICircuitElementType type = element.Type;
+            ICircuitElementType type = element.ElementType;
             foreach (TPin output in type.Outputs)
             {
                 if (bounds.Contains(p.X, p.Y))
@@ -468,7 +468,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         private ElementTypeInfo GetElementTypeInfo(TElement element, Graphics g)
         {
             // look it up in the cache
-            ICircuitElementType type = element.Type;
+            ICircuitElementType type = element.ElementType;
             ElementTypeInfo cachedInfo;
             if (m_elementTypeCache.TryGetValue(type, out cachedInfo))
                 return cachedInfo;

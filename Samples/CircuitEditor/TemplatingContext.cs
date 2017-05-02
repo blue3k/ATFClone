@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using Sce.Atf.Adaptation;
 using Sce.Atf.Controls.Adaptable.Graphs;
@@ -113,13 +113,13 @@ namespace CircuitEditorSample
                         if (wire.InputElement == templateInstance)
                         {
                             wire.InputElement = copyInstance;
-                            wire.InputPin = copyInstance.Type.GetInputPin(wire.InputPin.Index);
+                            wire.InputPin = copyInstance.ElementType.GetInputPin(wire.InputPin.Index);
                             wire.SetPinTarget();
                         }
                         if (wire.OutputElement == templateInstance)
                         {
                             wire.OutputElement = copyInstance;
-                            wire.OutputPin = copyInstance.Type.GetOutputPin(wire.OutputPin.Index);
+                            wire.OutputPin = copyInstance.ElementType.GetOutputPin(wire.OutputPin.Index);
                             wire.SetPinTarget();
                         }
                     }

@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System.Collections.Generic;
 using System.Drawing;
@@ -115,11 +115,13 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             /// <param name="name">Pin's name</param>
             /// <param name="typeName">Pin's type's name</param>
             /// <param name="index">Index of pin on module</param>
-            public Pin(string name, string typeName, int index)
+            public Pin(string name, string typeName, int index, bool allowFanIn = false, bool allowFanOut = true)
             {
                 m_name = name;
                 m_typeName = typeName;
                 m_index = index;
+                m_allowFanIn = allowFanIn;
+                m_allowFanOut = allowFanOut;
             }
 
             /// <summary>
@@ -148,16 +150,18 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             /// Gets whether connection fan in to pin is allowed</summary>
             public bool AllowFanIn
             {
-                get { return true; }
+                get { return m_allowFanIn; }
             }
 
             /// <summary>
             /// Gets whether connection fan out from pin is allowed</summary>
             public bool AllowFanOut
             {
-                get { return true; }
+                get { return m_allowFanOut; }
             }
 
+            private bool m_allowFanIn = true;
+            private bool m_allowFanOut = true;
             private string m_name;
             private string m_typeName;
             private int m_index;

@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System.Drawing;
 using Sce.Atf;
@@ -158,9 +158,9 @@ namespace CircuitEditorSample.Tests
 
 			Wire connection = domNode.As<Wire>();
 			connection.OutputElement = fromNode;
-			connection.OutputPin = fromNode.Type.GetOutputPin(fromPinIndex);
+			connection.OutputPin = fromNode.ElementType.GetOutputPin(fromPinIndex);
 			connection.InputElement = toNode;
-			connection.InputPin = toNode.Type.GetInputPin(toPinIndex);
+			connection.InputPin = toNode.ElementType.GetInputPin(toPinIndex);
 			connection.SetPinTarget();
 			connection.Cast<WireStyleProvider<Module, Connection, ICircuitPin>>().EdgeStyle = EdgeStyle.DirectCurve;
 
