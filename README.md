@@ -2,12 +2,18 @@ ATF for VS2015
 ===
 
 ### Note ###
-This is modified version of https://github.com/SonyWWS/ATF for Visual Studio 2015.
-1. Projects are converted for VS2015.
-2. DOM generator for VS2015 is update. See readme in DevTools\DomGenVS
-3. And some minor changes
+This implementation is based on https://github.com/SonyWWS/ATF. I modified some stuff, and it's getting too far from original.
+If you are interested in stuffs below, you can try.
 
-NOTE: Build & Install DevTool\DomGenVS Visual Studio 2015 plug-in before you open a project file with DOM generation.
+1. Projects are converted for VS2015.
+2. DOM generator for VS2015 is update. See readme in DevTools\DomGenVS.
+3. XSDgen is integrated for regular xsd dom generation for load/save xml.
+4. And some minor changes.
+5. TitleTab control - you can separete editors with title tab.
+6. ElementType of graph can be added as an adaptor so that you can override all property by element.
+
+
+NOTE: Build & Install DevTool\DomGenVS Visual Studio 2015 plug-in.
 
 
 ### [What's New](https://github.com/SonyWWS/ATF/wiki/ATF-News) ###
