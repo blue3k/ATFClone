@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.Collections.Generic;
@@ -15,6 +15,10 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <summary>
         /// Gets name attribute for subcircuit</summary>
         protected abstract AttributeInfo NameAttribute { get; }
+
+        /// <summary>
+        /// Gets name attribute for subcircuit</summary>
+        protected abstract AttributeInfo LabelAttribute { get; }
 
         // required  child info
         /// <summary>
@@ -44,6 +48,13 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             get { return GetAttribute<string>(NameAttribute); }
             set { SetAttribute(NameAttribute, value); }
+        }
+
+        /// <summary>
+        /// Gets the element display name</summary>
+        public string DisplayName
+        {
+            get { return GetAttribute<string>(LabelAttribute); }
         }
 
         /// <summary>

@@ -78,6 +78,13 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         }
 
         /// <summary>
+        /// Gets the element display name</summary>
+        public string DisplayName
+        {
+            get { return null; }
+        }
+
+        /// <summary>
         /// Gets desired size of element type's interior, in pixels</summary>
         public Size InteriorSize
         {

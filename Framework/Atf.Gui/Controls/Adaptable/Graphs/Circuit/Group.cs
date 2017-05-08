@@ -369,6 +369,13 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             get { return "Group".Localize(); }
         }
 
+        /// <summary>
+        /// Gets the element display name</summary>
+        string ICircuitElementType.DisplayName
+        {
+            get { return null; }
+        }
+
         #endregion
 
         #region IGraph<Module,Connection,ICircuitPin> Members

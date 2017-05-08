@@ -1,4 +1,4 @@
-﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,9 +13,17 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
     /// in the Sce.Atf.Controls.Adaptable.Graphs namespace.</summary>
     public interface ICircuitElementType
     {
+
         /// <summary>
         /// Gets the element type name</summary>
         string Name
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Gets the element display name</summary>
+        string DisplayName
         {
             get;
         }

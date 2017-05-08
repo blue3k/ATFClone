@@ -88,7 +88,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <returns>Display name of the circuit element</returns>
         protected virtual string GetElementDisplayName(TElement element)
         {
-            return element.Name;
+            // try to get display name from the type first
+            string dispName = element.ElementType.DisplayName;
+            return string.IsNullOrEmpty(dispName) ? element.Name : dispName;
         }
 
         /// <summary>
