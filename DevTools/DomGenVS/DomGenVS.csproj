@@ -163,6 +163,7 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DebugOutput.cs" />
     <Compile Include="DomGenVS.cs" />
     <Compile Include="XSDGenVS.cs" />
     <None Include="packages.config">

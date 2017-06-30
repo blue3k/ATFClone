@@ -1,4 +1,4 @@
-
+﻿
 
 using System;
 using System.Runtime.InteropServices;
@@ -190,15 +190,18 @@ namespace Sce.Atf.Dom.Gen
                     rgbOutputFileContents[0] = Marshal.AllocCoTaskMem(outputLength);
                     Marshal.Copy(buffer, 0, rgbOutputFileContents[0], outputLength);
                     pcbOutput = (uint)outputLength;
-                    return VSConstants.S_OK;
                 }
 
                 if (File.Exists(errorFilePath))
                     File.Delete(errorFilePath);
 
+                return VSConstants.S_OK;
             }
-            catch(Exception exp)
+            catch (Exception exp)
             {
+                rgbOutputFileContents = null;
+                pcbOutput = 0;
+
                 pGenerateProgress.GeneratorError(0, 0, exp.Message, 0, 0);
 
                 using (var outFileStream = new FileStream(errorFilePath, FileMode.Create))
@@ -207,8 +210,8 @@ namespace Sce.Atf.Dom.Gen
                     outFileStream.Write(bytes, 0, bytes.Length);
                 }
 
-                rgbOutputFileContents = null;
-                pcbOutput = 0;
+                DebugOutput.ShowMessage("Error while compiling: " + exp.Message);
+
                 return VSConstants.E_FAIL;
             }
         }

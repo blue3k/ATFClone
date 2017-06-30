@@ -1,4 +1,4 @@
-
+﻿
 
 using System;
 using System.Runtime.InteropServices;
@@ -130,10 +130,13 @@ namespace Sce.Atf.Dom.Gen
                     return VSConstants.S_OK;
                 }
             }
-            catch(Exception)
+            catch(Exception exp)
             {
                 rgbOutputFileContents = null;
                 pcbOutput = 0;
+
+                DebugOutput.ShowMessage("Error while compiling: " + exp.Message);
+
                 return VSConstants.E_FAIL;
             }
         }
