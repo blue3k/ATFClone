@@ -187,32 +187,32 @@ namespace VisualScript
                  new AttributePropertyDescriptor("label".Localize(), templateType.labelAttribute, null, "label".Localize(), false, null, null ),
             }));
 
-            pinType.Type = getNodeType("http://blue3k.com/1_0", "pinType");
-            pinType.nameAttribute = pinType.Type.GetAttributeInfo("name");
-            pinType.typeAttribute = pinType.Type.GetAttributeInfo("type");
-            pinType.Type.SetTag(new System.ComponentModel.PropertyDescriptorCollection(new PropertyDescriptor[] {
-                 new AttributePropertyDescriptor("name".Localize(), pinType.nameAttribute, null, "name".Localize(), false, null, null ),
-                 new AttributePropertyDescriptor("type".Localize(), pinType.typeAttribute, null, "type".Localize(), false, null, null ),
+            socketType.Type = getNodeType("http://blue3k.com/1_0", "socketType");
+            socketType.nameAttribute = socketType.Type.GetAttributeInfo("name");
+            socketType.typeAttribute = socketType.Type.GetAttributeInfo("type");
+            socketType.Type.SetTag(new System.ComponentModel.PropertyDescriptorCollection(new PropertyDescriptor[] {
+                 new AttributePropertyDescriptor("name".Localize(), socketType.nameAttribute, null, "name".Localize(), false, null, null ),
+                 new AttributePropertyDescriptor("type".Localize(), socketType.typeAttribute, null, "type".Localize(), false, null, null ),
             }));
 
-            groupPinType.Type = getNodeType("http://blue3k.com/1_0", "groupPinType");
-            groupPinType.nameAttribute = groupPinType.Type.GetAttributeInfo("name");
-            groupPinType.typeAttribute = groupPinType.Type.GetAttributeInfo("type");
-            groupPinType.moduleAttribute = groupPinType.Type.GetAttributeInfo("module");
-            groupPinType.pinAttribute = groupPinType.Type.GetAttributeInfo("pin");
-            groupPinType.visibleAttribute = groupPinType.Type.GetAttributeInfo("visible");
-            groupPinType.indexAttribute = groupPinType.Type.GetAttributeInfo("index");
-            groupPinType.pinnedAttribute = groupPinType.Type.GetAttributeInfo("pinned");
-            groupPinType.pinYAttribute = groupPinType.Type.GetAttributeInfo("pinY");
-            groupPinType.Type.SetTag(new System.ComponentModel.PropertyDescriptorCollection(new PropertyDescriptor[] {
-                 new AttributePropertyDescriptor("name".Localize(), groupPinType.nameAttribute, null, "name".Localize(), false, null, null ),
-                 new AttributePropertyDescriptor("type".Localize(), groupPinType.typeAttribute, null, "type".Localize(), false, null, null ),
-                 new AttributePropertyDescriptor("module".Localize(), groupPinType.moduleAttribute, null, "module".Localize(), false, null, null ),
-                 new AttributePropertyDescriptor("pin".Localize(), groupPinType.pinAttribute, null, "pin".Localize(), false, null, null ),
-                 new AttributePropertyDescriptor("visible".Localize(), groupPinType.visibleAttribute, null, "visible".Localize(), false, null, null ),
-                 new AttributePropertyDescriptor("index".Localize(), groupPinType.indexAttribute, null, "index".Localize(), false, null, null ),
-                 new AttributePropertyDescriptor("pinned".Localize(), groupPinType.pinnedAttribute, null, "pinned".Localize(), false, null, null ),
-                 new AttributePropertyDescriptor("pinY".Localize(), groupPinType.pinYAttribute, null, "pinY".Localize(), false, null, null ),
+            groupSocketType.Type = getNodeType("http://blue3k.com/1_0", "groupSocketType");
+            groupSocketType.nameAttribute = groupSocketType.Type.GetAttributeInfo("name");
+            groupSocketType.typeAttribute = groupSocketType.Type.GetAttributeInfo("type");
+            groupSocketType.moduleAttribute = groupSocketType.Type.GetAttributeInfo("module");
+            groupSocketType.pinAttribute = groupSocketType.Type.GetAttributeInfo("pin");
+            groupSocketType.visibleAttribute = groupSocketType.Type.GetAttributeInfo("visible");
+            groupSocketType.indexAttribute = groupSocketType.Type.GetAttributeInfo("index");
+            groupSocketType.pinnedAttribute = groupSocketType.Type.GetAttributeInfo("pinned");
+            groupSocketType.pinYAttribute = groupSocketType.Type.GetAttributeInfo("pinY");
+            groupSocketType.Type.SetTag(new System.ComponentModel.PropertyDescriptorCollection(new PropertyDescriptor[] {
+                 new AttributePropertyDescriptor("name".Localize(), groupSocketType.nameAttribute, null, "name".Localize(), false, null, null ),
+                 new AttributePropertyDescriptor("type".Localize(), groupSocketType.typeAttribute, null, "type".Localize(), false, null, null ),
+                 new AttributePropertyDescriptor("module".Localize(), groupSocketType.moduleAttribute, null, "module".Localize(), false, null, null ),
+                 new AttributePropertyDescriptor("pin".Localize(), groupSocketType.pinAttribute, null, "pin".Localize(), false, null, null ),
+                 new AttributePropertyDescriptor("visible".Localize(), groupSocketType.visibleAttribute, null, "visible".Localize(), false, null, null ),
+                 new AttributePropertyDescriptor("index".Localize(), groupSocketType.indexAttribute, null, "index".Localize(), false, null, null ),
+                 new AttributePropertyDescriptor("pinned".Localize(), groupSocketType.pinnedAttribute, null, "pinned".Localize(), false, null, null ),
+                 new AttributePropertyDescriptor("pinY".Localize(), groupSocketType.pinYAttribute, null, "pinY".Localize(), false, null, null ),
             }));
 
             groupType.Type = getNodeType("http://blue3k.com/1_0", "groupType");
@@ -487,14 +487,14 @@ namespace VisualScript
             public static ChildInfo moduleChild;
         }
 
-        public static class pinType
+        public static class socketType
         {
             public static DomNodeType Type;
             public static AttributeInfo nameAttribute;
             public static AttributeInfo typeAttribute;
         }
 
-        public static class groupPinType
+        public static class groupSocketType
         {
             public static DomNodeType Type;
             public static AttributeInfo nameAttribute;

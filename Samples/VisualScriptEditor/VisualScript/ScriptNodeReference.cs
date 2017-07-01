@@ -10,7 +10,7 @@ namespace VisualScript
 {
     /// <summary>
     /// Adapter for a reference instance of a module template</summary>
-    public class VisualScriptModuleReference : ElementReference, IReference<VisualScriptModule>
+    public class ScriptNodeReference : ElementReference, IReference<ScriptNode>
     {
         protected override AttributeInfo GuidRefAttribute
         {
@@ -19,14 +19,14 @@ namespace VisualScript
 
         #region IReference<Module>  memebers
 
-        bool IReference<VisualScriptModule>.CanReference(VisualScriptModule item)
+        bool IReference<ScriptNode>.CanReference(ScriptNode item)
         {
             return true;
         }
 
-        VisualScriptModule IReference<VisualScriptModule>.Target
+        ScriptNode IReference<ScriptNode>.Target
         {
-            get { return Template.Target.As<VisualScriptModule>(); }
+            get { return Template.Target.As<ScriptNode>(); }
             set
             {
                 throw new InvalidOperationException("The group template determines the target");

@@ -17,13 +17,13 @@ namespace VisualScript
     /// <summary>
     /// Loads the UI schema, registers data extensions on the DOM types and annotates
     /// the types with display information and PropertyDescriptors</summary>
-    [Export(typeof(VisualScriptBasicSchemaLoader))]
+    [Export(typeof(BasicSchemaLoader))]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    public class VisualScriptBasicSchemaLoader : XmlSchemaTypeLoader
+    public class BasicSchemaLoader : XmlSchemaTypeLoader
     {
         /// <summary>
         /// Constructor that loads the schema</summary>
-        public VisualScriptBasicSchemaLoader()
+        public BasicSchemaLoader()
         {
             // set resolver to locate embedded .xsd file
             SchemaResolver = new ResourceStreamResolver(System.Reflection.Assembly.GetExecutingAssembly(), "VisualScriptEditor/schemas");
@@ -75,14 +75,14 @@ namespace VisualScript
                 // register extensions
 
                 // decorate circuit document type
-                VisualScriptBasicSchema.visualScriptDocumentType.Type.Define(new ExtensionInfo<VisualScriptDocument>());                  // document info
+                VisualScriptBasicSchema.visualScriptDocumentType.Type.Define(new ExtensionInfo<ScriptDocument>());                  // document info
                 //VisualScriptBasicSchema.circuitDocumentType.Type.Define(new ExtensionInfo<SampleCircuitEditingContext>());                  // document info
                 VisualScriptBasicSchema.visualScriptDocumentType.Type.Define(new ExtensionInfo<MultipleHistoryContext>());    // ties sub-context histories into document dirty bit
                 VisualScriptBasicSchema.visualScriptDocumentType.Type.Define(new ExtensionInfo<VisualScriptEditor.PrototypingContext >());        // document-wide prototype hierarchy
                 VisualScriptBasicSchema.visualScriptDocumentType.Type.Define(new ExtensionInfo<VisualScriptEditor.TemplatingContext>());         // document-wide template hierarchy
                 //VisualScriptBasicSchema.circuitDocumentType.Type.Define(new ExtensionInfo<UniqueIdValidator>());         // ensures all ids are unique throughout document
-                VisualScriptBasicSchema.visualScriptDocumentType.Type.Define(new ExtensionInfo<CategoryUniqueIdValidator>());   // ensures all ids are local unique in its category
-                VisualScriptBasicSchema.visualScriptDocumentType.Type.Define(new ExtensionInfo<VisualScriptValidator>());          // validate group hierarchy
+                VisualScriptBasicSchema.visualScriptDocumentType.Type.Define(new ExtensionInfo<Sce.Atf.Dom.CategoryUniqueIdValidator>());   // ensures all ids are local unique in its category
+                VisualScriptBasicSchema.visualScriptDocumentType.Type.Define(new ExtensionInfo<ScriptValidator>());          // validate group hierarchy
                 // ReferenceValidator should be the last validator attached to the root DomNode to fully track
                 // all the DOM editings of all other validators to update references properly 
                 VisualScriptBasicSchema.visualScriptDocumentType.Type.Define(new ExtensionInfo<ReferenceValidator>());        // tracks references and targets
@@ -98,10 +98,10 @@ namespace VisualScript
 
                 // decorate group type
                 VisualScriptBasicSchema.groupType.Type.Define(new ExtensionInfo<VisualScriptEditor.VisualScriptEditingContext>());                    // main editable circuit adapter
-                VisualScriptBasicSchema.groupType.Type.Define(new ExtensionInfo<VisualScriptGroup>());
+                VisualScriptBasicSchema.groupType.Type.Define(new ExtensionInfo<ScriptGroup>());
                 VisualScriptBasicSchema.groupType.Type.Define(new ExtensionInfo<ViewingContext>());
 
-                VisualScriptBasicSchema.connectionType.Type.Define(new ExtensionInfo<WireStyleProvider<VisualScriptModule, VisualScriptConnection, ICircuitPin>>());
+                VisualScriptBasicSchema.connectionType.Type.Define(new ExtensionInfo<WireStyleProvider<ScriptNode, ScriptNodeConnection, ICircuitPin>>());
 
                 // register Expression.
                 VisualScriptBasicSchema.expressionType.Type.Define(new ExtensionInfo<Expression>());
@@ -170,24 +170,24 @@ namespace VisualScript
         static private void RegisterCircuitExtensions()
         {         
             // adapts the default implementation  of circuit types
-            VisualScriptBasicSchema.moduleType.Type.Define(new ExtensionInfo<VisualScriptModule>());
-            VisualScriptBasicSchema.moduleType.Type.Define(new ExtensionInfo<VisualScriptModuleProperties>());
-            VisualScriptBasicSchema.connectionType.Type.Define(new ExtensionInfo<VisualScriptConnection>());
-            VisualScriptBasicSchema.pinType.Type.Define(new ExtensionInfo<VisualScriptSocket>());
-            VisualScriptBasicSchema.groupPinType.Type.Define(new ExtensionInfo<VisualScriptGroupPin>());
+            VisualScriptBasicSchema.moduleType.Type.Define(new ExtensionInfo<ScriptNode>());
+            VisualScriptBasicSchema.moduleType.Type.Define(new ExtensionInfo<ScriptNodeProperties>());
+            VisualScriptBasicSchema.connectionType.Type.Define(new ExtensionInfo<ScriptNodeConnection>());
+            VisualScriptBasicSchema.socketType.Type.Define(new ExtensionInfo<ScriptNodeSocket>());
+            VisualScriptBasicSchema.groupSocketType.Type.Define(new ExtensionInfo<ScriptGroupSocket>());
             VisualScriptBasicSchema.visualScriptType.Type.Define(new ExtensionInfo<VisualScript>());
-            VisualScriptBasicSchema.prototypeFolderType.Type.Define(new ExtensionInfo<VisualScriptPrototypeFolder>());
-            VisualScriptBasicSchema.prototypeType.Type.Define(new ExtensionInfo<VisualScriptPrototype>());
-            VisualScriptBasicSchema.layerFolderType.Type.Define(new ExtensionInfo<VisualScriptLayerFolder>());
-            VisualScriptBasicSchema.moduleRefType.Type.Define(new ExtensionInfo<VisualScriptModuleRef>());
-            VisualScriptBasicSchema.annotationType.Type.Define(new ExtensionInfo<VisualScriptAnnotation>());
+            VisualScriptBasicSchema.prototypeFolderType.Type.Define(new ExtensionInfo<ScriptPrototypeFolder>());
+            VisualScriptBasicSchema.prototypeType.Type.Define(new ExtensionInfo<ScriptPrototype>());
+            VisualScriptBasicSchema.layerFolderType.Type.Define(new ExtensionInfo<ScriptLayerFolder>());
+            VisualScriptBasicSchema.moduleRefType.Type.Define(new ExtensionInfo<ScriptNodeRef>());
+            VisualScriptBasicSchema.annotationType.Type.Define(new ExtensionInfo<ScriptAnnotation>());
             VisualScriptBasicSchema.visualScriptType.Type.Define(new ExtensionInfo<VisualScriptEditor.VisualScriptEditingContext>()); // main editable circuit adapter
 
-            VisualScriptBasicSchema.templateFolderType.Type.Define(new ExtensionInfo<VisualScriptTemplateFolder>());
-            VisualScriptBasicSchema.templateType.Type.Define(new ExtensionInfo<VisualScriptTemplate>());
-            VisualScriptBasicSchema.moduleTemplateRefType.Type.Define(new ExtensionInfo<VisualScriptModuleReference>());
-            VisualScriptBasicSchema.groupTemplateRefType.Type.Define(new ExtensionInfo<VisualScriptGroupReference>());
-            VisualScriptBasicSchema.missingModuleType.Type.Define(new ExtensionInfo<VisualScriptMissingModule >());
+            VisualScriptBasicSchema.templateFolderType.Type.Define(new ExtensionInfo<ScriptTemplateFolder>());
+            VisualScriptBasicSchema.templateType.Type.Define(new ExtensionInfo<ScriptTemplate>());
+            VisualScriptBasicSchema.moduleTemplateRefType.Type.Define(new ExtensionInfo<ScriptNodeReference>());
+            VisualScriptBasicSchema.groupTemplateRefType.Type.Define(new ExtensionInfo<ScriptGroupReference>());
+            VisualScriptBasicSchema.missingModuleType.Type.Define(new ExtensionInfo<MissingScriptNode >());
 
 
             // set document editor information(DocumentClientInfo) for circuit editor:

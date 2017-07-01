@@ -11,7 +11,7 @@ namespace VisualScript
     /// Update transitions on Ending event are part of the transactions themselves, 
     /// then validate all sub-graphs in the current document on Ended event. Requires
     /// Sce.Atf.Dom.ReferenceValidator to be available on the adapted DomNode.</summary>
-    class VisualScriptValidator : Sce.Atf.Controls.Adaptable.Graphs.CircuitValidator
+    class ScriptValidator : Sce.Atf.Controls.Adaptable.Graphs.CircuitValidator
     {
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace VisualScript
         /// Gets pin name attribute</summary>
         protected override AttributeInfo PinNameAttributeAttribute
         {
-            get { return VisualScriptBasicSchema.pinType.nameAttribute; }
+            get { return VisualScriptBasicSchema.socketType.nameAttribute; }
         }
 
         /// <summary>

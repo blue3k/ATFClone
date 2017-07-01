@@ -12,9 +12,9 @@ namespace VisualScript
     /// <summary>
     /// This custom writer only writes out the sub-circuits that are actually referenced 
     /// by a SubCircuitInstance</summary>
-    internal class VisualScriptWriter : DomXmlWriter
+    internal class ScriptWriter : DomXmlWriter
     {
-        public VisualScriptWriter(XmlSchemaTypeCollection typeCollection)
+        public ScriptWriter(XmlSchemaTypeCollection typeCollection)
             : base(typeCollection)
         {
             PreserveSimpleElements = true;

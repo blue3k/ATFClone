@@ -6,10 +6,10 @@ using Sce.Atf.Dom;
 namespace VisualScript
 {
     /// <summary>
-    /// Adapter for a module reference, used within layer folders to represent
+    /// Adapter for a script node reference, used within layer folders to represent
     /// circuit modules that belong to that layer.
     /// </summary>
-    public class VisualScriptModuleRef : ElementRef
+    public class ScriptNodeRef : ElementRef
     {
         /// <summary>
         /// Gets the AttributeInfo for a module reference</summary>

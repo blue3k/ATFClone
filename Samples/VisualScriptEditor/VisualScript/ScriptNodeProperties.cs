@@ -12,7 +12,7 @@ namespace VisualScript
 {
     /// <summary>
     /// Provides property descriptors on circuit elements, dynamically, using optional user-specified data.</summary>
-    public class VisualScriptModuleProperties : CustomTypeDescriptorNodeAdapter, IDynamicTypeDescriptor
+    public class ScriptNodeProperties : CustomTypeDescriptorNodeAdapter, IDynamicTypeDescriptor
     {
         /// <summary>
         /// Creates an array of property descriptors that are associated with the adapted DomNode's

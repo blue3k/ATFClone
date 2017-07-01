@@ -11,14 +11,14 @@ namespace VisualScript
     /// <summary>
     /// A custom circuit renderer, demonstrating how to use a particular theme (D2dDiagramTheme)
     /// for particular types of circuit elements.</summary>
-    public class VisualScriptRenderer : D2dCircuitRenderer<VisualScriptModule, VisualScriptConnection, ICircuitPin>
+    public class ScriptRenderer : D2dCircuitRenderer<ScriptNode, ScriptNodeConnection, ICircuitPin>
     {
         /// <summary>
         /// Initializes a new instance of this class</summary>
         /// <param name="theme">Diagram theme for rendering graph</param>
         /// <param name="documentRegistry">An optional document registry, used to clear the internal
         /// element type cache when a document is removed</param>
-        public VisualScriptRenderer(D2dDiagramTheme theme, IDocumentRegistry documentRegistry) :
+        public ScriptRenderer(D2dDiagramTheme theme, IDocumentRegistry documentRegistry) :
             base(theme, documentRegistry)
         {
             m_disabledTheme = new D2dDiagramTheme();
@@ -40,10 +40,10 @@ namespace VisualScript
         /// <param name="element">Element to draw</param>
         /// <param name="style">Diagram drawing style</param>
         /// <param name="g">Graphics object</param>
-        public override void Draw(VisualScriptModule element, DiagramDrawingStyle style, D2dGraphics g)
+        public override void Draw(ScriptNode element, DiagramDrawingStyle style, D2dGraphics g)
         {
             // Use the "disabled" theme when drawing disabled circuit elements.
-            if (!((VisualScriptModuleElementInfo)element.ElementInfo).Enabled)
+            if (!((ScriptNodeElementInfo)element.ElementInfo).Enabled)
             {
                 D2dDiagramTheme defaultTheme = Theme;
                 Theme = m_disabledTheme;

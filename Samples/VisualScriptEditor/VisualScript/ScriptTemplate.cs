@@ -9,7 +9,7 @@ namespace VisualScript
 {
     /// <summary>
     /// Adapts DomNode to a template, which is is a module that can be referenced into a circuit</summary>
-    public class VisualScriptTemplate : Sce.Atf.Dom.Template
+    public class ScriptTemplate : Template
     {
         /// <summary>
         /// Gets and sets the user-visible name of the template</summary>
@@ -29,7 +29,7 @@ namespace VisualScript
                 SetChild(VisualScriptBasicSchema.templateType.moduleChild, value);
                 if (value != null) // initialize  model name
                 {
-                    var module = Target.Cast<VisualScriptModule>();
+                    var module = Target.Cast<ScriptNode>();
                     Name = module.Name;
                     if (string.IsNullOrEmpty(Name))
                         Name = module.ElementType.Name;
@@ -49,7 +49,7 @@ namespace VisualScript
         /// Returns true iff the template can reference the specified target item</summary>
         public override bool CanReference(DomNode item)
         {
-            return item.Is<VisualScriptModule>();
+            return item.Is<ScriptNode>();
         }
     }
 }

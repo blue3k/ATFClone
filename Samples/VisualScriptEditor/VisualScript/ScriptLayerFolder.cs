@@ -7,7 +7,7 @@ namespace VisualScript
     /// <summary>
     /// Adapts DomNode to a layer folder. A layer folder allows a hierarchy of layers to be defined. 
     /// Folders can be hidden by the user to allow layering.</summary>
-    class VisualScriptLayerFolder : Sce.Atf.Controls.Adaptable.Graphs.LayerFolder
+    class ScriptLayerFolder : Sce.Atf.Controls.Adaptable.Graphs.LayerFolder
     {
         /// <summary>
         /// Gets name attribute for layer folder</summary>

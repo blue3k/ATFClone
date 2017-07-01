@@ -84,7 +84,7 @@
   <!--
   A pin has a name, and a type which determines the connection type.
   -->
-  <xs:complexType name="pinType">
+  <xs:complexType name="socketType">
     <xs:attribute name="name" type="xs:string" use="required" />
     <xs:attribute name="type" type="xs:string" use="required" />
   </xs:complexType>
@@ -94,9 +94,9 @@
   of a pin to preserve the internal pin/module which is connected to the
   outside circuit.
   -->
-  <xs:complexType name="groupPinType">
+  <xs:complexType name="groupSocketType">
     <xs:complexContent>
-      <xs:extension base="pinType">
+      <xs:extension base="socketType">
         <!--associated internal(sub) element-->
         <xs:attribute name="module" type="xs:IDREF" use="required" />
         <!--associated internal(sub) pin-->
@@ -122,8 +122,8 @@
       <xs:extension base="moduleType">
 
         <xs:sequence>
-          <xs:element name="input" type="groupPinType" minOccurs="0" maxOccurs="unbounded" />
-          <xs:element name="output" type="groupPinType" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="input" type="groupSocketType" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="output" type="groupSocketType" minOccurs="0" maxOccurs="unbounded" />
           <xs:element name="module" type="moduleType" minOccurs="0" maxOccurs="unbounded" />
           <xs:element name="connection" type="connectionType" minOccurs="0" maxOccurs="unbounded" />
           <xs:element name="annotation" type="annotationType" minOccurs="0" maxOccurs="unbounded" />

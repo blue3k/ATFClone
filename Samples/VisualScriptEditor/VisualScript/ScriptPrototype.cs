@@ -7,7 +7,7 @@ namespace VisualScript
     /// <summary>
     /// Adapts DomNode to a circuit prototype, which contains modules and connections
     /// that can be instanced in a circuit</summary>
-    class VisualScriptPrototype : Sce.Atf.Controls.Adaptable.Graphs.Prototype
+    class ScriptPrototype : Sce.Atf.Controls.Adaptable.Graphs.Prototype
     {
         /// <summary>
         /// Gets name attribute for prototype</summary>

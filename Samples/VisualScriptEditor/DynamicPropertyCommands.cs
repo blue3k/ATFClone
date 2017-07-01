@@ -95,8 +95,8 @@ namespace VisualScriptEditor
                 switch ((Command) commandTag)
                 {
                     case Command.Add:
-                        return EditingContext.Items.Any<VisualScriptModule>() &&
-                            EditingContext.Items.All<VisualScriptModule>();
+                        return EditingContext.Items.Any<ScriptNode>() &&
+                            EditingContext.Items.All<ScriptNode>();
 
                     case Command.Edit:
                     case Command.Remove:
@@ -288,7 +288,7 @@ namespace VisualScriptEditor
             string converter, string editor, string valueType, bool add)
         {
             // Check for duplicate dynamic properties.
-            foreach (VisualScriptModule module in EditingContext.Items.AsIEnumerable<VisualScriptModule>())
+            foreach (ScriptNode module in EditingContext.Items.AsIEnumerable<ScriptNode>())
             {
                 if (!add)
                 {
@@ -319,7 +319,7 @@ namespace VisualScriptEditor
             ITransactionContext transactionContext = EditingContext.Cast<ITransactionContext>();
             bool success = transactionContext.DoTransaction(delegate
             {
-                foreach (VisualScriptModule module in EditingContext.Items.AsIEnumerable<VisualScriptModule>())
+                foreach (ScriptNode module in EditingContext.Items.AsIEnumerable<ScriptNode>())
                 {
                     DomNode node;
                     if (add)
@@ -353,7 +353,7 @@ namespace VisualScriptEditor
             ITransactionContext transactionContext = EditingContext.Cast<ITransactionContext>();
             bool success = transactionContext.DoTransaction(delegate
             {
-                foreach (VisualScriptModule module in EditingContext.Items.AsIEnumerable<VisualScriptModule>())
+                foreach (ScriptNode module in EditingContext.Items.AsIEnumerable<ScriptNode>())
                 {
                     DomNode node = GetDynamicDomNode(module);
                     node.RemoveFromParent();
@@ -363,7 +363,7 @@ namespace VisualScriptEditor
             return success;
         }
 
-        protected DomNode GetDynamicDomNode(VisualScriptModule module)
+        protected DomNode GetDynamicDomNode(ScriptNode module)
         {
             ChildAttributePropertyDescriptor dynamicPropertyDescriptor = Descriptor;
             if (m_multiPropertyDescriptor != null)

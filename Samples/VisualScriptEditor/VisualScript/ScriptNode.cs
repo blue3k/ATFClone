@@ -9,7 +9,7 @@ namespace VisualScript
     /// Adapts DomNode to circuit modules, which is the base circuit element with pins.
     /// It maintains local name and bounds for faster
     /// circuit rendering during editing operations, like dragging modules and wires.</summary>
-    public class VisualScriptModule : Element
+    public class ScriptNode : Element
     {
         /// <summary>
         /// Gets name attribute for module</summary>
@@ -64,7 +64,7 @@ namespace VisualScript
 
         protected override CircuitElementInfo CreateElementInfo()
         {
-            return new VisualScriptModuleElementInfo();
+            return new ScriptNodeElementInfo();
         }
     }
 }

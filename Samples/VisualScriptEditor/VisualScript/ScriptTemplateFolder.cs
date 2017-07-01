@@ -9,7 +9,7 @@ namespace VisualScript
 {
     /// <summary>
     /// Adapts a DomNode to a template folder, which holds a hierarchy containing references to subgraphs</summary>
-    public class VisualScriptTemplateFolder : Sce.Atf.Dom.TemplateFolder
+    public class ScriptTemplateFolder : Sce.Atf.Dom.TemplateFolder
     {
         /// <summary>
         /// Gets and sets the template folder name</summary>

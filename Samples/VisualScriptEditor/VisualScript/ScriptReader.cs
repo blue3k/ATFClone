@@ -11,15 +11,15 @@ using Sce.Atf.Dom;
 
 namespace VisualScript
 {
-    internal class VisualScriptReader : DomXmlReader
+    internal class ScriptReader : DomXmlReader
     {
         /// <summary>
         /// Constructor</summary>
         /// <param name="loader">Type loader to translate element names to DOM node types</param>
-        public VisualScriptReader(XmlSchemaTypeLoader loader)
+        public ScriptReader(XmlSchemaTypeLoader loader)
             : base(loader)
         {
-            var typeloader = loader as VisualScriptBasicSchemaLoader;
+            var typeloader = loader as BasicSchemaLoader;
             m_version = typeloader.Version; // tool's current schema version 
         }
 
@@ -98,7 +98,7 @@ namespace VisualScript
                 // read the existing templates document
                 using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
-                    var newReader = new VisualScriptReader(TypeLoader);
+                    var newReader = new ScriptReader(TypeLoader);
                     DomNode templatesRoot = newReader.Read(stream, uri);
                     ImportTemplates(toFolder, templatesRoot, uri);
                 }
@@ -146,8 +146,8 @@ namespace VisualScript
             foreach (var importedNode in rootNode.Subtree)
             {
                 // documents can be opened recursively, so tags may be set already by a child node reader
-                if (importedNode.GetTag(typeof (VisualScriptCategoryUniqueIdValidator.IDocumentTag)) == null)
-                    importedNode.SetTag(typeof(VisualScriptCategoryUniqueIdValidator.IDocumentTag), tagValue);
+                if (importedNode.GetTag(typeof (CategoryUniqueIdValidator.IDocumentTag)) == null)
+                    importedNode.SetTag(typeof(CategoryUniqueIdValidator.IDocumentTag), tagValue);
             }
         }
 

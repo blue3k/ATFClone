@@ -62,7 +62,7 @@ namespace VisualScriptEditor
             IDocumentService documentService,
             PrototypeLister prototypeLister,
             LayerLister layerLister,
-            VisualScriptBasicSchemaLoader schemaLoader)
+            BasicSchemaLoader schemaLoader)
         {
             m_controlHostService = controlHostService;
             m_commandService = commandService;
@@ -76,8 +76,8 @@ namespace VisualScriptEditor
             string initialDirectory = Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\..\\components\\wws_atf\\Samples\\CircuitEditor\\data");
             EditorInfo.InitialDirectory = initialDirectory;
             m_theme = new D2dDiagramTheme();
-            m_circuitRenderer = new VisualScriptRenderer(m_theme, documentRegistry);
-            m_subGraphRenderer = new D2dSubCircuitRenderer<VisualScriptModule, VisualScriptConnection, ICircuitPin>(m_theme);
+            m_circuitRenderer = new ScriptRenderer(m_theme, documentRegistry);
+            m_subGraphRenderer = new D2dSubCircuitRenderer<ScriptNode, ScriptNodeConnection, ICircuitPin>(m_theme);
 
             //// Note: Santa Monica uses following render settings: 
             //m_circuitRenderer.TitleBackgroundFilled = true;
@@ -93,7 +93,7 @@ namespace VisualScriptEditor
             m_d2dHoverControl.Dock = DockStyle.Fill;
             var xformAdapter = new TransformAdapter();
             xformAdapter.EnforceConstraints = false;//to allow the canvas to be panned to view negative coordinates
-            m_d2dHoverControl.Adapt(xformAdapter, new D2dGraphAdapter<VisualScriptModule, VisualScriptConnection, ICircuitPin>(m_circuitRenderer, xformAdapter));
+            m_d2dHoverControl.Adapt(xformAdapter, new D2dGraphAdapter<ScriptNode, ScriptNodeConnection, ICircuitPin>(m_circuitRenderer, xformAdapter));
             m_d2dHoverControl.DrawingD2d += m_d2dHoverControl_DrawingD2d;           
         }
 
@@ -103,7 +103,7 @@ namespace VisualScriptEditor
         private IDocumentRegistry m_documentRegistry;
         private IDocumentService m_documentService;
         private LayerLister m_layerLister;
-        private VisualScriptBasicSchemaLoader m_schemaLoader;
+        private BasicSchemaLoader m_schemaLoader;
 
         [Import(AllowDefault = true)]
         private IStatusService m_statusService = null;
@@ -191,7 +191,7 @@ namespace VisualScriptEditor
                 new D2dGradientStop(Color.White, 0),
                 new D2dGradientStop(Color.MediumVioletRed, 1.0f),
             };
-            m_theme.RegisterCustomBrush(VisualScriptMissingModule .MissingTypeName, D2dFactory.CreateLinearGradientBrush(gradstops));
+            m_theme.RegisterCustomBrush(MissingScriptNode .MissingTypeName, D2dFactory.CreateLinearGradientBrush(gradstops));
 
             VisualScriptEditingContext.CircuitFormat = CircuitFormat;
 
@@ -238,7 +238,7 @@ namespace VisualScriptEditor
                 // read existing document using standard XML reader
                 using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
-                    VisualScriptReader reader = new VisualScriptReader(m_schemaLoader);
+                    ScriptReader reader = new ScriptReader(m_schemaLoader);
                     node = reader.Read(stream, uri);
                 }
             }
@@ -252,7 +252,7 @@ namespace VisualScriptEditor
                     new DomNode(VisualScriptBasicSchema.prototypeFolderType.Type));
             }
 
-            VisualScriptDocument circuitCircuitDocument = null;
+            ScriptDocument circuitCircuitDocument = null;
             if (node != null)
             {
                 // now that the data is complete, initialize all other extensions to the Dom data
@@ -264,7 +264,7 @@ namespace VisualScriptEditor
                 var viewingContext = node.Cast<ViewingContext>();
                 viewingContext.Control = control;
 
-                circuitCircuitDocument = node.Cast<VisualScriptDocument>();
+                circuitCircuitDocument = node.Cast<ScriptDocument>();
                 string fileName = Path.GetFileName(filePath);
                 ControlInfo controlInfo = new ControlInfo(fileName, filePath, StandardControlGroup.Center);
 
@@ -329,17 +329,17 @@ namespace VisualScriptEditor
 
             if (scriptNode.Is<VisualScript.VisualScript>())
             {
-                var circuitAdapter = new D2dGraphAdapter<VisualScriptModule, VisualScriptConnection, ICircuitPin>(m_circuitRenderer, transformAdapter);
+                var circuitAdapter = new D2dGraphAdapter<ScriptNode, ScriptNodeConnection, ICircuitPin>(m_circuitRenderer, transformAdapter);
 
                 // The "AllFirst" policy will try to draw edges (wires) before nodes, as much as possible.
                 //circuitAdapter.EdgeRenderPolicy = D2dGraphAdapter<Module, Connection, ICircuitPin>.DrawEdgePolicy.AllFirst;
                 
-                var circuitModuleEditAdapter = new D2dGraphNodeEditAdapter<VisualScriptModule, VisualScriptConnection, ICircuitPin>(
+                var circuitModuleEditAdapter = new D2dGraphNodeEditAdapter<ScriptNode, ScriptNodeConnection, ICircuitPin>(
                     m_circuitRenderer, circuitAdapter, transformAdapter);
                 circuitModuleEditAdapter.DraggingSubNodes = false;
 
                 var circuitConnectionEditAdapter =
-                    new D2dGraphEdgeEditAdapter<VisualScriptModule, VisualScriptConnection, ICircuitPin>(m_circuitRenderer, circuitAdapter, transformAdapter);
+                    new D2dGraphEdgeEditAdapter<ScriptNode, ScriptNodeConnection, ICircuitPin>(m_circuitRenderer, circuitAdapter, transformAdapter);
                 circuitConnectionEditAdapter.EdgeRouteTraverser = CircuitUtil.EdgeRouteTraverser;
 
                 control.Adapt(
@@ -353,7 +353,7 @@ namespace VisualScriptEditor
                     canvasAdapter,
                     mouseTransformManipulator,
                     mouseWheelManipulator,
-                    new KeyboardIOGraphNavigator<VisualScriptModule, VisualScriptConnection, ICircuitPin>(),
+                    new KeyboardIOGraphNavigator<ScriptNode, ScriptNodeConnection, ICircuitPin>(),
                     new D2dGridAdapter(),
                     annotationAdaptor, //Needs to be before circuitAdapter so that comments appear under elements.
                     circuitAdapter,
@@ -367,16 +367,16 @@ namespace VisualScriptEditor
                     // This end of the list is drawn last and receives mouse events first.
                     );
             }
-            else if (scriptNode.Is<VisualScriptGroup>())
+            else if (scriptNode.Is<VisualScript.ScriptGroup>())
             {
-                var circuitAdapter = new D2dSubgraphAdapter<VisualScriptModule, VisualScriptConnection, ICircuitPin>(m_subGraphRenderer,
+                var circuitAdapter = new D2dSubgraphAdapter<ScriptNode, ScriptNodeConnection, ICircuitPin>(m_subGraphRenderer,
                                                                                       transformAdapter);
-                var circuitModuleEditAdapter = new D2dGraphNodeEditAdapter<VisualScriptModule, VisualScriptConnection, ICircuitPin>(
+                var circuitModuleEditAdapter = new D2dGraphNodeEditAdapter<ScriptNode, ScriptNodeConnection, ICircuitPin>(
                     m_subGraphRenderer, circuitAdapter, transformAdapter);
                 circuitModuleEditAdapter.DraggingSubNodes = false;
 
                 var circuitConnectionEditAdapter =
-                    new D2dGraphEdgeEditAdapter<VisualScriptModule, VisualScriptConnection, ICircuitPin>(m_subGraphRenderer, circuitAdapter, transformAdapter);
+                    new D2dGraphEdgeEditAdapter<ScriptNode, ScriptNodeConnection, ICircuitPin>(m_subGraphRenderer, circuitAdapter, transformAdapter);
                 circuitConnectionEditAdapter.EdgeRouteTraverser = CircuitUtil.EdgeRouteTraverser;
 
                 var groupPinEditor = new GroupPinEditor(transformAdapter);
@@ -395,7 +395,7 @@ namespace VisualScriptEditor
                   canvasAdapter,
                   mouseTransformManipulator,
                   mouseWheelManipulator,
-                  new KeyboardIOGraphNavigator<VisualScriptModule, VisualScriptConnection, ICircuitPin>(),
+                  new KeyboardIOGraphNavigator<ScriptNode, ScriptNodeConnection, ICircuitPin>(),
                   new D2dGridAdapter(),
                   annotationAdaptor,
                   circuitAdapter,
@@ -426,11 +426,11 @@ namespace VisualScriptEditor
             AdaptableControl d2dHoverControl = (AdaptableControl)sender;
             Point clientPoint = d2dHoverControl.PointToClient(Control.MousePosition);
 
-            D2dGraphAdapter<VisualScriptModule, VisualScriptConnection, ICircuitPin> graphAdapter =
-                d2dHoverControl.As<D2dGraphAdapter<VisualScriptModule, VisualScriptConnection, ICircuitPin>>();
-            GraphHitRecord<VisualScriptModule, VisualScriptConnection, ICircuitPin> hitRecord = graphAdapter.Pick(clientPoint);
-            VisualScriptGroup subGraph = null;
-            var subGraphReference = hitRecord.Node.As<VisualScriptGroupReference>();
+            D2dGraphAdapter<ScriptNode, ScriptNodeConnection, ICircuitPin> graphAdapter =
+                d2dHoverControl.As<D2dGraphAdapter<ScriptNode, ScriptNodeConnection, ICircuitPin>>();
+            GraphHitRecord<ScriptNode, ScriptNodeConnection, ICircuitPin> hitRecord = graphAdapter.Pick(clientPoint);
+            VisualScript.ScriptGroup subGraph = null;
+            var subGraphReference = hitRecord.Node.As<VisualScript.ScriptGroupReference>();
             if (subGraphReference != null)
             {
                 var templatingContext = m_contextRegistry.GetMostRecentContext<TemplatingContext>();
@@ -439,14 +439,14 @@ namespace VisualScriptEditor
                 DialogResult checkResult = DialogResult.No; //direct editing 
                 if (checkResult == DialogResult.No)
                 {
-                    subGraph = subGraphReference.Group.As<VisualScriptGroup>();
-                    var graphValidator = subGraphReference.DomNode.GetRoot().Cast<VisualScriptValidator>();
+                    subGraph = subGraphReference.Group.As<VisualScript.ScriptGroup>();
+                    var graphValidator = subGraphReference.DomNode.GetRoot().Cast<ScriptValidator>();
                     graphValidator.UpdateTemplateInfo(subGraph);
                 }
 
             }
             else
-                subGraph = hitRecord.Node.As<VisualScriptGroup>();
+                subGraph = hitRecord.Node.As<VisualScript.ScriptGroup>();
             if (subGraph != null)
             {
                 var viewingContext = subGraph.Cast<ViewingContext>();
@@ -466,15 +466,15 @@ namespace VisualScriptEditor
                     bool first = true;
                     foreach (var domNode in subGraph.DomNode.GetPath())
                     {
-                        if (domNode.Is<VisualScriptGroup>())
+                        if (domNode.Is<VisualScript.ScriptGroup>())
                         {
                             if (first)
                             {
-                                name = domNode.Cast<VisualScriptGroup>().Name;
+                                name = domNode.Cast<VisualScript.ScriptGroup>().Name;
                                 first = false;
                             }
                             else
-                                name += "/" + domNode.Cast<VisualScriptGroup>().Name;
+                                name += "/" + domNode.Cast<VisualScript.ScriptGroup>().Name;
                         }
                     }
 
@@ -512,16 +512,16 @@ namespace VisualScriptEditor
             if (e.Button == MouseButtons.Left && d2dControl.Focused)
             {
                 Point clientPoint = d2dControl.PointToClient(Control.MousePosition);
-                var graphAdapter = d2dControl.As<D2dGraphAdapter<VisualScriptModule, VisualScriptConnection, ICircuitPin>>();
-                GraphHitRecord<VisualScriptModule, VisualScriptConnection, ICircuitPin> hitRecord = graphAdapter.Pick(clientPoint);
+                var graphAdapter = d2dControl.As<D2dGraphAdapter<ScriptNode, ScriptNodeConnection, ICircuitPin>>();
+                GraphHitRecord<ScriptNode, ScriptNodeConnection, ICircuitPin> hitRecord = graphAdapter.Pick(clientPoint);
 
                 if (hitRecord.Part is DiagramExpander)
                 {
                     if (e.Clicks == 1)
                     {
-                        var group = hitRecord.Item.As<ICircuitGroupType<VisualScriptModule, VisualScriptConnection, ICircuitPin>>();
-                        if (hitRecord.SubItem.Is<ICircuitGroupType<VisualScriptModule, VisualScriptConnection, ICircuitPin>>())
-                            group = hitRecord.SubItem.Cast<ICircuitGroupType<VisualScriptModule, VisualScriptConnection, ICircuitPin>>();
+                        var group = hitRecord.Item.As<ICircuitGroupType<ScriptNode, ScriptNodeConnection, ICircuitPin>>();
+                        if (hitRecord.SubItem.Is<ICircuitGroupType<ScriptNode, ScriptNodeConnection, ICircuitPin>>())
+                            group = hitRecord.SubItem.Cast<ICircuitGroupType<ScriptNode, ScriptNodeConnection, ICircuitPin>>();
                         var transactionContext = group.Cast<DomNodeAdapter>().DomNode.GetRoot().As<ITransactionContext>();
                         transactionContext.DoTransaction(() => group.Expanded = !group.Expanded, "Toggle Group Expansion");
                     }
@@ -542,14 +542,14 @@ namespace VisualScriptEditor
                 }
                 else if (hitRecord.Part is DiagramPin)
                 {
-                    var grpPin = hitRecord.FromRoute.As<VisualScriptGroupPin>();
+                    var grpPin = hitRecord.FromRoute.As<ScriptGroupSocket>();
                     ITransactionContext transactionContext = grpPin.DomNode.GetRoot().As<ITransactionContext>();
                     transactionContext.DoTransaction(() => grpPin.Info.Pinned = !grpPin.Info.Pinned, "Pinned Subgraph Pin");
                     d2dControl.Invalidate();
                 }
                 else if (hitRecord.Part is DiagramVisibilityCheck)
                 {
-                    var grpPin = hitRecord.FromRoute.As<VisualScriptGroupPin>();
+                    var grpPin = hitRecord.FromRoute.As<ScriptGroupSocket>();
                     if (!grpPin.Info.ExternalConnected)
                     {
                         ITransactionContext transactionContext = grpPin.DomNode.GetRoot().As<ITransactionContext>();
@@ -577,12 +577,12 @@ namespace VisualScriptEditor
         /// <param name="uri">New document URI</param>
         public void Save(IDocument document, Uri uri)
         {
-            VisualScriptDocument circuitDocument = (VisualScriptDocument)document;
+            ScriptDocument circuitDocument = (ScriptDocument)document;
             string filePath = uri.LocalPath;
             FileMode fileMode = File.Exists(filePath) ? FileMode.Truncate : FileMode.OpenOrCreate;
             using (FileStream stream = new FileStream(filePath, fileMode))
             {
-                var writer = new VisualScriptWriter(m_schemaLoader.TypeCollection);
+                var writer = new ScriptWriter(m_schemaLoader.TypeCollection);
                 writer.Write(circuitDocument.DomNode, stream, uri);
             }
         }
@@ -611,7 +611,7 @@ namespace VisualScriptEditor
             var context = adaptableControl.ContextAs<VisualScriptEditingContext>();
             m_contextRegistry.ActiveContext = context;
 
-            VisualScriptDocument circuitDocument = context.As<VisualScriptDocument>();
+            ScriptDocument circuitDocument = context.As<ScriptDocument>();
             if (circuitDocument != null)
                 m_documentRegistry.ActiveDocument = circuitDocument;
         }
@@ -642,7 +642,7 @@ namespace VisualScriptEditor
             var adaptableControl = (AdaptableControl)control;
 
             bool closed = true;
-            VisualScriptDocument circuitDocument = adaptableControl.ContextAs<VisualScriptDocument>();
+            ScriptDocument circuitDocument = adaptableControl.ContextAs<ScriptDocument>();
             if (circuitDocument != null)
             {
                 closed = m_documentService.Close(circuitDocument);
@@ -694,18 +694,18 @@ namespace VisualScriptEditor
             var hoverItem = e.Object;
             var hoverPart = e.Part;
 
-            if (e.SubPart.Is<VisualScriptGroupPin>())
+            if (e.SubPart.Is<ScriptGroupSocket>())
             {
-                sb.Append(e.SubPart.Cast<VisualScriptGroupPin>().Name);
+                sb.Append(e.SubPart.Cast<ScriptGroupSocket>().Name);
                 CircuitUtil.GetDomNodeName(e.SubPart.Cast<DomNode>());
             }
             else if (e.SubObject.Is<DomNode>())
             {
                 CircuitUtil.GetDomNodeName(e.SubObject.Cast<DomNode>());
             }
-            else if (hoverPart.Is<VisualScriptGroupPin>())
+            else if (hoverPart.Is<ScriptGroupSocket>())
             {
-                sb.Append(hoverPart.Cast<VisualScriptGroupPin>().Name);
+                sb.Append(hoverPart.Cast<ScriptGroupSocket>().Name);
                 CircuitUtil.GetDomNodeName(hoverPart.Cast<DomNode>());
             }
             else if (hoverItem.Is<DomNode>())
@@ -744,52 +744,52 @@ namespace VisualScriptEditor
         //CircuitEditingContext callback 
         internal static RectangleF GetLocalBound(AdaptableControl adaptableControl, Element moudle)
         {
-            var graphAdapter = adaptableControl.Cast<D2dGraphAdapter<VisualScriptModule, VisualScriptConnection, ICircuitPin>>();
-            return graphAdapter.GetLocalBound(moudle.DomNode.Cast<VisualScriptModule>());
+            var graphAdapter = adaptableControl.Cast<D2dGraphAdapter<ScriptNode, ScriptNodeConnection, ICircuitPin>>();
+            return graphAdapter.GetLocalBound(moudle.DomNode.Cast<ScriptNode>());
         }
 
         //CircuitEditingContext callback 
         internal static Point GetWorldOffset(AdaptableControl adaptableControl, IEnumerable<Element> graphPath)
         {
-            var render = adaptableControl.Cast<D2dGraphAdapter<VisualScriptModule, VisualScriptConnection, ICircuitPin>>().Renderer
-            .Cast<D2dCircuitRenderer<VisualScriptModule, VisualScriptConnection, ICircuitPin>>();
-            return render.WorldOffset(graphPath.AsIEnumerable<VisualScriptModule>());
+            var render = adaptableControl.Cast<D2dGraphAdapter<ScriptNode, ScriptNodeConnection, ICircuitPin>>().Renderer
+            .Cast<D2dCircuitRenderer<ScriptNode, ScriptNodeConnection, ICircuitPin>>();
+            return render.WorldOffset(graphPath.AsIEnumerable<ScriptNode>());
         }
 
         //CircuitEditingContext callback 
         internal static int GetTitleHeight(AdaptableControl adaptableControl)
         {
-            var render = adaptableControl.Cast<D2dGraphAdapter<VisualScriptModule, VisualScriptConnection, ICircuitPin>>().Renderer
-            .Cast<D2dCircuitRenderer<VisualScriptModule, VisualScriptConnection, ICircuitPin>>();
+            var render = adaptableControl.Cast<D2dGraphAdapter<ScriptNode, ScriptNodeConnection, ICircuitPin>>().Renderer
+            .Cast<D2dCircuitRenderer<ScriptNode, ScriptNodeConnection, ICircuitPin>>();
             return render.TitleHeight;
         }
 
         //CircuitEditingContext callback 
         internal static int GetLabelHeight(AdaptableControl adaptableControl)
         {
-            var render = adaptableControl.Cast<D2dGraphAdapter<VisualScriptModule, VisualScriptConnection, ICircuitPin>>().Renderer
-            .Cast<D2dCircuitRenderer<VisualScriptModule, VisualScriptConnection, ICircuitPin>>();
+            var render = adaptableControl.Cast<D2dGraphAdapter<ScriptNode, ScriptNodeConnection, ICircuitPin>>().Renderer
+            .Cast<D2dCircuitRenderer<ScriptNode, ScriptNodeConnection, ICircuitPin>>();
             return render.LabelHeight;
         }
 
         //CircuitEditingContext callback 
         internal static Point GetSubContentOffset(AdaptableControl adaptableControl)
         {
-            var render = adaptableControl.Cast<D2dGraphAdapter<VisualScriptModule, VisualScriptConnection, ICircuitPin>>().Renderer
-            .Cast<D2dCircuitRenderer<VisualScriptModule, VisualScriptConnection, ICircuitPin>>();
+            var render = adaptableControl.Cast<D2dGraphAdapter<ScriptNode, ScriptNodeConnection, ICircuitPin>>().Renderer
+            .Cast<D2dCircuitRenderer<ScriptNode, ScriptNodeConnection, ICircuitPin>>();
             return render.SubContentOffset;
         }
 
         /// <summary>
         /// Component that adds module types to the editor</summary>
         [Import(AllowDefault = true)]
-        protected VisualScriptModuleManagerModule m_modulePlugin;
+        protected ScriptNodeDefinitionManager m_modulePlugin;
 
         [Import]
         private CircuitControlRegistry m_circuitControlRegistry = null;
 
-        private D2dCircuitRenderer<VisualScriptModule, VisualScriptConnection, ICircuitPin> m_circuitRenderer;
-        private D2dSubCircuitRenderer<VisualScriptModule, VisualScriptConnection, ICircuitPin> m_subGraphRenderer;
+        private D2dCircuitRenderer<ScriptNode, ScriptNodeConnection, ICircuitPin> m_circuitRenderer;
+        private D2dSubCircuitRenderer<ScriptNode, ScriptNodeConnection, ICircuitPin> m_subGraphRenderer;
         private D2dDiagramTheme m_theme;
         private HoverBase m_hoverForm;
         private D2dAdaptableControl m_d2dHoverControl; // a child of hover form

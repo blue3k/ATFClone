@@ -22,29 +22,29 @@ namespace VisualScript
     /// This class adds some sample audio modules.</summary>
     [Export(typeof(IInitializable))]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    [Export(typeof(VisualScriptModuleManagerModule))]
-    public class VisualScriptModuleManagerModule : IPaletteClient, IInitializable
+    [Export(typeof(ScriptNodeDefinitionManager))]
+    public class ScriptNodeDefinitionManager : IPaletteClient, IInitializable
     {
         /// <summary>
         /// Constructor</summary>
         /// <param name="paletteService">Palette service</param>
         /// <param name="schemaLoader">VisualScriptBasicSchema loader</param>
         [ImportingConstructor]
-        public VisualScriptModuleManagerModule(
+        public ScriptNodeDefinitionManager(
             IPaletteService paletteService,
-            VisualScriptBasicSchemaLoader schemaLoader)
+            BasicSchemaLoader schemaLoader)
         {
             m_paletteService = paletteService;
             m_schemaLoader = schemaLoader;
         }
 
-        protected VisualScriptBasicSchemaLoader SchemaLoader
+        protected BasicSchemaLoader SchemaLoader
         {
             get { return m_schemaLoader; }
         }
 
         private IPaletteService m_paletteService;
-        private VisualScriptBasicSchemaLoader m_schemaLoader;
+        private BasicSchemaLoader m_schemaLoader;
 
         /// <summary>
         /// Gets the palette category string for the circuit modules</summary>
@@ -345,7 +345,7 @@ namespace VisualScript
             string imageName,
             ElementType.Pin[] inputs,
             ElementType.Pin[] outputs,
-            VisualScriptBasicSchemaLoader loader,
+            BasicSchemaLoader loader,
             DomNodeType domNodeType = null)
         {
             if (domNodeType == null)

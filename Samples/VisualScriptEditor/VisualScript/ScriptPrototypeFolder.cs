@@ -6,7 +6,7 @@ namespace VisualScript
 {
     /// <summary>
     /// Adapts DomNode to prototype folders</summary>
-    class VisualScriptPrototypeFolder : Sce.Atf.Controls.Adaptable.Graphs.PrototypeFolder
+    class ScriptPrototypeFolder : Sce.Atf.Controls.Adaptable.Graphs.PrototypeFolder
     {
         /// <summary>
         /// Gets name attribute for prototype folder</summary>

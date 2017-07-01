@@ -10,28 +10,28 @@ namespace VisualScript
     /// on the group with the internal module where it was connected before grouping.
     /// A group pin is a pin on a grouped sub-circuit; it extends the information
     /// of a pin to preserve the internal pin/module which is connected to the outside circuit.</summary>
-    public class VisualScriptGroupPin : Sce.Atf.Controls.Adaptable.Graphs.GroupPin, ICircuitGroupPin<VisualScriptModule>
+    public class ScriptGroupSocket : Sce.Atf.Controls.Adaptable.Graphs.GroupPin, ICircuitGroupPin<ScriptNode>
     {
         // for bases class Pin
         /// <summary>
         /// Gets type attribute for group pin</summary>
         protected override AttributeInfo TypeAttribute
         {
-            get { return VisualScriptBasicSchema.pinType.typeAttribute; }
+            get { return VisualScriptBasicSchema.socketType.typeAttribute; }
         }
 
         /// <summary>
         /// Gets name attribute for group pin</summary>
         protected override AttributeInfo NameAttribute
         {
-            get { return VisualScriptBasicSchema.pinType.nameAttribute; }
+            get { return VisualScriptBasicSchema.socketType.nameAttribute; }
         }
 
         /// <summary>
         /// Gets index (pin order in its sub-graph owner) attribute for group pin</summary>
         protected override AttributeInfo IndexAttribute
         {
-            get { return VisualScriptBasicSchema.groupPinType.indexAttribute; }
+            get { return VisualScriptBasicSchema.groupSocketType.indexAttribute; }
         }
 
         /// <summary>
@@ -39,44 +39,44 @@ namespace VisualScript
         /// Floating pin location y value is user defined (x value is auto-generated).</summary>
         protected override AttributeInfo PinYAttribute
         {
-            get { return VisualScriptBasicSchema.groupPinType.pinYAttribute; }
+            get { return VisualScriptBasicSchema.groupSocketType.pinYAttribute; }
         }
 
         /// <summary>
         /// Gets module (associated internal subelement) attribute for group pin</summary>
         protected override AttributeInfo ElementAttribute
         {
-            get { return VisualScriptBasicSchema.groupPinType.moduleAttribute; }
+            get { return VisualScriptBasicSchema.groupSocketType.moduleAttribute; }
         }
 
         /// <summary>
         /// Gets pin (associated internal subpin) attribute for group pin</summary>
         protected override AttributeInfo PinAttribute
         {
-            get { return VisualScriptBasicSchema.groupPinType.pinAttribute; }
+            get { return VisualScriptBasicSchema.groupSocketType.pinAttribute; }
         }
 
         /// <summary>
         /// Gets pinned attribute for group pin</summary>
         protected override AttributeInfo PinnedAttribute
         {
-            get { return VisualScriptBasicSchema.groupPinType.pinnedAttribute; }
+            get { return VisualScriptBasicSchema.groupSocketType.pinnedAttribute; }
         }
 
         /// <summary>
         /// Gets visible attribute for group pin</summary>
         protected override AttributeInfo VisibleAttribute
         {
-            get { return VisualScriptBasicSchema.groupPinType.visibleAttribute; }
+            get { return VisualScriptBasicSchema.groupSocketType.visibleAttribute; }
         }
 
         #region ICircuitGroupPin members (needed for drawing)
 
         /// <summary>
         /// Gets the internal module corresponding to this group pin</summary>
-        VisualScriptModule ICircuitGroupPin<VisualScriptModule>.InternalElement
+        ScriptNode ICircuitGroupPin<ScriptNode>.InternalElement
         {
-            get { return GetReference<VisualScriptModule>(VisualScriptBasicSchema.groupPinType.moduleAttribute); }
+            get { return GetReference<ScriptNode>(VisualScriptBasicSchema.groupSocketType.moduleAttribute); }
         
         }    
 

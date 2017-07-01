@@ -10,7 +10,7 @@ namespace VisualScript
 {
     /// <summary>
     /// Adapts DomNode to group in a circuit</summary>
-    public class VisualScriptGroup : Sce.Atf.Controls.Adaptable.Graphs.Group, ICircuitGroupType<VisualScriptModule, VisualScriptConnection, ICircuitPin>, IGraph<VisualScriptModule, VisualScriptConnection, ICircuitPin>
+    public class ScriptGroup : Sce.Atf.Controls.Adaptable.Graphs.Group, ICircuitGroupType<ScriptNode, ScriptNodeConnection, ICircuitPin>, IGraph<ScriptNode, ScriptNodeConnection, ICircuitPin>
     {
         /// <summary>
         /// Performs initialization when the adapter is connected to the group's DomNode.
@@ -18,12 +18,12 @@ namespace VisualScript
         /// creates a DomNodeListAdapter for various circuit elements.</summary>
         protected override void OnNodeSet()
         {
-            m_modules = new DomNodeListAdapter<VisualScriptModule>(DomNode, VisualScriptBasicSchema.groupType.moduleChild);
-            m_connections = new DomNodeListAdapter<VisualScriptConnection>(DomNode, VisualScriptBasicSchema.groupType.connectionChild);
-            new DomNodeListAdapter<VisualScriptAnnotation>(DomNode, VisualScriptBasicSchema.groupType.annotationChild);
-            new DomNodeListAdapter<VisualScriptGroupPin>(DomNode, VisualScriptBasicSchema.groupType.inputChild);
-            new DomNodeListAdapter<VisualScriptGroupPin>(DomNode, VisualScriptBasicSchema.groupType.outputChild);
-            m_thisModule = DomNode.Cast<VisualScriptModule>();
+            m_modules = new DomNodeListAdapter<ScriptNode>(DomNode, VisualScriptBasicSchema.groupType.moduleChild);
+            m_connections = new DomNodeListAdapter<ScriptNodeConnection>(DomNode, VisualScriptBasicSchema.groupType.connectionChild);
+            new DomNodeListAdapter<ScriptAnnotation>(DomNode, VisualScriptBasicSchema.groupType.annotationChild);
+            new DomNodeListAdapter<ScriptGroupSocket>(DomNode, VisualScriptBasicSchema.groupType.inputChild);
+            new DomNodeListAdapter<ScriptGroupSocket>(DomNode, VisualScriptBasicSchema.groupType.outputChild);
+            m_thisModule = DomNode.Cast<ScriptNode>();
 
             base.OnNodeSet();
         }
@@ -184,7 +184,7 @@ namespace VisualScript
         /// to preserve the internal pin/module which is connected to the outside circuit.</summary>
         protected override DomNodeType GroupPinType
         {
-            get { return VisualScriptBasicSchema.groupPinType.Type; }
+            get { return VisualScriptBasicSchema.groupSocketType.Type; }
         }
 
         // optional child info
@@ -200,18 +200,18 @@ namespace VisualScript
 
         /// <summary>
         /// Gets the sequence of nodes that are children of this group (hierarchical graph node)</summary>
-        IEnumerable<VisualScriptModule> IHierarchicalGraphNode<VisualScriptModule, VisualScriptConnection, ICircuitPin>.SubNodes
+        IEnumerable<ScriptNode> IHierarchicalGraphNode<ScriptNode, ScriptNodeConnection, ICircuitPin>.SubNodes
         {
             get
             {
-                var graph = (IGraph<VisualScriptModule, VisualScriptConnection, ICircuitPin>)this;
+                var graph = (IGraph<ScriptNode, ScriptNodeConnection, ICircuitPin>)this;
                 return graph.Nodes;
             }
         }
 
         /// <summary>
         /// Gets the group's (subgraph's) internal edges</summary>
-        IEnumerable<VisualScriptConnection> ICircuitGroupType<VisualScriptModule, VisualScriptConnection, ICircuitPin>.SubEdges
+        IEnumerable<ScriptNodeConnection> ICircuitGroupType<ScriptNode, ScriptNodeConnection, ICircuitPin>.SubEdges
         {
             get { return m_connections; }
         }
@@ -222,14 +222,14 @@ namespace VisualScript
 
         /// <summary>
         /// Gets the nodes in the group</summary>
-        IEnumerable<VisualScriptModule> IGraph<VisualScriptModule, VisualScriptConnection, ICircuitPin>.Nodes
+        IEnumerable<ScriptNode> IGraph<ScriptNode, ScriptNodeConnection, ICircuitPin>.Nodes
         {
             get { return m_modules; }
         }
 
         /// <summary>
         /// Gets the edges in the group</summary>
-        IEnumerable<VisualScriptConnection> IGraph<VisualScriptModule, VisualScriptConnection, ICircuitPin>.Edges
+        IEnumerable<ScriptNodeConnection> IGraph<ScriptNode, ScriptNodeConnection, ICircuitPin>.Edges
         {
             get
             {
@@ -239,8 +239,8 @@ namespace VisualScript
 
         #endregion
 
-        private DomNodeListAdapter<VisualScriptModule> m_modules;
-        private DomNodeListAdapter<VisualScriptConnection> m_connections;
-        private VisualScriptModule m_thisModule;
+        private DomNodeListAdapter<ScriptNode> m_modules;
+        private DomNodeListAdapter<ScriptNodeConnection> m_connections;
+        private ScriptNode m_thisModule;
     }
 }

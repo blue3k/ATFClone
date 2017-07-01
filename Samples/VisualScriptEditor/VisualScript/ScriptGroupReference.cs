@@ -9,9 +9,9 @@ using Sce.Atf.Dom;
 
 namespace VisualScript
 {
-    public class VisualScriptGroupReference : Sce.Atf.Controls.Adaptable.Graphs.GroupReference,
-         ICircuitGroupType<VisualScriptModule, VisualScriptConnection, ICircuitPin>, // for circuit render
-         IReference<VisualScriptModule>
+    public class ScriptGroupReference : Sce.Atf.Controls.Adaptable.Graphs.GroupReference,
+         ICircuitGroupType<ScriptNode, ScriptNodeConnection, ICircuitPin>, // for circuit render
+         IReference<ScriptNode>
     {
         #region Fill required AttributeInfos 
         /// <summary>
@@ -124,7 +124,7 @@ namespace VisualScript
         /// to preserve the internal pin/module which is connected to the outside circuit.</summary>
         protected override DomNodeType GroupPinType
         {
-            get { return VisualScriptBasicSchema.groupPinType.Type; }
+            get { return VisualScriptBasicSchema.groupSocketType.Type; }
         }
 
 
@@ -137,25 +137,25 @@ namespace VisualScript
 
         #region ICircuitGroupType members
 
-        IEnumerable<VisualScriptModule> IHierarchicalGraphNode<VisualScriptModule, VisualScriptConnection, ICircuitPin>.SubNodes
+        IEnumerable<ScriptNode> IHierarchicalGraphNode<ScriptNode, ScriptNodeConnection, ICircuitPin>.SubNodes
         {
             get
             {
                 if (Group != null)
-                    return Group.Elements.AsIEnumerable<VisualScriptModule>();
-                return EmptyEnumerable<VisualScriptModule>.Instance;
+                    return Group.Elements.AsIEnumerable<ScriptNode>();
+                return EmptyEnumerable<ScriptNode>.Instance;
             }
         }
 
         /// <summary>
         /// Gets the group's (subgraph's) internal edges</summary>
-        IEnumerable<VisualScriptConnection> ICircuitGroupType<VisualScriptModule, VisualScriptConnection, ICircuitPin>.SubEdges
+        IEnumerable<ScriptNodeConnection> ICircuitGroupType<ScriptNode, ScriptNodeConnection, ICircuitPin>.SubEdges
         {
             get
             {
                 if (Group != null)
-                    return Group.Wires.AsIEnumerable<VisualScriptConnection>();
-                return EmptyEnumerable<VisualScriptConnection>.Instance;
+                    return Group.Wires.AsIEnumerable<ScriptNodeConnection>();
+                return EmptyEnumerable<ScriptNodeConnection>.Instance;
             }
         }
 
@@ -163,14 +163,14 @@ namespace VisualScript
 
         #region IReference<Module> members
 
-        bool IReference<VisualScriptModule>.CanReference(VisualScriptModule item)
+        bool IReference<ScriptNode>.CanReference(ScriptNode item)
         {
-            return item.Is<VisualScriptGroup>();
+            return item.Is<ScriptGroup>();
         }
 
-        VisualScriptModule IReference<VisualScriptModule>.Target
+        ScriptNode IReference<ScriptNode>.Target
         {
-            get { return Template.Target.As<VisualScriptModule>(); }
+            get { return Template.Target.As<ScriptNode>(); }
             set
             {
                 throw new InvalidOperationException("The group template determines the target");

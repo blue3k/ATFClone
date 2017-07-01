@@ -5,7 +5,7 @@ using Sce.Atf.Controls.Adaptable.Graphs;
 
 namespace VisualScript
 {
-    public class VisualScriptMissingModule : VisualScriptModule
+    public class MissingScriptNode : ScriptNode
     {
         protected override void OnNodeSet()
         {

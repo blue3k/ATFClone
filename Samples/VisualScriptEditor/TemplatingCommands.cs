@@ -52,9 +52,9 @@ namespace VisualScriptEditor
             {
                 foreach (var item in items)
                 {
-                    if (item.Is<IReference<VisualScriptModule>>())
+                    if (item.Is<IReference<ScriptNode>>())
                         return false; // guess we don't need nested referencing
-                    bool validCandiate = circuitEditingContext.Selection.Contains(item) && item.Is<VisualScriptModule>() ;
+                    bool validCandiate = circuitEditingContext.Selection.Contains(item) && item.Is<ScriptNode>() ;
                     if (!validCandiate)
                         return false;
                 }
@@ -91,9 +91,9 @@ namespace VisualScriptEditor
             var replacingItems = new List<object>();
             foreach (var item in itemsArray)
             {
-                if (item.Is<VisualScriptModule>())
+                if (item.Is<ScriptNode>())
                 {
-                    var module = item.Cast<VisualScriptModule>();
+                    var module = item.Cast<ScriptNode>();
                     if (module.SourceGuid != Guid.Empty)
                     {
                         var existingTemplate = TemplatingContext.SearchForTemplateByGuid(TemplatingContext.RootFolder,  module.SourceGuid);
@@ -185,7 +185,7 @@ namespace VisualScriptEditor
                 foreach (var item in items)
                 {
                     bool validCandiate = circuitEditingContext.Selection.Contains(item) &&
-                        (item.Is<VisualScriptGroupReference>() || item.Is<VisualScriptModuleReference>());
+                        (item.Is<VisualScript.ScriptGroupReference>() || item.Is<ScriptNodeReference>());
                     if (!validCandiate)
                         return false;
                     if (CircuitUtil.IsTemplateTargetMissing(item))
@@ -224,36 +224,36 @@ namespace VisualScriptEditor
 
 
             var originalRefs = items.Select(x => x.Cast<DomNode>()).ToArray();
-            var domNodes = items.Select(x => x.Cast<IReference<VisualScriptModule>>().Target.DomNode).ToArray();
+            var domNodes = items.Select(x => x.Cast<IReference<ScriptNode>>().Target.DomNode).ToArray();
             var itemCopies = DomNode.Copy(domNodes); // DOM deep copy
              // Position and Expanded properties copy from the referencing nodes
             for (int i = 0; i < itemCopies.Length; ++i)
             {
                 var copy = itemCopies[i];
-                copy.Cast<VisualScriptModule>().Bounds = originalRefs[i].Cast<VisualScriptModule>().Bounds;
-                copy.Cast<VisualScriptModule>().Position = originalRefs[i].Cast<VisualScriptModule>().Position;
-                copy.Cast<VisualScriptModule>().SourceGuid = originalRefs[i].Cast<VisualScriptModule>().SourceGuid;
-                if (originalRefs[i].Is<VisualScriptGroupReference>())
+                copy.Cast<ScriptNode>().Bounds = originalRefs[i].Cast<ScriptNode>().Bounds;
+                copy.Cast<ScriptNode>().Position = originalRefs[i].Cast<ScriptNode>().Position;
+                copy.Cast<ScriptNode>().SourceGuid = originalRefs[i].Cast<ScriptNode>().SourceGuid;
+                if (originalRefs[i].Is<VisualScript.ScriptGroupReference>())
                 {
-                    copy.Cast<VisualScriptGroup>().Expanded = originalRefs[i].Cast<VisualScriptGroupReference>().Expanded;
+                    copy.Cast<VisualScript.ScriptGroup>().Expanded = originalRefs[i].Cast<VisualScript.ScriptGroupReference>().Expanded;
                 }
 
                 // reroute external connections from original modules to replaced template instances.
-                externalConnections = externalConnectionsDict[originalRefs[i].Cast<VisualScriptModule>()];
+                externalConnections = externalConnectionsDict[originalRefs[i].Cast<ScriptNode>()];
                 foreach (var connection in externalConnections)
                 {
                     if (connection.InputElement.DomNode == originalRefs[i])
                     {
                         // input pin, i.e. pin on element that receives connection as input
                         int pinIndex = connection.InputPin.Index;
-                        connection.InputPin = copy.Cast<VisualScriptModule>().ElementType.GetInputPin(pinIndex);
-                        connection.InputElement = copy.Cast<VisualScriptModule>();
+                        connection.InputPin = copy.Cast<ScriptNode>().ElementType.GetInputPin(pinIndex);
+                        connection.InputElement = copy.Cast<ScriptNode>();
                         connection.InputPinTarget = null; // reset
                     }
                     else if (connection.OutputElement.DomNode == originalRefs[i])//output pin, i.e., pin on element that receives connection as output
                     {
-                        connection.OutputPin = copy.Cast<VisualScriptModule>().ElementType.GetOutputPin(connection.OutputPin.Index);
-                        connection.OutputElement = copy.Cast<VisualScriptModule>();
+                        connection.OutputPin = copy.Cast<ScriptNode>().ElementType.GetOutputPin(connection.OutputPin.Index);
+                        connection.OutputElement = copy.Cast<ScriptNode>();
                         connection.OutputPinTarget = null;
 
                     }
@@ -316,7 +316,7 @@ namespace VisualScriptEditor
                     // read existing document using standard XML reader
                     using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                     {
-                        var reader = new VisualScriptReader(m_schemaLoader);
+                        var reader = new ScriptReader(m_schemaLoader);
                         var root = reader.Read(stream, uri);
                         var toFolder = CreateTemplateFolder();
                         reader.ImportTemplates(toFolder.DomNode, root, uri);
@@ -336,9 +336,9 @@ namespace VisualScriptEditor
             var oldNodeGuidDictionary = new Dictionary<string, DomNode>();
             foreach (var node in TemplatingContext.RootFolder.DomNode.Subtree)
             {
-                if (node.Is<VisualScriptTemplate>())
+                if (node.Is<ScriptTemplate>())
                 {
-                    var template = node.Cast<VisualScriptTemplate>();
+                    var template = node.Cast<ScriptTemplate>();
                     if (template.Guid != Guid.Empty)
                         oldNodeGuidDictionary[template.Guid.ToString()] = node;
                 }
@@ -356,7 +356,7 @@ namespace VisualScriptEditor
                 {
                     using (FileStream stream = new FileStream(templateFolder.Url.LocalPath, FileMode.Open, FileAccess.Read))
                     {
-                        var reader = new VisualScriptReader(m_schemaLoader);
+                        var reader = new ScriptReader(m_schemaLoader);
                         var rootNode = reader.Read(stream, templateFolder.Url);
 
                         foreach (var newnode in rootNode.Subtree)
@@ -379,12 +379,12 @@ namespace VisualScriptEditor
                 // currently two types that reference templates: GroupInstance or ModuleInstance
                 DomNode refNode;
 
-                var groupInstance = node.As<VisualScriptGroupReference>();
+                var groupInstance = node.As<VisualScript.ScriptGroupReference>();
                 if (groupInstance != null)
                 {
                     if (newNodeGuidDictionary.TryGetValue(groupInstance.Template.Guid.ToString(), out refNode))
                     {
-                        groupInstance.Template = refNode.As<VisualScriptTemplate>();
+                        groupInstance.Template = refNode.As<ScriptTemplate>();
    
                         // need to reset pin targets due to DomNode replacements 
                         var graphContainer = groupInstance.DomNode.Parent.Cast<ICircuitContainer>();
@@ -401,12 +401,12 @@ namespace VisualScriptEditor
                     }                 
                 }
 
-                var moduleReference = node.As<VisualScriptModuleReference>();
+                var moduleReference = node.As<ScriptNodeReference>();
                 if (moduleReference != null)
                 {
                     if (newNodeGuidDictionary.TryGetValue(moduleReference.Template.Guid.ToString(), out refNode))
                     {
-                        moduleReference.Template = refNode.As<VisualScriptTemplate>();
+                        moduleReference.Template = refNode.As<ScriptTemplate>();
 
                         // need to reset pin targets due to DomNode replacements 
                         var graphContainer = moduleReference.DomNode.Parent.Cast<ICircuitContainer>();
@@ -434,6 +434,6 @@ namespace VisualScriptEditor
         }
 
         [Import]
-        private VisualScriptBasicSchemaLoader m_schemaLoader= null;
+        private BasicSchemaLoader m_schemaLoader= null;
     }
 }

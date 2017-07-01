@@ -20,7 +20,7 @@ namespace VisualScriptEditor
     /// contexts within a single circuit document, because each sub-circuit has its own
     /// editing context.</summary>
     public class VisualScriptEditingContext : Sce.Atf.Controls.Adaptable.Graphs.CircuitEditingContext, 
-        IEditableGraphContainer<VisualScriptModule, VisualScriptConnection, ICircuitPin>
+        IEditableGraphContainer<ScriptNode, ScriptNodeConnection, ICircuitPin>
     {
         /// <summary>
         /// Gets DomNodeType of Wire</summary>
@@ -36,9 +36,9 @@ namespace VisualScriptEditor
         /// <param name="newParent">New module parent</param>
         /// <param name="movingObjects">Objects being moved</param>
         /// <returns>True iff objects can be moved to new parent</returns>
-        bool IEditableGraphContainer<VisualScriptModule, VisualScriptConnection, ICircuitPin>.CanMove(object newParent, IEnumerable<object> movingObjects)
+        bool IEditableGraphContainer<ScriptNode, ScriptNodeConnection, ICircuitPin>.CanMove(object newParent, IEnumerable<object> movingObjects)
         {
-            if (newParent.Is<IReference<VisualScriptModule>>())
+            if (newParent.Is<IReference<ScriptNode>>())
                 return false; 
             var editableGraphContainer =
                 DomNode.Cast<VisualScriptEditingContext>() as IEditableGraphContainer<Element, Wire, ICircuitPin>;
@@ -49,7 +49,7 @@ namespace VisualScriptEditor
         /// Move the given nodes into the container</summary>
         /// <param name="newParent">New container</param>
         /// <param name="movingObjects">Nodes to move</param>
-        void IEditableGraphContainer<VisualScriptModule, VisualScriptConnection, ICircuitPin>.Move(object newParent, IEnumerable<object> movingObjects)
+        void IEditableGraphContainer<ScriptNode, ScriptNodeConnection, ICircuitPin>.Move(object newParent, IEnumerable<object> movingObjects)
         {
             var editableGraphContainer =
                DomNode.Cast<VisualScriptEditingContext>() as IEditableGraphContainer<Element, Wire, ICircuitPin>;
@@ -61,7 +61,7 @@ namespace VisualScriptEditor
         /// <param name="container">Container to resize</param>
         /// <param name="borderPart">Part of border to resize</param>
         /// <returns>True iff the container border can be resized</returns>
-        bool IEditableGraphContainer<VisualScriptModule, VisualScriptConnection, ICircuitPin>.CanResize(object container, DiagramBorder borderPart)
+        bool IEditableGraphContainer<ScriptNode, ScriptNodeConnection, ICircuitPin>.CanResize(object container, DiagramBorder borderPart)
         {
             var editableGraphContainer =
                DomNode.Cast<VisualScriptEditingContext>() as IEditableGraphContainer<Element, Wire, ICircuitPin>;
@@ -73,7 +73,7 @@ namespace VisualScriptEditor
         /// <param name="container">Container to resize</param>
         /// <param name="newWidth">New container width</param>
         /// <param name="newHeight">New container height</param>
-        void IEditableGraphContainer<VisualScriptModule, VisualScriptConnection, ICircuitPin>.Resize(object container, int newWidth, int newHeight)
+        void IEditableGraphContainer<ScriptNode, ScriptNodeConnection, ICircuitPin>.Resize(object container, int newWidth, int newHeight)
         {
             var editableGraphContainer =
                  DomNode.Cast<VisualScriptEditingContext>() as IEditableGraphContainer<Element, Wire, ICircuitPin>;
@@ -90,7 +90,7 @@ namespace VisualScriptEditor
         /// <param name="toNode">"To" node</param>
         /// <param name="toRoute">"To" edge route</param>
         /// <returns>Whether the "from" node/route can be connected to the "to" node/route</returns>
-        public bool CanConnect(VisualScriptModule fromNode, ICircuitPin fromRoute, VisualScriptModule toNode, ICircuitPin toRoute)
+        public bool CanConnect(ScriptNode fromNode, ICircuitPin fromRoute, ScriptNode toNode, ICircuitPin toRoute)
         {
             var editableGraphContainer =
                DomNode.Cast<VisualScriptEditingContext>() as IEditableGraphContainer<Element, Wire, ICircuitPin>;
@@ -106,18 +106,18 @@ namespace VisualScriptEditor
         /// <param name="toRoute">"To" edge route</param>
         /// <param name="existingEdge">Existing edge that is being reconnected, or null if new edge</param>
         /// <returns>New edge connecting the "from" node/route to the "to" node/route</returns>
-        public VisualScriptConnection Connect(VisualScriptModule fromNode, ICircuitPin fromRoute, VisualScriptModule toNode, ICircuitPin toRoute, VisualScriptConnection existingEdge)
+        public ScriptNodeConnection Connect(ScriptNode fromNode, ICircuitPin fromRoute, ScriptNode toNode, ICircuitPin toRoute, ScriptNodeConnection existingEdge)
         {
             var editableGraphContainer =
             DomNode.Cast<VisualScriptEditingContext>() as IEditableGraphContainer<Element, Wire, ICircuitPin>;
-            return editableGraphContainer.Connect(fromNode, fromRoute, toNode, toRoute, existingEdge).Cast<VisualScriptConnection>();
+            return editableGraphContainer.Connect(fromNode, fromRoute, toNode, toRoute, existingEdge).Cast<ScriptNodeConnection>();
         }
 
         /// <summary>
         /// Gets whether the edge can be disconnected</summary>
         /// <param name="edge">Edge to disconnect</param>
         /// <returns>Whether the edge can be disconnected</returns>
-        public bool CanDisconnect(VisualScriptConnection edge)
+        public bool CanDisconnect(ScriptNodeConnection edge)
         {
             var editableGraphContainer =
               DomNode.Cast<VisualScriptEditingContext>() as IEditableGraphContainer<Element, Wire, ICircuitPin>;
@@ -127,7 +127,7 @@ namespace VisualScriptEditor
         /// <summary>
         /// Disconnects the edge</summary>
         /// <param name="edge">Edge to disconnect</param>
-        public void Disconnect(VisualScriptConnection edge)
+        public void Disconnect(ScriptNodeConnection edge)
         {
             var editableGraphContainer =
                 DomNode.Cast<VisualScriptEditingContext>() as IEditableGraphContainer<Element, Wire, ICircuitPin>;
@@ -145,8 +145,8 @@ namespace VisualScriptEditor
             if (viewingContext == null || control == null)
                 return null;
 
-            var graphAdapter = control.As<D2dGraphAdapter<VisualScriptModule, VisualScriptConnection, ICircuitPin>>();
-            GraphHitRecord<VisualScriptModule, VisualScriptConnection, ICircuitPin> hitRecord = graphAdapter.Pick(point);
+            var graphAdapter = control.As<D2dGraphAdapter<ScriptNode, ScriptNodeConnection, ICircuitPin>>();
+            GraphHitRecord<ScriptNode, ScriptNodeConnection, ICircuitPin> hitRecord = graphAdapter.Pick(point);
             var result = new GraphHitRecord<Element, Wire, ICircuitPin>(hitRecord.Node, hitRecord.Part);
             result.SubItem = hitRecord.SubItem;
             result.SubPart = hitRecord.SubPart;

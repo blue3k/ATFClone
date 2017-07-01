@@ -41,7 +41,7 @@ namespace VisualScriptEditor
                 StandardCommand.EditGroup.Equals(commandTag))
             {
                 var selectionContext = ContextRegistry.GetActiveContext<ISelectionContext>();
-                var newGroup = selectionContext.GetLastSelected<VisualScriptGroup>();
+                var newGroup = selectionContext.GetLastSelected<ScriptGroup>();
                 if (newGroup != null)
                 {
                     // The "Emitter Vector" dynamic property.

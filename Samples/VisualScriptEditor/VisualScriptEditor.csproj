@@ -70,16 +70,16 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="VisualScriptAnnotation.cs" />
-    <Compile Include="VisualScriptCategoryUniqueIdValidator.cs" />
-    <Compile Include="schemas\VisualScriptBasicSchema1.cs">
+    <Compile Include="schemas\VisualScriptBasicSchema.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>VisualScriptBasicSchema.xsd</DependentUpon>
     </Compile>
-    <Compile Include="VisualScriptReader.cs" />
-    <Compile Include="VisualScriptRenderer.cs" />
-    <Compile Include="VisualScriptWriter.cs" />
+    <Compile Include="VisualScript\ScriptAnnotation.cs" />
+    <Compile Include="VisualScript\CategoryUniqueIdValidator.cs" />
+    <Compile Include="VisualScript\ScriptReader.cs" />
+    <Compile Include="VisualScript\ScriptRenderer.cs" />
+    <Compile Include="VisualScript\ScriptWriter.cs" />
     <Compile Include="DocVersionTransforms\VisualScriptMigrator.cs" />
     <Compile Include="DocVersionTransforms\upgrades\CircuitEditor1to2.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -96,45 +96,45 @@
     </Compile>
     <Compile Include="Expression\ExpressionManager.cs" />
     <Compile Include="GroupingCommands.cs" />
-    <Compile Include="VisualScriptGroupReference.cs" />
+    <Compile Include="VisualScript\ScriptGroupReference.cs" />
     <Compile Include="HelpAboutCommand.cs" />
-    <Compile Include="VisualScriptLayerFolder.cs" />
+    <Compile Include="VisualScript\ScriptLayerFolder.cs" />
     <Compile Include="LayeringCommands.cs" />
-    <Compile Include="VisualScriptMissingModule.cs" />
-    <Compile Include="VisualScriptModuleElementInfo.cs" />
-    <Compile Include="VisualScriptModuleProperties.cs" />
-    <Compile Include="VisualScriptModuleReference.cs" />
-    <Compile Include="VisualScriptPrototype.cs" />
-    <Compile Include="PrototypeFolder.cs" />
+    <Compile Include="VisualScript\MissingScriptNode.cs" />
+    <Compile Include="VisualScript\ScriptNodeElementInfo.cs" />
+    <Compile Include="VisualScript\ScriptNodeProperties.cs" />
+    <Compile Include="VisualScript\ScriptNodeReference.cs" />
+    <Compile Include="VisualScript\ScriptPrototype.cs" />
+    <Compile Include="VisualScript\ScriptPrototypeFolder.cs" />
     <Compile Include="PrototypingContext.cs" />
-    <Compile Include="VisualScriptConnection.cs" />
-    <Compile Include="VisualScriptModule.cs" />
-    <Compile Include="VisualScriptModuleRef.cs" />
-    <Compile Include="VisualScript.cs" />
-    <Compile Include="VisualScriptDocument.cs" />
+    <Compile Include="VisualScript\ScriptNodeConnection.cs" />
+    <Compile Include="VisualScript\ScriptNode.cs" />
+    <Compile Include="VisualScript\ScriptNodeRef.cs" />
+    <Compile Include="VisualScript\VisualScript.cs" />
+    <Compile Include="VisualScript\ScriptDocument.cs" />
     <Compile Include="VisualScriptEditingContext.cs" />
-    <Compile Include="VisualScriptGroup.cs" />
-    <Compile Include="VisualScriptGroupPin.cs" />
+    <Compile Include="VisualScript\ScriptGroup.cs" />
+    <Compile Include="VisualScript\ScriptGroupSocket.cs" />
     <Compile Include="LayeringContext.cs" />
-    <Compile Include="VisualScriptSocket.cs" />
-    <Compile Include="VisualScriptValidator.cs" />
+    <Compile Include="VisualScript\ScriptNodeSocket.cs" />
+    <Compile Include="VisualScript\ScriptValidator.cs" />
     <Compile Include="Resources\DynamicPropertyForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Resources\DynamicPropertyForm.Designer.cs">
       <DependentUpon>DynamicPropertyForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="VisualScriptTemplate.cs" />
-    <Compile Include="VisualScriptTemplateFolder.cs" />
+    <Compile Include="VisualScript\ScriptTemplate.cs" />
+    <Compile Include="VisualScript\ScriptTemplateFolder.cs" />
     <Compile Include="TemplatingCommands.cs" />
     <Compile Include="TemplatingContext.cs" />
     <Compile Include="PrintableDocument.cs" />
     <Compile Include="VisualScriptEditor.cs" />
-    <Compile Include="VisualScriptModuleManager.cs" />
-    <Compile Include="VisualScriptBasicSchemaLoader.cs" />
+    <Compile Include="VisualScript\ScriptNodeDefinitionManager.cs" />
+    <Compile Include="VisualScript\BasicSchemaLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources.cs" />
+    <Compile Include="VisualScript\Resources.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Expression\ExpressionDlg.resx">
@@ -186,7 +186,7 @@
       <SubType>Designer</SubType>
       <Generator>DomGenVS</Generator>
       <CustomToolNamespace>VisualScript</CustomToolNamespace>
-      <LastGenOutput>VisualScriptBasicSchema1.cs</LastGenOutput>
+      <LastGenOutput>VisualScriptBasicSchema.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,7 @@ using Sce.Atf.Dom;
 
 namespace VisualScript
 {
-    internal class VisualScriptCategoryUniqueIdValidator : Sce.Atf.Dom.CategoryUniqueIdValidator
+    internal class CategoryUniqueIdValidator : Sce.Atf.Dom.CategoryUniqueIdValidator
     {
 
         internal interface IDocumentTag { }
@@ -13,7 +13,7 @@ namespace VisualScript
         /// Get the id category of the given node</summary>
         protected override object GetIdCategory(DomNode node)
         {
-	        return node.GetTag(typeof (VisualScriptCategoryUniqueIdValidator.IDocumentTag));
+	        return node.GetTag(typeof (CategoryUniqueIdValidator.IDocumentTag));
         }
     }
 }

@@ -33,13 +33,13 @@ namespace VisualScriptEditor
             {
                 if (m_rootFolder == null)
                 {
-                    m_rootFolder = GetChild<VisualScriptTemplateFolder>(VisualScriptBasicSchema.visualScriptDocumentType.templateFolderChild);
+                    m_rootFolder = GetChild<ScriptTemplateFolder>(VisualScriptBasicSchema.visualScriptDocumentType.templateFolderChild);
                     if (m_rootFolder == null) // create one if no root folder is defined yet
                     {
                         var rootFolderNode = new DomNode(VisualScriptBasicSchema.templateFolderType.Type);
-                        rootFolderNode.Cast<VisualScriptTemplateFolder>().Name = "_TemplateRoot_";
+                        rootFolderNode.Cast<ScriptTemplateFolder>().Name = "_TemplateRoot_";
                         DomNode.SetChild(VisualScriptBasicSchema.visualScriptDocumentType.templateFolderChild, rootFolderNode);
-                        m_rootFolder = rootFolderNode.Cast<VisualScriptTemplateFolder>();
+                        m_rootFolder = rootFolderNode.Cast<ScriptTemplateFolder>();
                     }
                 }
                 return m_rootFolder;
@@ -59,7 +59,7 @@ namespace VisualScriptEditor
         /// <returns>True iff the reference can reference the specified target item</returns>
         public override bool CanReference(object item)
         {
-            return item.Is<VisualScriptTemplate>() && item.Cast<VisualScriptTemplate>().Target.Is<VisualScriptModule>();
+            return item.Is<ScriptTemplate>() && item.Cast<ScriptTemplate>().Target.Is<ScriptNode>();
         }
 
         /// <summary>
@@ -67,19 +67,19 @@ namespace VisualScriptEditor
         /// <param name="item">Item to create reference for</param>
         public override object CreateReference(object item)
         {
-            var template = item.Cast<VisualScriptTemplate>();
-            if (template.Target.Is<VisualScriptGroup>())
+            var template = item.Cast<ScriptTemplate>();
+            if (template.Target.Is<VisualScript.ScriptGroup>())
             {
-                var groupReference = new DomNode(VisualScriptBasicSchema.groupTemplateRefType.Type).Cast<VisualScriptGroupReference>();
+                var groupReference = new DomNode(VisualScriptBasicSchema.groupTemplateRefType.Type).Cast<VisualScript.ScriptGroupReference>();
                 groupReference.Template = template;
                 groupReference.Id = template.Name;
                 groupReference.Name = template.Name;
                 groupReference.Group.SourceGuid = template.Guid;
                 return groupReference;
             }
-            if (template.Target.Is<VisualScriptModule>())
+            if (template.Target.Is<ScriptNode>())
             {
-                var moduleReference = new DomNode(VisualScriptBasicSchema.moduleTemplateRefType.Type).Cast<VisualScriptModuleReference>();
+                var moduleReference = new DomNode(VisualScriptBasicSchema.moduleTemplateRefType.Type).Cast<ScriptNodeReference>();
                 moduleReference.Template = template;
                 moduleReference.Id = template.Name;
                 moduleReference.Name = template.Name;
@@ -92,12 +92,12 @@ namespace VisualScriptEditor
         private void DomNode_ChildRemoved(object sender, ChildEventArgs e)
         {
             // if a template is deleted, turn template references into copy-instances
-            if (!IsMovingItems && e.Child.Is<VisualScriptTemplate>())
+            if (!IsMovingItems && e.Child.Is<ScriptTemplate>())
             {
                 // we can use the ReferenceValidator which is attached to this (root) node to get all the references.
                 // note reference validation will happen later at the end of the transaction to remove the dangling references
                 var refValidator = this.As<ReferenceValidator>();
-                DomNode target = e.Child.Cast<VisualScriptTemplate>().Target;
+                DomNode target = e.Child.Cast<ScriptTemplate>().Target;
 
                 foreach (var reference in refValidator.GetReferences(target))
                 {
@@ -129,6 +129,6 @@ namespace VisualScriptEditor
             }
         }
 
-        private VisualScript.VisualScriptTemplateFolder m_rootFolder;
+        private VisualScript.ScriptTemplateFolder m_rootFolder;
     }
 }

@@ -6,7 +6,7 @@ namespace VisualScript
 {
     /// <summary>
     /// Adapts DomNode to script annotation, that is, note on the script</summary>
-    public class VisualScriptAnnotation : Sce.Atf.Controls.Adaptable.Graphs.Annotation
+    public class ScriptAnnotation : Sce.Atf.Controls.Adaptable.Graphs.Annotation
     {
         /// <summary>
         /// Gets annotation text attribute</summary>

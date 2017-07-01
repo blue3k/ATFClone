@@ -9,16 +9,16 @@ namespace VisualScript
 {
     /// <summary>
     /// Adapts DomNode to a circuit and observable context with change notification events</summary>
-    public class VisualScript : Sce.Atf.Controls.Adaptable.Graphs.Circuit, IGraph<VisualScriptModule, VisualScriptConnection, ICircuitPin>
+    public class VisualScript : Sce.Atf.Controls.Adaptable.Graphs.Circuit, IGraph<ScriptNode, ScriptNodeConnection, ICircuitPin>
     {
         /// <summary>
         /// Performs initialization when the adapter is connected to the circuit's DomNode</summary>
         protected override void OnNodeSet()
         {
             // cache these list wrapper objects
-            m_modules = new DomNodeListAdapter<VisualScriptModule>(DomNode, VisualScriptBasicSchema.visualScriptType.moduleChild);
-            m_connections = new DomNodeListAdapter<VisualScriptConnection>(DomNode, VisualScriptBasicSchema.visualScriptType.connectionChild);
-            new DomNodeListAdapter<VisualScriptAnnotation>(DomNode, VisualScriptBasicSchema.visualScriptType.annotationChild);
+            m_modules = new DomNodeListAdapter<ScriptNode>(DomNode, VisualScriptBasicSchema.visualScriptType.moduleChild);
+            m_connections = new DomNodeListAdapter<ScriptNodeConnection>(DomNode, VisualScriptBasicSchema.visualScriptType.connectionChild);
+            new DomNodeListAdapter<ScriptAnnotation>(DomNode, VisualScriptBasicSchema.visualScriptType.annotationChild);
             base.OnNodeSet();
         }
 
@@ -50,7 +50,7 @@ namespace VisualScript
         /// <summary>
         /// Gets all visible nodes in the circuit</summary>
         ///<remarks>IGraph.Nodes is called during circuit rendering, and picking(in reverse order).</remarks>
-        IEnumerable<VisualScriptModule> IGraph<VisualScriptModule, VisualScriptConnection, ICircuitPin>.Nodes
+        IEnumerable<ScriptNode> IGraph<ScriptNode, ScriptNodeConnection, ICircuitPin>.Nodes
         {
             get
             {
@@ -60,7 +60,7 @@ namespace VisualScript
 
         /// <summary>
         /// Gets enumeration of all connections between visible nodes in the circuit</summary>
-        IEnumerable<VisualScriptConnection> IGraph<VisualScriptModule, VisualScriptConnection, ICircuitPin>.Edges
+        IEnumerable<ScriptNodeConnection> IGraph<ScriptNode, ScriptNodeConnection, ICircuitPin>.Edges
         {
             get
             {
@@ -72,7 +72,7 @@ namespace VisualScript
         #endregion
        
 
-        private DomNodeListAdapter<VisualScriptModule> m_modules;
-        private DomNodeListAdapter<VisualScriptConnection> m_connections;
+        private DomNodeListAdapter<ScriptNode> m_modules;
+        private DomNodeListAdapter<ScriptNodeConnection> m_connections;
     }
 }

@@ -8,42 +8,42 @@ namespace VisualScript
 {
     /// <summary>
     /// Adapter for connections in a circuit</summary>
-    public class VisualScriptConnection : Wire, IGraphEdge<VisualScriptModule, ICircuitPin>
+    public class ScriptNodeConnection : Wire, IGraphEdge<ScriptNode, ICircuitPin>
     {
        
         #region IGraphEdge Members
 
         /// <summary>
         /// Gets edge's source node</summary>
-        VisualScriptModule IGraphEdge<VisualScriptModule>.FromNode
+        ScriptNode IGraphEdge<ScriptNode>.FromNode
         {
-            get { return OutputElement.Cast<VisualScriptModule>(); }
+            get { return OutputElement.Cast<ScriptNode>(); }
         }
 
         /// <summary>
         /// Gets the route taken from the source node</summary>
-        ICircuitPin IGraphEdge<VisualScriptModule, ICircuitPin>.FromRoute
+        ICircuitPin IGraphEdge<ScriptNode, ICircuitPin>.FromRoute
         {
             get { return OutputPin; }
         }
 
         /// <summary>
         /// Gets edge's destination node</summary>
-        VisualScriptModule IGraphEdge<VisualScriptModule>.ToNode
+        ScriptNode IGraphEdge<ScriptNode>.ToNode
         {
-            get { return InputElement.Cast<VisualScriptModule>(); }
+            get { return InputElement.Cast<ScriptNode>(); }
         }
 
         /// <summary>
         /// Gets the route taken to the destination node</summary>
-        ICircuitPin IGraphEdge<VisualScriptModule, ICircuitPin>.ToRoute
+        ICircuitPin IGraphEdge<ScriptNode, ICircuitPin>.ToRoute
         {
             get { return InputPin; }
         }
 
         /// <summary>
         /// Gets label on connection</summary>
-        string IGraphEdge<VisualScriptModule>.Label
+        string IGraphEdge<ScriptNode>.Label
         {
             get { return Label; }
         }

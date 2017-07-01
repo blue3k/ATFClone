@@ -110,14 +110,14 @@ namespace VisualScriptEditor
                 typeof(DomRecorder),                    // records and displays changes to the DOM for diagnostic purposes
 
                 typeof(VisualScriptEditor),                         // editor which manages circuit documents and controls
-                typeof(VisualScriptBasicSchemaLoader),                   // loads circuit schema and extends types
+                typeof(BasicSchemaLoader),                   // loads circuit schema and extends types
                 typeof(GroupingCommands),               // circuit group/ungroup commands
                 typeof(CircuitControlRegistry),         // circuit controls management
                 typeof(LayeringCommands),               // "Add Layer" command
                 typeof(GraphViewCommands),              // zooming with presets
                 typeof(PerformanceMonitor),             // displays the frame rate and memory usage
                 typeof(DefaultTabCommands),             // provides the default commands related to document tab Controls
-                typeof(VisualScriptModuleManagerModule),                   // component that defines circuit module types
+                typeof(ScriptNodeDefinitionManager),                   // component that defines circuit module types
                 typeof(TemplateLister),                 // template library for subgraph referencing or instancing 
                 typeof(TemplatingCommands),             // commands for promoting/demoting graph elements to/from template library 
                 //typeof(TemplatingSupervisor),         // templated instances copy-on-edit support(optionally)
