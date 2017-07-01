@@ -12,7 +12,8 @@ namespace VisualScript
     public class ScriptNode : Element
     {
         /// <summary>
-        /// Gets name attribute for module</summary>
+        /// Gets name attribute for node
+        /// </summary>
         protected override AttributeInfo NameAttribute
         {
             get { return VisualScriptBasicSchema.moduleType.nameAttribute; }

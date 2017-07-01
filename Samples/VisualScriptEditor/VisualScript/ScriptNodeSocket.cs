@@ -7,7 +7,7 @@ namespace VisualScript
     /// <summary>
     /// Adapts DomNode to a pin in a circuit; used in mastering and as a base
     /// class for GroupPin</summary>
-    class ScriptNodeSocket : Sce.Atf.Controls.Adaptable.Graphs.Pin
+    public class ScriptNodeSocket : Sce.Atf.Controls.Adaptable.Graphs.Pin
     {
         /// <summary>
         /// Gets type attribute of Pin</summary>

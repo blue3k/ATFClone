@@ -398,7 +398,7 @@ namespace Sce.Atf.Dom.Gen
         {
             var clrType = attribute.Type.ClrType;
             string attrTypeName = attribute.Type.Name;
-            int separator = attrTypeName.IndexOf(':');
+            int separator = attrTypeName.LastIndexOf(':');
             if (separator > 0) attrTypeName = attrTypeName.Substring(separator+1);
 
             StringEnumRule rule = attribute.Type.Rules.FirstOrDefault(x => x is StringEnumRule) as StringEnumRule;

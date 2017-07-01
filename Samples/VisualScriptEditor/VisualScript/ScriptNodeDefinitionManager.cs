@@ -13,7 +13,10 @@ using Sce.Atf.Controls.Adaptable.Graphs;
 using Sce.Atf.Dom;
 
 using PropertyDescriptor = Sce.Atf.Dom.PropertyDescriptor;
-
+using System.IO;
+using Sce.Atf.Controls.PropertyEditing;
+using System;
+using Sce.Atf.Adaptation;
 
 namespace VisualScript
 {
@@ -25,30 +28,44 @@ namespace VisualScript
     [Export(typeof(ScriptNodeDefinitionManager))]
     public class ScriptNodeDefinitionManager : IPaletteClient, IInitializable
     {
-        /// <summary>
-        /// Constructor</summary>
-        /// <param name="paletteService">Palette service</param>
-        /// <param name="schemaLoader">VisualScriptBasicSchema loader</param>
-        [ImportingConstructor]
-        public ScriptNodeDefinitionManager(
-            IPaletteService paletteService,
-            BasicSchemaLoader schemaLoader)
+        static readonly string[] stm_DefaultModuleDefinitions = new string[]
         {
-            m_paletteService = paletteService;
-            m_schemaLoader = schemaLoader;
+            Path.Combine("", "mathNodes.vsdef"),
+        };
+        public string[] DefaultModuleDefinitions
+        {
+            get
+            {
+                return stm_DefaultModuleDefinitions;
+            }
         }
+
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        [ImportingConstructor]
+        public ScriptNodeDefinitionManager()
+        {
+        }
+
 
         protected BasicSchemaLoader SchemaLoader
         {
             get { return m_schemaLoader; }
         }
 
-        private IPaletteService m_paletteService;
-        private BasicSchemaLoader m_schemaLoader;
+
+        [Import(AllowDefault = true)]
+        private IPaletteService m_paletteService = null;
+
+        [Import(AllowDefault = false)]
+        private BasicSchemaLoader m_schemaLoader = null;
+
 
         /// <summary>
         /// Gets the palette category string for the circuit modules</summary>
-        public readonly string PaletteCategory = "Circuits".Localize();
+        public readonly string PaletteCategory = "ScriptNodes".Localize();
 
         /// <summary>
         /// Gets drawing resource key for boolean pin types</summary>
@@ -91,8 +108,8 @@ namespace VisualScript
                 "Create a moveable resizable comment on the circuit canvas".Localize(),
                 Resources.AnnotationImage);
 
-            m_paletteService.AddItem(
-                annotationItem, "Misc".Localize("abbreviation for miscellaneous"), this);
+            if (m_paletteService != null)
+                m_paletteService.AddItem(annotationItem, "Misc".Localize("abbreviation for miscellaneous"), this);
 
             // define editable properties on annotation
             VisualScriptBasicSchema.annotationType.Type.SetTag(
@@ -124,172 +141,13 @@ namespace VisualScript
                                 ),
                    }));
 
-            // define module types
 
-            DefineModuleType(
-                new XmlQualifiedName("buttonType", VisualScriptBasicSchema.NS),
-                "Button".Localize(),
-                "On/Off Button".Localize(),
-                Resources.ButtonImage,
-                EmptyArray<ElementType.Pin>.Instance,
-                new ElementType.Pin[]
-                {
-                    new ElementType.Pin("Out".Localize(), BooleanPinTypeName, 0, allowFanIn : false, allowFanOut : true)
-                },
-                m_schemaLoader);
+            CreateChildCollectionEditor();
 
-            DefineModuleType(
-                new XmlQualifiedName("lightType", VisualScriptBasicSchema.NS),
-                "Light".Localize(),
-                "Light source".Localize(),
-                Resources.LightImage,
-                new ElementType.Pin[]
-                {
-                    new ElementType.Pin("In".Localize(), BooleanPinTypeName, 0, allowFanIn : false, allowFanOut : true)
-                },
-                EmptyArray<ElementType.Pin>.Instance,
-                m_schemaLoader);
+            InitializeProperties();
 
-            DomNodeType speakerNodeType = DefineModuleType(
-                new XmlQualifiedName("speakerType", VisualScriptBasicSchema.NS),
-                "Speaker".Localize("an electronic speaker, for playing sounds"),
-                "Speaker".Localize("an electronic speaker, for playing sounds"),
-                Resources.SpeakerImage,
-                new ElementType.Pin[]
-                {
-                    new ElementType.Pin("In".Localize(), FloatPinTypeName, 0, allowFanIn : false, allowFanOut : true),
-                },
-                EmptyArray<ElementType.Pin>.Instance,
-                m_schemaLoader);
-            var speakerManufacturerInfo = new AttributeInfo("Manufacturer".Localize(), AttributeType.StringType);
-            speakerNodeType.Define(speakerManufacturerInfo);
-            speakerNodeType.SetTag(
-                new PropertyDescriptorCollection(
-                    new PropertyDescriptor[] {
-                        new AttributePropertyDescriptor(
-                            "Manufacturer".Localize(),
-                            speakerManufacturerInfo,
-                            null, //category
-                            "Manufacturer".Localize(), //description
-                            false) //is not read-only
-                    }));
+            LoadNodeDefinition();
 
-            DefineModuleType(
-                new XmlQualifiedName("soundType", VisualScriptBasicSchema.NS),
-                "Sound".Localize(),
-                "Sound Player".Localize(),
-                Resources.SoundImage,
-                new ElementType.Pin[]
-                {
-                    new ElementType.Pin("On".Localize(), "boolean", 0, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Reset".Localize(), "boolean", 1, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Pause".Localize(), "boolean", 2, allowFanIn : false, allowFanOut : true),
-                },
-                new ElementType.Pin[]
-                {
-                    new ElementType.Pin("Out".Localize(), "float", 0, allowFanIn : false, allowFanOut : true),
-                },
-                m_schemaLoader);
-
-            DefineModuleType(
-                new XmlQualifiedName("andType", VisualScriptBasicSchema.NS),
-                "And".Localize(),
-                "Logical AND".Localize(),
-                Resources.AndImage,
-                new ElementType.Pin[]
-                {
-                    new ElementType.Pin("In1".Localize("input pin #1"), "boolean", 0, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In2".Localize("input pin #2"), "boolean", 1, allowFanIn : false, allowFanOut : true),
-                },
-                new ElementType.Pin[]
-                {
-                    new ElementType.Pin("Out".Localize(), "boolean", 0, allowFanIn : false, allowFanOut : true),
-                },
-                m_schemaLoader);
-
-            DefineModuleType(
-                new XmlQualifiedName("orType", VisualScriptBasicSchema.NS),
-                "Or".Localize(),
-                "Logical OR".Localize(),
-                Resources.OrImage,
-                new ElementType.Pin[]
-                {
-                    new ElementType.Pin("In1".Localize("input pin #1"), "boolean", 0, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In2".Localize("input pin #2"), "boolean", 1, allowFanIn : false, allowFanOut : true),
-                },
-                new ElementType.Pin[]
-                {
-                    new ElementType.Pin("Out".Localize(), "boolean", 0, allowFanIn : false, allowFanOut : true),
-                },
-                m_schemaLoader);
-
-            DefineModuleType(
-                new XmlQualifiedName("16To1MultiplexerType", VisualScriptBasicSchema.NS),
-                "16-to-1 Multiplexer".Localize(),
-                "16-to-1 Multiplexer".Localize(),
-                Resources.AndImage,
-                new ElementType.Pin[]
-                {
-                    new ElementType.Pin("In1".Localize("input pin #1"), "boolean", 0, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In2".Localize("input pin #2"), "boolean", 1, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In3".Localize(), "boolean", 2, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In4".Localize(), "boolean", 3, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In5".Localize(), "boolean", 4, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In6".Localize(), "boolean", 5, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In7".Localize(), "boolean", 6, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In8".Localize(), "boolean", 7, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In9".Localize(), "boolean", 8, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In10".Localize(), "boolean", 9, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In11".Localize(), "boolean", 10, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In12".Localize(), "boolean", 11, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In13".Localize(), "boolean", 12, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In14".Localize(), "boolean", 13, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In15".Localize(), "boolean", 14, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("In16".Localize(), "boolean", 15, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Select1".Localize("The name of a pin on a circuit element"), "boolean", 16, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Select2".Localize("The name of a pin on a circuit element"), "boolean", 17, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Select3".Localize("The name of a pin on a circuit element"), "boolean", 18, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Select4".Localize("The name of a pin on a circuit element"), "boolean", 19, allowFanIn : false, allowFanOut : true),
-                },
-                new ElementType.Pin[]
-                {
-                    new ElementType.Pin("Out".Localize(), "boolean", 0, allowFanIn : false, allowFanOut : true),
-                },
-                m_schemaLoader);
-
-            DefineModuleType(
-                new XmlQualifiedName("1To16DemultiplexerType", VisualScriptBasicSchema.NS),
-                "1-to-16 Demultiplexer".Localize(),
-                "1-to-16 Demultiplexer".Localize(),
-                Resources.OrImage,
-                new ElementType.Pin[]
-                {
-                    new ElementType.Pin("Data".Localize(), "boolean", 0, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Select1".Localize("The name of a pin on a circuit element"), "boolean", 1, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Select2".Localize("The name of a pin on a circuit element"), "boolean", 2, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Select3".Localize("The name of a pin on a circuit element"), "boolean", 3, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Select4".Localize("The name of a pin on a circuit element"), "boolean", 4, allowFanIn : false, allowFanOut : true),
-                },
-                new ElementType.Pin[]
-                {
-                    new ElementType.Pin("Out1".Localize(), "boolean", 0, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Out2".Localize(), "boolean", 1, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Out3".Localize(), "boolean", 2, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Out4".Localize(), "boolean", 3, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Out5".Localize(), "boolean", 4, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Out6".Localize(), "boolean", 5, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Out7".Localize(), "boolean", 6, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Out8".Localize(), "boolean", 7, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Out9".Localize(), "boolean", 8, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Out10".Localize(), "boolean", 9, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Out11".Localize(), "boolean", 10, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Out12".Localize(), "boolean", 11, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Out13".Localize(), "boolean", 12, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Out14".Localize(), "boolean", 13, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Out15".Localize(), "boolean", 14, allowFanIn : false, allowFanOut : true),
-                    new ElementType.Pin("Out16".Localize(), "boolean", 15, allowFanIn : false, allowFanOut : true),
-                },
-                m_schemaLoader);
         }
 
         #endregion
@@ -327,9 +185,519 @@ namespace VisualScript
 
         #endregion
 
+
+        struct PropertyInformation
+        {
+            public AttributeInfo AttributeInfo;
+            public AttributeInfo ListAttributeInfo;
+            public ChildInfo ChildInfo;
+            public object Editor;
+            public TypeConverter Converter;
+        };
+
+        List<PropertyInformation> m_PropertyInfos = new List<PropertyInformation>();
+
+
+
+        DomNodeType CreateDOMType(Type clrType)
+        {
+            var nodeType = new DomNodeType(clrType.Name);
+
+            var propertyDescs = new PropertyDescriptorCollection(null);
+            var properties = clrType.GetProperties();
+            foreach (var prop in properties)
+            {
+                var propType = prop.PropertyType;
+                AttributeInfo newAttr = null;
+                PropertyDescriptor propDesc = null;
+
+                if (propType.IsClass && propType != typeof(string))
+                {
+                    ChildInfo newChild = null;
+                    object editor = null;
+
+                    var childCLRType = propType.IsArray ? propType.GetElementType() : propType;
+                    newChild = new ChildInfo(prop.Name, CreateDOMType(childCLRType), propType.IsArray);
+                    nodeType.Define(newChild);
+                    if (propType.IsArray && clrType != typeof(VisualScriptSchema.EditorSocket))
+                    {
+                        editor = m_ChildCollectionEditor;
+                    }
+
+                    propDesc = new ChildPropertyDescriptor(prop.Name, newChild, "Node", prop.Name, false, editor);
+                }
+                else if (propType.IsEnum)
+                {
+                    if (propType.IsArray)
+                    {
+                        newAttr = new AttributeInfo(prop.Name, new AttributeType(AttributeTypes.SingleArray.ToString(), typeof(string[])));
+                        newAttr.AddRule(new StringEnumRule(Enum.GetNames(propType)));
+                    }
+                    else
+                    {
+                        newAttr = new AttributeInfo(prop.Name, AttributeType.StringType);
+                        newAttr.AddRule(new StringEnumRule(Enum.GetNames(propType)));
+                    }
+                }
+                else
+                {
+                    if (propType.IsArray)
+                    {
+                        switch (propType.Name)
+                        {
+                            case "String":
+                                // Consider them as string crc always?
+                                newAttr = new AttributeInfo(prop.Name, new AttributeType(AttributeTypes.SingleArray.ToString(), typeof(string[])));
+                                newAttr.AddRule(new StringHashRule());
+                                break;
+                            case "int":
+                                newAttr = new AttributeInfo(prop.Name, new AttributeType(AttributeTypes.Int32Array.ToString(), typeof(int[])));
+                                break;
+                            case "boolean":
+                                newAttr = new AttributeInfo(prop.Name, new AttributeType(AttributeTypes.BooleanArray.ToString(), typeof(bool[])));
+                                break;
+                            case "Single":
+                                newAttr = new AttributeInfo(prop.Name, new AttributeType(AttributeTypes.SingleArray.ToString(), typeof(float[])));
+                                break;
+                            default:
+                                throw new NotSupportedException("Not supported data type for DOM type gen:" + prop.PropertyType.Name);
+                        }
+                    }
+                    else
+                    {
+                        switch (propType.Name)
+                        {
+                            case "String":
+                                // Consider them as string crc always?
+                                newAttr = new AttributeInfo(prop.Name, AttributeType.StringType);
+                                newAttr.AddRule(new StringHashRule());
+                                break;
+                            case "int":
+                                newAttr = new AttributeInfo(prop.Name, AttributeType.IntType);
+                                break;
+                            case "boolean":
+                                newAttr = new AttributeInfo(prop.Name, AttributeType.BooleanType);
+                                break;
+                            case "Single":
+                                newAttr = new AttributeInfo(prop.Name, AttributeType.FloatType);
+                                break;
+                            default:
+                                throw new NotSupportedException("Not supported data type for DOM type gen:" + prop.PropertyType.Name);
+                        }
+                    }
+
+                }
+
+                if (newAttr != null)
+                {
+                    propDesc = new AttributePropertyDescriptor(prop.Name, newAttr, "Node", prop.Name, false);
+                    nodeType.Define(newAttr);
+                }
+
+                if (propDesc != null)
+                    propertyDescs.Add(propDesc);
+            }
+
+            nodeType.SetTag(propertyDescs);
+
+            return nodeType;
+        }
+
+
+        void CreateChildCollectionEditor()
+        {
+            //EmbeddedCollectionEditor edit children (edit, add, remove, move).
+            // note: EmbeddedCollectionEditor needs some work (efficiency and implementation issues).
+            m_ChildCollectionEditor = new EmbeddedCollectionEditor();
+
+            // the following  lambda's handles (add, remove, move ) items.
+            m_ChildCollectionEditor.GetItemInsertersFunc = (context) =>
+            {
+                var insertors
+                    = new EmbeddedCollectionEditor.ItemInserter[1];
+
+                var list = context.GetValue() as IList<DomNode>;
+                if (list != null)
+                {
+                    var childDescriptor
+                        = context.Descriptor as ChildPropertyDescriptor;
+                    if (childDescriptor != null)
+                    {
+                        insertors[0] = new EmbeddedCollectionEditor.ItemInserter(childDescriptor.ChildInfo.Type.Name,
+                    delegate
+                    {
+                        DomNode node = new DomNode(childDescriptor.ChildInfo.Type);
+                        if (node.Type.IdAttribute != null)
+                        {
+                            node.SetAttribute(node.Type.IdAttribute, node.Type.Name);
+                        }
+                        list.Add(node);
+                        return node;
+                    });
+                        return insertors;
+                    }
+                }
+                return EmptyArray<EmbeddedCollectionEditor.ItemInserter>.Instance;
+            };
+
+
+            m_ChildCollectionEditor.RemoveItemFunc = (context, item) =>
+            {
+                var list = context.GetValue() as IList<DomNode>;
+                if (list != null)
+                    list.Remove(item.Cast<DomNode>());
+            };
+
+
+            m_ChildCollectionEditor.MoveItemFunc = (context, item, delta) =>
+            {
+                var list = context.GetValue() as IList<DomNode>;
+                if (list != null)
+                {
+                    DomNode node = item.Cast<DomNode>();
+                    int index = list.IndexOf(node);
+                    int insertIndex = index + delta;
+                    if (insertIndex < 0 || insertIndex >= list.Count)
+                        return;
+                    list.RemoveAt(index);
+                    list.Insert(insertIndex, node);
+                }
+
+            };
+
+        }
+
+        void InitializeProperties()
+        {
+            m_PropertyInfos.Clear();
+            foreach (var enumValueObj in Enum.GetValues(typeof(VisualScriptSchema.PropertyType)))
+            {
+                var enumValue = (VisualScriptSchema.PropertyType)enumValueObj;
+                AttributeInfo newAttr = null, newListAttr = null;
+                DomNodeType childNodeType = null;
+                object editor = null;
+                TypeConverter converter = null;
+
+                switch (enumValue)
+                {
+                    case VisualScriptSchema.PropertyType.Event:
+                        newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.BooleanType);
+                        newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.BooleanArrayType);
+                        break;
+                    case VisualScriptSchema.PropertyType.boolean:
+                        newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.BooleanType);
+                        newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.BooleanArrayType);
+                        break;
+                    case VisualScriptSchema.PropertyType.@int:
+                        newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.IntType);
+                        newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.IntArrayType);
+                        break;
+                    case VisualScriptSchema.PropertyType.@float:
+                        newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.FloatType);
+                        newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.FloatArrayType);
+                        break;
+                    case VisualScriptSchema.PropertyType.@double:
+                        newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.DoubleType);
+                        newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.DoubleArrayType);
+                        break;
+                    case VisualScriptSchema.PropertyType.@string:
+                        newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.StringType);
+                        newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.StringArrayType);
+                        break;
+                    case VisualScriptSchema.PropertyType.FixedString:
+                        newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.StringType);
+                        newAttr.AddRule(new StringHashRule());
+                        newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.StringArrayType);
+                        newListAttr.AddRule(new StringHashRule());
+                        break;
+                    case VisualScriptSchema.PropertyType.vector3:
+                        newAttr = new AttributeInfo(enumValue.ToString(), new AttributeType(enumValue.ToString(), typeof(float[]), 3));
+                        editor = new Sce.Atf.Controls.PropertyEditing.NumericTupleEditor(typeof(float), new string[] { "x", "y", "z" });
+                        break;
+                    case VisualScriptSchema.PropertyType.Socket:
+                        childNodeType = CreateDOMType(typeof(VisualScriptSchema.EditorSocket));
+                        socketType.Type = childNodeType; // cache for global use
+                        break;
+                    default:
+                        throw new InvalidDataException("There is a not-handled property type");
+                }
+
+                if (newAttr != null)
+                {
+                    var propInfo = new PropertyInformation()
+                    {
+                        AttributeInfo = newAttr,
+                        ListAttributeInfo = newListAttr,
+                        ChildInfo = null,
+                        Editor = editor,
+                        Converter = converter,
+                    };
+                    m_PropertyInfos.Add(propInfo);
+                }
+                else if (childNodeType != null)
+                {
+                    ChildInfo newChild = new ChildInfo(enumValue.ToString(), childNodeType);
+                    var propInfo = new PropertyInformation()
+                    {
+                        AttributeInfo = null,
+                        ListAttributeInfo = null,
+                        ChildInfo = newChild,
+                        Editor = null,
+                        Converter = null,
+                    };
+                    m_PropertyInfos.Add(propInfo);
+                }
+                else
+                {
+                    Outputs.WriteLine(OutputMessageType.Warning, "Invalid property {0}", enumValue.ToString());
+                }
+            }
+        }
+
+
+        void AddProperty(DomNodeType domNodeType, VisualScriptSchema.Property prop, PropertyDescriptorCollection newDescs)
+        {
+            var propTypeInfo = m_PropertyInfos[(int)prop.Type];
+            if (propTypeInfo.AttributeInfo != null)
+            {
+                AttributeInfo newAttr = null;
+                if (prop.IsArray)
+                {
+                    newAttr = propTypeInfo.ListAttributeInfo.Clone(prop.Name);
+                }
+                else
+                {
+                    newAttr = propTypeInfo.AttributeInfo.Clone(prop.Name);
+                }
+
+                if (!string.IsNullOrEmpty(prop.Default))
+                {
+                    newAttr.DefaultValue = newAttr.Type.Convert(prop.Default);
+                }
+
+                newAttr.AddRule(new GameDataAttributeRule());
+
+                var newDesc = new AttributePropertyDescriptor(newAttr.Name, newAttr, "Node", newAttr.Name, false, propTypeInfo.Editor, propTypeInfo.Converter);
+                newDescs.Add(newDesc);
+                domNodeType.Define(newAttr);
+            }
+            else if (propTypeInfo.ChildInfo != null)
+            {
+                var newChild = propTypeInfo.ChildInfo.Clone(prop.Name, prop.IsArray);
+
+                newChild.AddRule(new GameDataChildRule());
+
+                object editor = m_ChildCollectionEditor;
+                var newDesc = new ChildPropertyDescriptor(newChild.Name, newChild, "Node", newChild.Name, false, editor, propTypeInfo.Converter);
+                newDescs.Add(newDesc);
+                domNodeType.Define(newChild);
+            }
+
+        }
+
+        void RecursiveCreateProperties(VisualScriptSchema.NodeTypeInfo nodeDef, Dictionary<string, VisualScriptSchema.Property> properties)
+        {
+            if (!string.IsNullOrEmpty(nodeDef.Base))
+            {
+                VisualScriptSchema.NodeTypeInfo parentNodeDef = nodeDef.Parent;
+                if (parentNodeDef != null)
+                {
+                    // TODO : maybe parent domnode type would be better?
+                    RecursiveCreateProperties(parentNodeDef, properties);
+                }
+                else
+                {
+                    Outputs.Write(OutputMessageType.Error, "Can't find base node definition: {0} parent of {1}", nodeDef.Base, nodeDef.Name);
+                }
+            }
+
+            if (nodeDef.Property != null)
+            {
+                foreach (var prop in nodeDef.Property)
+                {
+                    if (properties.ContainsKey(prop.Name))
+                    {
+                        // override
+                        properties[prop.Name] = prop;
+                    }
+                    else
+                    {
+                        properties.Add(prop.Name, prop);
+                    }
+                }
+            }
+        }
+
+        void AddProperties(ICollection<VisualScriptSchema.Property> properties, DomNodeType domNodeType, PropertyDescriptorCollection newDescs)
+        {
+            if (properties != null)
+            {
+                foreach (var prop in properties)
+                {
+                    AddProperty(domNodeType, prop, newDescs);
+                }
+            }
+        }
+
+        void AddSockets(ICollection<VisualScriptSchema.Property> properties, List<ElementType.Pin> inputs, List<ElementType.Pin> outputs)
+        {
+            if (properties != null)
+            {
+                foreach (var prop in properties)
+                {
+                    switch (prop.Socket)
+                    {
+                        case VisualScriptSchema.SocketType.Input:
+                            inputs.Add(new ElementType.Pin(prop.Name, prop.Type.ToString(), inputs.Count, allowFanIn: prop.AllowMultipleInput));
+                            break;
+                        case VisualScriptSchema.SocketType.Output:
+                            outputs.Add(new ElementType.Pin(prop.Name, prop.Type.ToString(), outputs.Count, allowFanOut: prop.AllowMultipleOutput));
+                            break;
+                        case VisualScriptSchema.SocketType.InOut:
+                            inputs.Add(new ElementType.Pin("Set" + prop.Name, prop.Type.ToString(), inputs.Count, allowFanIn: prop.AllowMultipleInput));
+                            outputs.Add(new ElementType.Pin("Get" + prop.Name, prop.Type.ToString(), outputs.Count, allowFanOut: prop.AllowMultipleOutput));
+                            break;
+                    }
+                }
+            }
+
+        }
+
+        string GetNodeIcon(VisualScriptSchema.NodeTypeInfo nodeDef, string nodeIcon = null)
+        {
+            if (!string.IsNullOrEmpty(nodeDef.Icon))
+                nodeIcon = typeof(Resources).FullName + "." + nodeDef.Icon;
+
+            if (!string.IsNullOrEmpty(nodeIcon))
+                return nodeIcon;
+
+            if (!string.IsNullOrEmpty(nodeDef.Base))
+            {
+                VisualScriptSchema.NodeTypeInfo parentNodeDef = nodeDef.Parent;
+                if (parentNodeDef != null)
+                {
+                    nodeIcon = GetNodeIcon(parentNodeDef, nodeIcon);
+                }
+            }
+
+            return nodeIcon;
+        }
+
+        string GetNodeCategory(VisualScriptSchema.NodeTypeInfo nodeDef, string nodeCategory = null)
+        {
+            if (!string.IsNullOrEmpty(nodeDef.Category))
+                nodeCategory = nodeDef.Category;
+
+            if (!string.IsNullOrEmpty(nodeCategory))
+                return nodeCategory;
+
+            if (!string.IsNullOrEmpty(nodeDef.Base))
+            {
+                VisualScriptSchema.NodeTypeInfo parentNodeDef = nodeDef.Parent;
+                if (parentNodeDef != null)
+                {
+                    nodeCategory = GetNodeCategory(parentNodeDef, nodeCategory);
+                }
+            }
+
+            return nodeCategory;
+        }
+
+        Dictionary<string, VisualScriptSchema.NodeTypeInfo> m_NodeDefines = new Dictionary<string, VisualScriptSchema.NodeTypeInfo>();
+
+        void LoadNodeDefinition()
+        {
+            m_NodeDefines.Clear();
+
+            foreach(var definitionFile in stm_DefaultModuleDefinitions)
+                AddNodeDefinition(definitionFile);
+        }
+
+        void AddNodeDefinition(string nodeDefinitionPath)
+        {
+            if (nodeDefinitionPath == null)
+            {
+                throw new Exception("Invalid script node definition: " + nodeDefinitionPath);
+            }
+
+            VisualScriptSchema.NodeTypeDefinitions nodeData = null;
+            var xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(VisualScriptSchema.NodeTypeDefinitions));
+
+            using (var stream = new FileStream(nodeDefinitionPath, FileMode.Open, FileAccess.Read))
+            {
+                nodeData = xmlSerializer.Deserialize(stream) as VisualScriptSchema.NodeTypeDefinitions;
+            }
+
+
+            if (nodeData == null || nodeData.NodeTypeInfos == null)
+                throw new InvalidDataException("Failed to load Node definition data");
+
+            // cache all node types
+            foreach (var nodeDef in nodeData.NodeTypeInfos)
+            {
+                VisualScriptSchema.NodeTypeInfo oldDef;
+                if (m_NodeDefines.TryGetValue(nodeDef.Name, out oldDef))
+                {
+                    throw new InvalidDataException(string.Format("Duplicated type name, {0} is already taken in {1}", nodeDef.Name, oldDef.NodeDefinitionFile));
+                }
+
+                nodeDef.NodeDefinitionFile = nodeDefinitionPath;
+                m_NodeDefines.Add(nodeDef.Name, nodeDef);
+            }
+
+            foreach (var nodeDef in nodeData.NodeTypeInfos)
+            {
+                VisualScriptSchema.NodeTypeInfo parent;
+                if (string.IsNullOrEmpty(nodeDef.Base)) continue;
+                if (m_NodeDefines.TryGetValue(nodeDef.Base, out parent))
+                    nodeDef.Parent = parent;
+            }
+
+
+            foreach (var nodeDef in nodeData.NodeTypeInfos)
+            {
+                if (nodeDef.IsAbstract) continue;
+
+                var inputs = new List<ElementType.Pin>();
+                var outputs = new List<ElementType.Pin>();
+                var properties = new Dictionary<string, VisualScriptSchema.Property>();
+                RecursiveCreateProperties(nodeDef, properties);
+
+                AddSockets(properties.Values, inputs, outputs);
+
+                var nodeIcon = GetNodeIcon(nodeDef);
+                var nodeCategory = GetNodeCategory(nodeDef);
+
+                var domNodeType = DefineModuleType(new XmlQualifiedName(nodeDef.Name, VisualScriptBasicSchema.NS),
+                    nodeDef.Name,
+                    nodeDef.Description,
+                    nodeCategory,
+                    string.IsNullOrEmpty(nodeIcon) ? Resources.ButtonImage : nodeIcon,
+                    inputs.ToArray(),
+                    outputs.ToArray(),
+                    m_schemaLoader);
+
+                // Add in-game type info
+                var typeAttribute = new AttributeInfo("NodeType", AttributeType.StringType);
+                typeAttribute.DefaultValue = nodeDef.NodeType;
+                domNodeType.Define(typeAttribute);
+
+                // Add node def as tag
+                domNodeType.SetTag(nodeDef);
+
+                var newDescs = new PropertyDescriptorCollection(null);
+
+                AddProperties(properties.Values, domNodeType, newDescs);
+
+                domNodeType.SetTag(newDescs);
+            }
+        }
+
+
         /// <summary>
-        /// Prepare metadata for the module type, to be used by the palette and circuit drawing engine</summary>
-        /// <param name="name"> VisualScriptBasicSchema full name of the DomNodeType for the module type</param>
+        /// Prepare metadata for the module type, to be used by the palette and circuit drawing engine
+        /// </summary>
+        /// <param name="name"> Schema full name of the DomNodeType for the module type</param>
         /// <param name="displayName">Display name for the module type</param>
         /// <param name="description"></param>
         /// <param name="imageName">Image name </param>
@@ -339,9 +707,11 @@ namespace VisualScript
         /// <param name="domNodeType">optional DomNode type for the module type</param>
         /// <returns>DomNodeType that was created (or the domNodeType parameter, if it wasn't null)</returns>
         protected DomNodeType DefineModuleType(
+
             XmlQualifiedName name,
             string displayName,
             string description,
+            string category,
             string imageName,
             ElementType.Pin[] inputs,
             ElementType.Pin[] outputs,
@@ -355,7 +725,10 @@ namespace VisualScript
                 VisualScriptBasicSchema.moduleType.Type,
                 EmptyArray<AttributeInfo>.Instance,
                 EmptyArray<ChildInfo>.Instance,
-                EmptyArray<ExtensionInfo>.Instance);
+                new ExtensionInfo[] { new ExtensionInfo<ScriptNodeElementType>() });
+
+            inputs = inputs ?? EmptyArray<ElementType.Pin>.Instance;
+            outputs = outputs ?? EmptyArray<ElementType.Pin>.Instance;
 
             DefineCircuitType(domNodeType, displayName, imageName, inputs, outputs);
 
@@ -363,14 +736,17 @@ namespace VisualScript
             loader.AddNodeType(name.ToString(), domNodeType);
 
             // add the type to the palette
-            m_paletteService.AddItem(
-                new NodeTypePaletteItem(
-                    domNodeType,
-                    displayName,
-                    description,
-                    imageName),
-                PaletteCategory,
-                this);
+            if (m_paletteService != null)
+            {
+                m_paletteService.AddItem(
+                    new NodeTypePaletteItem(
+                        domNodeType,
+                        displayName,
+                        description,
+                        imageName),
+                    string.IsNullOrEmpty(category) ? PaletteCategory : category,
+                    this);
+            }
 
             return domNodeType;
         }
@@ -398,5 +774,43 @@ namespace VisualScript
 
 
         }
+
+
+        EmbeddedCollectionEditor m_ChildCollectionEditor;
     }
+
+
+
+    public class GameDataAttributeRule : AttributeRule
+    {
+        public override bool Validate(object value, AttributeInfo info)
+        {
+            return true;
+        }
+    }
+
+    public class GameDataChildRule : ChildRule
+    {
+        public override bool Validate(DomNode parent, DomNode child, ChildInfo childInfo)
+        {
+            return true;
+        }
+    }
+
+
+    static public class startNodeType
+    {
+        public static DomNodeType Type;
+    };
+
+    static public class eventNodeType
+    {
+        public static DomNodeType Type;
+    };
+
+    static public class socketType
+    {
+        public static DomNodeType Type;
+    };
+
 }

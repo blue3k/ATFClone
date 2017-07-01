@@ -75,8 +75,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>VisualScriptBasicSchema.xsd</DependentUpon>
     </Compile>
+    <Compile Include="schemas\VisualScriptNodeDefinitionSchema.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VisualScriptNodeDefinitionSchema.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="schemas\VisualScriptNodeDefinitionSchemaExt.cs" />
     <Compile Include="VisualScript\ScriptAnnotation.cs" />
     <Compile Include="VisualScript\CategoryUniqueIdValidator.cs" />
+    <Compile Include="VisualScript\ScriptNodeElementType.cs" />
     <Compile Include="VisualScript\ScriptReader.cs" />
     <Compile Include="VisualScript\ScriptRenderer.cs" />
     <Compile Include="VisualScript\ScriptWriter.cs" />
@@ -110,6 +117,7 @@
     <Compile Include="VisualScript\ScriptNodeConnection.cs" />
     <Compile Include="VisualScript\ScriptNode.cs" />
     <Compile Include="VisualScript\ScriptNodeRef.cs" />
+    <Compile Include="VisualScript\StringHashRule.cs" />
     <Compile Include="VisualScript\VisualScript.cs" />
     <Compile Include="VisualScript\ScriptDocument.cs" />
     <Compile Include="VisualScriptEditingContext.cs" />
@@ -213,6 +221,12 @@
     <EmbeddedResource Include="Resources\ja\Localization.xml" />
     <EmbeddedResource Include="Resources\ja\About.rtf" />
     <None Include="schemas\GenSchemaDef.bat" />
+    <None Include="schemas\VisualScriptNodeDefinitionSchema.xsd">
+      <SubType>Designer</SubType>
+      <Generator>XSDGenVS</Generator>
+      <CustomToolNamespace>CS,VisualScriptSchema</CustomToolNamespace>
+      <LastGenOutput>VisualScriptNodeDefinitionSchema.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DocVersionTransforms\downgrades\" />
