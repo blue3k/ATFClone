@@ -190,7 +190,7 @@ namespace VisualScript
             VisualScriptBasicSchema.missingModuleType.Type.Define(new ExtensionInfo<MissingScriptNode >());
 
 
-            // set document editor information(DocumentClientInfo) for circuit editor:
+            // set document editor information(DocumentClientInfo) for visual script editor editor:
             VisualScriptBasicSchema.visualScriptDocumentType.Type.SetTag(VisualScriptEditor.VisualScriptEditor.EditorInfo);
         }
     }

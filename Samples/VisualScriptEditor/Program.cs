@@ -24,14 +24,9 @@ using PropertyGrid = Sce.Atf.Controls.PropertyEditing.PropertyGrid;
 namespace VisualScriptEditor
 {
     /// <summary>
-    /// CircuitEditor is a sample editor for circuits, consisting of modules with input and output pins and connections between them. 
-    /// It uses an XML VisualScriptBasicSchema to define the data file format, reads and writes XML circuit files, 
-    /// and allows circuits to be edited using a graphical representation of modules and connections. 
-    /// It uses the AdaptableControl to display and edit the circuit. Multiple documents can be edited simultaneously. 
-    /// CircuitEditor uses several ATF Editor components to implement standard editing commands. CircuitEditor also demonstrates:
-    /// * Prototyping: you can create a custom set of circuit fragments that can be inserted into documents.
-    /// * Layering: you can assign diagram components to layers that can be turned on and off (visible and invisible).
-    /// For more information, see https://github.com/SonyWWS/ATF/wiki/ATF-Circuit-Editor-Sample. </summary>
+    /// This is modified version of circuit editor sample.
+    /// It supports node type definition file so that you can customize node types from the file. See Data/mathNodes.vsdef for sample node type definitions
+    /// </summary>
     public class Program
     {
         /// <summary>
@@ -45,12 +40,7 @@ namespace VisualScriptEditor
             Application.SetCompatibleTextRenderingDefault(false);
             Application.DoEvents(); // see http://www.codeproject.com/buglist/EnableVisualStylesBug.asp?df=100&forumid=25268&exp=0&select=984714
 
-
-            // Switch to Japanese
-            //var jp = new System.Globalization.CultureInfo("ja-JP");
-            //Thread.CurrentThread.CurrentCulture = jp;
-            //Thread.CurrentThread.CurrentUICulture = jp;
-
+            
             // Set up localization support early on, so that user-readable strings will be localized
             //  during the initialization phase below. Use XML files that are embedded resources.
             Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CurrentCulture;

@@ -158,22 +158,22 @@ namespace VisualScriptEditor
                 {
                   new BoundPropertyDescriptor(typeof (CircuitDefaultStyle),
                         () => CircuitDefaultStyle.EdgeStyle,
-                        "Wire Style".Localize(), "Circuit Editor".Localize(),
+                        "Wire Style".Localize(), "VisualScript Editor".Localize(),
                         "Default Edge Style".Localize()),
                   new BoundPropertyDescriptor(typeof (CircuitDefaultStyle),
                         () => CircuitDefaultStyle.ShowExpandedGroupPins,
-                        "Show Expanded Group Pins".Localize(), "Circuit Editor".Localize(),
+                        "Show Expanded Group Pins".Localize(), "VisualScript Editor".Localize(),
                         "Show group pins when a group is expanded".Localize()),
                   new BoundPropertyDescriptor(typeof (CircuitDefaultStyle),
                         () => CircuitDefaultStyle.ShowVirtualLinks,
-                        "Show Virtual links".Localize(), "Circuit Editor".Localize(),
+                        "Show Virtual links".Localize(), "VisualScript Editor".Localize(),
                         "Show virtual links between group pin and its associated subnodes when a group is expanded".Localize()),
                     new BoundPropertyDescriptor(this, () => InitialDirectory,
-                        "Initial Directory".Localize(), "Circuit Editor".Localize(),
+                        "Initial Directory".Localize(), "VisualScript Editor".Localize(),
                         "The initial directory for documents".Localize(),
                         new System.Windows.Forms.Design.FolderNameEditor(), null), 
                 };
-                m_settingsService.RegisterUserSettings("Circuit Editor", settings);
+                m_settingsService.RegisterUserSettings("VisualScript Editor", settings);
                 m_settingsService.RegisterSettings(this, settings);
             }
 
@@ -210,9 +210,9 @@ namespace VisualScriptEditor
         }
 
         /// <summary>
-        /// Document editor information for circuit editor</summary>
+        /// Document editor information for VisualScript editor</summary>
         public static DocumentClientInfo EditorInfo =
-            new DocumentClientInfo("Circuit".Localize(), ".circuit", null, null);
+            new DocumentClientInfo("VisualScript".Localize(), ".vscript", null, null);
 
         /// <summary>
         /// Returns whether the client can open or create a document at the given URI</summary>

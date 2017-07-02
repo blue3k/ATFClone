@@ -6,8 +6,7 @@ namespace VisualScript
 {
     /// <summary>
     /// These are additional options per circuit element, that are returned by the
-    /// ICircuitElement.ElementInfo property. The Circuit Editor sample app's Module
-    /// class implements ICircuitElement.</summary>
+    /// ICircuitElement.ElementInfo property. class implements ICircuitElement.</summary>
     public class ScriptNodeElementInfo : CircuitElementInfo
     {
         /// <summary>

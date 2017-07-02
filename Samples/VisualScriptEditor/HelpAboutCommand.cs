@@ -42,7 +42,7 @@ namespace VisualScriptEditor
 
             const string appUrl = "https://github.com/SonyWWS/ATF/wiki";
             var dialog = new AboutDialog(
-                "Circuit Editor Sample".Localize(), appUrl, richTextBox, null, null, true);
+                "Visual script Editor Sample".Localize(), appUrl, richTextBox, null, null, true);
             dialog.ShowDialog();
         }
     }
