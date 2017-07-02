@@ -73,7 +73,7 @@
   <xs:element name="NodeTypeDefinitions">
     <xs:complexType >
       <xs:sequence>
-        <xs:element name="NodeTypeInfos" type="NodeTypeInfo" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="NodeTypeInfo" type="NodeTypeInfo" minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

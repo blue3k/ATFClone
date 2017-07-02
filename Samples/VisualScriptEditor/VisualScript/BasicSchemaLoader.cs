@@ -28,7 +28,7 @@ namespace VisualScript
             // set resolver to locate embedded .xsd file
             SchemaResolver = new ResourceStreamResolver(System.Reflection.Assembly.GetExecutingAssembly(), "VisualScriptEditor/schemas");
             var myAssembly = System.Reflection.Assembly.GetAssembly(GetType());
-            var schema = Load(myAssembly, "Circuit.xsd");
+            var schema = Load(myAssembly, "VisualScriptBasicSchema.xsd");
             var version = schema.Version; // Version will be null if the xsd has no version attribute
             m_version = string.IsNullOrEmpty(version) ? new Version("1.0") : new Version(version);
 

@@ -24,16 +24,16 @@ namespace VisualScriptSchema {
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://blue3k.com/1_0", IsNullable=false)]
     public partial class NodeTypeDefinitions {
         
-        private NodeTypeInfo[] nodeTypeInfosField;
+        private NodeTypeInfo[] nodeTypeInfoField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("NodeTypeInfos")]
-        public NodeTypeInfo[] NodeTypeInfos {
+        [System.Xml.Serialization.XmlElementAttribute("NodeTypeInfo")]
+        public NodeTypeInfo[] NodeTypeInfo {
             get {
-                return this.nodeTypeInfosField;
+                return this.nodeTypeInfoField;
             }
             set {
-                this.nodeTypeInfosField = value;
+                this.nodeTypeInfoField = value;
             }
         }
     }

@@ -28,9 +28,11 @@ namespace VisualScript
     [Export(typeof(ScriptNodeDefinitionManager))]
     public class ScriptNodeDefinitionManager : IPaletteClient, IInitializable
     {
+        static readonly string stm_DefaultPath = "Data";
+
         static readonly string[] stm_DefaultModuleDefinitions = new string[]
         {
-            Path.Combine("", "mathNodes.vsdef"),
+            Path.Combine(stm_DefaultPath, "mathNodes.vsdef"),
         };
         public string[] DefaultModuleDefinitions
         {
@@ -629,11 +631,11 @@ namespace VisualScript
             }
 
 
-            if (nodeData == null || nodeData.NodeTypeInfos == null)
+            if (nodeData == null || nodeData.NodeTypeInfo == null)
                 throw new InvalidDataException("Failed to load Node definition data");
 
             // cache all node types
-            foreach (var nodeDef in nodeData.NodeTypeInfos)
+            foreach (var nodeDef in nodeData.NodeTypeInfo)
             {
                 VisualScriptSchema.NodeTypeInfo oldDef;
                 if (m_NodeDefines.TryGetValue(nodeDef.Name, out oldDef))
@@ -645,7 +647,7 @@ namespace VisualScript
                 m_NodeDefines.Add(nodeDef.Name, nodeDef);
             }
 
-            foreach (var nodeDef in nodeData.NodeTypeInfos)
+            foreach (var nodeDef in nodeData.NodeTypeInfo)
             {
                 VisualScriptSchema.NodeTypeInfo parent;
                 if (string.IsNullOrEmpty(nodeDef.Base)) continue;
@@ -654,7 +656,7 @@ namespace VisualScript
             }
 
 
-            foreach (var nodeDef in nodeData.NodeTypeInfos)
+            foreach (var nodeDef in nodeData.NodeTypeInfo)
             {
                 if (nodeDef.IsAbstract) continue;
 
@@ -730,7 +732,7 @@ namespace VisualScript
             inputs = inputs ?? EmptyArray<ElementType.Pin>.Instance;
             outputs = outputs ?? EmptyArray<ElementType.Pin>.Instance;
 
-            DefineCircuitType(domNodeType, displayName, imageName, inputs, outputs);
+            DefineVScriptType(domNodeType, displayName, imageName, inputs, outputs);
 
             // add it to the schema-defined types
             loader.AddNodeType(name.ToString(), domNodeType);
@@ -751,7 +753,7 @@ namespace VisualScript
             return domNodeType;
         }
 
-        private void DefineCircuitType(
+        private void DefineVScriptType(
             DomNodeType type,
             string elementTypeName,
             string imageName,

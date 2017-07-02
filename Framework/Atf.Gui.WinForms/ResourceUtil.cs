@@ -1,8 +1,9 @@
-//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -256,6 +257,38 @@ namespace Sce.Atf
         public static void Register(Type type, string resourcePath)
         {
             Assembly resourceAssembly = type.Assembly;
+
+            // Register any resources in the assembly
+            foreach(var resName in resourceAssembly.GetManifestResourceNames())
+            {
+                var ext = Path.GetExtension(resName);
+                if (string.IsNullOrEmpty(ext) || ext.ToLower() != ".png")
+                    continue;
+
+                // 16 bit image is the leading image for lookup
+                var fileNameOnly = Path.GetFileNameWithoutExtension(resName);
+                if (!fileNameOnly.EndsWith("_16"))
+                    continue;
+
+                var fileNameTemplate = fileNameOnly.Substring(0, fileNameOnly.Length - "_16".Length);
+                string imageName16 = resName;
+                string imageName24 = fileNameTemplate + "_24" + ext;
+                string imageName32 = fileNameTemplate + "_32" + ext;
+
+                if (resourceAssembly.GetManifestResourceInfo(imageName24) == null)
+                    imageName24 = null;
+
+                if (resourceAssembly.GetManifestResourceInfo(imageName32) == null)
+                    imageName32 = null;
+
+                RegisterImage(imageName16, 
+                    GdiUtil.GetImage(resourceAssembly, imageName16), 
+                    imageName24 != null ? GdiUtil.GetImage(resourceAssembly, imageName24) : null,
+                    imageName32 != null ? GdiUtil.GetImage(resourceAssembly, imageName32) : null);
+            }
+            
+
+            // register fields for custom names
             FieldInfo[] fields = type.GetFields(
                 BindingFlags.Static | BindingFlags.Public);
 

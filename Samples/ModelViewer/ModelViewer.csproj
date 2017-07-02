@@ -91,6 +91,10 @@
       <Project>{9D1835B6-D1C2-44BA-BAE1-05C6EC442D2F}</Project>
       <Name>Atf.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Framework\Atf.Gui.OpenGL\Atf.Gui.OpenGL.csproj">
+      <Project>{52d35323-1aa1-4205-a1b0-26c5e5e8d543}</Project>
+      <Name>Atf.Gui.OpenGL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Framework\Atf.Gui.WinForms\Atf.Gui.WinForms.csproj">
       <Project>{7C36A258-9102-420D-B80A-5EB5717644B6}</Project>
       <Name>Atf.Gui.WinForms</Name>

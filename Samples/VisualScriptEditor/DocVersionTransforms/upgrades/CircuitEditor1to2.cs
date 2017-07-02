@@ -1,4 +1,4 @@
-//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+ï»¿//Copyright ?2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace VisualScriptEditor
     /// Transforms XML document data from version 1 to 2. Version 2 is released with ATF3.10</summary>
     internal class CircuitEditor1to2 
     {
-        readonly XNamespace ns = "http://sony.com/gametech/circuits/1_0"; // circuit xml document default namespace
+        readonly XNamespace ns = "http://blue3k.com/1_0"; // circuit xml document default namespace
         readonly XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
 
         public void Transform(XDocument doc)
@@ -139,7 +139,7 @@ namespace VisualScriptEditor
                     groupReference.Add(new XAttribute("guidRef", guid));
 
                     // the GUID was also used as the id of the groupReference node, which is not a good idea ,
-                    // since the circuit reader wants to resolve guid reference specially. 
+                    // since the vscript reader wants to resolve guid reference specially. 
                     // change the id and all the references to the id with prefix ""GroupReference_" 
                     foreach (var child in doc.Descendants())
                     {
@@ -165,8 +165,9 @@ namespace VisualScriptEditor
                     var guid = template.Attribute("guid").Value;
                     moduleReference.Add(new XAttribute("guidRef", guid));
 
+
                     // the GUID was also used as the id of the moduleReference node, which is not a good idea ,
-                    // since the circuit reader wants to resolve guid reference specially. 
+                    // since the vscript reader wants to resolve guid reference specially. 
                     // change the id and all the references to the id with prefix ""ModuleReference_" 
                     foreach (var child in doc.Descendants())
                     {

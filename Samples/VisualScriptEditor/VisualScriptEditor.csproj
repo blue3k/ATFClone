@@ -79,6 +79,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>VisualScriptNodeDefinitionSchema.xsd</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="schemas\VisualScriptNodeDefinitionSchemaExt.cs" />
     <Compile Include="VisualScript\ScriptAnnotation.cs" />
@@ -216,16 +217,132 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\arithmetic\Add-icon_16.png" />
+    <EmbeddedResource Include="Resources\arithmetic\Add-icon_32.png" />
+    <EmbeddedResource Include="Resources\arithmetic\Cross-icon_16.png" />
+    <EmbeddedResource Include="Resources\arithmetic\Cross-icon_32.png" />
+    <EmbeddedResource Include="Resources\arithmetic\Divide-icon_16.png" />
+    <EmbeddedResource Include="Resources\arithmetic\Divide-icon_32.png" />
+    <EmbeddedResource Include="Resources\arithmetic\Minus-icon_16.png" />
+    <EmbeddedResource Include="Resources\arithmetic\Minus-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-a-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-a-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-b-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-b-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-c-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-c-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-d-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-d-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-e-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-e-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-f-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-f-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-g-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-g-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-h-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-h-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-i-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-i-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-j-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-j-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-k-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-k-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-l-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-l-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-m-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-m-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-n-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-n-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-o-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-o-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-p-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-p-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-q-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-q-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-r-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-r-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-s-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-s-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-t-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-t-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-u-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-u-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-v-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-v-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-w-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-w-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-x-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-x-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-y-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-y-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-z-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-green-z-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-a-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-a-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-b-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-b-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-c-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-c-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-d-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-d-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-e-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-e-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-f-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-f-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-g-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-g-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-h-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-h-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-i-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-i-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-j-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-j-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-k-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-k-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-l-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-l-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-m-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-m-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-n-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-n-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-o-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-o-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-p-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-p-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-q-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-q-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-r-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-r-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-s-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-s-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-t-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-t-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-u-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-u-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-v-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-v-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-w-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-w-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-x-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-x-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-y-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-y-icon_32.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-z-icon_16.png" />
+    <EmbeddedResource Include="Resources\alphabet\speech-balloon-orange-z-icon_32.png" />
     <None Include="app.config" />
     <EmbeddedResource Include="Resources\About.rtf" />
     <EmbeddedResource Include="Resources\ja\Localization.xml" />
     <EmbeddedResource Include="Resources\ja\About.rtf" />
+    <Content Include="Data\mathNodes.vsdef">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="schemas\GenSchemaDef.bat" />
     <None Include="schemas\VisualScriptNodeDefinitionSchema.xsd">
       <SubType>Designer</SubType>
       <Generator>XSDGenVS</Generator>
       <CustomToolNamespace>CS,VisualScriptSchema</CustomToolNamespace>
       <LastGenOutput>VisualScriptNodeDefinitionSchema.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
