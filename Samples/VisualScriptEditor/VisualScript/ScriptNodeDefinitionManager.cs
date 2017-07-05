@@ -477,7 +477,7 @@ namespace VisualScript
                     newAttr.DefaultValue = newAttr.Type.Convert(prop.Default);
                 }
 
-                newAttr.AddRule(new GameDataAttributeRule());
+                newAttr.AddRule(new GameDataAttributeRule(prop));
 
                 var newDesc = new AttributePropertyDescriptor(newAttr.Name, newAttr, "Node", newAttr.Name, false, propTypeInfo.Editor, propTypeInfo.Converter);
                 newDescs.Add(newDesc);
@@ -487,7 +487,7 @@ namespace VisualScript
             {
                 var newChild = propTypeInfo.ChildInfo.Clone(prop.Name, prop.IsArray);
 
-                newChild.AddRule(new GameDataChildRule());
+                newChild.AddRule(new GameDataChildRule(prop));
 
                 object editor = m_ChildCollectionEditor;
                 var newDesc = new ChildPropertyDescriptor(newChild.Name, newChild, "Node", newChild.Name, false, editor, propTypeInfo.Converter);
@@ -540,31 +540,7 @@ namespace VisualScript
                 }
             }
         }
-
-        void AddSockets(ICollection<VisualScriptSchema.Property> properties, List<ElementType.Pin> inputs, List<ElementType.Pin> outputs)
-        {
-            if (properties != null)
-            {
-                foreach (var prop in properties)
-                {
-                    switch (prop.Socket)
-                    {
-                        case VisualScriptSchema.SocketType.Input:
-                            inputs.Add(new ElementType.Pin(prop.Name, prop.Type.ToString(), inputs.Count, allowFanIn: prop.AllowMultipleInput));
-                            break;
-                        case VisualScriptSchema.SocketType.Output:
-                            outputs.Add(new ElementType.Pin(prop.Name, prop.Type.ToString(), outputs.Count, allowFanOut: prop.AllowMultipleOutput));
-                            break;
-                        case VisualScriptSchema.SocketType.InOut:
-                            inputs.Add(new ElementType.Pin("Set" + prop.Name, prop.Type.ToString(), inputs.Count, allowFanIn: prop.AllowMultipleInput));
-                            outputs.Add(new ElementType.Pin("Get" + prop.Name, prop.Type.ToString(), outputs.Count, allowFanOut: prop.AllowMultipleOutput));
-                            break;
-                    }
-                }
-            }
-
-        }
-
+        
         string GetNodeIcon(VisualScriptSchema.NodeTypeInfo nodeDef, string nodeIcon = null)
         {
             if (!string.IsNullOrEmpty(nodeDef.Icon))
@@ -665,8 +641,6 @@ namespace VisualScript
                 var properties = new Dictionary<string, VisualScriptSchema.Property>();
                 RecursiveCreateProperties(nodeDef, properties);
 
-                AddSockets(properties.Values, inputs, outputs);
-
                 var nodeIcon = GetNodeIcon(nodeDef);
                 var nodeCategory = GetNodeCategory(nodeDef);
 
@@ -675,14 +649,15 @@ namespace VisualScript
                     nodeDef.Description,
                     nodeCategory,
                     string.IsNullOrEmpty(nodeIcon) ? Resources.ButtonImage : nodeIcon,
-                    inputs.ToArray(),
-                    outputs.ToArray(),
                     m_schemaLoader);
 
                 // Add in-game type info
                 var typeAttribute = new AttributeInfo("NodeType", AttributeType.StringType);
                 typeAttribute.DefaultValue = nodeDef.NodeType;
                 domNodeType.Define(typeAttribute);
+
+                // Update Icon name to actual icon name
+                nodeDef.Icon = string.IsNullOrEmpty(nodeIcon) ? Resources.ButtonImage : nodeIcon;
 
                 // Add node def as tag
                 domNodeType.SetTag(nodeDef);
@@ -715,8 +690,6 @@ namespace VisualScript
             string description,
             string category,
             string imageName,
-            ElementType.Pin[] inputs,
-            ElementType.Pin[] outputs,
             BasicSchemaLoader loader,
             DomNodeType domNodeType = null)
         {
@@ -728,11 +701,6 @@ namespace VisualScript
                 EmptyArray<AttributeInfo>.Instance,
                 EmptyArray<ChildInfo>.Instance,
                 new ExtensionInfo[] { new ExtensionInfo<ScriptNodeElementType>() });
-
-            inputs = inputs ?? EmptyArray<ElementType.Pin>.Instance;
-            outputs = outputs ?? EmptyArray<ElementType.Pin>.Instance;
-
-            DefineVScriptType(domNodeType, displayName, imageName, inputs, outputs);
 
             // add it to the schema-defined types
             loader.AddNodeType(name.ToString(), domNodeType);
@@ -752,30 +720,7 @@ namespace VisualScript
 
             return domNodeType;
         }
-
-        private void DefineVScriptType(
-            DomNodeType type,
-            string elementTypeName,
-            string imageName,
-            ICircuitPin[] inputs,
-            ICircuitPin[] outputs)
-        {
-            // create an element type and add it to the type metadata
-            // For now, let all circuit elements be used as 'connectors' which means
-            //  that their pins will be used to create the pins on a master instance.
-            bool isConnector = true; //(inputs.Length + outputs.Length) == 1;
-            var image = string.IsNullOrEmpty(imageName) ? null : ResourceUtil.GetImage32(imageName);
-            type.SetTag<ICircuitElementType>(
-                new ElementType(
-                    elementTypeName,
-                    isConnector,
-                    new Size(),
-                    image,
-                    inputs,
-                    outputs));
-
-
-        }
+        
 
 
         EmbeddedCollectionEditor m_ChildCollectionEditor;
@@ -785,6 +730,13 @@ namespace VisualScript
 
     public class GameDataAttributeRule : AttributeRule
     {
+        public VisualScriptSchema.Property SchemaProperty { get; private set; }
+
+        public GameDataAttributeRule(VisualScriptSchema.Property property)
+        {
+            SchemaProperty = property;
+        }
+
         public override bool Validate(object value, AttributeInfo info)
         {
             return true;
@@ -793,6 +745,13 @@ namespace VisualScript
 
     public class GameDataChildRule : ChildRule
     {
+        public VisualScriptSchema.Property SchemaProperty { get; private set; }
+
+        public GameDataChildRule(VisualScriptSchema.Property property)
+        {
+            SchemaProperty = property;
+        }
+
         public override bool Validate(DomNode parent, DomNode child, ChildInfo childInfo)
         {
             return true;

@@ -7,6 +7,7 @@ using Sce.Atf.Rendering;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Xml;
+using Sce.Atf;
 
 namespace VisualScript
 {
@@ -42,13 +43,11 @@ namespace VisualScript
         }
 
         /// <summary>
-        /// Gets desired interior size, in pixels, of this element type</summary>
+        /// Gets desired interior size, in pixels, of this element type
+        /// </summary>
         public Size InteriorSize
         {
-            get
-            {
-                return m_cachedInteriorSize;
-            }
+            get { return (m_Image != null) ? new Size(32, 32) : new Size(); }
         }
 
         /// <summary>
@@ -57,7 +56,7 @@ namespace VisualScript
         {
             get
             {
-                return m_cachedImage;
+                return m_Image;
             }
         }
 
@@ -87,21 +86,7 @@ namespace VisualScript
             }
         }
 
-
-        ICircuitElementType GetCachedType()
-        {
-            if (m_cachedType != null)
-                return m_cachedType;
-
-            // search in tags
-            if (m_cachedType == null)
-                m_cachedType = DomNode.GetTag(typeof(ICircuitElementType)) as ICircuitElementType;
-
-            if (m_cachedType == null) // now try domNode type tag
-                m_cachedType = DomNode.Type.GetTag<ICircuitElementType>();
-
-            return m_cachedType;
-        }
+        
 
         string GetBaseNameFor(ChildInfo childInfo, DomNode child)
         {
@@ -130,15 +115,10 @@ namespace VisualScript
             m_AttributeForTitle = VisualScriptBasicSchema.moduleType.labelAttribute;
 
 
-            var elementType = GetCachedType();
 
-            if (elementType != null)
-            {
-                m_cachedImage = elementType.Image;
-                m_cachedInteriorSize = elementType.InteriorSize;
-                m_Inputs.AddRange(elementType.Inputs);
-                m_Outputs.AddRange(elementType.Outputs);
-            }
+            // Pull image icon image from node definition
+            var nodeDef = DomNode.Type.GetTag<VisualScriptSchema.NodeTypeInfo>();
+            m_Image = string.IsNullOrEmpty(nodeDef.Icon) ? null : ResourceUtil.GetImage32(nodeDef.Icon);
 
             // Create non-string child classes
             if (DomNode.Children != null)
@@ -150,6 +130,32 @@ namespace VisualScript
 
                     var newChild = new DomNode(childInfo.Type);
                     DomNode.SetChild(childInfo, newChild);
+                }
+            }
+
+            // Add sockets for attributes
+            if (DomNode.Type.Attributes != null)
+            {
+                foreach (var attrInfo in DomNode.Type.Attributes)
+                {
+                    var attrRule = attrInfo.GetRule<GameDataAttributeRule>();
+                    if (attrRule == null || attrRule.SchemaProperty == null) continue;
+
+                    switch (attrRule.SchemaProperty.Socket)
+                    {
+                        case VisualScriptSchema.SocketType.Input:
+                            m_Inputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type.Name, m_Outputs.Count));
+                            break;
+                        case VisualScriptSchema.SocketType.Output:
+                            m_Outputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type.Name, m_Outputs.Count));
+                            break;
+                        case VisualScriptSchema.SocketType.InOut:
+                            m_Inputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type.Name, m_Outputs.Count));
+                            m_Outputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type.Name, m_Outputs.Count));
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
@@ -216,9 +222,7 @@ namespace VisualScript
 
 
 
-        ICircuitElementType m_cachedType;
-        Size m_cachedInteriorSize;
-        Image m_cachedImage;
+        Image m_Image;
 
         List<ICircuitPin> m_Inputs = new List<ICircuitPin>();
         List<ICircuitPin> m_Outputs = new List<ICircuitPin>();
