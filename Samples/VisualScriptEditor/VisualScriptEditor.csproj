@@ -79,7 +79,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>VisualScriptNodeDefinitionSchema.xsd</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="schemas\VisualScriptNodeDefinitionSchemaExt.cs" />
     <Compile Include="VisualScript\ScriptAnnotation.cs" />
@@ -336,13 +335,14 @@
     <Content Include="Data\mathNodes.vsdef">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Data\buildPipelineNodes.vsdef" />
     <None Include="schemas\GenSchemaDef.bat" />
     <None Include="schemas\VisualScriptNodeDefinitionSchema.xsd">
       <SubType>Designer</SubType>
       <Generator>XSDGenVS</Generator>
       <CustomToolNamespace>CS,VisualScriptSchema</CustomToolNamespace>
-      <LastGenOutput>VisualScriptNodeDefinitionSchema.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <LastGenOutput>VisualScriptNodeDefinitionSchema.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

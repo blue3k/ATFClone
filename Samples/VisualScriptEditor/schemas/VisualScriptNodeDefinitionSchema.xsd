@@ -46,6 +46,7 @@
     <xs:attribute name="Name" type="xs:string" use="required" />
     <xs:attribute name="Type" type="PropertyType" use="required" />
     <xs:attribute name="Default" type="xs:string" use="optional" />
+    <xs:attribute name="VisibleInGame" type="xs:boolean" use="optional" default="false" />
     <xs:attribute name="AllowMultipleInput" type="xs:boolean" use="optional" default="false" />
     <xs:attribute name="AllowMultipleOutput" type="xs:boolean" use="optional" default="true" />
     <xs:attribute name="IsArray" type="xs:boolean" use="optional" default="false" />

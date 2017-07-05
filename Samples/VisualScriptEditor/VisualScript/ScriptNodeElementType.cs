@@ -105,10 +105,6 @@ namespace VisualScript
         {
             base.OnNodeSet();
 
-            //var index = DomNode.Type.Name.LastIndexOf(':');
-            //m_TitleText = index < 0 ? DomNode.Type.Name : DomNode.Type.Name.Substring(index + 1);
-
-
             if(string.IsNullOrEmpty(GetAttribute<string>(VisualScriptBasicSchema.moduleType.labelAttribute)))
                 SetAttribute(VisualScriptBasicSchema.moduleType.labelAttribute, GetAttribute<string>(VisualScriptBasicSchema.moduleType.nameAttribute));
 
@@ -176,6 +172,8 @@ namespace VisualScript
                 }
             }
 
+
+            // Update socket as new a child node is added
             DomNode.ChildInserted += (sender, args) =>
             {
                 if (DomNode != args.Parent) return;
@@ -190,6 +188,7 @@ namespace VisualScript
                 }
             };
 
+            // Update socket as new a child node is removed
             DomNode.ChildRemoved += (sender, args) =>
             {
                 if (DomNode != args.Parent) return;

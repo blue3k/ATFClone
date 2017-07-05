@@ -183,6 +183,8 @@ namespace VisualScriptSchema {
         
         private string defaultField;
         
+        private bool visibleInGameField;
+        
         private bool allowMultipleInputField;
         
         private bool allowMultipleOutputField;
@@ -194,6 +196,7 @@ namespace VisualScriptSchema {
         private SocketType socketField;
         
         public Property() {
+            this.visibleInGameField = false;
             this.allowMultipleInputField = false;
             this.allowMultipleOutputField = true;
             this.isArrayField = false;
@@ -231,6 +234,18 @@ namespace VisualScriptSchema {
             }
             set {
                 this.defaultField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool VisibleInGame {
+            get {
+                return this.visibleInGameField;
+            }
+            set {
+                this.visibleInGameField = value;
             }
         }
         

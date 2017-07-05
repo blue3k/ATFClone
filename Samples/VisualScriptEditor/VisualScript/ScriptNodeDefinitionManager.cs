@@ -33,6 +33,7 @@ namespace VisualScript
         static readonly string[] stm_DefaultModuleDefinitions = new string[]
         {
             Path.Combine(stm_DefaultPath, "mathNodes.vsdef"),
+            Path.Combine(stm_DefaultPath, "buildNodes.vsdef"),
         };
         public string[] DefaultModuleDefinitions
         {
@@ -519,6 +520,7 @@ namespace VisualScript
                 {
                     if (properties.ContainsKey(prop.Name))
                     {
+                        // This is DFS travel. Child most property definition will be taken.
                         // override
                         properties[prop.Name] = prop;
                     }
@@ -650,6 +652,9 @@ namespace VisualScript
                     nodeCategory,
                     string.IsNullOrEmpty(nodeIcon) ? Resources.ButtonImage : nodeIcon,
                     m_schemaLoader);
+
+                // Use node name as node type when node type isn't assigned
+                nodeDef.NodeType = string.IsNullOrEmpty(nodeDef.NodeType) ? nodeDef.Name : nodeDef.NodeType;
 
                 // Add in-game type info
                 var typeAttribute = new AttributeInfo("NodeType", AttributeType.StringType);
