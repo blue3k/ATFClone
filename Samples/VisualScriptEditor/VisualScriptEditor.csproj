@@ -335,7 +335,9 @@
     <Content Include="Data\mathNodes.vsdef">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Data\buildPipelineNodes.vsdef" />
+    <None Include="Data\buildPipelineNodes.vsdef">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="schemas\GenSchemaDef.bat" />
     <None Include="schemas\VisualScriptNodeDefinitionSchema.xsd">
       <SubType>Designer</SubType>
