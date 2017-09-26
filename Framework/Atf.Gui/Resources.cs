@@ -665,6 +665,24 @@ namespace Sce.Atf
         [ImageResource("arrow-upload16.png", null, "arrow-upload32.png")]
         public static readonly string ArrowUpload;
 
+        /// <summary>
+        /// Button Play
+        /// </summary>
+        [ImageResource("Button-1-play-icon_16.png", null, "Button-1-play-icon_32.png")]
+        public static readonly string ButtonPlay;
+
+        /// <summary>
+        /// Button Play
+        /// </summary>
+        [ImageResource("Button-2-pause-icon_16.png", null, "Button-2-pause-icon_32.png")]
+        public static readonly string ButtonPause;
+
+        /// <summary>
+        /// Button Play
+        /// </summary>
+        [ImageResource("Button-2-stop-icon_16.png", null, "Button-2-stop-icon_32.png")]
+        public static readonly string ButtonStop;
+
 
         #endregion
 

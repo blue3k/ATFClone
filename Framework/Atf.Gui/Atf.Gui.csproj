@@ -850,6 +850,16 @@
     <EmbeddedResource Include="Resources\Arrow-reload-5-icon_16.png" />
     <EmbeddedResource Include="Resources\Arrow-reload-5-icon_32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Button-1-play-icon_16.png" />
+    <EmbeddedResource Include="Resources\Button-1-play-icon_32.png" />
+    <EmbeddedResource Include="Resources\Button-2-pause-icon_16.png" />
+    <EmbeddedResource Include="Resources\Button-2-pause-icon_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Button-2-stop-icon_16.png" />
+    <EmbeddedResource Include="Resources\Button-2-stop-icon_32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
