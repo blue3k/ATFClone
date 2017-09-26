@@ -614,6 +614,61 @@ namespace Sce.Atf
         #endregion
 
 
+        #region Arrow
+
+
+        /// <summary>
+        /// Arrow down
+        /// </summary>
+        [ImageResource("Arrow-down-icon_16.png", null, "Arrow-down-icon_32.png")]
+        public static readonly string ArrowDown;
+
+        /// <summary>
+        /// Arrow Down 2
+        /// </summary>
+        [ImageResource("Arrow-down-2-icon_16.png", null, "Arrow-down-2-icon_32.png")]
+        public static readonly string ArrowDown2;
+
+        /// <summary>
+        /// Arrow download 2
+        /// </summary>
+        [ImageResource("Arrow-download-2-icon_16.png", null, "Arrow-download-2-icon_32.png")]
+        public static readonly string ArrowDownload2;
+
+        /// <summary>
+        /// Arrow download 3
+        /// </summary>
+        [ImageResource("Arrow-download-3-icon_16.png", null, "Arrow-download-3-icon_32.png")]
+        public static readonly string ArrowDownload3;
+
+        /// <summary>
+        /// Arrow reload 3
+        /// </summary>
+        [ImageResource("Arrow-reload-3-icon_16.png", null, "Arrow-reload-3-icon_32.png")]
+        public static readonly string ArrowReload3;
+
+        /// <summary>
+        /// Arrow reload 3
+        /// </summary>
+        [ImageResource("Arrow-reload-4-icon_16.png", null, "Arrow-reload-4-icon_32.png")]
+        public static readonly string ArrowReload4;
+
+        /// <summary>
+        /// Arrow reload 3
+        /// </summary>
+        [ImageResource("Arrow-reload-5-icon_16.png", null, "Arrow-reload-5-icon_32.png")]
+        public static readonly string ArrowReload5;
+
+        /// <summary>
+        /// Arrow reload 3
+        /// </summary>
+        [ImageResource("arrow-upload16.png", null, "arrow-upload32.png")]
+        public static readonly string ArrowUpload;
+
+
+        #endregion
+
+
         /// <summary>
         /// Constructor</summary>
         static Resources()

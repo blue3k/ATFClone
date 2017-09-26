@@ -830,6 +830,26 @@
     <EmbeddedResource Include="Resources\ChromeLeft.png" />
     <EmbeddedResource Include="Resources\ChromeRight.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\arrow-upload16.png" />
+    <EmbeddedResource Include="Resources\arrow-upload32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Arrow-down-2-icon_16.png" />
+    <EmbeddedResource Include="Resources\Arrow-down-2-icon_32.png" />
+    <EmbeddedResource Include="Resources\Arrow-down-icon_16.png" />
+    <EmbeddedResource Include="Resources\Arrow-down-icon_32.png" />
+    <EmbeddedResource Include="Resources\Arrow-download-2-icon_16.png" />
+    <EmbeddedResource Include="Resources\Arrow-download-2-icon_32.png" />
+    <EmbeddedResource Include="Resources\Arrow-download-3-icon_16.png" />
+    <EmbeddedResource Include="Resources\Arrow-download-3-icon_32.png" />
+    <EmbeddedResource Include="Resources\Arrow-reload-3-icon_16.png" />
+    <EmbeddedResource Include="Resources\Arrow-reload-3-icon_32.png" />
+    <EmbeddedResource Include="Resources\Arrow-reload-4-icon_16.png" />
+    <EmbeddedResource Include="Resources\Arrow-reload-4-icon_32.png" />
+    <EmbeddedResource Include="Resources\Arrow-reload-5-icon_16.png" />
+    <EmbeddedResource Include="Resources\Arrow-reload-5-icon_32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
