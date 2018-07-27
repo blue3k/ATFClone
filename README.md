@@ -1,4 +1,4 @@
-ATF for VS2015
+ATF for VS2017
 ===
 
 ### Note ###

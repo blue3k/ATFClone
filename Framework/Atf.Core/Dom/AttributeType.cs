@@ -834,6 +834,70 @@ namespace Sce.Atf.Dom
 
         /// <summary>
         /// Gets a generic AttributeType that specifies a CLR int</summary>
+        public static AttributeType Int8Type
+        {
+            get { return s_int8Type; }
+        }
+        private static readonly AttributeType s_int8Type = new AttributeType("Int8", typeof(sbyte), 1);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR int</summary>
+        public static AttributeType Int8ArrayType
+        {
+            get { return s_int8ArrayType; }
+        }
+        private static readonly AttributeType s_int8ArrayType = new AttributeType("int8[]", typeof(sbyte[]), Int32.MaxValue);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR int</summary>
+        public static AttributeType UInt8Type
+        {
+            get { return s_uint8Type; }
+        }
+        private static readonly AttributeType s_uint8Type = new AttributeType("UInt8", typeof(byte), 1);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR int</summary>
+        public static AttributeType UInt8ArrayType
+        {
+            get { return s_uint8ArrayType; }
+        }
+        private static readonly AttributeType s_uint8ArrayType = new AttributeType("uint8[]", typeof(byte[]), Int32.MaxValue);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR int</summary>
+        public static AttributeType Int16Type
+        {
+            get { return s_int16Type; }
+        }
+        private static readonly AttributeType s_int16Type = new AttributeType("Int16", typeof(Int16), 1);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR int</summary>
+        public static AttributeType Int16ArrayType
+        {
+            get { return s_int16ArrayType; }
+        }
+        private static readonly AttributeType s_int16ArrayType = new AttributeType("int16[]", typeof(Int16[]), Int32.MaxValue);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR int</summary>
+        public static AttributeType UInt16Type
+        {
+            get { return s_uint16Type; }
+        }
+        private static readonly AttributeType s_uint16Type = new AttributeType("UInt16", typeof(UInt16), 1);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR int</summary>
+        public static AttributeType UInt16ArrayType
+        {
+            get { return s_uint16ArrayType; }
+        }
+        private static readonly AttributeType s_uint16ArrayType = new AttributeType("uint16[]", typeof(UInt16[]), Int32.MaxValue);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR int</summary>
         public static AttributeType IntType
         {
             get { return s_intType; }
@@ -847,6 +911,54 @@ namespace Sce.Atf.Dom
             get { return s_intArrayType; }
         }
         private static readonly AttributeType s_intArrayType = new AttributeType("int[]", typeof(int[]), Int32.MaxValue);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR int</summary>
+        public static AttributeType UIntType
+        {
+            get { return s_uintType; }
+        }
+        private static readonly AttributeType s_uintType = new AttributeType("UInt", typeof(UInt32), 1);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR int</summary>
+        public static AttributeType UIntArrayType
+        {
+            get { return s_uintArrayType; }
+        }
+        private static readonly AttributeType s_uintArrayType = new AttributeType("uint[]", typeof(UInt32[]), Int32.MaxValue);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR int</summary>
+        public static AttributeType Int64Type
+        {
+            get { return s_int64Type; }
+        }
+        private static readonly AttributeType s_int64Type = new AttributeType("Int64", typeof(Int64), 1);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR int</summary>
+        public static AttributeType Int64ArrayType
+        {
+            get { return s_int64ArrayType; }
+        }
+        private static readonly AttributeType s_int64ArrayType = new AttributeType("int64[]", typeof(Int64[]), Int32.MaxValue);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR int</summary>
+        public static AttributeType UInt64Type
+        {
+            get { return s_uint64Type; }
+        }
+        private static readonly AttributeType s_uint64Type = new AttributeType("UInt64", typeof(UInt64), 1);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR int</summary>
+        public static AttributeType UInt64ArrayType
+        {
+            get { return s_uint64ArrayType; }
+        }
+        private static readonly AttributeType s_uint64ArrayType = new AttributeType("uint64[]", typeof(UInt64[]), Int32.MaxValue);
 
         /// <summary>
         /// Gets a generic AttributeType that specifies a CLR float</summary>
