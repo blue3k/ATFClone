@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\lib\anycpu_dotnet_clr4_debug\</OutputPath>
-    <IntermediateOutputPath>obj\Debug.vs2010\</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\DebugWin\</IntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;CS_4</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -30,7 +30,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\lib\anycpu_dotnet_clr4_release\</OutputPath>
-    <IntermediateOutputPath>obj\Release.vs2010\</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\ReleaseWin\</IntermediateOutputPath>
     <DefineConstants>TRACE;CS_4</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -90,11 +90,11 @@
     <EmbeddedResource Include="LanguageDefinitions\XMLDefinition.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Atf.Core\Atf.Core.vs2010.csproj">
+    <ProjectReference Include="..\Atf.Core\Atf.Core.csproj">
       <Project>{9D1835B6-D1C2-44BA-BAE1-05C6EC442D2F}</Project>
       <Name>Atf.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Atf.Gui.WinForms\Atf.Gui.WinForms.vs2010.csproj">
+    <ProjectReference Include="..\Atf.Gui.WinForms\Atf.Gui.WinForms.csproj">
       <Project>{7C36A258-9102-420D-B80A-5EB5717644B6}</Project>
       <Name>Atf.Gui.WinForms</Name>
     </ProjectReference>

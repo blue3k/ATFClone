@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\Debug.vs2015\</OutputPath>
+    <OutputPath>..\..\bin\DebugWin\</OutputPath>
     <IntermediateOutputPath>obj\Debug.vs2010\</IntermediateOutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -29,7 +29,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\Release.vs2015\</OutputPath>
+    <OutputPath>..\..\bin\ReleaseWin\</OutputPath>
     <IntermediateOutputPath>obj\Release.vs2010\</IntermediateOutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -66,14 +66,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.vs2010.csproj">
-      <Project>{9D1835B6-D1C2-44BA-BAE1-05C6EC442D2F}</Project>
-      <Name>Atf.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="Schemas\GenSchemaDef.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.csproj">
+      <Project>{9d1835b6-d1c2-44ba-bae1-05c6ec442d2f}</Project>
+      <Name>Atf.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

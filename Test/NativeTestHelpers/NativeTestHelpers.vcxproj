@@ -24,7 +24,7 @@
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>NativeTestHelpers</RootNamespace>
     <ProjectName>NativeTestHelpers</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -182,16 +182,16 @@
     <Image Include="app.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.csproj">
       <Project>{9d1835b6-d1c2-44ba-bae1-05c6ec442d2f}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Gui.WinForms\Atf.Gui.WinForms.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Gui.WinForms\Atf.Gui.WinForms.csproj">
       <Project>{7c36a258-9102-420d-b80a-5eb5717644b6}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Gui.Wpf\Atf.Gui.Wpf.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Gui.Wpf\Atf.Gui.Wpf.csproj">
       <Project>{050fc659-553f-4911-a609-5ba1be4edbf8}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Gui\Atf.Gui.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Gui\Atf.Gui.csproj">
       <Project>{4765c2a7-f989-40db-bc12-fcd67025b93f}</Project>
     </ProjectReference>
   </ItemGroup>

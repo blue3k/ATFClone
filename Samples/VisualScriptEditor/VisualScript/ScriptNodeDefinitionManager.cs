@@ -33,7 +33,7 @@ namespace VisualScript
         static readonly string[] stm_DefaultModuleDefinitions = new string[]
         {
             Path.Combine(stm_DefaultPath, "mathNodes.vsdef"),
-            Path.Combine(stm_DefaultPath, "buildNodes.vsdef"),
+            Path.Combine(stm_DefaultPath, "buildPipelineNodes.vsdef"),
         };
         public string[] DefaultModuleDefinitions
         {
@@ -420,6 +420,12 @@ namespace VisualScript
                     case VisualScriptSchema.PropertyType.Socket:
                         childNodeType = CreateDOMType(typeof(VisualScriptSchema.EditorSocket));
                         socketType.Type = childNodeType; // cache for global use
+                        break;
+                    case VisualScriptSchema.PropertyType.File:
+                    case VisualScriptSchema.PropertyType.Asset:
+                        // TODO: add new type
+                        newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.StringType);
+                        newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.StringArrayType);
                         break;
                     default:
                         throw new InvalidDataException("There is a not-handled property type");

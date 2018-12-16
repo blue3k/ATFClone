@@ -116,8 +116,8 @@ namespace VisualScriptEditor
         private IEnumerable<Lazy<IContextMenuCommandProvider>> m_contextMenuCommandProviders = null;
 
         /// <summary>
-        /// Circuit clipboard data type</summary>
-        public static readonly string CircuitFormat = VisualScriptBasicSchema.NS + ":Circuit";
+        /// VScript clipboard data type</summary>
+        public static readonly string CircuitFormat = VisualScriptBasicSchema.NS + ":VScript";
 
         // scripting related members
         [Import(AllowDefault = false)]

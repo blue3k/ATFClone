@@ -37,8 +37,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\Debug.vs2010\</OutputPath>
-    <IntermediateOutputPath>obj\Debug.vs2010\</IntermediateOutputPath>
+    <OutputPath>..\..\bin\DebugWin\</OutputPath>
+    <IntermediateOutputPath>obj\DebugWin\</IntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;CS_3</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -47,8 +47,8 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\Release.vs2010\</OutputPath>
-    <IntermediateOutputPath>obj\Release.vs2010\</IntermediateOutputPath>
+    <OutputPath>..\..\bin\ReleaseWin\</OutputPath>
+    <IntermediateOutputPath>obj\ReleaseWin\</IntermediateOutputPath>
     <DefineConstants>TRACE;CS_3</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -96,7 +96,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.csproj">
       <Project>{9D1835B6-D1C2-44BA-BAE1-05C6EC442D2F}</Project>
       <Name>Atf.Core</Name>
     </ProjectReference>

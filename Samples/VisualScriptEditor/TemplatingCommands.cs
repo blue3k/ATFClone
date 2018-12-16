@@ -297,7 +297,7 @@ namespace VisualScriptEditor
             if (uri == null)
             {
                 var dlg = new OpenFileDialog();
-                dlg.Filter = "Circuit Template File (*.circuit)|*.circuit".Localize();
+                dlg.Filter = "Script Template File (*.vscript)|*.vscript".Localize();
                 dlg.CheckFileExists = true;
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

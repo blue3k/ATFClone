@@ -41,7 +41,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\lib\anycpu_dotnet_clr4_debug\</OutputPath>
-    <IntermediateOutputPath>obj\Debug.vs2010\</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\DebugWin\</IntermediateOutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -51,7 +51,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\lib\anycpu_dotnet_clr4_release\</OutputPath>
-    <IntermediateOutputPath>obj\Release.vs2010\</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\ReleaseWin\</IntermediateOutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>

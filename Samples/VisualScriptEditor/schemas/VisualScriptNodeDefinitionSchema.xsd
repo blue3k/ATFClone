@@ -28,6 +28,8 @@
       <xs:enumeration value="FixedString"/>
       <xs:enumeration value="vector3"/>
       <xs:enumeration value="Socket"/>
+      <xs:enumeration value="File"/>
+      <xs:enumeration value="Asset"/>
     </xs:restriction>
   </xs:simpleType>
 

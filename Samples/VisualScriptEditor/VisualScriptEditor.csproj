@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\Debug.vs2015\</OutputPath>
+    <OutputPath>..\..\bin\DebugWin\</OutputPath>
     <IntermediateOutputPath>obj\Debug.vs2010\</IntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;DEBUG_VERBOSE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -31,7 +31,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\Release.vs2015\</OutputPath>
+    <OutputPath>..\..\bin\ReleaseWin\</OutputPath>
     <IntermediateOutputPath>obj\Release.vs2010\</IntermediateOutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -198,15 +198,15 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.csproj">
       <Project>{9D1835B6-D1C2-44BA-BAE1-05C6EC442D2F}</Project>
       <Name>Atf.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Gui.WinForms\Atf.Gui.WinForms.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Gui.WinForms\Atf.Gui.WinForms.csproj">
       <Project>{7C36A258-9102-420D-B80A-5EB5717644B6}</Project>
       <Name>Atf.Gui.WinForms</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Gui\Atf.Gui.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Gui\Atf.Gui.csproj">
       <Project>{4765C2A7-F989-40DB-BC12-FCD67025B93F}</Project>
       <Name>Atf.Gui</Name>
     </ProjectReference>
@@ -335,9 +335,10 @@
     <Content Include="Data\mathNodes.vsdef">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Data\buildPipelineNodes.vsdef">
+    <Content Include="Data\buildPipelineNodes.vsdef">
       <SubType>Designer</SubType>
-    </None>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="schemas\GenSchemaDef.bat" />
     <None Include="schemas\VisualScriptNodeDefinitionSchema.xsd">
       <SubType>Designer</SubType>

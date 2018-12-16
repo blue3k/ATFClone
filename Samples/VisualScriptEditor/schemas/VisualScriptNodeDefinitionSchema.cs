@@ -342,6 +342,12 @@ namespace VisualScriptSchema {
         
         /// <remarks/>
         Socket,
+        
+        /// <remarks/>
+        File,
+        
+        /// <remarks/>
+        Asset,
     }
     
     /// <remarks/>

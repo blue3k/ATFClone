@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\lib\anycpu_dotnet_clr4_debug\</OutputPath>
-    <IntermediateOutputPath>obj\Debug.vs2010\</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\DebugWin\</IntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;CS_4</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -83,15 +83,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Atf.Core\Atf.Core.csproj">
-      <Project>{9D1835B6-D1C2-44BA-BAE1-05C6EC442D2F}</Project>
+      <Project>{9d1835b6-d1c2-44ba-bae1-05c6ec442d2f}</Project>
       <Name>Atf.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Atf.Gui.OpenGL\Atf.Gui.OpenGL.csproj">
-      <Project>{52D35323-1AA1-4205-A1B0-26C5E5E8D543}</Project>
+      <Project>{52d35323-1aa1-4205-a1b0-26c5e5e8d543}</Project>
       <Name>Atf.Gui.OpenGL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Atf.Gui\Atf.Gui.csproj">
-      <Project>{4765C2A7-F989-40DB-BC12-FCD67025B93F}</Project>
+      <Project>{4765c2a7-f989-40db-bc12-fcd67025b93f}</Project>
       <Name>Atf.Gui</Name>
     </ProjectReference>
   </ItemGroup>

@@ -18,8 +18,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\Debug.vs2015\</OutputPath>
-    <IntermediateOutputPath>obj\Debug.vs2010\</IntermediateOutputPath>
+    <OutputPath>..\..\bin\DebugWin\</OutputPath>
+    <IntermediateOutputPath>obj\DebugWin\</IntermediateOutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,8 +32,8 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\Release.vs2015\</OutputPath>
-    <IntermediateOutputPath>obj\Release.vs2010\</IntermediateOutputPath>
+    <OutputPath>..\..\bin\ReleaseWin\</OutputPath>
+    <IntermediateOutputPath>obj\ReleaseWin\</IntermediateOutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -73,15 +73,15 @@
     <Compile Include="SourceControlContext.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.csproj">
       <Project>{9D1835B6-D1C2-44BA-BAE1-05C6EC442D2F}</Project>
       <Name>Atf.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Gui.WinForms\Atf.Gui.WinForms.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Gui.WinForms\Atf.Gui.WinForms.csproj">
       <Project>{7C36A258-9102-420D-B80A-5EB5717644B6}</Project>
       <Name>Atf.Gui.WinForms</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Gui\Atf.Gui.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Gui\Atf.Gui.csproj">
       <Project>{4765C2A7-F989-40DB-BC12-FCD67025B93F}</Project>
       <Name>Atf.Gui</Name>
     </ProjectReference>
@@ -97,7 +97,7 @@
       <Project>{ad8b5500-d8e2-4609-beca-c405ea22b1ae}</Project>
       <Name>Atf.Subversion</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.SyntaxEditorControl\Atf.SyntaxEditorControl.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.SyntaxEditorControl\Atf.SyntaxEditorControl.csproj">
       <Project>{D1A78912-9AD2-4555-8560-B251A4D751DC}</Project>
       <Name>Atf.SyntaxEditorControl</Name>
     </ProjectReference>

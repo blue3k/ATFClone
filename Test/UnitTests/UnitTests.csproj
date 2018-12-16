@@ -32,7 +32,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\bin\Debug.vs2015\tests\</OutputPath>
+    <OutputPath>..\..\bin\DebugWin\tests\</OutputPath>
     <DefineConstants>TRACE;DEBUG;CS_3;CS_4</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DebugType>full</DebugType>
@@ -42,7 +42,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>..\..\bin\Release.vs2015\tests\</OutputPath>
+    <OutputPath>..\..\bin\ReleaseWin\tests\</OutputPath>
     <DefineConstants>TRACE;CS_3;CS_4</DefineConstants>
     <Optimize>true</Optimize>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -265,7 +265,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DevTools\DomGen\DomGen.vs2010.csproj">
+    <ProjectReference Include="..\..\DevTools\DomGen\DomGen.csproj">
       <Project>{FE3CA2EA-2F56-49A5-AD02-E5DEC8694457}</Project>
       <Name>DomGen</Name>
     </ProjectReference>
@@ -285,11 +285,11 @@
       <Project>{6f80048b-e81f-4e06-9438-26c23487777c}</Project>
       <Name>Atf.Collada</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Core\Atf.Core.csproj">
       <Project>{9D1835B6-D1C2-44BA-BAE1-05C6EC442D2F}</Project>
       <Name>Atf.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Gui.WinForms\Atf.Gui.WinForms.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Gui.WinForms\Atf.Gui.WinForms.csproj">
       <Project>{7C36A258-9102-420D-B80A-5EB5717644B6}</Project>
       <Name>Atf.Gui.WinForms</Name>
     </ProjectReference>
@@ -297,7 +297,7 @@
       <Project>{050fc659-553f-4911-a609-5ba1be4edbf8}</Project>
       <Name>Atf.Gui.Wpf</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Atf.Gui\Atf.Gui.vs2010.csproj">
+    <ProjectReference Include="..\..\Framework\Atf.Gui\Atf.Gui.csproj">
       <Project>{4765C2A7-F989-40DB-BC12-FCD67025B93F}</Project>
       <Name>Atf.Gui</Name>
     </ProjectReference>
