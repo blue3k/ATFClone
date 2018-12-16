@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CircuitEditor")]
+[assembly: AssemblyTitle("Tong Script")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("SCEA")]
-[assembly: AssemblyProduct("CircuitEditor")]
-[assembly: AssemblyCopyright("Copyright © 2014 Sony Computer Entertainment America LLC")]
+[assembly: AssemblyCompany("blue3k")]
+[assembly: AssemblyProduct("TongScriptEditor")]
+[assembly: AssemblyCopyright("Copyright © 2018 KyungKun Ko")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
