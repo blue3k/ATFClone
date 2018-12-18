@@ -14,11 +14,11 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// i.e., the element this pin is associated with at the lowest level (leaf node) in the graph</param>
         /// <param name="targetPinIndex">The pin index on the defining element</param>
         /// <param name="referencingDomNode">DomNode that instances the template that the pin is associated with</param>
-        public PinTarget(DomNode targetDomNode, int targetPinIndex, DomNode referencingDomNode)
+        public PinTarget(DomNode targetDomNode, NameString pinName, DomNode referencingDomNode)
         {
             m_leafDomNode = targetDomNode;
-            m_leafPinIndex = targetPinIndex;
             m_instancingNode = referencingDomNode;
+            m_leafPinName = pinName;
         }
 
      
@@ -30,10 +30,11 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         }
 
         /// <summary>
-        /// Gets the ultimate pin index(in the binding circuit element) that this group pin binds</summary>
-        public int LeafPinIndex
+        /// Gets the ultimate pin name(in the binding circuit element) that this group pin binds
+        /// </summary>
+        public NameString LeafPinName
         {
-            get { return m_leafPinIndex; }
+            get { return m_leafPinName; }
         }
 
 
@@ -52,7 +53,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         public override int GetHashCode()
         {
             int hash1 = LeafDomNode.GetHashCode();
-            int hash2 = LeafPinIndex.GetHashCode();
+            int hash2 = LeafPinName.GetHashCode();
             return hash1 ^ hash2;
         }
 
@@ -101,7 +102,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             if (other == null)
                 return false;
-            return (LeafDomNode == other.LeafDomNode && LeafPinIndex == other.LeafPinIndex);
+            return (LeafDomNode == other.LeafDomNode && LeafPinName == other.LeafPinName);
         }
 
         /// <summary>
@@ -112,13 +113,12 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             if (other == null)
                 return false;
-            return (LeafDomNode == other.LeafDomNode && LeafPinIndex == other.LeafPinIndex &&
+            return (LeafDomNode == other.LeafDomNode && LeafPinName == other.LeafPinName &&
                 InstancingNode == other.InstancingNode);
         }
 
         private readonly DomNode m_leafDomNode;
-        private readonly int m_leafPinIndex;
         private DomNode m_instancingNode; // non-null for pin targets of a template instance
-   
+        private readonly NameString m_leafPinName;
     }
 }

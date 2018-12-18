@@ -230,14 +230,14 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             {
                 if (grpPin.InternalElement.DomNode != node) continue;
                 if (grpPin.IsDefaultName)
-                    grpPin.Name = grpPin.InternalElement.Name + ":" + grpPin.InternalElement.InputPin(grpPin.InternalPinIndex).Name;
+                    grpPin.Name = grpPin.InternalElement.Name + ":" + grpPin.InternalElement.InputPin(grpPin.InternalPinName).Name;
             }
 
             foreach (GroupPin grpPin in group.Outputs)
             {
                 if (grpPin.InternalElement.DomNode != node) continue;
                 if (grpPin.IsDefaultName)
-                    grpPin.Name = grpPin.InternalElement.Name + ":" + grpPin.InternalElement.OutputPin(grpPin.InternalPinIndex).Name;
+                    grpPin.Name = grpPin.InternalElement.Name + ":" + grpPin.InternalElement.OutputPin(grpPin.InternalPinName).Name;
             }
         }
 
@@ -393,7 +393,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                         {
                             var grpPin = matchedInput.Second.Cast<GroupPin>();
                             wire.InputElement = grpPin.InternalElement;
-                            wire.InputPin = grpPin.InternalElement.InputPin(grpPin.InternalPinIndex);
+                            wire.InputPin = grpPin.InternalElement.InputPin(grpPin.InternalPinName);
                         }
                         else
                         {
@@ -405,7 +405,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                         {
                             var grpPin = matchedOutput.Second.Cast<GroupPin>();
                             wire.OutputElement = grpPin.InternalElement;
-                            wire.OutputPin = grpPin.InternalElement.OutputPin(grpPin.InternalPinIndex);
+                            wire.OutputPin = grpPin.InternalElement.OutputPin(grpPin.InternalPinName);
                         }
                         else
                         {
@@ -500,7 +500,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                             //TODO
                         }
 
-                        Debug.Assert(edge.InputPin.Index == edge.InputPinTarget.LeafPinIndex,
+                        Debug.Assert(edge.InputPin.Index == edge.InputPinTarget.LeafPinName,
                                            "Top level graph edge should reference node pin index directly ");
                     }
                 }
@@ -539,7 +539,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                         {
                             //TODO
                         }
-                        Debug.Assert(edge.OutputPin.Index == edge.OutputPinTarget.LeafPinIndex,
+                        Debug.Assert(edge.OutputPin.Index == edge.OutputPinTarget.LeafPinName,
                           "Top level graph edge should reference node pin index directly ");
 
                     }

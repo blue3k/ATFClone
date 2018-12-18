@@ -332,7 +332,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
                 Point ip = grpPin.InternalElement.Bounds.Location;
                 float x2 = ip.X;
-                float y2 = ip.Y + GetPinOffset(grpPin.InternalElement, grpPin.InternalPinIndex, true );
+                float y2 = ip.Y + GetPinOffset(grpPin.InternalElement, grpPin.InternalPinName, true );
 
                 DrawWire(g, m_fakeInputLinkPen, x1, y1, x2, y2, 1.0f, m_VirtualLinkStrokeStyle);
             }
@@ -340,7 +340,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             {
                 Point op = grpPin.InternalElement.Bounds.Location;
                 float x1 = op.X + info.Size.Width;
-                float y1 = op.Y + GetPinOffset(grpPin.InternalElement, grpPin.InternalPinIndex,false);
+                float y1 = op.Y + GetPinOffset(grpPin.InternalElement, grpPin.InternalPinName,false);
 
                 PointF ip = grpPinPos;
                 float x2 = ip.X;

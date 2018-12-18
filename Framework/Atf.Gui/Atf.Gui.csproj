@@ -240,6 +240,7 @@
     <Compile Include="Controls\Adaptable\Graphs\StateType.cs" />
     <Compile Include="Controls\Adaptable\IAnnotatedDiagram.cs" />
     <Compile Include="Controls\Adaptable\IAnnotation.cs" />
+    <Compile Include="Controls\Adaptable\PinList.cs" />
     <Compile Include="Controls\CurveEditing\CurveEnums.cs" />
     <Compile Include="Controls\CurveEditing\CurveInterfaces.cs" />
     <Compile Include="Controls\CurveEditing\CurveUtils.cs" />

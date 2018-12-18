@@ -118,9 +118,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                         foreach (var newGrpPin in newGroup.InputGroupPins)
                         {
                             if (newGrpPin.InternalElement.DomNode == grpPin.InternalElement.DomNode &&
-                                newGrpPin.InternalPinIndex == grpPin.InternalPinIndex)
+                                newGrpPin.InternalPinName == grpPin.InternalPinName)
                             {
-                                grpPin.InternalPinIndex = newGrpPin.Index;
+                                grpPin.InternalPinName = newGrpPin.Index;
                                 newGrpPin.Name = grpPin.Name;
                                 //grpPin.Name = newGroup.Name + ":" + newGrpPin.Name;
 
@@ -140,9 +140,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                         foreach (var newGrpPin in newGroup.OutputGroupPins)
                         {
                             if (newGrpPin.InternalElement.DomNode == grpPin.InternalElement.DomNode &&
-                                newGrpPin.InternalPinIndex == grpPin.InternalPinIndex)
+                                newGrpPin.InternalPinName == grpPin.InternalPinName)
                             {
-                                grpPin.InternalPinIndex = newGrpPin.Index;
+                                grpPin.InternalPinName = newGrpPin.Index;
                                 newGrpPin.Name = grpPin.Name;
                                 //grpPin.Name = newGroup.Name + ":" + newGrpPin.Name;
 
@@ -216,13 +216,13 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 {
                     var pin = connection.InputPin.As<GroupPin>();
                     Element element = pin.InternalElement;
-                    connection.SetInput(element, element.InputPin(pin.InternalPinIndex));
+                    connection.SetInput(element, element.InputPin(pin.InternalPinName));
                 }
                 else if (connection.OutputElement.As<Group>() == group)
                 {
                     var pin = connection.OutputPin.As<GroupPin>();
                     Element element = pin.InternalElement;
-                    connection.SetOutput(element, element.OutputPin(pin.InternalPinIndex));
+                    connection.SetOutput(element, element.OutputPin(pin.InternalPinName));
                 }
             }
 

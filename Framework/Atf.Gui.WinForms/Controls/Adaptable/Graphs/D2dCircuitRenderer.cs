@@ -1098,7 +1098,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     {
                         Point ip = grpPin.InternalElement.Bounds.Location;
                         ip.Offset(WorldOffset(m_graphPath));
-                        int y2 = ip.Y + GetPinOffset(grpPin.InternalElement, grpPin.InternalPinIndex, true);
+                        int y2 = ip.Y + GetPinOffset(grpPin.InternalElement, grpPin.InternalPinName, true);
                         int x2 = ip.X;
 
                         DrawWire(g, SubGraphPinBrush, x1, y1, x2, y2, 1.0f, null);
@@ -1127,7 +1127,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                         info = GetElementTypeInfo(grpPin.InternalElement, g);
                         Point ip = grpPin.InternalElement.Bounds.Location;
                         ip.Offset(WorldOffset(m_graphPath));
-                        int y2 = ip.Y + GetPinOffset(grpPin.InternalElement, grpPin.InternalPinIndex, false);
+                        int y2 = ip.Y + GetPinOffset(grpPin.InternalElement, grpPin.InternalPinName, false);
                         int x2 = ip.X + info.Size.Width;
 
                         DrawWire(g, SubGraphPinBrush, x2, y2, x1, y1, 1.0f, null);
@@ -1949,7 +1949,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                             for (int iGroupPin = groupPins.Count; --iGroupPin >= 0; )
                             {
                                 var groupPin = (ICircuitGroupPin<TElement>)groupPins[iGroupPin];
-                                if (groupPin.InternalElement.ElementType.GetInputPin(groupPin.InternalPinIndex) == pin)
+                                if (groupPin.InternalElement.ElementType.GetInputPin(groupPin.InternalPinName) == pin)
                                 {
                                     visiblePins.Add(pin);
                                     foundConnectingWire = true;
@@ -1996,7 +1996,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                             for (int iGroupPin = groupPins.Count; --iGroupPin >= 0; )
                             {
                                 var groupPin = (ICircuitGroupPin<TElement>)groupPins[iGroupPin];
-                                if (groupPin.InternalElement.ElementType.GetOutputPin(groupPin.InternalPinIndex) == pin)
+                                if (groupPin.InternalElement.ElementType.GetOutputPin(groupPin.InternalPinName) == pin)
                                 {
                                     visiblePins.Add(pin);
                                     foundConnectingWire = true;
@@ -2695,7 +2695,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     {
                         TElement internalElement = groupPin.InternalElement;
                         m_elementToHelper[internalElement].InputWires.Add(wire);
-                        groupPin = internalElement.ElementType.GetInputPin(groupPin.InternalPinIndex).As<ICircuitGroupPin<TElement>>();
+                        groupPin = internalElement.ElementType.GetInputPin(groupPin.InternalPinName).As<ICircuitGroupPin<TElement>>();
                     } while (groupPin != null);
                 }
 
@@ -2711,7 +2711,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     {
                         TElement internalElement = groupPin.InternalElement;
                         m_elementToHelper[internalElement].OutputWires.Add(wire);
-                        groupPin = internalElement.ElementType.GetOutputPin(groupPin.InternalPinIndex).As<ICircuitGroupPin<TElement>>();
+                        groupPin = internalElement.ElementType.GetOutputPin(groupPin.InternalPinName).As<ICircuitGroupPin<TElement>>();
                     } while (groupPin != null);
                 }
             }

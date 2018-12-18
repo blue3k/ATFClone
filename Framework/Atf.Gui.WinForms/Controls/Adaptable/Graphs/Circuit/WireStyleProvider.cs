@@ -163,7 +163,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     {
                         // the first data starts from sub-node/pin    
                         var firstGroupPin = dataPoints[0].GroupPin;
-                        Point p0 = circuitRender.GetPinPosition(firstGroupPin.InternalElement.Cast<TElement>(), firstGroupPin.InternalPinIndex, false, g);
+                        Point p0 = circuitRender.GetPinPosition(firstGroupPin.InternalElement.Cast<TElement>(), firstGroupPin.InternalPinName, false, g);
                         p0.Offset(worldOffset);
                         p0.Offset(circuitRender.WorldOffset(relativePath.AsIEnumerable<TElement>()));
                         dataPoints.Insert(0, new GroupPinData { Pos = p0 });
@@ -202,7 +202,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     if (lastGroup.Expanded) // the edge ends at an expanded group pin, need to draw the virtual link to subnode
                     {
                         // the last data ends at sub-node/pin              
-                        Point pn = circuitRender.GetPinPosition(lastGroupPin.InternalElement.Cast<TElement>(), lastGroupPin.InternalPinIndex, true, g);
+                        Point pn = circuitRender.GetPinPosition(lastGroupPin.InternalElement.Cast<TElement>(), lastGroupPin.InternalPinName, true, g);
                         pn.Offset(worldOffset);
                         pn.Offset(circuitRender.WorldOffset(relativePath.AsIEnumerable<TElement>()));
                         dataPoints.Add(new GroupPinData { Pos = pn});

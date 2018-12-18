@@ -63,7 +63,7 @@ namespace VisualScript
         /// <summary>
         /// Gets a read-only list of input pins for this element type. For Groups, this list
         /// only includes pins whose Info.Visible property is true. Consider using GetAllInputPins()
-        /// or GetInputPin() when using ICircuitGroupPin's InternalPinIndex to look for the
+        /// or GetInputPin() when using ICircuitGroupPin's InternalPinName to look for the
         /// corresponding pin.</summary>
         public IList<ICircuitPin> Inputs
         {
@@ -76,7 +76,7 @@ namespace VisualScript
         /// <summary>
         /// Gets a read-only list of output pins for this element type. For Groups, this list
         /// only includes pins whose Info.Visible property is true. Consider using GetAllOutputPins()
-        /// or GetOutputPin() when using ICircuitGroupPin's InternalPinIndex to look for the
+        /// or GetOutputPin() when using ICircuitGroupPin's InternalPinName to look for the
         /// corresponding pin.</summary>
         public IList<ICircuitPin> Outputs
         {

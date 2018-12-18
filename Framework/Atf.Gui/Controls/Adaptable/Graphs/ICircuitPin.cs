@@ -9,7 +9,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
     {
         /// <summary>
         /// Gets pin name</summary>
-        string Name
+        NameString Name
         {
             get;
         }
@@ -19,14 +19,6 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         string TypeName
         {
             get;
-        }
-
-        /// <summary>
-        /// Gets index of this pin in the owning ICircuitElementType's input/output list</summary>
-        int Index
-        {
-            get;
-            set;
         }
     }
 }

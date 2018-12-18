@@ -118,8 +118,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             {
                 if (value)
                 {
-                    m_inputPinsMap = null;
-                    m_outputPinsMap = null;
+                    m_inputs.UpddateNameMap();
+                    m_outputs.UpddateNameMap();
                 }
                 m_dirty = value;
             }
@@ -177,8 +177,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 Validated = true;
             }
 
-            Info.HiddenInputPins = m_inputs.Where(x => !x.Visible).AsIEnumerable<ICircuitPin>();
-            Info.HiddenOutputPins = m_outputs.Where(x => !x.Visible).AsIEnumerable<ICircuitPin>();
+            Info.HiddenInputPins = m_inputs.Cast<GroupPin>().Where(x => !x.Visible).AsIEnumerable<ICircuitPin>();
+            Info.HiddenOutputPins = m_outputs.Cast<GroupPin>().Where(x => !x.Visible).AsIEnumerable<ICircuitPin>();
 
             UpdateGroupPinInfo();
             UpdateOffset();
@@ -236,13 +236,16 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         public override ICircuitPin InputPin(int pinIndex)
         {
             // If we're dirty, construct the map.
-            if (m_inputPinsMap == null)
-            {
-                m_inputPinsMap = new int[m_inputs.Count];
-                for(int i = m_inputs.Count; --i >= 0; )
-                    m_inputPinsMap[m_inputs[i].Index] = i;
-            }
-            return m_inputs[m_inputPinsMap[pinIndex]];
+            return m_inputs[pinIndex];
+        }
+
+        /// <summary>
+        /// Gets the input pin for the given pin index</summary>
+        /// <param name="pinName">Pin Name</param>
+        /// <returns>Input pin for pin name</returns>
+        public override ICircuitPin InputPin(NameString pinName)
+        {
+            return m_inputs.GetPinByName(pinName);
         }
 
         /// <summary>
@@ -252,13 +255,17 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         public override ICircuitPin OutputPin(int pinIndex)
         {
             // If we're dirty, construct the map.
-            if (m_outputPinsMap == null)
-            {
-                m_outputPinsMap = new int[m_outputs.Count];
-                for (int i = m_outputs.Count; --i >= 0; )
-                    m_outputPinsMap[m_outputs[i].Index] = i;
-            }
-            return m_outputs[m_outputPinsMap[pinIndex]];
+            return m_outputs[pinIndex];
+        }
+
+        /// <summary>
+        /// Gets the output pin for the given pin index</summary>
+        /// <param name="pinName">Pin name</param>
+        /// <returns>Output pin for pin name</returns>
+        public override ICircuitPin OutputPin(NameString pinName)
+        {
+            // If we're dirty, construct the map.
+            return m_outputs.GetPinByName(pinName);
         }
 
         /// <summary>
@@ -298,30 +305,31 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
         /// <summary>
         /// Gets a list of the visible input pins in this group</summary>
-        public virtual IList<ICircuitPin> Inputs
+        public virtual PinList<ICircuitPin> Inputs
         {
-            get { return m_inputs.OrderBy(n => n.Index).Where(n => n.Visible).ToArray(); }
+            // TODO: optimize!
+            get { return new PinList<ICircuitPin>(m_inputs.Where(n => n.Cast<GroupPin>().Visible).ToArray()); }
         }
 
         /// <summary>
         /// Gets a list of the visible output pins in this group</summary>
-        public virtual IList<ICircuitPin> Outputs
+        public virtual PinList<ICircuitPin> Outputs
         {
-            get { return m_outputs.OrderBy(n => n.Index).Where(n => n.Visible).ToArray(); }
+            get { return new PinList<ICircuitPin>(m_outputs.Where(n => n.Cast<GroupPin>().Visible).ToArray()); }
         }
 
         /// <summary>
         /// Gets enumeration of all the input pins in this group</summary>
         public virtual IEnumerable<GroupPin> InputGroupPins
         {
-            get { return m_inputs; }
+            get { return m_inputs.Cast<GroupPin>(); }
         }
 
         /// <summary>
         /// Gets enumeration of all output pins in this group</summary>
         public virtual IEnumerable<GroupPin> OutputGroupPins
         {
-            get { return m_outputs; }
+            get { return m_outputs.Cast<GroupPin>(); }
         }
 
 
@@ -344,7 +352,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <summary>
         /// Gets the list of input pins, whose Visible property is 'true', for this group;
         /// the list is considered to be read-only</summary>
-        IList<ICircuitPin> ICircuitElementType.Inputs
+        PinList<ICircuitPin> ICircuitElementType.Inputs
         {
             get { return Inputs; }
         }
@@ -352,7 +360,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <summary>
         /// Gets the list of output pins, whose Visible property is 'true', for this group;
         /// the list is considered to be read-only</summary>
-        IList<ICircuitPin> ICircuitElementType.Outputs
+        PinList<ICircuitPin> ICircuitElementType.Outputs
         {
             get { return Outputs; }
         }
@@ -593,8 +601,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             for (int pass = 0; pass < 2; ++pass)
             {
 
-                var sorted = (pass == 0) ? m_inputs.OrderBy(n => n.Position.Y).ToArray() :
-                    m_outputs.OrderBy(n => n.Position.Y).ToArray();
+                var sorted = (pass == 0) ? m_inputs.Cast<GroupPin>().OrderBy(n => n.Position.Y).ToArray() :
+                    m_outputs.OrderBy(n => n.Cast<GroupPin>().Position.Y).ToArray();
 
                 // assign group pin index in y order, but visible pins goes first 
                 int index = 0;
@@ -634,7 +642,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     {
                         if (parentGrpPin.PinTarget == groupPin.PinTarget)
                         {
-                            parentGrpPin.InternalPinIndex = groupPin.Index;
+                            parentGrpPin.InternalPinName = groupPin.Name;
                         }
                     }
                 }
@@ -658,7 +666,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     {
                         if (parentGrpPin.PinTarget == groupPin.PinTarget)
                         {
-                            parentGrpPin.InternalPinIndex = groupPin.Index;
+                            parentGrpPin.InternalPinName = groupPin.Name;
                         }
                     }
                 }
@@ -712,9 +720,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                         var groupPin = new DomNode(GroupPinType).As<GroupPin>();
                         groupPin.TypeName = inputPin.TypeName;
                         groupPin.InternalElement = connection.InputElement;
-                        groupPin.InternalPinIndex = inputPin.Index;
+                        groupPin.InternalPinName = inputPin.Index;
                         groupPin.Index = m_inputs.Count;
-                        groupPin.Position = new Point(0, (groupPin.InternalPinIndex + 1) * 16 + connection.InputElement.Bounds.Location.Y);
+                        groupPin.Position = new Point(0, (groupPin.InternalPinName + 1) * 16 + connection.InputElement.Bounds.Location.Y);
                         groupPin.IsDefaultName = true;
                         groupPin.Visible = true;
 
@@ -737,9 +745,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                         var groupPin = new DomNode(GroupPinType).As<GroupPin>();
                         groupPin.TypeName = outputPin.TypeName;
                         groupPin.InternalElement = connection.OutputElement;
-                        groupPin.InternalPinIndex = outputPin.Index;
+                        groupPin.InternalPinName = outputPin.Index;
                         groupPin.Index = m_outputs.Count;
-                        groupPin.Position = new Point(0, (groupPin.InternalPinIndex + 1) * 16 + connection.OutputElement.Bounds.Location.Y);
+                        groupPin.Position = new Point(0, (groupPin.InternalPinName + 1) * 16 + connection.OutputElement.Bounds.Location.Y);
                         groupPin.IsDefaultName = true;
                         groupPin.Visible = true;
                         m_outputs.Add(groupPin);
@@ -767,9 +775,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                             var groupPin = new DomNode(GroupPinType).As<GroupPin>();
                             groupPin.TypeName = inputPin.TypeName;
                             groupPin.InternalElement = module;
-                            groupPin.InternalPinIndex = inputPin.Index;
+                            groupPin.InternalPinName = inputPin.Index;
                             groupPin.Index = m_inputs.Count;
-                            groupPin.Position = new Point(0, (groupPin.InternalPinIndex + 1) * 16 + module.Bounds.Location.Y);
+                            groupPin.Position = new Point(0, (groupPin.InternalPinName + 1) * 16 + module.Bounds.Location.Y);
                             groupPin.Visible = inputPin.Is<IVisible>() ? inputPin.Cast<IVisible>().Visible : ShowExpandedGroupPins;
                             groupPin.IsDefaultName = true;
                             m_inputs.Add(groupPin);
@@ -803,9 +811,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                             var groupPin = new DomNode(GroupPinType).As<GroupPin>();
                             groupPin.TypeName = outputPin.TypeName;
                             groupPin.InternalElement = module;
-                            groupPin.InternalPinIndex = outputPin.Index;
+                            groupPin.InternalPinName = outputPin.Index;
                             groupPin.Index = m_outputs.Count;
-                            groupPin.Position = new Point(0, (groupPin.InternalPinIndex + 1) * 16 + module.Bounds.Location.Y);
+                            groupPin.Position = new Point(0, (groupPin.InternalPinName + 1) * 16 + module.Bounds.Location.Y);
                             groupPin.Visible = outputPin.Is<IVisible>() ? outputPin.Cast<IVisible>().Visible : ShowExpandedGroupPins;
                             groupPin.IsDefaultName = true;
                             m_outputs.Add(groupPin);
@@ -886,14 +894,14 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             if (DefaultPinOrder == PinOrderStyle.NodeY)
             {
                 // layout group pins by its sub-node Y value first, then sub-node pin display order
-                var orderdInputs = m_inputs.OrderBy(n => n.InternalElement.Bounds.Location.Y).ThenBy(n => n.InternalElement.PinDisplayOrder(n.InternalPinIndex, true)).ToList();
+                var orderdInputs = m_inputs.OrderBy(n => n.InternalElement.Bounds.Location.Y).ThenBy(n => n.InternalElement.PinDisplayOrder(n.InternalPinName, true)).ToList();
                 foreach (var grpPin in m_inputs)
                 {
                     int newIndex = orderdInputs.IndexOf(grpPin);
                     grpPin.Index = newIndex;
                 }
 
-                var orderdOutputs = m_outputs.OrderBy(n => n.InternalElement.Bounds.Location.Y).ThenBy(n => n.InternalElement.PinDisplayOrder(n.InternalPinIndex, false)).ToList();
+                var orderdOutputs = m_outputs.OrderBy(n => n.InternalElement.Bounds.Location.Y).ThenBy(n => n.InternalElement.PinDisplayOrder(n.InternalPinName, false)).ToList();
                 foreach (var grpPin in m_outputs)
                 {
                     int newIndex = orderdOutputs.IndexOf(grpPin);
@@ -977,7 +985,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 }
 
                 // outputs just based pinY 
-                var orderd = m_outputs.OrderBy(n => n.InternalElement.Bounds.Location.Y).ThenBy(n => n.InternalPinIndex).ToList();
+                var orderd = m_outputs.OrderBy(n => n.InternalElement.Bounds.Location.Y).ThenBy(n => n.InternalPinName).ToList();
                 foreach (var grpPin in m_outputs)
                 {
                     int newIndex = orderd.IndexOf(grpPin);
@@ -1094,9 +1102,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     " Index invalid " + grpPin.Index + " Count=" + InputGroupPins.Count());
                 //Debug.Assert(grpPin.Position.Y >= 0, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "has negative Y");
                 //Debug.Assert(grpPin.Position.Y <= 4096 && grpPin.Position.Y >= -4096, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "has suspicious large Y greater than 4k");
-                // validate InternalPinIndex
-                Debug.Assert(grpPin.InternalPinIndex >= 0 && grpPin.InternalPinIndex < grpPin.InternalElement.ElementType.GetAllInputPins().Count(),
-                    "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "InternalPinIndex is out of range");
+                // validate InternalPinName
+                Debug.Assert(grpPin.InternalPinName >= 0 && grpPin.InternalPinName < grpPin.InternalElement.ElementType.GetAllInputPins().Count(),
+                    "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "InternalPinName is out of range");
             }
             foreach (var grpPin in OutputGroupPins)
             {
@@ -1107,9 +1115,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     " Index invalid " + grpPin.Index + " Count=" + OutputGroupPins.Count());
                 //Debug.Assert(grpPin.Position.Y >= 0, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "has negative Y");
                 //Debug.Assert(grpPin.Position.Y <= 4096 && grpPin.Position.Y >= -4096, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "has suspicious large Y greater than 4k");
-                // validate InternalPinIndex
-                Debug.Assert(grpPin.InternalPinIndex >= 0 && grpPin.InternalPinIndex < grpPin.InternalElement.ElementType.GetAllOutputPins().Count(),
-                    "SubGraph " + Name + " Output Group Pin" + grpPin.Name + "InternalPinIndex is out of range");
+                // validate InternalPinName
+                Debug.Assert(grpPin.InternalPinName >= 0 && grpPin.InternalPinName < grpPin.InternalElement.ElementType.GetAllOutputPins().Count(),
+                    "SubGraph " + Name + " Output Group Pin" + grpPin.Name + "InternalPinName is out of range");
             }
 
             var pinIndexes = inputGroupPins.GroupBy(g => g.Index).Where(w => w.Count() > 1);
@@ -1167,8 +1175,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 foreach (var grpPin in m_inputs)
                 {
                     var leafModule = grpPin.PinTarget.LeafDomNode.Cast<Element>();
-                    //var leafPin = leafModule.Type.Inputs[grpPin.PinTarget.LeafPinIndex];
-                    var leafPin = leafModule.ElementType.GetInputPin(grpPin.PinTarget.LeafPinIndex);
+                    //var leafPin = leafModule.Type.Inputs[grpPin.PinTarget.LeafPinName];
+                    var leafPin = leafModule.ElementType.GetInputPin(grpPin.PinTarget.LeafPinName);
                     if (!leafPin.AllowFanIn)
                     {
                         GroupPin pin = grpPin;
@@ -1193,7 +1201,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 foreach (var grpPin in m_outputs)
                 {
                     var leafModule = grpPin.PinTarget.LeafDomNode.Cast<Element>();
-                    var leafPin = leafModule.ElementType.GetOutputPin(grpPin.PinTarget.LeafPinIndex);
+                    var leafPin = leafModule.ElementType.GetOutputPin(grpPin.PinTarget.LeafPinName);
                     if (!leafPin.AllowFanOut)
                     {
                         GroupPin pin = grpPin;
@@ -1310,8 +1318,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             }
 
 
-            return inputSide ? m_inputs.FirstOrDefault(x => x.InternalElement.DomNode == node.DomNode && x.InternalPinIndex == pinIndex) :
-                        m_outputs.FirstOrDefault(x => x.InternalElement.DomNode == node.DomNode && x.InternalPinIndex == pinIndex);
+            return inputSide ? m_inputs.FirstOrDefault(x => x.InternalElement.DomNode == node.DomNode && x.InternalPinName == pinIndex) :
+                        m_outputs.FirstOrDefault(x => x.InternalElement.DomNode == node.DomNode && x.InternalPinName == pinIndex);
 
         }
 
@@ -1385,8 +1393,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             m_wires = new DomNodeListAdapter<Wire>(DomNode, WireChildInfo);
             if (AnnotationChildInfo != null)
                 m_annotations = new DomNodeListAdapter<Annotation>(DomNode, AnnotationChildInfo);
-            m_inputs = new DomNodeListAdapter<GroupPin>(DomNode, InputChildInfo);
-            m_outputs = new DomNodeListAdapter<GroupPin>(DomNode, OutputChildInfo);
+            m_inputs = new PinList<ICircuitPin>(new DomNodeListAdapter<ICircuitPin>(DomNode, InputChildInfo));
+            m_outputs = new PinList<ICircuitPin>(new DomNodeListAdapter<ICircuitPin>(DomNode, OutputChildInfo));
         }
 
         private void BackDepthOrderVistor(Element outputNode, IEnumerable<Wire> internalConnections, List<GroupPin> grpPinVisited)
@@ -1399,7 +1407,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 if (CanExposePin(outputNode, inputPin, internalConnections, true)) // reach the group pin
                 {
                     var inputPinTarget = inputPin.Is<GroupPin>() ?
-                             inputPin.Cast<GroupPin>().PinTarget : new PinTarget(GetDomLeafNode(outputNode.DomNode), inputPin.Index, null);
+                             inputPin.Cast<GroupPin>().PinTarget : new PinTarget(GetDomLeafNode(outputNode.DomNode), inputPin.Name, null);
                     var grpPin = m_inputs.First(n => n.PinTarget == inputPinTarget);
                     grpPinVisited.Add(grpPin);
                 }
@@ -1523,12 +1531,13 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         private DomNodeListAdapter<Element> m_elements;
         private DomNodeListAdapter<Wire> m_wires;
         private DomNodeListAdapter<Annotation> m_annotations;
-        private DomNodeListAdapter<GroupPin> m_inputs;
-        private DomNodeListAdapter<GroupPin> m_outputs;
+        private PinList<ICircuitPin> m_inputs;
+        private PinList<ICircuitPin> m_outputs;
 
-        // Maps the index passed into InputPin() and OutputPin() to the correct array index.
-        //  If they're null, that's the indicator that they were dirty and need to be rebuilt.
-        private int[] m_inputPinsMap, m_outputPinsMap;
+        //// Maps the index passed into InputPin() and OutputPin() to the correct array index.
+        ////  If they're null, that's the indicator that they were dirty and need to be rebuilt.
+        ////private int[] m_inputPinsMap, m_outputPinsMap;
+        //private Dictionary<NameString, GroupPin> m_inputPinsMap, m_outputPinsMap;
 
         private bool m_dirty;
         private bool m_expanded;

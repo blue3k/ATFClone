@@ -45,22 +45,25 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <summary>
         /// Gets a read-only list of input pins for this element type. For Groups, this list
         /// only includes pins whose Info.Visible property is true. Consider using GetAllInputPins()
-        /// or GetInputPin() when using ICircuitGroupPin's InternalPinIndex to look for the
+        /// or GetInputPin() when using ICircuitGroupPin's InternalPinName to look for the
         /// corresponding pin.</summary>
-        IList<ICircuitPin> Inputs
+        PinList<ICircuitPin> Inputs
         {
             get;
         }
 
+
+
         /// <summary>
         /// Gets a read-only list of output pins for this element type. For Groups, this list
         /// only includes pins whose Info.Visible property is true. Consider using GetAllOutputPins()
-        /// or GetOutputPin() when using ICircuitGroupPin's InternalPinIndex to look for the
+        /// or GetOutputPin() when using ICircuitGroupPin's InternalPinName to look for the
         /// corresponding pin.</summary>
-        IList<ICircuitPin> Outputs
+        PinList<ICircuitPin> Outputs
         {
             get;
         }
+
     }
 
     /// <summary>
@@ -101,9 +104,24 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             var group = type as Group;
             if (group == null)
             {
-                return type.Inputs.FirstOrDefault(p => p.Index == index);                
+                return type.Inputs[index];                
             }
             return group.InputPin(index);
+        }
+
+        /// <summary>
+        /// Gets the input pin, taking into account whether 'type' is a Group or not.</summary>
+        /// <param name="type">The type</param>
+        /// <param name="index">The zero-based index</param>
+        /// <returns>The input pin whose zero-based index is 'index'.</returns>
+        public static ICircuitPin GetInputPin(this ICircuitElementType type, NameString pinName)
+        {
+            var group = type as Group;
+            if (group == null)
+            {
+                return type.Inputs.GetPinByName(pinName);
+            }
+            return group.InputPin(pinName);
         }
 
         /// <summary>
@@ -116,10 +134,27 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             var group = type as Group;
             if (group == null)
             {
-                return type.Outputs.FirstOrDefault(p => p.Index == index);
+                return type.Outputs[index];
                 
             }
             return group.OutputPin(index);
         }
+
+        /// <summary>
+        /// Gets the output pin, taking into account whether 'type' is a Group or not.</summary>
+        /// <param name="type">The type</param>
+        /// <param name="index">The zero-based index</param>
+        /// <returns>The output pin whose zero-based index is 'index'.</returns>
+        public static ICircuitPin GetOutputPin(this ICircuitElementType type, NameString pinName)
+        {
+            var group = type as Group;
+            if (group == null)
+            {
+                return type.Outputs.GetPinByName(pinName);
+
+            }
+            return group.OutputPin(pinName);
+        }
+
     }
 }

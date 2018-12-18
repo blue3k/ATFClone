@@ -8,38 +8,43 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
     /// class for GroupPin</summary>
     public abstract class Pin : DomNodeAdapter, ICircuitPin
     {
+        public Pin()
+        {
+
+        }
+
         /// <summary>
-        /// Gets type attribute of Pin</summary>
+        /// Gets type attribute of Pin
+        /// </summary>
         protected abstract AttributeInfo TypeAttribute { get; }
 
         /// <summary>
-        /// Gets name attribute of Pin</summary>
+        /// Gets name attribute of Pin
+        /// </summary>
         protected abstract AttributeInfo NameAttribute { get; }
 
         #region ICircuitPin Members
 
-        /// <summary>
-        /// Gets pin name</summary>
-        public virtual string Name
+        /// <summary>Gets pin name</summary>
+        public virtual NameString Name
         {
-            get { return GetAttribute<string>(NameAttribute); }
-            set { SetAttribute(NameAttribute, value); }
+            get { return GetAttribute<NameString>(NameAttribute); }
+            set
+            {
+                SetAttribute(NameAttribute, value);
+            }
         }
 
         /// <summary>
-        /// Gets pin type name</summary>
+        /// Gets pin type name
+        /// </summary>
         public virtual string TypeName
         {
             get { return GetAttribute<string>(TypeAttribute); }
-            set { SetAttribute(TypeAttribute, value); }
-        }
-
-        /// <summary>
-        /// Gets index of this pin in the owning ICircuitElementType's input/output list</summary>
-        public virtual int Index
-        {
-             get { return m_index; }
-             set { m_index = value; }
+            set
+            {
+                SetAttribute(TypeAttribute, value);
+            }
         }
 
         #endregion
@@ -63,6 +68,5 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
         #endregion
 
-        private int m_index;
-     }
+    }
 }

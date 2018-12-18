@@ -55,21 +55,13 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         }
 
         /// <summary>
-        /// Gets index of this group pin in the owning group’s input/output group pin list</summary>
-        public override int Index
-        {
-            get { return GetAttribute<int>(IndexAttribute); }
-            set { SetAttribute(IndexAttribute, value); }
-        }
-
-        /// <summary>
         /// Gets whether connection fan in to pin is allowed</summary>
         public override bool AllowFanIn
         {
             get
             {
-                ICircuitPin pin = IsInputSide ? PinTarget.LeafDomNode.Cast<ICircuitElement>().ElementType.GetInputPin(PinTarget.LeafPinIndex) :
-                                                PinTarget.LeafDomNode.Cast<ICircuitElement>().ElementType.GetOutputPin(PinTarget.LeafPinIndex);
+                ICircuitPin pin = IsInputSide ? PinTarget.LeafDomNode.Cast<ICircuitElement>().ElementType.GetInputPin(PinTarget.LeafPinName) :
+                                                PinTarget.LeafDomNode.Cast<ICircuitElement>().ElementType.GetOutputPin(PinTarget.LeafPinName);
                 return pin.AllowFanIn;
             }
         }
@@ -80,8 +72,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             get
             {
-                ICircuitPin pin = IsInputSide ? PinTarget.LeafDomNode.Cast<ICircuitElement>().ElementType.GetInputPin(PinTarget.LeafPinIndex) :
-                                                PinTarget.LeafDomNode.Cast<ICircuitElement>().ElementType.GetOutputPin(PinTarget.LeafPinIndex);
+                ICircuitPin pin = IsInputSide ? PinTarget.LeafDomNode.Cast<ICircuitElement>().ElementType.GetInputPin(PinTarget.LeafPinName) :
+                                                PinTarget.LeafDomNode.Cast<ICircuitElement>().ElementType.GetOutputPin(PinTarget.LeafPinName);
                 return pin.AllowFanOut;
             }
         }
@@ -99,14 +91,14 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <param name="inputSide">True iff pin is on input side</param>
         /// <returns>Default group pin name</returns>
         /// <remarks>The group pin default naming convention: "{internal-element-name}:{internal-pin-name}"</remarks>
-        public virtual string DefaultName(bool inputSide)
+        public virtual NameString DefaultName(bool inputSide)
         {
-            string pinName =
+            string internalName = 
                 inputSide
-                ? InternalElement.InputPin(InternalPinIndex).Name
-                : InternalElement.OutputPin(InternalPinIndex).Name;
+                ? InternalElement.InputPin(InternalPinName).Name.ToString()
+                : InternalElement.OutputPin(InternalPinName).Name.ToString();
                    
-            return InternalElement.Name + ":" + pinName;
+            return new NameString(InternalElement.Name + ":" + internalName);
         }
 
         /// <summary>
@@ -145,11 +137,11 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         }
 
         /// <summary>
-        /// Gets the "index" (really an ID) of the pin on InternalElement that this group pin
+        /// Gets the "name" (really an ID) of the pin on InternalElement that this group pin
         /// connects to. Use this with InternalElement.GetInputPin(index) or Group.InputPin(index).</summary>
-        public int InternalPinIndex
+        public NameString InternalPinName
         {
-            get { return GetAttribute<int>(PinAttribute); }
+            get { return GetAttribute<NameString>(PinAttribute); }
             set { DomNode.SetAttribute(PinAttribute, value); }
         }
 
@@ -194,7 +186,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
 
         /// <summary>
-        /// Updates LeafDomNode and LeafPinIndex from the ultimate DomNode this group pin binds to
+        /// Updates LeafDomNode and LeafPinName from the ultimate DomNode this group pin binds to
         /// by recursively going down the nested group hierarchy</summary>
         /// <param name="inputSide">True if this is an input-side group pin, false if output-side</param>
         public void SetPinTarget(bool inputSide)
@@ -206,7 +198,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             if (m_pinTarget != null && m_pinTarget.InstancingNode!= null)
                 instancingNode = m_pinTarget.InstancingNode;// try keep the original instancingNode
 
-            PinTarget = new PinTarget(leafNode, GetLeafPinIndex(inputSide), instancingNode);
+            PinTarget = new PinTarget(leafNode, GetLeafPinName(inputSide), instancingNode);
         }
 
         /// <summary>
@@ -261,7 +253,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                         var parentPins = inputSide ? parentSubGraph.InputGroupPins : parentSubGraph.OutputGroupPins;
                         foreach (var parentPin in parentPins)
                         {
-                            if (parentPin.InternalElement.DomNode == subGraph.DomNode && parentPin.InternalPinIndex == grpPin.Index)
+                            if (parentPin.InternalElement.DomNode == subGraph.DomNode && parentPin.InternalPinName == grpPin.Name)
                             {
                                 nextGrpPin = parentPin;
                                 domNode = nextGrpPin.DomNode;
@@ -387,8 +379,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 }
 
                 var childSubGraph = current.InternalElement.Cast<Group>();
-                current = inputSide ? childSubGraph.InputGroupPins.First(x => x.Index == current.InternalPinIndex) :
-                      childSubGraph.OutputGroupPins.First(x => x.Index == current.InternalPinIndex);               
+                current = inputSide ? childSubGraph.InputGroupPins.First(x => x.Name == current.InternalPinName) :
+                      childSubGraph.OutputGroupPins.First(x => x.Name == current.InternalPinName);               
             }
 
             if ( current.InternalElement.Is<IReference<DomNode>>()) // case for plain node references
@@ -405,17 +397,17 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// Returns the ultimate pin index (in the binding module) this group pin binds by recursively
         /// going down the nested group hierarchy</summary>
         /// <param name="inputSide">True if this is an input-side group pin</param>
-        private int GetLeafPinIndex(bool inputSide)
+        private NameString GetLeafPinName(bool inputSide)
         {
             var current = this;
             while (current.InternalElement.Is<Group>())
             {
                 var childSubGraph = current.InternalElement.Cast<Group>();
-                current = inputSide ? childSubGraph.InputGroupPins.First(x => x.Index == current.InternalPinIndex) :
-                      childSubGraph.OutputGroupPins.First(x => x.Index == current.InternalPinIndex);
+                current = inputSide ? childSubGraph.InputGroupPins.First(x => x.Name == current.InternalPinName) :
+                      childSubGraph.OutputGroupPins.First(x => x.Name == current.InternalPinName);
 
             }
-            return current.InternalPinIndex;
+            return current.InternalPinName;
         }
 
 

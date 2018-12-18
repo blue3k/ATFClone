@@ -69,7 +69,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             else if (domNode.Is<Wire>())
             {
                 var connection = domNode.Cast<Wire>();
-                int inputPinIndex, outputPinIndex;
+                NameString inputPinIndex, outputPinIndex;
                 // during undo/redo, the pin index may temporarily out of range, need to check index before call OutputPin|InputPin
                 if (connection.IsValid(out inputPinIndex, out outputPinIndex))
                     result = "Edge from " + connection.OutputElement.Name + "[" + connection.OutputPin.Name + "]" +
@@ -185,7 +185,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     foreach (var grpPin in group.InputGroupPins)
                     {
                         if (grpPin.InternalElement.Equals(currentElement) &&
-                            grpPin.InternalElement.InputPin(grpPin.InternalPinIndex) == circuitPin)
+                            grpPin.InternalElement.InputPin(grpPin.InternalPinName) == circuitPin)
                         {
                             matchedPin = grpPin;
                             break;
@@ -196,7 +196,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                         foreach (var grpPin in group.OutputGroupPins)
                         {
                             if (grpPin.InternalElement.Equals(currentElement) &&
-                                grpPin.InternalElement.OutputPin(grpPin.InternalPinIndex) == circuitPin)
+                                grpPin.InternalElement.OutputPin(grpPin.InternalPinName) == circuitPin)
                             {
                                 matchedPin = grpPin;
                                 break;

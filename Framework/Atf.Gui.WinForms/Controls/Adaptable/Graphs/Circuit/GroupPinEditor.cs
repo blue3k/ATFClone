@@ -191,7 +191,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     {
                         // a floating pin node maps to a subnode and its pin index, needed to sort by both                      
                         var pinList = pinNodes.OrderBy(x => x.InternalElement.Position.Y)
-                                               .ThenBy(x => x.InternalElement.PinDisplayOrder(x.InternalPinIndex, inputSide)).ToList();
+                                               .ThenBy(x => x.InternalElement.PinDisplayOrder(x.InternalPinName, inputSide)).ToList();
                         //bool initialOrder = pinList.All(n => n.PinY == int.MinValue);
 
                         //if (initialOrder && subGraph.DefaultPinOrder == Group.PinOrderStyle.DepthFirst)
@@ -207,7 +207,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                         {
                             foreach (var fakePinNode in pinList)
                             {
-                                int pinOffset = GetPinOffset(fakePinNode.InternalElement, fakePinNode.InternalPinIndex, inputSide);
+                                int pinOffset = GetPinOffset(fakePinNode.InternalElement, fakePinNode.InternalPinName, inputSide);
                                 fakePinNode.DesiredLocation = new Point( offset.X, fakePinNode.InternalElement.Bounds.Location.Y + pinOffset - 8);
                            }
 

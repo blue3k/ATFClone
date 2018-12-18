@@ -55,11 +55,14 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             m_isConnector = isConnector;
             //m_size = size;
             m_image = image;
-            
-            //m_inputPins = inputPins.OrderBy(n => n.Index).ToArray();
-            m_inputPins = inputPins;
-            //m_outputPins = outputPins.OrderBy(n => n.Index).ToArray();
-            m_outputPins = outputPins;
+
+            m_inputPins.Clear();
+            foreach (var itPin in inputPins)
+                m_inputPins.Add(itPin);
+
+            m_outputPins.Clear();
+            foreach (var itPin in outputPins)
+                m_outputPins.Add(itPin);
         }
 
         /// <summary>
@@ -101,14 +104,14 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
         /// <summary>
         /// Gets the element type's input pins</summary>
-        public IList<ICircuitPin> Inputs
+        public PinList<ICircuitPin> Inputs
         {
             get { return m_inputPins; }
         }
 
         /// <summary>
         /// Gets the element type's output pins</summary>
-        public IList<ICircuitPin> Outputs
+        public PinList<ICircuitPin> Outputs
         {
             get { return m_outputPins; }
         }
@@ -122,18 +125,17 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             /// <param name="name">Pin's name</param>
             /// <param name="typeName">Pin's type's name</param>
             /// <param name="index">Index of pin on module</param>
-            public Pin(string name, string typeName, int index, bool allowFanIn = false, bool allowFanOut = true)
+            public Pin(string name, string typeName, bool allowFanIn = false, bool allowFanOut = true)
             {
-                m_name = name;
+                m_name.SetString(name);
                 m_typeName = typeName;
-                m_index = index;
                 m_allowFanIn = allowFanIn;
                 m_allowFanOut = allowFanOut;
             }
 
             /// <summary>
             /// Gets pin's name</summary>
-            public string Name
+            public NameString Name
             {
                 get { return m_name; }
             }
@@ -143,14 +145,6 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             public string TypeName
             {
                 get { return m_typeName; }
-            }
-
-            /// <summary>
-            /// Gets index of pin on module</summary>
-            public int Index
-            {
-                get { return m_index; }
-                set { m_index = value; }
             }
 
             /// <summary>
@@ -169,14 +163,13 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
             private bool m_allowFanIn = true;
             private bool m_allowFanOut = true;
-            private string m_name;
+            private NameString m_name;
             private string m_typeName;
-            private int m_index;
         }
 
         private string m_name;
-        private ICircuitPin[] m_inputPins;
-        private ICircuitPin[] m_outputPins;
+        private PinList<ICircuitPin> m_inputPins = new PinList<ICircuitPin>();
+        private PinList<ICircuitPin> m_outputPins = new PinList<ICircuitPin>();
         //private Size m_size;
         private Image m_image;
         private bool m_isConnector;

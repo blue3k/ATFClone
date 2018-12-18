@@ -34,8 +34,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// Raises the DomNodeAdapter NodeSet event and performs custom processing.</summary>
         protected override void OnNodeSet()
         {
-            m_inputPins = new DomNodeListAdapter<ICircuitPin>(DomNode, InputChildInfo);
-            m_outputPins = new DomNodeListAdapter<ICircuitPin>(DomNode, OutputChildInfo);
+            m_inputPins = new PinList<ICircuitPin>(new DomNodeListAdapter<ICircuitPin>(DomNode, InputChildInfo));
+            m_outputPins = new PinList<ICircuitPin>(new DomNodeListAdapter<ICircuitPin>(DomNode, OutputChildInfo));
 
             base.OnNodeSet();
         }
@@ -74,7 +74,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <summary>
         /// Gets the list of input pins for this element type; the list is considered
         /// to be read-only</summary>
-        public IList<ICircuitPin> Inputs
+        public PinList<ICircuitPin> Inputs
         {
             get { return m_inputPins; }
         }
@@ -82,7 +82,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <summary>
         /// Gets the list of output pins for this element type; the list is considered
         /// to be read-only</summary>
-        public IList<ICircuitPin> Outputs
+        public PinList<ICircuitPin> Outputs
         {
             get { return m_outputPins; }
         }
@@ -91,7 +91,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
  
 
-        private DomNodeListAdapter<ICircuitPin> m_inputPins;
-        private DomNodeListAdapter<ICircuitPin> m_outputPins;
+        private PinList<ICircuitPin> m_inputPins;
+        private PinList<ICircuitPin> m_outputPins;
     }
 }

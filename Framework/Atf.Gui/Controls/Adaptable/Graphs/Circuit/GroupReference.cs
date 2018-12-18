@@ -27,8 +27,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         protected override void OnNodeSet()
         {         
             m_info = new CircuitGroupInfo();
-            m_inputs = new List<GroupPin>();
-            m_outputs = new List<GroupPin>();    
+            m_inputs = new PinList<ICircuitPin>();
+            m_outputs = new PinList<ICircuitPin>();    
             Refresh();
         }
 
@@ -57,7 +57,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
         /// <summary>
         /// Gets a list of the visible input pins in target group</summary>
-        public override IList<ICircuitPin> Inputs
+        public override PinList<ICircuitPin> Inputs
         {
             get
             {
@@ -67,14 +67,13 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     return missingElement.ElementType.Inputs;
                 }
 
-                var inputs = m_inputs.OrderBy(n => n.Index).Where(n => n.Visible).ToArray();
-                return inputs;
+                return m_inputs;
             }
         }
 
         /// <summary>
         /// Gets a list of the visible output pins in target group</summary>
-        public override IList<ICircuitPin> Outputs
+        public override PinList<ICircuitPin> Outputs
         {
             get
             {
@@ -84,8 +83,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     return missingElement.ElementType.Outputs;
                 }
 
-                var outputs = m_outputs.OrderBy(n => n.Index).Where(n => n.Visible).ToArray();
-                return outputs;
+                return m_outputs;
             }
         }
 
@@ -126,7 +124,18 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 var missingElement = Template.Target.As<Element>();
                 return missingElement.ElementType.GetInputPin(pinIndex);
             }
-            var pin = m_inputs.FirstOrDefault(x => x.Index == pinIndex);
+            var pin = m_inputs[pinIndex];
+            return pin;
+        }
+
+        public override ICircuitPin InputPin(NameString pinName)
+        {
+            if (m_targetGroup == null) //using MissingElementType
+            {
+                var missingElement = Template.Target.As<Element>();
+                return missingElement.ElementType.GetInputPin(pinName);
+            }
+            var pin = m_inputs[pinName];
             return pin;
         }
 
@@ -141,7 +150,18 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 var missingElement = Template.Target.As<Element>();
                 return missingElement.ElementType.GetOutputPin(pinIndex);
             }
-            var pin = m_outputs.FirstOrDefault(x => x.Index == pinIndex);
+            var pin = m_outputs[pinIndex];
+            return pin;
+        }
+
+        public override ICircuitPin OutputPin(NameString pinName)
+        {
+            if (m_targetGroup == null)//using MissingElementType
+            {
+                var missingElement = Template.Target.As<Element>();
+                return missingElement.ElementType.GetOutputPin(pinName);
+            }
+            var pin = m_outputs[pinName];
             return pin;
         }
 
@@ -309,7 +329,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 var targetGroup = Template.Target.As<Group>();
                 if (targetGroup == null)
                      return EmptyEnumerable<GroupPin>.Instance;
-                return m_inputs;
+                return m_inputs.Cast<GroupPin>();
             }
         }
 
@@ -322,13 +342,13 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 var targetGroup = Template.Target.As<Group>();
                 if (targetGroup == null)
                     return EmptyEnumerable<GroupPin>.Instance;
-                return m_outputs;
+                return m_outputs.Cast<GroupPin>();
             }
         }
 
         private Group m_targetGroup;
-        private List<GroupPin> m_inputs;
-        private List<GroupPin> m_outputs;
+        private PinList<ICircuitPin> m_inputs;
+        private PinList<ICircuitPin> m_outputs;
         private CircuitGroupInfo m_info;
         private bool m_expanded;
     }

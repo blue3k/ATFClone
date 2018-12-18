@@ -19,8 +19,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         }
         
         /// <summary>
-        /// Gets the index of the pin on InternalElement that this group pin connects to</summary>
-        int InternalPinIndex
+        /// Gets the name of the pin on InternalElement that this group pin connects to</summary>
+        NameString InternalPinName
         {
             get;
         }

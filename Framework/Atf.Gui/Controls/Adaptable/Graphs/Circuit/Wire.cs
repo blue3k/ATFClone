@@ -44,12 +44,12 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             get
             {
-                int pinIndex = GetAttribute<int>(OutputPinAttribute);             
+                NameString pinIndex = GetAttribute<NameString>(OutputPinAttribute);             
                 return OutputElement.OutputPin(pinIndex);
             }
             set
             {
-                DomNode.SetAttribute(OutputPinAttribute, value.Index);
+                DomNode.SetAttribute(OutputPinAttribute, value.Name);
             }
         }
 
@@ -67,12 +67,13 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             get
             {
-                int pinIndex = GetAttribute<int>(InputPinAttribute);
-                return InputElement.InputPin(pinIndex);              
+                NameString pinName = GetAttribute<NameString>(InputPinAttribute);
+                return InputElement.InputPin(pinName);              
             }
             set
             {
-                DomNode.SetAttribute(InputPinAttribute, value.Index);
+                var pin = InputElement.InputPin(value.Name);
+                DomNode.SetAttribute(InputPinAttribute, pin.Name);
             }
         }
 
@@ -156,7 +157,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     if (isInputElementRef)
                     {
                         var pinTarget = InputPin.Cast<GroupPin>().PinTarget;
-                        InputPinTarget = new PinTarget(pinTarget.LeafDomNode, pinTarget.LeafPinIndex,
+                        InputPinTarget = new PinTarget(pinTarget.LeafDomNode, pinTarget.LeafPinName,
                                                        InputElement.DomNode);
                     }
                     else
@@ -167,10 +168,10 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     if (isInputElementRef)
                     {
                         var reference = InputElement.As<IReference<DomNode>>();
-                        InputPinTarget = new PinTarget(reference.Target, InputPin.Index, InputElement.DomNode);
+                        InputPinTarget = new PinTarget(reference.Target, InputPin.Name, InputElement.DomNode);
                     }
                     else
-                        InputPinTarget = new PinTarget(InputElement.DomNode, InputPin.Index, null);
+                        InputPinTarget = new PinTarget(InputElement.DomNode, InputPin.Name, null);
                 }
                 Debug.Assert(InputPinTarget != null, "sanity check");
             }
@@ -183,7 +184,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     if (isOutputElementRef)
                     {
                         var pinTarget = OutputPin.Cast<GroupPin>().PinTarget;
-                        OutputPinTarget = new PinTarget(pinTarget.LeafDomNode, pinTarget.LeafPinIndex,
+                        OutputPinTarget = new PinTarget(pinTarget.LeafDomNode, pinTarget.LeafPinName,
                                                         OutputElement.DomNode);
                     }
                     else
@@ -194,10 +195,10 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     if (isOutputElementRef)
                     {
                         var reference = OutputElement.Cast<IReference<DomNode>>();
-                        OutputPinTarget = new PinTarget(reference.Target, OutputPin.Index, OutputElement.DomNode);
+                        OutputPinTarget = new PinTarget(reference.Target, OutputPin.Name, OutputElement.DomNode);
                     }
                     else
-                        OutputPinTarget = new PinTarget(OutputElement.DomNode, OutputPin.Index, null);
+                        OutputPinTarget = new PinTarget(OutputElement.DomNode, OutputPin.Name, null);
 
 
                 }
@@ -256,11 +257,11 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             }
         }
 
-        internal bool IsValid(out int inputPinIndex, out int outputPinIndex)
+        internal bool IsValid(out NameString inputPinName, out NameString outputPinName)
         {
-            outputPinIndex = OutputPin.Index; // GetAttribute<int>(OutputPinAttribute);
-            inputPinIndex = InputPin.Index;   // GetAttribute<int>(InputPinAttribute);
-            return OutputElement.ElementType.GetOutputPin(outputPinIndex) != null &&  InputElement.ElementType.GetInputPin(inputPinIndex) != null;
+            outputPinName = OutputPin.Name; // GetAttribute<int>(OutputPinAttribute);
+            inputPinName = InputPin.Name;   // GetAttribute<int>(InputPinAttribute);
+            return OutputElement.ElementType.GetOutputPin(outputPinName) != null &&  InputElement.ElementType.GetInputPin(inputPinName) != null;
         }
 
         private PinTarget m_inputPinTarget;

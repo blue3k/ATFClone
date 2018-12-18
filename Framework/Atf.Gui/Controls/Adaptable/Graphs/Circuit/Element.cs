@@ -167,6 +167,16 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// Gets the input pin for the given pin index.</summary>
         /// <param name="pinIndex">Pin index</param>
         /// <returns>Input pin for pin index</returns>
+        public virtual ICircuitPin InputPin(NameString name)
+        {
+            return ElementType.GetInputPin(name);
+        }
+
+
+        /// <summary>
+        /// Gets the input pin for the given pin index.</summary>
+        /// <param name="pinIndex">Pin index</param>
+        /// <returns>Input pin for pin index</returns>
         public virtual ICircuitPin InputPin(int pinIndex)
         {
             return ElementType.GetInputPin(pinIndex);            
@@ -179,6 +189,15 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         public virtual ICircuitPin OutputPin(int pinIndex)
         {
             return ElementType.GetOutputPin(pinIndex);            
+        }
+
+        /// <summary>
+        /// Gets the output pin for the given pin name.</summary>
+        /// <param name="pinName">Pin name</param>
+        /// <returns>Output pin for pin name</returns>
+        public virtual ICircuitPin OutputPin(NameString pinName)
+        {
+            return ElementType.GetOutputPin(pinName);
         }
 
 
@@ -209,8 +228,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             var result = new Pair<Element, ICircuitPin>();
             if (pinTarget != null &&  pinTarget.LeafDomNode == DomNode) // an element must be a leaf node in a circuit hierarchy
             {                
-                var  pin = inputSide ? ElementType.GetInputPin(pinTarget.LeafPinIndex)
-                                        : ElementType.GetOutputPin(pinTarget.LeafPinIndex);
+                var  pin = inputSide ? ElementType.GetInputPin(pinTarget.LeafPinName)
+                                        : ElementType.GetOutputPin(pinTarget.LeafPinName);
                 if (pin != null)
                 {
                     result.First = this;

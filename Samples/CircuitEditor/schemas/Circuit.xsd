@@ -18,6 +18,12 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <!-- nameString -->
+  <xs:simpleType name="nameString">
+    <xs:restriction base="floatListType">
+    </xs:restriction>
+  </xs:simpleType>
+
   <!--
   This represents a property on an object that can be specified dynamically at run-time,
   either programmatically or by the user, using context menu commands in the property
@@ -75,9 +81,9 @@
   <xs:complexType name="connectionType">
     <xs:attribute name="label" type="xs:string" use="optional" />
     <xs:attribute name="outputModule" type="xs:IDREF" use="required" />
-    <xs:attribute name="outputPin" type="xs:integer" use="required" />
+    <xs:attribute name="outputPin" type="nameString" use="required" />
     <xs:attribute name="inputModule" type="xs:IDREF" use="required" />
-    <xs:attribute name="inputPin" type="xs:integer" use="required" />
+    <xs:attribute name="inputPin" type="nameString" use="required" />
   </xs:complexType>
 
   <!--
@@ -103,7 +109,8 @@
         <!--visibility: hide or show this group pin-->
         <xs:attribute name="visible" type="xs:boolean" default="true"/>
         <!-- pin index(order) in its sub-graph owner  -->
-        <xs:attribute name="index" type="xs:integer" use="required" />
+        <!--<xs:attribute name="index" type="xs:integer" use="required" />-->
+        <xs:attribute name="pinName" type="nameString" use="required" />
         <xs:attribute name="pinned" type="xs:boolean" default="false"/>
         <!--user defined floating pin location y value (x value is auto-generated)-->
         <xs:attribute name="pinY" type="xs:integer"/>

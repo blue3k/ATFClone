@@ -98,6 +98,7 @@
     <Compile Include="ICrashLogger.cs" />
     <Compile Include="IObservableCollection.cs" />
     <Compile Include="IPropertyValueValidator.cs" />
+    <Compile Include="NameString.cs" />
     <Compile Include="Windows\Gdi32.cs" />
     <Compile Include="Windows\Gdi32Types.cs" />
     <Compile Include="Windows\Kernel32Types.cs" />
