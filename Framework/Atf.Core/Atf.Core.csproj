@@ -86,6 +86,7 @@
     <Compile Include="CollectionAdapter.cs" />
     <Compile Include="ConsoleOutputWriter.cs" />
     <Compile Include="CrashLogger.cs" />
+    <Compile Include="DictionaryAdapter.cs" />
     <Compile Include="DisplayStringAttribute.cs" />
     <Compile Include="Dom\CustomTypeDescriptorNodeAdapter.cs" />
     <Compile Include="Dom\CategoryUniqueIdValidator.cs" />

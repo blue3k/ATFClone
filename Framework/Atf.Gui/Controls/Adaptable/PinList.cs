@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Linq;
 using Sce.Atf.Dom;
 
 
@@ -15,6 +15,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         public PinList()
         {
             m_Pins = new List<PinType>();
+            m_pinByName = new Dictionary<NameString, PinType>();
         }
 
         /// <summary>
@@ -24,7 +25,18 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         public PinList(IList<PinType> sourceList)
         {
             m_Pins = sourceList;
+            m_pinByName = new Dictionary<NameString, PinType>();
             UpddateNameMap();
+        }
+
+        /// <summary>
+        /// This method is for supporting list from outside. the synchronization should be made manually.
+        /// </summary>
+        /// <param name="sourceList"></param>
+        internal PinList(IList<PinType> sourceList, IDictionary<NameString, PinType> sourceMap)
+        {
+            m_Pins = sourceList;
+            m_pinByName = sourceMap;
         }
 
         public int Count
@@ -176,6 +188,10 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             return m_Pins.GetEnumerator();
         }
+        public PinList<TResult> Cast<TResult>() where TResult : ICircuitPin
+        {
+            return new PinList<TResult>(m_Pins.Cast<TResult>().ToList(), new DictionaryAdapter<NameString, TResult, PinType>(m_pinByName));
+        }
 
         // Update name map 
         public void UpddateNameMap()
@@ -188,6 +204,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         }
 
         private IList<PinType> m_Pins;
-        private Dictionary<NameString, PinType> m_pinByName = new Dictionary<NameString, PinType>();
+        private IDictionary<NameString, PinType> m_pinByName;
     }
+
+
+
 }

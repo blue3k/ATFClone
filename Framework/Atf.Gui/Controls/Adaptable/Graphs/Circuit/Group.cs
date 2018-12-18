@@ -602,7 +602,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             {
 
                 var sorted = (pass == 0) ? m_inputs.Cast<GroupPin>().OrderBy(n => n.Position.Y).ToArray() :
-                    m_outputs.OrderBy(n => n.Cast<GroupPin>().Position.Y).ToArray();
+                    m_outputs.Cast<GroupPin>().OrderBy(n => n.Position.Y).ToArray();
 
                 // assign group pin index in y order, but visible pins goes first 
                 int index = 0;
@@ -712,7 +712,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             {
                 if (modules.Contains(connection.InputElement))
                 {
-                    var grpPin = MatchedGroupPin(connection.InputElement, connection.InputPin.Index, true);
+                    var grpPin = MatchedGroupPin(connection.InputElement, connection.InputPin.Name, true);
                     if (grpPin == null)
                     {
                         //var inputPin = connection.InputElement.Type.Inputs[connection.InputPin.Index];
@@ -1300,7 +1300,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <param name="pinIndex">Input or output pin index of the given node</param>
         /// <param name="inputSide">True for input pin, false for output pin</param>
         /// <returns>Group pin found</returns>
-        public GroupPin MatchedGroupPin(Element node, int pinIndex, bool inputSide)
+        public GroupPin MatchedGroupPin(Element node, NameString pinName, bool inputSide)
         {
             if (node.Is<Group>())
             {

@@ -46,6 +46,15 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         protected abstract AttributeInfo VisibleAttribute { get; }
      
         /// <summary>
+        /// Group pin index used for visual ordering
+        /// </summary>
+        public int Index
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Constructor that subscribes to Changed event</summary>
         public GroupPin()
         {
