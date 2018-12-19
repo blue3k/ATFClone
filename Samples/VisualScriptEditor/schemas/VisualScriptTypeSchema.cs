@@ -21,8 +21,8 @@ namespace VisualScript.VisualScriptBasicSchema
                 layerFolderChild = Type.DefineNewChildInfo("layerFolder", layerFolderType.Type, true);
                 expressionChild = Type.DefineNewChildInfo("expression", expressionType.Type, true);
                 annotationChild = Type.DefineNewChildInfo("annotation", annotationType.Type, true);
-                prototypeFolderChild = Type.DefineNewChildInfo("prototypeFolder", prototypeFolderType.Type, true);
-                templateFolderChild = Type.DefineNewChildInfo("templateFolder", templateFolderType.Type, true);
+                prototypeFolderChild = Type.DefineNewChildInfo("prototypeFolder", prototypeFolderType.Type, false);
+                templateFolderChild = Type.DefineNewChildInfo("templateFolder", templateFolderType.Type, false);
 
                 Type.SetTag(new System.ComponentModel.PropertyDescriptorCollection(new PropertyDescriptor[] {
                         new AttributePropertyDescriptor("version".Localize(), versionAttribute, null, "version".Localize(), false, null, null ),
