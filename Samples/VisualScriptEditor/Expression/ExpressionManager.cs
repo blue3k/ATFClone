@@ -9,6 +9,9 @@ using Sce.Atf;
 using Sce.Atf.Adaptation;
 using Sce.Atf.Applications;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
+
+using VisualScript.VisualScriptBasicSchema;
 
 namespace VisualScript
 {
@@ -20,7 +23,7 @@ namespace VisualScript
     {
         protected override void OnNodeSet()
         {
-            if (!VisualScriptBasicSchema.visualScriptType.Type.IsAssignableFrom(DomNode.Type))
+            if (!visualScriptType.Type.IsAssignableFrom(DomNode.Type))
                 throw new Exception("can attatch only to circuit");
 
             DomNode.AttributeChanged += (sender, e) =>
@@ -46,7 +49,7 @@ namespace VisualScript
                         m_expressionSet.Add(expr.Id);
                 };
 
-            Expressions = GetChildList<Expression>(VisualScriptBasicSchema.visualScriptType.expressionChild);
+            Expressions = GetChildList<Expression>(visualScriptType.expressionChild);
             foreach (var expression in Expressions)
                 m_expressionSet.Add(expression.Id);
         }
@@ -64,13 +67,13 @@ namespace VisualScript
         /// </summary>
         public IEnumerable<DomNode> ExpressionNodes
         {
-            get { return DomNode.GetChildList(VisualScriptBasicSchema.visualScriptType.moduleChild); }
+            get { return DomNode.GetChildList(visualScriptType.moduleChild); }
         }
 
 
         public Expression CreateExpression()
         {
-            Expression exp = new DomNode(VisualScriptBasicSchema.expressionType.Type).Cast<Expression>();
+            Expression exp = new DomNode(expressionType.Type).Cast<Expression>();
             exp.Id = "Expression";
             exp.Label = "Expression".Localize();
             return exp;

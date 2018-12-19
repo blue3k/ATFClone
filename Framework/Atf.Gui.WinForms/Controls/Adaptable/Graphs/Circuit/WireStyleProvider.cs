@@ -145,7 +145,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 var group = connection.OutputElement.As<ICircuitGroupType<TElement, TWire, TPin>>();
                 foreach (var groupPin in connection.OutputPinSinkChain)
                 {                   
-                    var pt = circuitRender.GetPinPosition(group.Cast<TElement>(), groupPin.Index, false, g);
+                    var pt = circuitRender.GetPinPosition(group.Cast<TElement>(), groupPin.Name, false, g);
                     pt.Offset(worldOffset);
                     pt.Offset(circuitRender.WorldOffset(relativePath.AsIEnumerable<TElement>()));
                     relativePath.Add(group);
@@ -172,7 +172,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 }
                 else // edge starts from a non-expanded node
                 {
-                    Point p0 = circuitRender.GetPinPosition(connection.OutputElement.Cast<TElement>(), connection.OutputPin.Index, false, g);
+                    Point p0 = circuitRender.GetPinPosition(connection.OutputElement.Cast<TElement>(), connection.OutputPin.Name, false, g);
                     p0.Offset(worldOffset);
                     dataPoints.Add(new GroupPinData { Pos = p0});
                 }
@@ -185,7 +185,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 group = connection.InputElement.As<ICircuitGroupType<TElement, TWire, TPin>>();
                 foreach (var groupPin in connection.InputPinSinkChain)
                 {
-                    var pt = circuitRender.GetPinPosition(group.Cast<TElement>(), groupPin.Index, true, g);
+                    var pt = circuitRender.GetPinPosition(group.Cast<TElement>(), groupPin.Name, true, g);
                     pt.Offset(worldOffset);
                     pt.Offset(circuitRender.WorldOffset(relativePath.AsIEnumerable<TElement>()));
                     relativePath.Add(group);
@@ -211,7 +211,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 }
                 else // edge ends at a non-expanded node
                 {
-                    Point pn = circuitRender.GetPinPosition(connection.InputElement.Cast<TElement>(), connection.InputPin.Index, true, g);
+                    Point pn = circuitRender.GetPinPosition(connection.InputElement.Cast<TElement>(), connection.InputPin.Name, true, g);
                     pn.Offset(worldOffset);
                     dataPoints.Add(new GroupPinData { Pos = pn });
                 }

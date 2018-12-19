@@ -1,6 +1,7 @@
 ﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 namespace VisualScript
 {
@@ -13,14 +14,19 @@ namespace VisualScript
         /// Gets type attribute of Pin</summary>
         protected override AttributeInfo TypeAttribute
         {
-            get { return VisualScriptBasicSchema.socketType.typeAttribute; }
+            get { return socketType.typeAttribute; }
         }
 
         /// <summary>
         /// Gets name attribute of Pin</summary>
         protected override AttributeInfo NameAttribute
         {
-            get { return VisualScriptBasicSchema.socketType.nameAttribute; }
+            get { return socketType.nameAttribute; }
+        }
+
+        protected override AttributeInfo IndexAttribute
+        {
+            get { return null; }
         }
     }
 }

@@ -11,6 +11,9 @@ namespace Sce.Atf
     /// <summary>Name string. hold string hash for compaire</summary>
     public struct NameString
     {
+        static public NameString Empty = new NameString();
+
+
         /// <summary>Constructors</summary>
         /// <param name="nameString">String to initialize</param>
         public NameString(string nameString)
@@ -20,6 +23,14 @@ namespace Sce.Atf
             m_Hash32 = 0;
             m_Hash = 0;
             SetString(nameString);
+        }
+
+        public NameString(NameString nameString)
+            : this()
+        {
+            m_NameString = nameString.m_NameString;
+            m_Hash32 = nameString.m_Hash32;
+            m_Hash = nameString.m_Hash;
         }
 
         /// <summary>SetString</summary>
@@ -66,8 +77,39 @@ namespace Sce.Atf
         {
             if (lhs == null)
                 return rhs == null;
-            return lhs.Equals(rhs);
+            return !lhs.Equals(rhs);
         }
+
+
+        public static bool operator ==(NameString lhs, string rhs)
+        {
+            if (lhs == null)
+                return rhs == null;
+            return lhs.m_NameString.Equals(rhs);
+        }
+
+        public static bool operator !=(NameString lhs, string rhs)
+        {
+            if (lhs == null)
+                return rhs == null;
+            return !lhs.m_NameString.Equals(rhs);
+        }
+
+        public static bool operator ==(string lhs, NameString rhs)
+        {
+            if (lhs == null)
+                return rhs == null;
+            return lhs.Equals(rhs.m_NameString);
+        }
+
+        public static bool operator !=(string lhs, NameString rhs)
+        {
+            if (lhs == null)
+                return rhs == null;
+            return !lhs.Equals(rhs.m_NameString);
+        }
+
+
 
 
         public static explicit operator string(NameString name)

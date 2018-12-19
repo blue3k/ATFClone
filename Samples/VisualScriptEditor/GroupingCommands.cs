@@ -4,6 +4,8 @@ using System.ComponentModel.Composition;
 using Sce.Atf.Applications;
 using Sce.Atf.Dom;
 using VisualScript;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
+
 
 namespace VisualScriptEditor
 {
@@ -29,7 +31,7 @@ namespace VisualScriptEditor
         /// Gets type for Group</summary>
         protected override DomNodeType GroupType
         {
-            get { return VisualScriptBasicSchema.groupType.Type; }
+            get { return groupType.Type; }
         }
 
         public override void DoCommand(object commandTag)
@@ -45,57 +47,57 @@ namespace VisualScriptEditor
                 if (newGroup != null)
                 {
                     // The "Emitter Vector" dynamic property.
-                    var customAttrNode = new DomNode(VisualScriptBasicSchema.dynamicPropertyType.Type, VisualScriptBasicSchema.moduleType.dynamicPropertyChild);
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.nameAttribute,
+                    var customAttrNode = new DomNode(dynamicPropertyType.Type, moduleType.dynamicPropertyChild);
+                    customAttrNode.SetAttribute(dynamicPropertyType.nameAttribute,
                         "Emitter Vector");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.categoryAttribute,
+                    customAttrNode.SetAttribute(dynamicPropertyType.categoryAttribute,
                         "Custom Properties");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.descriptionAttribute,
+                    customAttrNode.SetAttribute(dynamicPropertyType.descriptionAttribute,
                         "The speed and the direction that the emitter travels when it is created");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.converterAttribute,
+                    customAttrNode.SetAttribute(dynamicPropertyType.converterAttribute,
                         "Sce.Atf.Controls.PropertyEditing.FloatArrayConverter, Atf.Gui");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.editorAttribute,
+                    customAttrNode.SetAttribute(dynamicPropertyType.editorAttribute,
                         "Sce.Atf.Controls.PropertyEditing.NumericTupleEditor, Atf.Gui.WinForms:System.Single,x,y,z");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.valueTypeAttribute, "vector3Value");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.vector3ValueAttribute,
+                    customAttrNode.SetAttribute(dynamicPropertyType.valueTypeAttribute, "vector3Value");
+                    customAttrNode.SetAttribute(dynamicPropertyType.vector3ValueAttribute,
                         new [] {0.0f, 0.0f, 0.0f});
-                    newGroup.DomNode.GetChildList(VisualScriptBasicSchema.moduleType.dynamicPropertyChild).Add(customAttrNode);
+                    newGroup.DomNode.GetChildList(moduleType.dynamicPropertyChild).Add(customAttrNode);
 
                     // The "Debug Mode" dynamic property.
-                    customAttrNode = new DomNode(VisualScriptBasicSchema.dynamicPropertyType.Type, VisualScriptBasicSchema.moduleType.dynamicPropertyChild);
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.nameAttribute,
+                    customAttrNode = new DomNode(dynamicPropertyType.Type, moduleType.dynamicPropertyChild);
+                    customAttrNode.SetAttribute(dynamicPropertyType.nameAttribute,
                         "Debug Mode");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.categoryAttribute,
+                    customAttrNode.SetAttribute(dynamicPropertyType.categoryAttribute,
                         "Custom Properties");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.descriptionAttribute,
+                    customAttrNode.SetAttribute(dynamicPropertyType.descriptionAttribute,
                         "Whether or not debug mode visualizations should be used");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.editorAttribute,
+                    customAttrNode.SetAttribute(dynamicPropertyType.editorAttribute,
                         "Sce.Atf.Controls.PropertyEditing.BoolEditor, Atf.Gui.WinForms");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.valueTypeAttribute, "boolValue");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.boolValueAttribute, false);
-                    newGroup.DomNode.GetChildList(VisualScriptBasicSchema.moduleType.dynamicPropertyChild).Add(customAttrNode);
+                    customAttrNode.SetAttribute(dynamicPropertyType.valueTypeAttribute, "boolValue");
+                    customAttrNode.SetAttribute(dynamicPropertyType.boolValueAttribute, false);
+                    newGroup.DomNode.GetChildList(moduleType.dynamicPropertyChild).Add(customAttrNode);
 
                     // The "Tester Name" dynamic property.
-                    customAttrNode = new DomNode(VisualScriptBasicSchema.dynamicPropertyType.Type, VisualScriptBasicSchema.moduleType.dynamicPropertyChild);
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.nameAttribute,
+                    customAttrNode = new DomNode(dynamicPropertyType.Type, moduleType.dynamicPropertyChild);
+                    customAttrNode.SetAttribute(dynamicPropertyType.nameAttribute,
                         "Tester Name");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.categoryAttribute,
+                    customAttrNode.SetAttribute(dynamicPropertyType.categoryAttribute,
                         "Custom Properties");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.descriptionAttribute,
+                    customAttrNode.SetAttribute(dynamicPropertyType.descriptionAttribute,
                         "The name of the person who is testing this particle effect object");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.valueTypeAttribute, "stringValue");
-                    newGroup.DomNode.GetChildList(VisualScriptBasicSchema.moduleType.dynamicPropertyChild).Add(customAttrNode);
+                    customAttrNode.SetAttribute(dynamicPropertyType.valueTypeAttribute, "stringValue");
+                    newGroup.DomNode.GetChildList(moduleType.dynamicPropertyChild).Add(customAttrNode);
 
                     // The "# of Emitters" dynamic property.
-                    customAttrNode = new DomNode(VisualScriptBasicSchema.dynamicPropertyType.Type, VisualScriptBasicSchema.moduleType.dynamicPropertyChild);
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.nameAttribute,
+                    customAttrNode = new DomNode(dynamicPropertyType.Type, moduleType.dynamicPropertyChild);
+                    customAttrNode.SetAttribute(dynamicPropertyType.nameAttribute,
                         "# of Emitters");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.categoryAttribute,
+                    customAttrNode.SetAttribute(dynamicPropertyType.categoryAttribute,
                         "Custom Properties");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.descriptionAttribute,
+                    customAttrNode.SetAttribute(dynamicPropertyType.descriptionAttribute,
                         "The number of emitter objects spawned by this emitter");
-                    customAttrNode.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.valueTypeAttribute, "intValue");
-                    newGroup.DomNode.GetChildList(VisualScriptBasicSchema.moduleType.dynamicPropertyChild).Add(customAttrNode);
+                    customAttrNode.SetAttribute(dynamicPropertyType.valueTypeAttribute, "intValue");
+                    newGroup.DomNode.GetChildList(moduleType.dynamicPropertyChild).Add(customAttrNode);
                 }
             }
         }

@@ -109,6 +109,10 @@ namespace Sce.Atf.Dom
             {
                 m_type = AttributeTypes.DateTime;
             }
+            else if (valueType == typeof(NameString))
+            {
+                m_type = AttributeTypes.NameString;
+            }
             else
             {
                 m_clrType = typeof(string); // unrecognized type, so treat it as a string, as in normal DOM
@@ -319,6 +323,10 @@ namespace Sce.Atf.Dom
                     result = GetDefaultArrayValue<String>();
                     break;
 
+                case AttributeTypes.NameString:
+                    result = NameString.Empty;
+                    break;
+
                 case AttributeTypes.Reference:
                     break;
 
@@ -417,6 +425,10 @@ namespace Sce.Atf.Dom
                 case AttributeTypes.StringArray:
                     result = AreEqualArraysOf<String>(val1, val2);
                     break;
+
+                case AttributeTypes.NameString:
+                    result = val1.Equals(val2);
+                    break;
             }
 
             return result;
@@ -503,6 +515,10 @@ namespace Sce.Atf.Dom
                     case AttributeTypes.StringArray:
                         result = ((String[])value).Clone();
                         break;
+
+                    case AttributeTypes.NameString:
+                        result = new NameString((NameString)value);
+                        break;
                 }
             }
 
@@ -543,6 +559,11 @@ namespace Sce.Atf.Dom
                 case AttributeTypes.String:
                     result = value.ToString();
                     break;
+
+                case AttributeTypes.NameString:
+                    result = value.ToString();
+                    break;
+
                 case AttributeTypes.Uri:
                     result = Uri.EscapeUriString(Uri.UnescapeDataString(value.ToString()));
                     break;
@@ -705,6 +726,10 @@ namespace Sce.Atf.Dom
 
                 case AttributeTypes.String:
                     result = s;
+                    break;
+
+                case AttributeTypes.NameString:
+                    result = new NameString(s);
                     break;
 
                 case AttributeTypes.Uri:
@@ -1007,6 +1032,26 @@ namespace Sce.Atf.Dom
             get { return s_booleanArrayType; }
         }
         private static readonly AttributeType s_booleanArrayType = new AttributeType("boolean[]", typeof(bool[]), Int32.MaxValue);
+
+
+        /// <summary>
+        /// Name string type
+        /// </summary>
+        public static AttributeType NameStringType
+        {
+            get { return s_nameStringType; }
+        }
+        private static readonly AttributeType s_nameStringType = new AttributeType("NameString", typeof(NameString), 1);
+
+        /// <summary>
+        /// name string array
+        /// </summary>
+        public static AttributeType NameStringArrayType
+        {
+            get { return s_nameStringArrayType; }
+        }
+        private static readonly AttributeType s_nameStringArrayType = new AttributeType("NameString[]", typeof(NameString[]), Int32.MaxValue);
+
 
         private object GetDefaultArrayValue<T>()
         {

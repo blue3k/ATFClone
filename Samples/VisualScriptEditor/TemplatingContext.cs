@@ -3,8 +3,11 @@
 using Sce.Atf.Adaptation;
 using Sce.Atf.Controls.Adaptable.Graphs;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
+
 
 using VisualScript;
+using VisualScript.VisualScriptBasicSchema;
 
 namespace VisualScriptEditor
 {
@@ -33,12 +36,12 @@ namespace VisualScriptEditor
             {
                 if (m_rootFolder == null)
                 {
-                    m_rootFolder = GetChild<ScriptTemplateFolder>(VisualScriptBasicSchema.visualScriptDocumentType.templateFolderChild);
+                    m_rootFolder = GetChild<ScriptTemplateFolder>(visualScriptDocumentType.templateFolderChild);
                     if (m_rootFolder == null) // create one if no root folder is defined yet
                     {
-                        var rootFolderNode = new DomNode(VisualScriptBasicSchema.templateFolderType.Type);
+                        var rootFolderNode = new DomNode(templateFolderType.Type);
                         rootFolderNode.Cast<ScriptTemplateFolder>().Name = "_TemplateRoot_";
-                        DomNode.SetChild(VisualScriptBasicSchema.visualScriptDocumentType.templateFolderChild, rootFolderNode);
+                        DomNode.SetChild(visualScriptDocumentType.templateFolderChild, rootFolderNode);
                         m_rootFolder = rootFolderNode.Cast<ScriptTemplateFolder>();
                     }
                 }
@@ -50,7 +53,7 @@ namespace VisualScriptEditor
         /// Gets type of template</summary>
         protected override DomNodeType TemplateType
         {
-            get { return VisualScriptBasicSchema.templateType.Type; }
+            get { return templateType.Type; }
         }
 
         /// <summary>
@@ -70,7 +73,7 @@ namespace VisualScriptEditor
             var template = item.Cast<ScriptTemplate>();
             if (template.Target.Is<VisualScript.ScriptGroup>())
             {
-                var groupReference = new DomNode(VisualScriptBasicSchema.groupTemplateRefType.Type).Cast<VisualScript.ScriptGroupReference>();
+                var groupReference = new DomNode(groupTemplateRefType.Type).Cast<VisualScript.ScriptGroupReference>();
                 groupReference.Template = template;
                 groupReference.Id = template.Name;
                 groupReference.Name = template.Name;
@@ -79,7 +82,7 @@ namespace VisualScriptEditor
             }
             if (template.Target.Is<ScriptNode>())
             {
-                var moduleReference = new DomNode(VisualScriptBasicSchema.moduleTemplateRefType.Type).Cast<ScriptNodeReference>();
+                var moduleReference = new DomNode(moduleTemplateRefType.Type).Cast<ScriptNodeReference>();
                 moduleReference.Template = template;
                 moduleReference.Id = template.Name;
                 moduleReference.Name = template.Name;

@@ -23,6 +23,23 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// </summary>
         protected abstract AttributeInfo NameAttribute { get; }
 
+        /// <summary>
+        /// Gets index attribute of Pin
+        /// </summary>
+        protected abstract AttributeInfo IndexAttribute { get; }
+
+        /// <summary>
+        /// pin index used for cached order access
+        /// </summary>
+        public int Index
+        {
+            get { return GetAttribute<int>(IndexAttribute); }
+            set
+            {
+                SetAttribute(IndexAttribute, value);
+            }
+        }
+
         #region ICircuitPin Members
 
         /// <summary>Gets pin name</summary>

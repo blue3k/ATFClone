@@ -120,7 +120,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                             if (newGrpPin.InternalElement.DomNode == grpPin.InternalElement.DomNode &&
                                 newGrpPin.InternalPinName == grpPin.InternalPinName)
                             {
-                                grpPin.InternalPinName = newGrpPin.Index;
+                                grpPin.InternalPinName = newGrpPin.Name;
                                 newGrpPin.Name = grpPin.Name;
                                 //grpPin.Name = newGroup.Name + ":" + newGrpPin.Name;
 
@@ -142,7 +142,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                             if (newGrpPin.InternalElement.DomNode == grpPin.InternalElement.DomNode &&
                                 newGrpPin.InternalPinName == grpPin.InternalPinName)
                             {
-                                grpPin.InternalPinName = newGrpPin.Index;
+                                grpPin.InternalPinName = newGrpPin.Name;
                                 newGrpPin.Name = grpPin.Name;
                                 //grpPin.Name = newGroup.Name + ":" + newGrpPin.Name;
 
@@ -161,7 +161,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             // Remap external connections from grouped modules to group.
             foreach (Wire connection in externalConnections)
             {
-                var groupInputPin = newGroup.MatchedGroupPin(connection.InputElement, connection.InputPin.Index, true);
+                var groupInputPin = newGroup.MatchedGroupPin(connection.InputElement, connection.InputPin, true);
                 if (groupInputPin != null)
                 {
                     groupInputPin.SetPinTarget(true);
@@ -171,7 +171,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     connection.InputPinTarget = groupInputPin.PinTarget;
                 }
 
-                var groupOutputPin = newGroup.MatchedGroupPin(connection.OutputElement, connection.OutputPin.Index, false);
+                var groupOutputPin = newGroup.MatchedGroupPin(connection.OutputElement, connection.OutputPin, false);
                 if (groupOutputPin != null)
                 {
                     groupOutputPin.SetPinTarget(false);

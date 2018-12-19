@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Xml;
 using Sce.Atf;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 namespace VisualScript
 {
@@ -65,7 +66,7 @@ namespace VisualScript
         /// only includes pins whose Info.Visible property is true. Consider using GetAllInputPins()
         /// or GetInputPin() when using ICircuitGroupPin's InternalPinName to look for the
         /// corresponding pin.</summary>
-        public IList<ICircuitPin> Inputs
+        public PinList<ICircuitPin> Inputs
         {
             get
             {
@@ -78,7 +79,7 @@ namespace VisualScript
         /// only includes pins whose Info.Visible property is true. Consider using GetAllOutputPins()
         /// or GetOutputPin() when using ICircuitGroupPin's InternalPinName to look for the
         /// corresponding pin.</summary>
-        public IList<ICircuitPin> Outputs
+        public PinList<ICircuitPin> Outputs
         {
             get
             {
@@ -105,10 +106,10 @@ namespace VisualScript
         {
             base.OnNodeSet();
 
-            if(string.IsNullOrEmpty(GetAttribute<string>(VisualScriptBasicSchema.moduleType.labelAttribute)))
-                SetAttribute(VisualScriptBasicSchema.moduleType.labelAttribute, GetAttribute<string>(VisualScriptBasicSchema.moduleType.nameAttribute));
+            if(string.IsNullOrEmpty(GetAttribute<string>(moduleType.labelAttribute)))
+                SetAttribute(moduleType.labelAttribute, GetAttribute<string>(moduleType.nameAttribute));
 
-            m_AttributeForTitle = VisualScriptBasicSchema.moduleType.labelAttribute;
+            m_AttributeForTitle = moduleType.labelAttribute;
 
 
 
@@ -223,7 +224,7 @@ namespace VisualScript
 
         Image m_Image;
 
-        List<ICircuitPin> m_Inputs = new List<ICircuitPin>();
-        List<ICircuitPin> m_Outputs = new List<ICircuitPin>();
+        PinList<ICircuitPin> m_Inputs = new PinList<ICircuitPin>();
+        PinList<ICircuitPin> m_Outputs = new PinList<ICircuitPin>();
     }
 }

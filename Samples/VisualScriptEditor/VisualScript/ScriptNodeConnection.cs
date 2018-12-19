@@ -3,6 +3,8 @@
 using Sce.Atf.Adaptation;
 using Sce.Atf.Controls.Adaptable.Graphs;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
+
 
 namespace VisualScript
 {
@@ -54,35 +56,35 @@ namespace VisualScript
         /// Gets label attribute on connection</summary>
         protected override AttributeInfo LabelAttribute
         {
-            get { return VisualScriptBasicSchema.connectionType.labelAttribute; }
+            get { return connectionType.labelAttribute; }
         }
 
         /// <summary>
         /// Gets input module attribute for connection</summary>
         protected override AttributeInfo InputElementAttribute
         {
-            get { return VisualScriptBasicSchema.connectionType.inputModuleAttribute; }
+            get { return connectionType.inputModuleAttribute; }
         }
 
         /// <summary>
         /// Gets output module attribute for connection</summary>
         protected override AttributeInfo OutputElementAttribute
         {
-            get { return VisualScriptBasicSchema.connectionType.outputModuleAttribute; }
+            get { return connectionType.outputModuleAttribute; }
         }
 
         /// <summary>
         /// Gets input pin attribute for connection</summary>
         protected override AttributeInfo InputPinAttribute
         {
-            get { return VisualScriptBasicSchema.connectionType.inputPinAttribute; }
+            get { return connectionType.inputPinAttribute; }
         }
 
         /// <summary>
         /// Gets output pin attribute for connection</summary>
         protected override AttributeInfo OutputPinAttribute
         {
-            get { return VisualScriptBasicSchema.connectionType.outputPinAttribute; }
+            get { return connectionType.outputPinAttribute; }
         }
 
     }

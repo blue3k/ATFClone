@@ -3,6 +3,7 @@
 using System.ComponentModel.Composition;
 using Sce.Atf.Applications;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 using VisualScript;
 
@@ -29,7 +30,7 @@ namespace VisualScriptEditor
         /// Gets type of layer folder</summary>
         protected override DomNodeType LayerFolderType
         {
-            get { return VisualScriptBasicSchema.layerFolderType.Type; }
+            get { return layerFolderType.Type; }
         }
     }
 }

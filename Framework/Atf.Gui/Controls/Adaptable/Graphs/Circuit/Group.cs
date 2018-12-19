@@ -712,17 +712,17 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             {
                 if (modules.Contains(connection.InputElement))
                 {
-                    var grpPin = MatchedGroupPin(connection.InputElement, connection.InputPin.Name, true);
+                    var grpPin = MatchedGroupPin(connection.InputElement, connection.InputPin, true);
                     if (grpPin == null)
                     {
                         //var inputPin = connection.InputElement.Type.Inputs[connection.InputPin.Index];
-                        var inputPin = connection.InputElement.InputPin(connection.InputPin.Index);
+                        var inputPin = connection.InputElement.InputPin(connection.InputPin.Name);
                         var groupPin = new DomNode(GroupPinType).As<GroupPin>();
                         groupPin.TypeName = inputPin.TypeName;
                         groupPin.InternalElement = connection.InputElement;
-                        groupPin.InternalPinName = inputPin.Index;
+                        groupPin.InternalPinName = inputPin.Name;
                         groupPin.Index = m_inputs.Count;
-                        groupPin.Position = new Point(0, (groupPin.InternalPinName + 1) * 16 + connection.InputElement.Bounds.Location.Y);
+                        groupPin.Position = new Point(0, (inputPin.Index + 1) * 16 + connection.InputElement.Bounds.Location.Y);
                         groupPin.IsDefaultName = true;
                         groupPin.Visible = true;
 
@@ -737,17 +737,17 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 }
                 else
                 {
-                    var grpPin = MatchedGroupPin(connection.OutputElement, connection.OutputPin.Index, false);
+                    var grpPin = MatchedGroupPin(connection.OutputElement, connection.OutputPin, false);
                     if (grpPin == null)
                     {
                         //var outputPin = connection.OutputElement.Type.Outputs[connection.OutputPin.Index];
-                        var outputPin = connection.OutputElement.OutputPin(connection.OutputPin.Index);
+                        var outputPin = connection.OutputElement.OutputPin(connection.OutputPin.Name);
                         var groupPin = new DomNode(GroupPinType).As<GroupPin>();
                         groupPin.TypeName = outputPin.TypeName;
                         groupPin.InternalElement = connection.OutputElement;
-                        groupPin.InternalPinName = outputPin.Index;
+                        groupPin.InternalPinName = outputPin.Name;
                         groupPin.Index = m_outputs.Count;
-                        groupPin.Position = new Point(0, (groupPin.InternalPinName + 1) * 16 + connection.OutputElement.Bounds.Location.Y);
+                        groupPin.Position = new Point(0, (outputPin.Index + 1) * 16 + connection.OutputElement.Bounds.Location.Y);
                         groupPin.IsDefaultName = true;
                         groupPin.Visible = true;
                         m_outputs.Add(groupPin);
@@ -765,9 +765,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             foreach (var module in modules)
             {
                 Element element = module;
-                foreach (var inputPin in module.AllInputPins.OrderBy(n => element.PinDisplayOrder(n.Index, true)))
+                foreach (var inputPin in module.AllInputPins.OrderBy(n => element.PinDisplayOrder(n, true)))
                 {
-                    var grpPin = MatchedGroupPin(module, inputPin.Index, true);
+                    var grpPin = MatchedGroupPin(module, inputPin, true);
                     if (CanExposePin(module, inputPin, internalConnections, true))
                     {
                         if (grpPin == null)
@@ -775,9 +775,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                             var groupPin = new DomNode(GroupPinType).As<GroupPin>();
                             groupPin.TypeName = inputPin.TypeName;
                             groupPin.InternalElement = module;
-                            groupPin.InternalPinName = inputPin.Index;
+                            groupPin.InternalPinName = inputPin.Name;
                             groupPin.Index = m_inputs.Count;
-                            groupPin.Position = new Point(0, (groupPin.InternalPinName + 1) * 16 + module.Bounds.Location.Y);
+                            groupPin.Position = new Point(0, (inputPin.Index + 1) * 16 + module.Bounds.Location.Y);
                             groupPin.Visible = inputPin.Is<IVisible>() ? inputPin.Cast<IVisible>().Visible : ShowExpandedGroupPins;
                             groupPin.IsDefaultName = true;
                             m_inputs.Add(groupPin);
@@ -800,9 +800,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     }
                 }
 
-                foreach (var outputPin in module.AllOutputPins.OrderBy(n => element.PinDisplayOrder(n.Index, false)))
+                foreach (var outputPin in module.AllOutputPins.OrderBy(n => element.PinDisplayOrder(n, false)))
                 {
-                    var grpPin = MatchedGroupPin(module, outputPin.Index, false);
+                    var grpPin = MatchedGroupPin(module, outputPin, false);
                     if (CanExposePin(module, outputPin, internalConnections, false))
                     {
                         if (grpPin == null)
@@ -811,9 +811,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                             var groupPin = new DomNode(GroupPinType).As<GroupPin>();
                             groupPin.TypeName = outputPin.TypeName;
                             groupPin.InternalElement = module;
-                            groupPin.InternalPinName = outputPin.Index;
+                            groupPin.InternalPinName = outputPin.Name;
                             groupPin.Index = m_outputs.Count;
-                            groupPin.Position = new Point(0, (groupPin.InternalPinName + 1) * 16 + module.Bounds.Location.Y);
+                            groupPin.Position = new Point(0, (outputPin.Index + 1) * 16 + module.Bounds.Location.Y);
                             groupPin.Visible = outputPin.Is<IVisible>() ? outputPin.Cast<IVisible>().Visible : ShowExpandedGroupPins;
                             groupPin.IsDefaultName = true;
                             m_outputs.Add(groupPin);
@@ -838,8 +838,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             // 3) remove all dangling group pins that have no corresponding internal nodes, or matched pins 
             RemoveDanglingGroupPins();
 
-            Info.HiddenInputPins = m_inputs.Where(x => !x.Visible).AsIEnumerable<ICircuitPin>();
-            Info.HiddenOutputPins = m_outputs.Where(x => !x.Visible).AsIEnumerable<ICircuitPin>();
+            Info.HiddenInputPins = m_inputs.Where(x => !x.Cast<GroupPin>().Visible).AsIEnumerable<ICircuitPin>();
+            Info.HiddenOutputPins = m_outputs.Where(x => !x.Cast<GroupPin>().Visible).AsIEnumerable<ICircuitPin>();
 
         }
 
@@ -847,8 +847,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         private void RemoveDanglingGroupPins()
         {
             PinTarget pinTarget;
-            foreach (var grpPin in m_inputs.ToArray())
+            foreach (var pin in m_inputs.ToArray())
             {
+                var grpPin = pin.Cast<GroupPin>();
                 pinTarget = grpPin.PinTarget;
                 if (pinTarget != null && grpPin.InternalElement.Is<IReference<DomNode>>())
                     pinTarget.InstancingNode = grpPin.InternalElement.DomNode;
@@ -866,8 +867,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 }
             }
 
-            foreach (var grpPin in m_outputs.ToArray())
+            foreach (var pin in m_outputs.ToArray())
             {
+                var grpPin = pin.Cast<GroupPin>();
                 pinTarget = grpPin.PinTarget;
                 if (pinTarget != null && grpPin.InternalElement.Is<IReference<DomNode>>())
                     pinTarget.InstancingNode = grpPin.InternalElement.DomNode;
@@ -894,14 +896,14 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             if (DefaultPinOrder == PinOrderStyle.NodeY)
             {
                 // layout group pins by its sub-node Y value first, then sub-node pin display order
-                var orderdInputs = m_inputs.OrderBy(n => n.InternalElement.Bounds.Location.Y).ThenBy(n => n.InternalElement.PinDisplayOrder(n.InternalPinName, true)).ToList();
+                var orderdInputs = m_inputs.OrderBy(n => n.Cast<GroupPin>().InternalElement.Bounds.Location.Y).ThenBy(n => n.Cast<GroupPin>().InternalElement.PinDisplayOrder(n, true)).ToList();
                 foreach (var grpPin in m_inputs)
                 {
                     int newIndex = orderdInputs.IndexOf(grpPin);
                     grpPin.Index = newIndex;
                 }
 
-                var orderdOutputs = m_outputs.OrderBy(n => n.InternalElement.Bounds.Location.Y).ThenBy(n => n.InternalElement.PinDisplayOrder(n.InternalPinName, false)).ToList();
+                var orderdOutputs = m_outputs.OrderBy(n => n.Cast<GroupPin>().InternalElement.Bounds.Location.Y).ThenBy(n => n.Cast<GroupPin>().InternalElement.PinDisplayOrder(n, false)).ToList();
                 foreach (var grpPin in m_outputs)
                 {
                     int newIndex = orderdOutputs.IndexOf(grpPin);
@@ -985,7 +987,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 }
 
                 // outputs just based pinY 
-                var orderd = m_outputs.OrderBy(n => n.InternalElement.Bounds.Location.Y).ThenBy(n => n.InternalPinName).ToList();
+                var orderd = m_outputs.OrderBy(n => n.Cast<GroupPin>().InternalElement.Bounds.Location.Y).ThenBy(n => n.Cast<GroupPin>().InternalPinName).ToList();
                 foreach (var grpPin in m_outputs)
                 {
                     int newIndex = orderd.IndexOf(grpPin);
@@ -995,13 +997,13 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 int i = 0;
                 foreach (var grpPin in m_inputs.OrderBy(n => n.Index))
                 {
-                    grpPin.Position = new Point(0, i * (CircuitGroupPinInfo.FloatingPinNodeHeight + CircuitGroupPinInfo.FloatingPinNodeMargin));
+                    grpPin.Cast<GroupPin>().Position = new Point(0, i * (CircuitGroupPinInfo.FloatingPinNodeHeight + CircuitGroupPinInfo.FloatingPinNodeMargin));
                     ++i;
                 }
                 i = 0;
                 foreach (var grpPin in m_outputs.OrderBy(n => n.Index))
                 {
-                    grpPin.Position = new Point(0, i * (CircuitGroupPinInfo.FloatingPinNodeHeight + CircuitGroupPinInfo.FloatingPinNodeMargin));
+                    grpPin.Cast<GroupPin>().Position = new Point(0, i * (CircuitGroupPinInfo.FloatingPinNodeHeight + CircuitGroupPinInfo.FloatingPinNodeMargin));
                     ++i;
                 }
             }
@@ -1033,7 +1035,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     if (inputSide)
                     {
                         var inputPinTarget = pin.Is<GroupPin>() ?
-                               pin.Cast<GroupPin>().PinTarget : new PinTarget(element.DomNode, pin.Index, null);
+                               pin.Cast<GroupPin>().PinTarget : new PinTarget(element.DomNode, pin.Name, null);
 
                         //inputPinTarget.InstancingNode = referencingNode;
                         if (inputPinTarget == edge.InputPinTarget)
@@ -1043,7 +1045,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     else
                     {
                         var outputPinTarget = pin.Is<GroupPin>() ?
-                               pin.Cast<GroupPin>().PinTarget : new PinTarget(element.DomNode, pin.Index, referencingNode);
+                               pin.Cast<GroupPin>().PinTarget : new PinTarget(element.DomNode, pin.Name, referencingNode);
                         //outputPinTarget.InstancingNode = referencingNode;
                         if (outputPinTarget == edge.OutputPinTarget)
                         {
@@ -1069,8 +1071,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             GetSubGraphConnections(internalConnections, externalConnections, externalConnections);
 
             // --- validate visible group pins
-            var inputGroupPins = m_inputs.Where(p => p.Visible).ToList();
-            var outputGroupPins = m_outputs.Where(p => p.Visible).ToList();
+            var inputGroupPins = m_inputs.Where(p => p.Cast<GroupPin>().Visible).ToList();
+            var outputGroupPins = m_outputs.Where(p => p.Cast<GroupPin>().Visible).ToList();
             // no self duplications
             var duplicates = inputGroupPins.GroupBy(g => g).Where(w => w.Count() > 1);
             Debug.Assert(!duplicates.Any(), "SubGraph " + Name + " has duplicated input group pins");
@@ -1078,14 +1080,14 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             Debug.Assert(!duplicates.Any(), "SubGraph " + Name + " has duplicated output group pins");
             // each group pin points to different internal module and pin 
             {
-                var byInternalElements = inputGroupPins.GroupBy(g => g.InternalElement);
+                var byInternalElements = inputGroupPins.GroupBy(g => g.Cast<GroupPin>().InternalElement);
                 foreach (var grpPins in byInternalElements)
                 {
                     var duplicatedPins = grpPins.GroupBy(g => g.Index).Where(w => w.Count() > 1);
                     Debug.Assert(!duplicatedPins.Any(), "SubGraph " + Name + " module " + grpPins.Key.Name + " has duplicated output group pins");
                 }
 
-                byInternalElements = outputGroupPins.GroupBy(g => g.InternalElement);
+                byInternalElements = outputGroupPins.GroupBy(g => g.Cast<GroupPin>().InternalElement);
                 foreach (var grpPins in byInternalElements)
                 {
                     var duplicatedPins = grpPins.GroupBy(g => g.Index).Where(w => w.Count() > 1);
@@ -1103,8 +1105,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 //Debug.Assert(grpPin.Position.Y >= 0, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "has negative Y");
                 //Debug.Assert(grpPin.Position.Y <= 4096 && grpPin.Position.Y >= -4096, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "has suspicious large Y greater than 4k");
                 // validate InternalPinName
-                Debug.Assert(grpPin.InternalPinName >= 0 && grpPin.InternalPinName < grpPin.InternalElement.ElementType.GetAllInputPins().Count(),
-                    "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "InternalPinName is out of range");
+                //Debug.Assert(grpPin.InternalPinName >= 0 && grpPin.InternalPinName < grpPin.InternalElement.ElementType.GetAllInputPins().Count(),
+                //    "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "InternalPinName is out of range");
             }
             foreach (var grpPin in OutputGroupPins)
             {
@@ -1116,8 +1118,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 //Debug.Assert(grpPin.Position.Y >= 0, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "has negative Y");
                 //Debug.Assert(grpPin.Position.Y <= 4096 && grpPin.Position.Y >= -4096, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "has suspicious large Y greater than 4k");
                 // validate InternalPinName
-                Debug.Assert(grpPin.InternalPinName >= 0 && grpPin.InternalPinName < grpPin.InternalElement.ElementType.GetAllOutputPins().Count(),
-                    "SubGraph " + Name + " Output Group Pin" + grpPin.Name + "InternalPinName is out of range");
+                //Debug.Assert(grpPin.InternalPinName >= 0 && grpPin.InternalPinName < grpPin.InternalElement.ElementType.GetAllOutputPins().Count(),
+                //    "SubGraph " + Name + " Output Group Pin" + grpPin.Name + "InternalPinName is out of range");
             }
 
             var pinIndexes = inputGroupPins.GroupBy(g => g.Index).Where(w => w.Count() > 1);
@@ -1135,12 +1137,12 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 {
                     if (CanExposePin(module, inputPin, Wires, true))
                     {
-                        var grpPin = MatchedGroupPin(module, inputPin.Index, true);
+                        var grpPin = MatchedGroupPin(module, inputPin, true);
                         Debug.Assert(grpPin != null, "SubGraph " + Name + " missed an input group pin for " + module.Name + ":" + inputPin.Name);
                     }
                     else
                     {
-                        var grpPin = MatchedGroupPin(module, inputPin.Index, true);
+                        var grpPin = MatchedGroupPin(module, inputPin, true);
                         Debug.Assert(grpPin == null, "SubGraph " + Name + " should not expose an input group pin for " + module.Name + ":" + inputPin.Name);
                     }
                 }
@@ -1150,12 +1152,12 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 {
                     if (CanExposePin(module, outputPin, Wires, false))
                     {
-                        var grpPin = MatchedGroupPin(module, outputPin.Index, false);
+                        var grpPin = MatchedGroupPin(module, outputPin, false);
                         Debug.Assert(grpPin != null, "SubGraph " + Name + " missed an output group pin for " + module.Name + ":" + outputPin.Name);
                     }
                     else
                     {
-                        var grpPin = MatchedGroupPin(module, outputPin.Index, false);
+                        var grpPin = MatchedGroupPin(module, outputPin, false);
                         Debug.Assert(grpPin == null, "SubGraph " + Name + " should not expose an output group pin for " + module.Name + ":" + outputPin.Name);
                     }
                 }
@@ -1172,16 +1174,16 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     Debug.Assert(link.InputPin.Index < m_inputs.Count, "Pin index out of range");
 
                 // check fan in
-                foreach (var grpPin in m_inputs)
+                foreach (var pin in m_inputs)
                 {
+                    var grpPin = pin.Cast<GroupPin>();
                     var leafModule = grpPin.PinTarget.LeafDomNode.Cast<Element>();
                     //var leafPin = leafModule.Type.Inputs[grpPin.PinTarget.LeafPinName];
                     var leafPin = leafModule.ElementType.GetInputPin(grpPin.PinTarget.LeafPinName);
                     if (!leafPin.AllowFanIn)
                     {
-                        GroupPin pin = grpPin;
-                        int incomingCrossLinks = inputCrossLinks.Count(x => (x.InputPinTarget.FullyEquals(pin.PinTarget)));
-                        int incomingInternalLinks = Wires.Count(x => (x.InputPinTarget.FullyEquals(pin.PinTarget)));
+                        int incomingCrossLinks = inputCrossLinks.Count(x => (x.InputPinTarget.FullyEquals(grpPin.PinTarget)));
+                        int incomingInternalLinks = Wires.Count(x => (x.InputPinTarget.FullyEquals(grpPin.PinTarget)));
                         Debug.Assert(incomingCrossLinks + incomingInternalLinks <= 1,
                                            "Multiple incoming edges not allowed for this pin");
                     }
@@ -1198,15 +1200,15 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
 
                 // check fan out
-                foreach (var grpPin in m_outputs)
+                foreach (var pin in m_outputs)
                 {
+                    var grpPin = pin.Cast<GroupPin>();
                     var leafModule = grpPin.PinTarget.LeafDomNode.Cast<Element>();
                     var leafPin = leafModule.ElementType.GetOutputPin(grpPin.PinTarget.LeafPinName);
                     if (!leafPin.AllowFanOut)
                     {
-                        GroupPin pin = grpPin;
-                        int outgoingCrossLinks = outputCrossLinks.Count(x => (x.OutputPinTarget == pin.PinTarget));
-                        int outgoingInternalLinks = Wires.Count(x => (x.OutputPinTarget == pin.PinTarget));
+                        int outgoingCrossLinks = outputCrossLinks.Count(x => (x.OutputPinTarget == grpPin.PinTarget));
+                        int outgoingInternalLinks = Wires.Count(x => (x.OutputPinTarget == grpPin.PinTarget));
                         Debug.Assert(outgoingCrossLinks + outgoingInternalLinks <= 1,
                                            "Multiple outgoing edges not allowed for this pin");
                     }
@@ -1252,8 +1254,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         public override Pair<Element, ICircuitPin> MatchPinTarget(PinTarget pinTarget, bool inputSide)
         {
             var result = new Pair<Element, ICircuitPin>();
-            GroupPin grpPin = inputSide ? m_inputs.FirstOrDefault(x => x.PinTarget == pinTarget) :
-                    m_outputs.FirstOrDefault(x => x.PinTarget == pinTarget);
+            GroupPin grpPin = inputSide ? m_inputs.FirstOrDefault(x => x.Cast<GroupPin>().PinTarget == pinTarget).Cast<GroupPin>() :
+                    m_outputs.FirstOrDefault(x => x.Cast<GroupPin>().PinTarget == pinTarget).Cast<GroupPin>();
 
             if (grpPin != null)
             {
@@ -1278,8 +1280,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         public override Pair<Element, ICircuitPin> FullyMatchPinTarget(PinTarget pinTarget, bool inputSide)
         {
             var result = new Pair<Element, ICircuitPin>();
-            GroupPin grpPin = inputSide ? m_inputs.FirstOrDefault(x => x.PinTarget.FullyEquals(pinTarget)) :
-                    m_outputs.FirstOrDefault(x => x.PinTarget.FullyEquals(pinTarget));
+            GroupPin grpPin = inputSide ? m_inputs.FirstOrDefault(x => x.Cast<GroupPin>().PinTarget.FullyEquals(pinTarget)).Cast<GroupPin>() :
+                    m_outputs.FirstOrDefault(x => x.Cast<GroupPin>().PinTarget.FullyEquals(pinTarget)).Cast<GroupPin>();
 
             if (grpPin != null)
             {
@@ -1300,34 +1302,57 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <param name="pinIndex">Input or output pin index of the given node</param>
         /// <param name="inputSide">True for input pin, false for output pin</param>
         /// <returns>Group pin found</returns>
-        public GroupPin MatchedGroupPin(Element node, NameString pinName, bool inputSide)
+        public GroupPin MatchedGroupPin(Element node, ICircuitPin inputPin, bool inputSide)
         {
+            NameString pinName = inputPin.Name;
+
             if (node.Is<Group>())
             {
                 var nestedSubGraph = node.Cast<Group>();
                 if (inputSide)
                 {
-                    var nestedGrpPin = nestedSubGraph.InputGroupPins.First(x => x.Index == pinIndex);
-                    return m_inputs.FirstOrDefault(x => x.PinTarget.FullyEquals(nestedGrpPin.PinTarget));
+                    var nestedGrpPin = nestedSubGraph.GetInputPin(pinName).Cast<GroupPin>();
+                    foreach(var itPin in m_inputs)
+                    {
+                        var grpPin = itPin.Cast<GroupPin>();
+                        if (grpPin.PinTarget.FullyEquals(nestedGrpPin.PinTarget))
+                            return grpPin;
+                    }
                 }
                 else
                 {
-                    var nestedGrpPin = nestedSubGraph.OutputGroupPins.First(x => x.Index == pinIndex);
-                    return m_outputs.FirstOrDefault(x => x.PinTarget.FullyEquals(nestedGrpPin.PinTarget));
+                    var nestedGrpPin = nestedSubGraph.GetInputPin(pinName).Cast<GroupPin>();
+                    foreach (var itPin in m_outputs)
+                    {
+                        var grpPin = itPin.Cast<GroupPin>();
+                        if (grpPin.PinTarget.FullyEquals(nestedGrpPin.PinTarget))
+                            return grpPin;
+                    }
                 }
             }
 
+            GroupPin pin;
+            if (inputSide)
+                pin = m_inputs.FirstOrDefault(x => {
+                    var grpPin = x.Cast<GroupPin>();
+                    return grpPin.InternalElement.DomNode == node.DomNode && grpPin.InternalPinName == pinName;
+                }).Cast<GroupPin>();
+            else
+                pin = m_outputs.FirstOrDefault(x => {
+                    var grpPin = x.Cast<GroupPin>();
+                    return grpPin.InternalElement.DomNode == node.DomNode && grpPin.InternalPinName == pinName;
+                }).Cast<GroupPin>();
 
-            return inputSide ? m_inputs.FirstOrDefault(x => x.InternalElement.DomNode == node.DomNode && x.InternalPinName == pinIndex) :
-                        m_outputs.FirstOrDefault(x => x.InternalElement.DomNode == node.DomNode && x.InternalPinName == pinIndex);
+
+            return pin;
 
         }
 
-        /// <summary>
-        /// Returns true iff the specified attribute is name or label</summary>
-        /// <param name="attributeInfo">AttributeInfo for attribute</param>
-        /// <returns>True iff the specified attribute is name or label</returns>
-        public bool IsNameAttribute(AttributeInfo attributeInfo)
+    /// <summary>
+    /// Returns true iff the specified attribute is name or label</summary>
+    /// <param name="attributeInfo">AttributeInfo for attribute</param>
+    /// <returns>True iff the specified attribute is name or label</returns>
+    public bool IsNameAttribute(AttributeInfo attributeInfo)
         {
             return (attributeInfo == NameAttribute || attributeInfo == LabelAttribute);
         }
@@ -1408,7 +1433,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 {
                     var inputPinTarget = inputPin.Is<GroupPin>() ?
                              inputPin.Cast<GroupPin>().PinTarget : new PinTarget(GetDomLeafNode(outputNode.DomNode), inputPin.Name, null);
-                    var grpPin = m_inputs.First(n => n.PinTarget == inputPinTarget);
+                    var grpPin = m_inputs.First(n => n.Cast<GroupPin>().PinTarget == inputPinTarget).Cast<GroupPin>();
                     grpPinVisited.Add(grpPin);
                 }
                 else
@@ -1531,6 +1556,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         private DomNodeListAdapter<Element> m_elements;
         private DomNodeListAdapter<Wire> m_wires;
         private DomNodeListAdapter<Annotation> m_annotations;
+
         private PinList<ICircuitPin> m_inputs;
         private PinList<ICircuitPin> m_outputs;
 

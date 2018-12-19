@@ -6,6 +6,7 @@ using System.Xml;
 
 using Sce.Atf.Adaptation;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 namespace VisualScript
 {
@@ -25,7 +26,7 @@ namespace VisualScript
             // Filter out external template file references that should not be in-lined
             if (node.Is<TemplateFolder>())
             {
-                var pathUri = node.GetAttribute(VisualScriptBasicSchema.templateFolderType.referenceFileAttribute) as Uri;
+                var pathUri = node.GetAttribute(templateFolderType.referenceFileAttribute) as Uri;
                 if (pathUri != null)
                     return;
             }
@@ -39,7 +40,7 @@ namespace VisualScript
 			{
 				// guidRef refers a template whose guid value should be persisted
 				var templateNode = value as DomNode;
-				return templateNode.GetAttribute(VisualScriptBasicSchema.templateType.guidAttribute) as string;
+				return templateNode.GetAttribute(templateType.guidAttribute) as string;
 			}
 
 			return base.Convert(node, attributeInfo);

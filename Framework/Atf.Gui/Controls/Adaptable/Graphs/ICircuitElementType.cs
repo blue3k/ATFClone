@@ -95,6 +95,22 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         }
 
         /// <summary>
+        /// Gets the input pin index by pin name
+        /// </summary>
+        /// <param name="type">The type</param>
+        /// <param name="pinName">Pin Name</param>
+        /// <returns>The input pin indexwhose zero-based index is 'index'.</returns>
+        public static int GetInputPinIndex(this ICircuitElementType type, NameString pinName)
+        {
+            var group = type as Group;
+            if (group == null)
+            {
+                return type.Inputs.IndexOf(pinName);
+            }
+            return group.Inputs.IndexOf(pinName);
+        }
+
+        /// <summary>
         /// Gets the input pin, taking into account whether 'type' is a Group or not.</summary>
         /// <param name="type">The type</param>
         /// <param name="index">The zero-based index</param>

@@ -78,8 +78,25 @@ namespace Sce.Atf.Dom
         public void Define(AttributeInfo attributeInfo)
         {
             if (m_attributes != null)
-                throw new InvalidOperationException("Attributes frozen");
+                throw new InvalidOperationException("Attributes frozen"); // You can't add attribute once it's instantiated
             m_definitions.Attributes.Add(attributeInfo);
+        }
+
+        /// <summary>
+        /// DefineNewAttributeInfo. Create new attribute info and add it to the type
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public AttributeInfo DefineNewAttributeInfo(string name, AttributeType type, object defaultValue = null)
+        {
+            var newAttr = new AttributeInfo(name, type);
+
+            if (defaultValue != null)
+                newAttr.DefaultValue = defaultValue;
+
+            Define(newAttr);
+            return newAttr;
         }
 
         /// <summary>
@@ -90,6 +107,20 @@ namespace Sce.Atf.Dom
             if (m_children != null)
                 throw new InvalidOperationException("Children frozen");
             m_definitions.Children.Add(childInfo);
+        }
+
+        /// <summary>
+        /// create new child info and add it to the type
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="childType"></param>
+        /// <param name="isList"></param>
+        /// <returns></returns>
+        public ChildInfo DefineNewChildInfo(string name, DomNodeType childType, bool isList = false)
+        {
+            var newChild = new ChildInfo(name, childType, isList);
+            Define(newChild);
+            return newChild;
         }
 
         /// <summary>

@@ -317,7 +317,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     Pen pen = GetPen(inputPin);
                     if (pen != null)
                         g.DrawRectangle(pen, p.X + 1, pinY + m_pinOffset, m_pinSize, m_pinSize);
-                    g.DrawString(inputPin.Name, m_theme.Font, m_theme.TextBrush, p.X + m_pinSize + PinMargin, pinY);
+                    g.DrawString((string)inputPin.Name, m_theme.Font, m_theme.TextBrush, p.X + m_pinSize + PinMargin, pinY);
                     pinY += m_rowSpacing;
                 }
 
@@ -328,7 +328,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     Pen pen = GetPen(outputPin);
                     if (pen != null)
                         g.DrawRectangle(pen, p.X + info.Size.Width - m_pinSize, pinY + m_pinOffset, m_pinSize, m_pinSize);
-                    g.DrawString(outputPin.Name, m_theme.Font, m_theme.TextBrush, p.X + info.OutputLeftX[i], pinY);
+                    g.DrawString((string)outputPin.Name, m_theme.Font, m_theme.TextBrush, p.X + info.OutputLeftX[i], pinY);
                     pinY += m_rowSpacing;
                     i++;
                 }
@@ -519,7 +519,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 double rowWidth = 2 * PinMargin;
                 if (inputCount > i)
                 {
-                    SizeF labelSize = g.MeasureString(inputPins[i].Name, m_theme.Font);
+                    SizeF labelSize = g.MeasureString((string)inputPins[i].Name, m_theme.Font);
                     rowWidth += labelSize.Width + m_pinSize + PinMargin;
                 }
                 else
@@ -529,7 +529,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 }
                 if (outputCount > i)
                 {
-                    SizeF labelSize = g.MeasureString(outputPins[i].Name, m_theme.Font);
+                    SizeF labelSize = g.MeasureString((string)outputPins[i].Name, m_theme.Font);
                     outputLeftX[i] = (int)labelSize.Width;
                     rowWidth += labelSize.Width + m_pinSize + PinMargin;
                 }

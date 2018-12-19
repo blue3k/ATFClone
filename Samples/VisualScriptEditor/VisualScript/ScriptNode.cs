@@ -2,6 +2,8 @@
 
 using Sce.Atf.Controls.Adaptable.Graphs;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
+
 
 namespace VisualScript
 {
@@ -16,35 +18,35 @@ namespace VisualScript
         /// </summary>
         protected override AttributeInfo NameAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.nameAttribute; }
+            get { return moduleType.nameAttribute; }
         }
 
         /// <summary>
         /// Gets label attribute on module</summary>
         protected override AttributeInfo LabelAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.labelAttribute; }
+            get { return moduleType.labelAttribute; }
         }
 
         /// <summary>
         /// Gets x-coordinate position attribute for module</summary>
         protected override AttributeInfo XAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.xAttribute; }
+            get { return moduleType.xAttribute; }
         }
 
         /// <summary>
         /// Gets y-coordinate position attribute for module</summary>
         protected override AttributeInfo YAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.yAttribute; }
+            get { return moduleType.yAttribute; }
         }
 
         /// <summary>
         /// Gets visible attribute for module</summary>
         protected override AttributeInfo VisibleAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.visibleAttribute; }
+            get { return moduleType.visibleAttribute; }
         }
 
         /// <summary>
@@ -52,7 +54,7 @@ namespace VisualScript
         /// if this module is a copy-instance of a template(and nothing else) </summary>
         protected override AttributeInfo SourceGuidAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.sourceGuidAttribute; }
+            get { return moduleType.sourceGuidAttribute; }
         }
 
         /// <summary>
@@ -60,7 +62,7 @@ namespace VisualScript
         /// pins should be displayed.</summary>
         protected override AttributeInfo ShowUnconnectedPinsAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.showUnconnectedPinsAttribute; }
+            get { return moduleType.showUnconnectedPinsAttribute; }
         }
 
         protected override CircuitElementInfo CreateElementInfo()

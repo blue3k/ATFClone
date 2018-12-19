@@ -20,5 +20,15 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             get;
         }
+
+        /// <summary>
+        /// Gets pin index. cached value, use only for visual property.
+        /// </summary>
+        int Index
+        {
+            get;
+            set;
+        }
+
     }
 }

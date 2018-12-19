@@ -3,6 +3,8 @@
 using System;
 
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
+
 
 namespace VisualScript
 {
@@ -27,14 +29,14 @@ namespace VisualScript
         /// Gets module label attribute</summary>
         protected override AttributeInfo ElementLabelAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.labelAttribute; }
+            get { return moduleType.labelAttribute; }
         }
 
         /// <summary>
         /// Gets pin name attribute</summary>
         protected override AttributeInfo PinNameAttributeAttribute
         {
-            get { return VisualScriptBasicSchema.socketType.nameAttribute; }
+            get { return socketType.nameAttribute; }
         }
 
         /// <summary>

@@ -173,23 +173,23 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                         foreach (var grpPin in subGraph.InputGroupPins)
                         {
                             if (grpPin != childGrpPin)
-                                uniqueName.Name(grpPin.Name);
+                                uniqueName.Name((string)grpPin.Name);
                         }
 
                         foreach (var grpPin in subGraph.OutputGroupPins)
                         {
                             if (grpPin != childGrpPin)
-                                uniqueName.Name(grpPin.Name);
+                                uniqueName.Name((string)grpPin.Name);
                         }
 
-                        string unique = uniqueName.Name(childGrpPin.Name);
+                        string unique = uniqueName.Name((string)childGrpPin.Name);
                         if (unique != childGrpPin.Name)
-                            childGrpPin.Name = unique;
+                            childGrpPin.Name.SetString(unique);
 
                         // Reset IsDefaultName. Ignore the suffix because there are typically multiple
                         //  circuit elements in a group and the child group pin doesn't know about
                         //  our unique namer.
-                        string defaultName = childGrpPin.DefaultName(childGrpPin.IsInputSide);
+                        var defaultName = childGrpPin.DefaultName(childGrpPin.IsInputSide);
                         string ourRoot;
                         int ourSuffix;
                         uniqueName.Parse(unique, out ourRoot, out ourSuffix);
@@ -230,14 +230,14 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             {
                 if (grpPin.InternalElement.DomNode != node) continue;
                 if (grpPin.IsDefaultName)
-                    grpPin.Name = grpPin.InternalElement.Name + ":" + grpPin.InternalElement.InputPin(grpPin.InternalPinName).Name;
+                    grpPin.Name.SetString(grpPin.InternalElement.Name.ToString() + ":" + grpPin.InternalElement.InputPin(grpPin.InternalPinName).Name.ToString());
             }
 
             foreach (GroupPin grpPin in group.Outputs)
             {
                 if (grpPin.InternalElement.DomNode != node) continue;
                 if (grpPin.IsDefaultName)
-                    grpPin.Name = grpPin.InternalElement.Name + ":" + grpPin.InternalElement.OutputPin(grpPin.InternalPinName).Name;
+                    grpPin.Name.SetString(grpPin.InternalElement.Name.ToString() + ":" + grpPin.InternalElement.OutputPin(grpPin.InternalPinName).Name.ToString());
             }
         }
 
@@ -500,7 +500,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                             //TODO
                         }
 
-                        Debug.Assert(edge.InputPin.Index == edge.InputPinTarget.LeafPinName,
+                        Debug.Assert(edge.InputPin.Name == edge.InputPinTarget.LeafPinName,
                                            "Top level graph edge should reference node pin index directly ");
                     }
                 }
@@ -539,7 +539,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                         {
                             //TODO
                         }
-                        Debug.Assert(edge.OutputPin.Index == edge.OutputPinTarget.LeafPinName,
+                        Debug.Assert(edge.OutputPin.Name == edge.OutputPinTarget.LeafPinName,
                           "Top level graph edge should reference node pin index directly ");
 
                     }

@@ -2,6 +2,7 @@
 
 using Sce.Atf.Controls.Adaptable.Graphs;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 namespace VisualScript
 {
@@ -15,7 +16,7 @@ namespace VisualScript
         /// Gets the AttributeInfo for a module reference</summary>
         protected override AttributeInfo RefAttribute
         {
-            get { return VisualScriptBasicSchema.moduleRefType.refAttribute; }
+            get { return moduleRefType.refAttribute; }
         }
     }
 }

@@ -8,6 +8,8 @@ using System.Xml.Linq;
 
 using Sce.Atf;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
+
 
 namespace VisualScript
 {
@@ -75,7 +77,7 @@ namespace VisualScript
         protected override void ReadAttribute(DomNode node, AttributeInfo attributeInfo, string valueString)
         {
             base.ReadAttribute(node, attributeInfo, valueString);
-            if (node.Type == VisualScriptBasicSchema.templateFolderType.Type && attributeInfo.Name == "referenceFile")
+            if (node.Type == templateFolderType.Type && attributeInfo.Name == "referenceFile")
             {
                 Uri uri;
                 if (Uri.TryCreate(valueString, UriKind.RelativeOrAbsolute, out uri))
@@ -117,18 +119,18 @@ namespace VisualScript
             // assume all templates and their containing folders are children of a root template folder 
             foreach (var domNode in fromRoot.LevelSubtree) // add top-level folders
             {
-                if (domNode.Type == VisualScriptBasicSchema.templateFolderType.Type) // this should be the root template folder of the imported DOM tree
+                if (domNode.Type == templateFolderType.Type) // this should be the root template folder of the imported DOM tree
                 {
                     // import the children of the root template folder, but not the root itself
                     foreach (var child in domNode.Children.ToArray())
                     {
-                        if (child.Type == VisualScriptBasicSchema.templateFolderType.Type)
+                        if (child.Type == templateFolderType.Type)
                         {
-                            toFolder.GetChildList(VisualScriptBasicSchema.templateFolderType.templateFolderChild).Add(child);
+                            toFolder.GetChildList(templateFolderType.templateFolderChild).Add(child);
                         }
-                        else if (child.Type == VisualScriptBasicSchema.templateType.Type)
+                        else if (child.Type == templateType.Type)
                         {
-                            toFolder.GetChildList(VisualScriptBasicSchema.templateFolderType.templateChild).Add(child);
+                            toFolder.GetChildList(templateFolderType.templateChild).Add(child);
                         }
                     }
                     break; // skip the rest of the document contents
@@ -185,8 +187,8 @@ namespace VisualScript
                         Outputs.Write(OutputMessageType.Error, "Couldn't resolve node reference by GUID: " + nodeReference.Value);
                         
                         // if DomNode is a template reference, create a missing template 
-                        if (nodeReference.Node.Type == VisualScriptBasicSchema.moduleTemplateRefType.Type || 
-                            nodeReference.Node.Type == VisualScriptBasicSchema.groupTemplateRefType.Type)
+                        if (nodeReference.Node.Type == moduleTemplateRefType.Type || 
+                            nodeReference.Node.Type == groupTemplateRefType.Type)
                         {
                            var templateNode =  GetOrCreateMissingTemplateNode(nodeReference.Value);
                            nodeReference.Node.SetAttribute(nodeReference.AttributeInfo, templateNode);
@@ -204,10 +206,10 @@ namespace VisualScript
             if (m_missingTemplates.TryGetValue(guid, out templateNode))
                 return templateNode;
 
-            templateNode = new DomNode(VisualScriptBasicSchema.missingTemplateType.Type);
-            templateNode.SetAttribute(VisualScriptBasicSchema.missingTemplateType.guidAttribute, guid);
-            var moduleChild = new DomNode(VisualScriptBasicSchema.missingModuleType.Type);
-            templateNode.SetChild(VisualScriptBasicSchema.missingTemplateType.moduleChild, moduleChild);
+            templateNode = new DomNode(missingTemplateType.Type);
+            templateNode.SetAttribute(missingTemplateType.guidAttribute, guid);
+            var moduleChild = new DomNode(missingModuleType.Type);
+            templateNode.SetChild(missingTemplateType.moduleChild, moduleChild);
             return templateNode;
         }
 

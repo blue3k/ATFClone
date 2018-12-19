@@ -1,1 +1,1 @@
-..\..\..\DevTools\DomGen\bin\DomGen.exe VisualScriptBasicSchema.xsd VisualScriptBasicSchema.cs "http://blue3k.com/1_0" VisualScript
+..\..\..\DevTools\DomGen\bin\DomGen.exe xsd cs "http://blue3k.com/1_0" VisualScript

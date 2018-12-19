@@ -166,7 +166,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
             var groupPin = item.As<GroupPin>();
             if (groupPin != null)
-                return groupPin.Name;
+                return groupPin.Name.ToString();
             return null;
         }
 
@@ -206,7 +206,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             var groupPin = item.As<GroupPin>();
             if (groupPin != null)
             {
-                groupPin.Name = name;
+                groupPin.Name.SetString(name);
                 return;
             }
         }

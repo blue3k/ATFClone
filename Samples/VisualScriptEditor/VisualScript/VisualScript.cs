@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Sce.Atf.Controls.Adaptable.Graphs;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
+
+using VisualScript.VisualScriptBasicSchema;
 
 namespace VisualScript
 {
@@ -16,9 +19,9 @@ namespace VisualScript
         protected override void OnNodeSet()
         {
             // cache these list wrapper objects
-            m_modules = new DomNodeListAdapter<ScriptNode>(DomNode, VisualScriptBasicSchema.visualScriptType.moduleChild);
-            m_connections = new DomNodeListAdapter<ScriptNodeConnection>(DomNode, VisualScriptBasicSchema.visualScriptType.connectionChild);
-            new DomNodeListAdapter<ScriptAnnotation>(DomNode, VisualScriptBasicSchema.visualScriptType.annotationChild);
+            m_modules = new DomNodeListAdapter<ScriptNode>(DomNode, visualScriptType.moduleChild);
+            m_connections = new DomNodeListAdapter<ScriptNodeConnection>(DomNode, visualScriptType.connectionChild);
+            new DomNodeListAdapter<ScriptAnnotation>(DomNode, visualScriptType.annotationChild);
             base.OnNodeSet();
         }
 
@@ -26,14 +29,14 @@ namespace VisualScript
         /// Gets ChildInfo for Elements (circuit elements with pins) in circuit</summary>
         protected override ChildInfo ElementChildInfo
         {
-            get { return VisualScriptBasicSchema.visualScriptType.moduleChild; }
+            get { return visualScriptType.moduleChild; }
         }
 
         /// <summary>
         /// Gets ChildInfo for Wires (connections) in circuit</summary>
         protected override ChildInfo WireChildInfo
         {
-            get { return VisualScriptBasicSchema.visualScriptType.connectionChild; }
+            get { return visualScriptType.connectionChild; }
         }
 
         // optional child info
@@ -42,7 +45,7 @@ namespace VisualScript
         /// Return null if annotations are not supported.</summary>
         protected override ChildInfo AnnotationChildInfo
         {
-            get { return VisualScriptBasicSchema.visualScriptType.annotationChild; }
+            get { return visualScriptType.annotationChild; }
         }
 
         #region IGraph Members

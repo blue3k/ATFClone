@@ -7,6 +7,7 @@ using System.Text;
 
 using Sce.Atf;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 
 namespace VisualScript
@@ -18,36 +19,36 @@ namespace VisualScript
     {
         protected override void OnNodeSet()
         {
-            if (!VisualScriptBasicSchema.expressionType.Type.IsAssignableFrom(DomNode.Type))
+            if (!expressionType.Type.IsAssignableFrom(DomNode.Type))
                 throw new Exception("can be attached only to DomNode of type expressionType");
         }
 
 
         public string Label
         {
-            get { return GetAttribute<string>(VisualScriptBasicSchema.expressionType.labelAttribute); }
-            set { SetAttribute(VisualScriptBasicSchema.expressionType.labelAttribute, value); }
+            get { return GetAttribute<string>(expressionType.labelAttribute); }
+            set { SetAttribute(expressionType.labelAttribute, value); }
 
         }
 
         public string Id
         {
-            get { return GetAttribute<string>(VisualScriptBasicSchema.expressionType.idAttribute); }
+            get { return GetAttribute<string>(expressionType.idAttribute); }
             set
             {
                 string id = value ?? "Expression";
-                SetAttribute(VisualScriptBasicSchema.expressionType.idAttribute, id);
+                SetAttribute(expressionType.idAttribute, id);
             }
         }
 
 
         public string Script
         {
-            get { return GetAttribute<string>(VisualScriptBasicSchema.expressionType.scriptAttribute); }
+            get { return GetAttribute<string>(expressionType.scriptAttribute); }
             set
             {
                 string script = value ?? string.Empty;
-                SetAttribute(VisualScriptBasicSchema.expressionType.scriptAttribute, script);
+                SetAttribute(expressionType.scriptAttribute, script);
             }
         }
 

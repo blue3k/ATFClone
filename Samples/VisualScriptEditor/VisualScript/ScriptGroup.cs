@@ -5,6 +5,7 @@ using System.Drawing;
 using Sce.Atf.Adaptation;
 using Sce.Atf.Controls.Adaptable.Graphs;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 namespace VisualScript
 {
@@ -18,11 +19,11 @@ namespace VisualScript
         /// creates a DomNodeListAdapter for various circuit elements.</summary>
         protected override void OnNodeSet()
         {
-            m_modules = new DomNodeListAdapter<ScriptNode>(DomNode, VisualScriptBasicSchema.groupType.moduleChild);
-            m_connections = new DomNodeListAdapter<ScriptNodeConnection>(DomNode, VisualScriptBasicSchema.groupType.connectionChild);
-            new DomNodeListAdapter<ScriptAnnotation>(DomNode, VisualScriptBasicSchema.groupType.annotationChild);
-            new DomNodeListAdapter<ScriptGroupSocket>(DomNode, VisualScriptBasicSchema.groupType.inputChild);
-            new DomNodeListAdapter<ScriptGroupSocket>(DomNode, VisualScriptBasicSchema.groupType.outputChild);
+            m_modules = new DomNodeListAdapter<ScriptNode>(DomNode, groupType.moduleChild);
+            m_connections = new DomNodeListAdapter<ScriptNodeConnection>(DomNode, groupType.connectionChild);
+            new DomNodeListAdapter<ScriptAnnotation>(DomNode, groupType.annotationChild);
+            new DomNodeListAdapter<ScriptGroupSocket>(DomNode, groupType.inputChild);
+            new DomNodeListAdapter<ScriptGroupSocket>(DomNode, groupType.outputChild);
             m_thisModule = DomNode.Cast<ScriptNode>();
 
             base.OnNodeSet();
@@ -57,63 +58,63 @@ namespace VisualScript
         /// Gets name attribute for group</summary>
         protected override AttributeInfo NameAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.nameAttribute; }
+            get { return moduleType.nameAttribute; }
         }
 
         /// <summary>
         /// Gets label attribute on group</summary>
         protected override AttributeInfo LabelAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.labelAttribute; }
+            get { return moduleType.labelAttribute; }
         }
 
         /// <summary>
         /// Gets x-coordinate position attribute for group</summary>
         protected override AttributeInfo XAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.xAttribute; }
+            get { return moduleType.xAttribute; }
         }
 
         /// <summary>
         /// Gets y-coordinate position attribute for group</summary>
         protected override AttributeInfo YAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.yAttribute; }
+            get { return moduleType.yAttribute; }
         }
 
         /// <summary>
         /// Gets visible attribute for group</summary>
         protected override AttributeInfo VisibleAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.visibleAttribute; }
+            get { return moduleType.visibleAttribute; }
         }
 
         /// <summary>
         /// Gets minimum width (when the group is expanded) attribute for group</summary>
         protected override AttributeInfo MinWidthAttribute
         {
-            get { return VisualScriptBasicSchema.groupType.minwidthAttribute; }
+            get { return groupType.minwidthAttribute; }
         }
 
         /// <summary>
         /// Gets minimum height (when the group is expanded) attribute for group</summary>
         protected override AttributeInfo MinHeightAttribute
         {
-            get { return VisualScriptBasicSchema.groupType.minheightAttribute; }
+            get { return groupType.minheightAttribute; }
         }
 
         /// <summary>
         /// Gets width (when the group is expanded) attribute for group</summary>
         protected override AttributeInfo WidthAttribute
         {
-            get { return VisualScriptBasicSchema.groupType.widthAttribute; }
+            get { return groupType.widthAttribute; }
         }
 
         /// <summary>
         /// Gets height (when the group is expanded) attribute for group</summary>
         protected override AttributeInfo HeightAttribute
         {
-            get { return VisualScriptBasicSchema.groupType.heightAttribute; }
+            get { return groupType.heightAttribute; }
         }
 
         /// <summary>
@@ -121,61 +122,61 @@ namespace VisualScript
         /// When autosize is true, container size is computed.</summary>
         protected override AttributeInfo AutosizeAttribute
         {
-            get { return VisualScriptBasicSchema.groupType.autosizeAttribute; }
+            get { return groupType.autosizeAttribute; }
         }
 
         /// <summary>
         /// Gets expanded attribute for group</summary>
         protected override AttributeInfo ExpandedAttribute
         {
-            get { return VisualScriptBasicSchema.groupType.expandedAttribute; }
+            get { return groupType.expandedAttribute; }
         }
 
         /// <summary>
         /// Gets showExpandedGroupPins attribute for group</summary>
         protected override AttributeInfo ShowExpandedGroupPinsAttribute
         {
-            get { return VisualScriptBasicSchema.groupType.showExpandedGroupPinsAttribute; }
+            get { return groupType.showExpandedGroupPinsAttribute; }
         }
 
         /// <summary>
         /// Gets showExpandedGroupPins attribute for group</summary>
         protected override AttributeInfo ValidatedAttribute
         {
-            get { return VisualScriptBasicSchema.groupType.validatedAttribute; }
+            get { return groupType.validatedAttribute; }
         }
 
         protected override AttributeInfo SourceGuidAttribute
         {
-            get { return VisualScriptBasicSchema.groupType.sourceGuidAttribute; }
+            get { return groupType.sourceGuidAttribute; }
         }
 
         /// <summary>
         /// Gets ChildInfo for Modules in group</summary>
         protected override ChildInfo ElementChildInfo
         {
-            get { return VisualScriptBasicSchema.groupType.moduleChild; }
+            get { return groupType.moduleChild; }
         }
 
         /// <summary>
         /// Gets ChildInfo for Wires in group</summary>
         protected override ChildInfo WireChildInfo
         {
-            get { return VisualScriptBasicSchema.groupType.connectionChild; }
+            get { return groupType.connectionChild; }
         }
 
         /// <summary>
         /// Gets ChildInfo for input group pins in group</summary>
         protected override ChildInfo InputChildInfo
         {
-            get { return VisualScriptBasicSchema.groupType.inputChild; }
+            get { return groupType.inputChild; }
         }
 
         /// <summary>
         /// Gets ChildInfo for output group pins in group</summary>
         protected override ChildInfo OutputChildInfo
         {
-            get { return VisualScriptBasicSchema.groupType.outputChild; }
+            get { return groupType.outputChild; }
         }
 
         /// <summary>
@@ -184,7 +185,7 @@ namespace VisualScript
         /// to preserve the internal pin/module which is connected to the outside circuit.</summary>
         protected override DomNodeType GroupPinType
         {
-            get { return VisualScriptBasicSchema.groupSocketType.Type; }
+            get { return groupSocketType.Type; }
         }
 
         // optional child info
@@ -193,7 +194,7 @@ namespace VisualScript
         /// Return null if annotations are not supported.</summary>
         protected override ChildInfo AnnotationChildInfo
         {
-            get { return VisualScriptBasicSchema.groupType.annotationChild; }
+            get { return groupType.annotationChild; }
         }
 
         #region IHierarchicalGraphNode and ICircuitGroupType Members

@@ -1,6 +1,7 @@
 ﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 namespace VisualScript
 {
@@ -12,21 +13,21 @@ namespace VisualScript
         /// Gets name attribute for prototype folder</summary>
         protected override AttributeInfo NameAttribute
         {
-            get { return VisualScriptBasicSchema.prototypeFolderType.nameAttribute; }
+            get { return prototypeFolderType.nameAttribute; }
         }
 
         /// <summary>
         /// Gets ChildInfo for prototypes in prototype folder</summary>
         protected override ChildInfo PrototypeChildInfo
         {
-            get { return VisualScriptBasicSchema.prototypeFolderType.prototypeChild; }
+            get { return prototypeFolderType.prototypeChild; }
         }
 
         /// <summary>
         /// Gets ChildInfo for prototype folders in prototype folder</summary>
         protected override ChildInfo PrototypeFolderChildInfo
         {
-            get { return VisualScriptBasicSchema.prototypeFolderType.prototypeFolderChild; }
+            get { return prototypeFolderType.prototypeFolderChild; }
         }
     }
 }

@@ -4,6 +4,7 @@ using System;
 
 using Sce.Atf.Adaptation;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 namespace VisualScript
 {
@@ -15,18 +16,18 @@ namespace VisualScript
         /// Gets and sets the user-visible name of the template</summary>
         public override string Name
         {
-            get { return (string)DomNode.GetAttribute(VisualScriptBasicSchema.templateType.labelAttribute); }
-            set { DomNode.SetAttribute(VisualScriptBasicSchema.templateType.labelAttribute, value); }
+            get { return (string)DomNode.GetAttribute(templateType.labelAttribute); }
+            set { DomNode.SetAttribute(templateType.labelAttribute, value); }
         }
 
         /// <summary>
         /// Gets or sets DomNode module that represents the template</summary>
         public override DomNode Target
         {
-            get { return GetChild<DomNode>(VisualScriptBasicSchema.templateType.moduleChild); }
+            get { return GetChild<DomNode>(templateType.moduleChild); }
             set
             {
-                SetChild(VisualScriptBasicSchema.templateType.moduleChild, value);
+                SetChild(templateType.moduleChild, value);
                 if (value != null) // initialize  model name
                 {
                     var module = Target.Cast<ScriptNode>();
@@ -41,8 +42,8 @@ namespace VisualScript
         /// <summary>Gets and sets  a globally unique identifier (GUID) that represents this template</summary>
         public override Guid Guid
         {
-            get { return new Guid((string)DomNode.GetAttribute(VisualScriptBasicSchema.templateType.guidAttribute)); }
-            set { DomNode.SetAttribute(VisualScriptBasicSchema.templateType.guidAttribute, value.ToString()); }
+            get { return new Guid((string)DomNode.GetAttribute(templateType.guidAttribute)); }
+            set { DomNode.SetAttribute(templateType.guidAttribute, value.ToString()); }
         }
 
         /// <summary>

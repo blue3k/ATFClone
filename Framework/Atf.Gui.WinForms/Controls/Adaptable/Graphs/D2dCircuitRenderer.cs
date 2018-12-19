@@ -309,7 +309,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             if (inputSide) // group pin box on the left edge
             {
                 Point op = group.Bounds.Location;
-                op.Y += GetPinOffset(group.Cast<TElement>(), groupPin.Index, true);
+                op.Y += GetPinOffset(group.Cast<TElement>(), groupPin.Name, true);
                 return op;
             }
             else
@@ -317,7 +317,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 ElementTypeInfo info = GetElementTypeInfo(group.Cast<TElement>(), g);
                 Point ip = group.Bounds.Location;
                 ip.X += info.Size.Width;
-                ip.Y += GetPinOffset(group.Cast<TElement>(), groupPin.Index, false); ;
+                ip.Y += GetPinOffset(group.Cast<TElement>(), groupPin.Name, false); ;
                 return ip;
 
             }
@@ -326,16 +326,16 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <summary>
         /// Gets pin position in element local space</summary>
         /// <param name="element">Element</param>
-        /// <param name="pinIndex">Pin index</param>
+        /// <param name="pinName">Pin name</param>
         /// <param name="inputSide">True if pin side is input, false for output side</param>
         /// <param name="g">Graphics object</param>
         /// <returns>Pin position</returns>
-        public Point GetPinPosition(TElement element, int pinIndex, bool inputSide, D2dGraphics g)
+        public Point GetPinPosition(TElement element, NameString pinName, bool inputSide, D2dGraphics g)
         {
             if (inputSide) // group pin box on the left edge
             {
                 Point op = element.Bounds.Location;
-                op.Y += GetPinOffset(element, pinIndex, true);
+                op.Y += GetPinOffset(element, pinName, true);
                 if (m_pinDrawStyle == PinStyle.OnBorderFilled)
                     op.X -= m_pinSize / 2;
                 return op;
@@ -347,7 +347,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 ip.X += info.Size.Width;
                 if (m_pinDrawStyle == PinStyle.OnBorderFilled)
                     ip.X += m_pinSize / 2;
-                ip.Y += GetPinOffset(element, pinIndex, false);
+                ip.Y += GetPinOffset(element, pinName, false);
                 return ip;
 
             }
@@ -566,9 +566,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     }
 
                     if (pickedInput != null)
-                        pickedInputPos = GetPinPosition(pickedElement, pickedInput.Index, true, g);
+                        pickedInputPos = GetPinPosition(pickedElement, pickedInput.Name, true, g);
                     if (pickedOutput != null)
-                        pickedOutputPos = GetPinPosition(pickedElement, pickedOutput.Index, false, g);
+                        pickedOutputPos = GetPinPosition(pickedElement, pickedOutput.Name, false, g);
                 }
             }
 
@@ -640,13 +640,13 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             if (pickedSubInput != null)
             {
                 pickedInput = pickedSubInput;
-                pickedInputPos = GetPinPosition(subPick.First.First().Cast<TElement>(), pickedSubInput.Index, true, g);
+                pickedInputPos = GetPinPosition(subPick.First.First().Cast<TElement>(), pickedSubInput.Name, true, g);
                 pickedInputPos.Offset(ParentWorldOffset(subPick.First));
             }
             if (pickedSubOutput != null)
             {
                 pickedOutput = pickedSubOutput;
-                pickedOutputPos = GetPinPosition(subPick.First.First().Cast<TElement>(), pickedSubOutput.Index, false, g);
+                pickedOutputPos = GetPinPosition(subPick.First.First().Cast<TElement>(), pickedSubOutput.Name, false, g);
                 pickedOutputPos.Offset(ParentWorldOffset(subPick.First));
             }
 
@@ -694,11 +694,11 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
             Point p1 = edge.FromNode.Bounds.Location;
             float x1 = p1.X + fromInfo.Size.Width + xOffset;
-            float y1 = p1.Y + GetPinOffset(edge.FromNode, outputPin.Index, false) + yOffset;
+            float y1 = p1.Y + GetPinOffset(edge.FromNode, outputPin.Name, false) + yOffset;
 
             Point p2 = edge.ToNode.Bounds.Location;
             float x2 = p2.X + xOffset; ;
-            float y2 = p2.Y + GetPinOffset(edge.ToNode, inputPin.Index, true) + yOffset;
+            float y2 = p2.Y + GetPinOffset(edge.ToNode, inputPin.Name, true) + yOffset;
 
             float tanLen = GetTangentLength(x1, x2);
 
@@ -843,7 +843,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                             g.DrawRectangle(new RectangleF(p.X, p.Y + pinY + m_pinOffset, m_pinSize, m_pinSize), pen, 1.0f);
                         else if (PinDrawStyle == PinStyle.OnBorderFilled)
                             g.FillRectangle(new RectangleF(p.X - m_pinSize * 0.5f, p.Y + pinY + m_pinOffset, m_pinSize, m_pinSize), pen);
-                        var pinText = inputPin.Name;
+                        string pinText = inputPin.Name.ToString();
                         if (!groupExpanded)
                             pinText = TruncatePinText(pinText);
 
@@ -866,7 +866,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                         else if (PinDrawStyle == PinStyle.OnBorderFilled)
                             g.FillRectangle(new RectangleF(bounds.Right - m_pinSize * 0.5f, p.Y + pinY + m_pinOffset, m_pinSize, m_pinSize), pen);
 
-                        var pinText = outputPin.Name;
+                        var pinText = outputPin.Name.ToString();
                         if (!groupExpanded)
                             pinText = TruncatePinText(pinText);
 
@@ -1238,7 +1238,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     if (pin == visiblePins[iVisiblePin])
                     {
                         ++iVisiblePin;
-                        int y = elementY + GetPinOffset(element, pin.Index, inputSide);
+                        int y = elementY + GetPinOffset(element, pin.Name, inputSide);
                         var normalPinBounds = new RectangleF(pinX, y, m_pinSize, m_pinSize);
                         normalPinBounds.Inflate(pickTolerance, pickTolerance);
                         if (normalPinBounds.Contains(p.X, p.Y))
@@ -1260,7 +1260,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     if (pin == visiblePins[iVisiblePin])
                     {
                         ++iVisiblePin;
-                        int y = elementY + GetPinOffset(element, pin.Index, inputSide);
+                        int y = elementY + GetPinOffset(element, pin.Name, inputSide);
                         EdgeRouteDrawMode drawMode = GetEdgeRouteDrawMode(element, pin);
                         if (drawMode == EdgeRouteDrawMode.CanConnect)
                         {
@@ -1697,7 +1697,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 rowWidth = 2 * m_pinMargin;
                 if (inputCount > i)
                 {
-                    var pinText = inputPins[i].Name;
+                    var pinText = inputPins[i].Name.ToString();
                     if (isCollapsedGroup)
                         pinText = TruncatePinText(pinText);
                     SizeF labelSize = g.MeasureText(pinText, m_theme.TextFormat);
@@ -1711,7 +1711,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
                 if (outputCount > i)
                 {
-                    var pinText = outputPins[i].Name;
+                    var pinText = outputPins[i].Name.ToString();
                     if (isCollapsedGroup)
                         pinText = TruncatePinText(pinText);
                     SizeF labelSize = g.MeasureText(pinText, m_theme.TextFormat);
@@ -1883,7 +1883,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             int[] grpOutputLeftX = new int[outputCount];
             for (int i = 0; i < grpOutputLeftX.Length; i++)
             {
-                SizeF labelSize = g.MeasureText(group.Outputs[i].Name, m_theme.TextFormat);
+                SizeF labelSize = g.MeasureText((string)group.Outputs[i].Name, m_theme.TextFormat);
                 grpOutputLeftX[i] = grpBounds.Size.Width - m_pinMargin - m_pinSize - (int)labelSize.Width;
 
             }
@@ -2028,14 +2028,14 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             int x1 = op.X + info.Size.Width;
             if (PinDrawStyle == PinStyle.OnBorderFilled)
                 x1 += m_pinSize / 2;
-            int y1 = op.Y + GetPinOffset(outputElement, outputPin.Index, false);
+            int y1 = op.Y + GetPinOffset(outputElement, outputPin.Name, false);
 
             Point ip = inputElement.Bounds.Location;
             ip.Offset(WorldOffset(m_graphPath));
             int x2 = ip.X;
             if (PinDrawStyle == PinStyle.OnBorderFilled)
                 x2 -= m_pinSize / 2;
-            int y2 = ip.Y + GetPinOffset(inputElement, inputPin.Index, true);
+            int y2 = ip.Y + GetPinOffset(inputElement, inputPin.Name, true);
 
             DrawWire(g, pen, x1, y1, x2, y2, 0.0f, null);
         }
@@ -2053,7 +2053,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             float x = ep.X;
             if (PinDrawStyle == PinStyle.OnBorderFilled)
                 x += m_pinSize * 0.5f;
-            float y = ep.Y + GetPinOffset(element, pin.Index, !fromOutput);
+            float y = ep.Y + GetPinOffset(element, pin.Name, !fromOutput);
             if (fromOutput)
                 x += info.Size.Width;
 
@@ -2122,14 +2122,15 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <summary>
         /// Gets pin offset</summary>
         /// <param name="element">Element containing pin</param>
-        /// <param name="pinIndex">Pin index</param>
+        /// <param name="pinName">Pin name</param>
         /// <param name="inputSide">True if pin side is input, false for output side</param>
         /// <returns>Pin offset</returns>
-        public virtual int GetPinOffset(ICircuitElement element, int pinIndex, bool inputSide)
+        public virtual int GetPinOffset(ICircuitElement element, NameString pinName, bool inputSide)
         {
+            int pinIndex = 0;
             if (inputSide)
             {
-                var pin = element.ElementType.GetInputPin(pinIndex);
+                var pin = element.ElementType.GetInputPin(pinName);
                 if (pin.Is<ICircuitGroupPin<TElement>>())
                 {
                     var group = element.Cast<ICircuitGroupType<TElement, TWire, TPin>>();
@@ -2144,7 +2145,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             }
             else
             {
-                var pin = element.ElementType.GetOutputPin(pinIndex);
+                var pin = element.ElementType.GetOutputPin(pinName);
                 if (pin.Is<ICircuitGroupPin<TElement>>())
                 {
                     var group = element.Cast<ICircuitGroupType<TElement, TWire, TPin>>();
@@ -2256,14 +2257,14 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 int x1 = op.X + info.Size.Width;
                 if (PinDrawStyle == PinStyle.OnBorderFilled)
                     x1 += m_pinSize / 2;
-                int y1 = op.Y + GetPinOffset(wire.FromNode, wire.FromRoute.Index, false);
+                int y1 = op.Y + GetPinOffset(wire.FromNode, wire.FromRoute.Name, false);
 
                 Point ip = wire.ToNode.Bounds.Location;
                 ip.Offset(WorldOffset(m_graphPath));
                 int x2 = ip.X;
                 if (PinDrawStyle == PinStyle.OnBorderFilled)
                     x2 -= m_pinSize / 2;
-                int y2 = ip.Y + GetPinOffset(wire.ToNode, wire.ToRoute.Index, true);
+                int y2 = ip.Y + GetPinOffset(wire.ToNode, wire.ToRoute.Name, true);
                 result = D2dUtil.MakeRectangle(new PointF(x1, y1), new PointF(x2, y2));
             }
 

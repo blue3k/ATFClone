@@ -14,6 +14,8 @@ using Sce.Atf.Applications;
 using Sce.Atf.Controls;
 using Sce.Atf.Controls.Adaptable.Graphs;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
+
 using VisualScript;
 
 namespace VisualScriptEditor
@@ -37,7 +39,7 @@ namespace VisualScriptEditor
         /// Gets type of template folder</summary>
         protected override DomNodeType TemplateFolderType
         {
-            get { return VisualScriptBasicSchema.templateFolderType.Type; }
+            get { return templateFolderType.Type; }
         }
 
         /// <summary>

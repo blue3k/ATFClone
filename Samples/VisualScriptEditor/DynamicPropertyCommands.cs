@@ -11,6 +11,7 @@ using Sce.Atf.Applications;
 using Sce.Atf.Dom;
 using Keys = Sce.Atf.Input.Keys;
 using VisualScript;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 namespace VisualScriptEditor
 {
@@ -101,7 +102,7 @@ namespace VisualScriptEditor
                     case Command.Edit:
                     case Command.Remove:
                         return Descriptor != null &&
-                            Descriptor.Path.Last().IsEquivalent(VisualScriptBasicSchema.moduleType.dynamicPropertyChild);
+                            Descriptor.Path.Last().IsEquivalent(moduleType.dynamicPropertyChild);
                 }
             }
 
@@ -218,7 +219,7 @@ namespace VisualScriptEditor
                     description,
                     "", //type converter
                     "", //UI editor
-                    VisualScriptBasicSchema.dynamicPropertyType.stringValueAttribute.Name,
+                    dynamicPropertyType.stringValueAttribute.Name,
                     add);
             }
             else if (form.FloatingPointType.Checked)
@@ -229,7 +230,7 @@ namespace VisualScriptEditor
                     description,
                     "", //type converter
                     "", //UI editor
-                    VisualScriptBasicSchema.dynamicPropertyType.floatValueAttribute.Name,
+                    dynamicPropertyType.floatValueAttribute.Name,
                     add);
             }
             else if (form.IntegerType.Checked)
@@ -240,7 +241,7 @@ namespace VisualScriptEditor
                     description,
                     "", //type converter
                     "", //UI editor
-                    VisualScriptBasicSchema.dynamicPropertyType.intValueAttribute.Name,
+                    dynamicPropertyType.intValueAttribute.Name,
                     add);
             }
             else if (form.BooleanType.Checked)
@@ -251,7 +252,7 @@ namespace VisualScriptEditor
                     description,
                     "", //type converter
                     "Sce.Atf.Controls.PropertyEditing.BoolEditor, Atf.Gui.WinForms", //UI editor
-                    VisualScriptBasicSchema.dynamicPropertyType.boolValueAttribute.Name,
+                    dynamicPropertyType.boolValueAttribute.Name,
                     add);
             }
             else if (form.VectorType.Checked)
@@ -262,7 +263,7 @@ namespace VisualScriptEditor
                     description,
                     "Sce.Atf.Controls.PropertyEditing.FloatArrayConverter, Atf.Gui", //type converter
                     "Sce.Atf.Controls.PropertyEditing.NumericTupleEditor, Atf.Gui.WinForms:System.Single,x,y,z", //UI editor
-                    VisualScriptBasicSchema.dynamicPropertyType.vector3ValueAttribute.Name,
+                    dynamicPropertyType.vector3ValueAttribute.Name,
                     add);
             }
             else
@@ -280,7 +281,7 @@ namespace VisualScriptEditor
         /// <param name="description">The optional description of the user-defined dynamic property</param>
         /// <param name="converter">e.g., "Sce.Atf.Controls.PropertyEditing.FloatArrayConverter, Atf.Gui"</param>
         /// <param name="editor">e.g., "Sce.Atf.Controls.PropertyEditing.NumericTupleEditor, Atf.Gui.WinForms:System.Single,x,y,z"</param>
-        /// <param name="valueType">e.g., VisualScriptBasicSchema.customAttributeType.stringValueAttribute.Name</param>
+        /// <param name="valueType">e.g., customAttributeType.stringValueAttribute.Name</param>
         /// <param name="add">Whether to add a new dynamic property or to update an existing one</param>
         /// <returns>True if successful and false if there was a problem with the input, in which case no
         /// changes were made to the DOM.</returns>
@@ -297,12 +298,12 @@ namespace VisualScriptEditor
                         continue;
                 }
 
-                foreach (DomNode childNode in module.DomNode.GetChildren(VisualScriptBasicSchema.moduleType.dynamicPropertyChild))
+                foreach (DomNode childNode in module.DomNode.GetChildren(moduleType.dynamicPropertyChild))
                 {
                     // Copies the logic of PropertyUtil.PropertyDescriptorsEqual()
-                    if ((string) childNode.GetAttribute(VisualScriptBasicSchema.dynamicPropertyType.nameAttribute) == propertyName &&
-                        (string) childNode.GetAttribute(VisualScriptBasicSchema.dynamicPropertyType.categoryAttribute) == category &&
-                        (string) childNode.GetAttribute(VisualScriptBasicSchema.dynamicPropertyType.valueTypeAttribute) == valueType)
+                    if ((string) childNode.GetAttribute(dynamicPropertyType.nameAttribute) == propertyName &&
+                        (string) childNode.GetAttribute(dynamicPropertyType.categoryAttribute) == category &&
+                        (string) childNode.GetAttribute(dynamicPropertyType.valueTypeAttribute) == valueType)
                     {
                         MessageBox.Show("This dynamic property is a duplicate of another dynamic property on the same object".Localize());
                         return false;
@@ -323,14 +324,14 @@ namespace VisualScriptEditor
                 {
                     DomNode node;
                     if (add)
-                        node = new DomNode(VisualScriptBasicSchema.dynamicPropertyType.Type, VisualScriptBasicSchema.moduleType.dynamicPropertyChild);
+                        node = new DomNode(dynamicPropertyType.Type, moduleType.dynamicPropertyChild);
                     else
                         node = GetDynamicDomNode(module);
                         
                     SetDynamicPropertyDomNode(propertyName, category, description, converter, editor, valueType, node);
 
                     if (add)
-                        module.DomNode.GetChildList(VisualScriptBasicSchema.moduleType.dynamicPropertyChild).Add(node);
+                        module.DomNode.GetChildList(moduleType.dynamicPropertyChild).Add(node);
                 }
             }, commandName);
             
@@ -340,12 +341,12 @@ namespace VisualScriptEditor
         protected virtual void SetDynamicPropertyDomNode(string propertyName, string category, string description,
             string converter, string editor, string valueType, DomNode node)
         {
-            node.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.nameAttribute, propertyName);
-            node.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.categoryAttribute, category);
-            node.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.descriptionAttribute, description);
-            node.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.converterAttribute, converter);
-            node.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.editorAttribute, editor);
-            node.SetAttribute(VisualScriptBasicSchema.dynamicPropertyType.valueTypeAttribute, valueType);
+            node.SetAttribute(dynamicPropertyType.nameAttribute, propertyName);
+            node.SetAttribute(dynamicPropertyType.categoryAttribute, category);
+            node.SetAttribute(dynamicPropertyType.descriptionAttribute, description);
+            node.SetAttribute(dynamicPropertyType.converterAttribute, converter);
+            node.SetAttribute(dynamicPropertyType.editorAttribute, editor);
+            node.SetAttribute(dynamicPropertyType.valueTypeAttribute, valueType);
         }
 
         protected virtual bool RemoveProperty()

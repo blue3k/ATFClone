@@ -115,6 +115,10 @@ namespace Sce.Atf.Dom
         DateTime,
 
         /// <summary>
+        /// NameString</summary>
+        NameString,
+
+        /// <summary>
         /// Uri</summary>
         Uri,
 

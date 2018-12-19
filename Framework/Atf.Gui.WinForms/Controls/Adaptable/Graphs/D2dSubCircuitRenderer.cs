@@ -90,7 +90,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <param name="g">Graphics object</param>
         public void DrawFloatingGroupPin(ICircuitGroupPin<TElement> grpPin, bool inputSide, DiagramDrawingStyle style, D2dGraphics g)
         {
-            SizeF pinNameSize = g.MeasureText(grpPin.Name, Theme.TextFormat);
+            SizeF pinNameSize = g.MeasureText((string)grpPin.Name, Theme.TextFormat);
             PointF p;
 
             if (inputSide)
@@ -112,7 +112,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     bounds.Left, bounds.Bottom + Theme.PinMargin, pinNameSize.Width, Theme.RowSpacing);
                 var textAlignment = Theme.TextFormat.TextAlignment;              
                 Theme.TextFormat.TextAlignment = D2dTextAlignment.Leading;
-                g.DrawText(grpPin.Name, Theme.TextFormat, alignRect.Location, Theme.TextBrush);
+                g.DrawText((string)grpPin.Name, Theme.TextFormat, alignRect.Location, Theme.TextBrush);
                 Theme.TextFormat.TextAlignment = textAlignment;
 
             }
@@ -138,7 +138,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
                 var textAlignment = Theme.TextFormat.TextAlignment;
                 Theme.TextFormat.TextAlignment = D2dTextAlignment.Trailing;
-                g.DrawText(grpPin.Name, Theme.TextFormat, alignRectF, Theme.TextBrush);
+                g.DrawText((string)grpPin.Name, Theme.TextFormat, alignRectF, Theme.TextBrush);
                 Theme.TextFormat.TextAlignment = textAlignment;          
             }
 
@@ -215,7 +215,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 // check whether hit the floating pin label-part        
                 PointF grpPos = GetGroupPinLocation(grpPin, true);
                 RectangleF bounds = new RectangleF(grpPos.X, grpPos.Y, CircuitGroupPinInfo.FloatingPinBoxWidth, CircuitGroupPinInfo.FloatingPinBoxHeight);
-                SizeF nameSize = g.MeasureText(grpPin.Name, Theme.TextFormat);
+                SizeF nameSize = g.MeasureText((string)grpPin.Name, Theme.TextFormat);
                 RectangleF labelBounds = new RectangleF(bounds.Left, bounds.Bottom + Theme.PinMargin, (int)nameSize.Width, Theme.RowSpacing);
                 //labelBounds = GdiUtil.Transform(g.Transform, labelBounds);
                 var labelPart = new DiagramLabel(
@@ -256,7 +256,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 // check whether hit the floating pin label-part     
                 PointF grpPos = GetGroupPinLocation(grpPin, false);
                 RectangleF bounds = new RectangleF(grpPos.X, grpPos.Y, CircuitGroupPinInfo.FloatingPinBoxWidth, CircuitGroupPinInfo.FloatingPinBoxHeight);
-                 SizeF nameSize = g.MeasureText(grpPin.Name, Theme.TextFormat);
+                 SizeF nameSize = g.MeasureText((string)grpPin.Name, Theme.TextFormat);
                  RectangleF labelBounds = new RectangleF(bounds.Right - (int)nameSize.Width, bounds.Bottom + Theme.PinMargin, (int)nameSize.Width, Theme.RowSpacing);
                 //labelBounds = GdiUtil.Transform(g.Transform, labelBounds);
                 var labelPart = new DiagramLabel(

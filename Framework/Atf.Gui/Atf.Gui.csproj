@@ -197,6 +197,7 @@
     <Compile Include="Controls\Adaptable\Graphs\CircuitGroupPinInfo.cs" />
     <Compile Include="Controls\Adaptable\Graphs\Circuit\Annotation.cs" />
     <Compile Include="Controls\Adaptable\Graphs\Circuit\Circuit.cs" />
+    <Compile Include="Controls\Adaptable\Graphs\Circuit\CircuitTypeSchema.cs" />
     <Compile Include="Controls\Adaptable\Graphs\Circuit\CircuitUtil.cs" />
     <Compile Include="Controls\Adaptable\Graphs\Circuit\Element.cs" />
     <Compile Include="Controls\Adaptable\Graphs\Circuit\ElementRef.cs" />

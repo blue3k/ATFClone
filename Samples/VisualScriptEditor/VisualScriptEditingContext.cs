@@ -9,6 +9,7 @@ using Sce.Atf.Applications;
 using Sce.Atf.Controls.Adaptable;
 using Sce.Atf.Controls.Adaptable.Graphs;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 using VisualScript;
 
@@ -26,7 +27,7 @@ namespace VisualScriptEditor
         /// Gets DomNodeType of Wire</summary>
         protected override DomNodeType WireType
         {
-            get { return VisualScriptBasicSchema.connectionType.Type; }
+            get { return connectionType.Type; }
         }
 
 

@@ -3,6 +3,8 @@
 using Sce.Atf.Dom;
 
 using VisualScript;
+using VisualScript.VisualScriptBasicSchema;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 namespace VisualScriptEditor
 {
@@ -23,28 +25,28 @@ namespace VisualScriptEditor
         /// Gets visible attribute for layer</summary>
         protected override AttributeInfo VisibleAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.visibleAttribute; }
+            get { return moduleType.visibleAttribute; }
         }
 
         /// <summary>
         /// Gets ChildInfo for layers in circuit</summary>
         protected override ChildInfo LayerFolderChildInfo
         {
-            get { return VisualScriptBasicSchema.visualScriptType.layerFolderChild; }
+            get { return visualScriptType.layerFolderChild; }
         }
 
         /// <summary>
         /// Gets type of layer folder</summary>
         protected override DomNodeType LayerFolderType
         {
-            get { return VisualScriptBasicSchema.layerFolderType.Type; }
+            get { return layerFolderType.Type; }
         }
 
         /// <summary>
         /// Gets type of module reference</summary>
         protected override DomNodeType ElementRefType
         {
-            get { return VisualScriptBasicSchema.moduleRefType.Type; }
+            get { return moduleRefType.Type; }
         }
     }
 }

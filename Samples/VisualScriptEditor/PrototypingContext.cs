@@ -2,6 +2,8 @@
 using Sce.Atf.Dom;
 
 using VisualScript;
+using VisualScript.VisualScriptBasicSchema;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 namespace VisualScriptEditor
 {
@@ -16,14 +18,14 @@ namespace VisualScriptEditor
         /// Gets ChildInfo for prototype folders in prototype folder</summary>
         protected override ChildInfo PrototypeFolderChildInfo
         {
-            get { return VisualScriptBasicSchema.visualScriptDocumentType.prototypeFolderChild; }
+            get { return visualScriptDocumentType.prototypeFolderChild; }
         }
 
         /// <summary>
         /// Gets type of prototype</summary>
         protected override DomNodeType PrototypeType
         {
-            get { return VisualScriptBasicSchema.prototypeType.Type; }
+            get { return prototypeType.Type; }
         }
     }
 }

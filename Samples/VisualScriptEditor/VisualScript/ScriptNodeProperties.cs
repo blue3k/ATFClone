@@ -7,6 +7,7 @@ using Sce.Atf;
 using Sce.Atf.Controls.PropertyEditing;
 using Sce.Atf.Dom;
 using PropertyDescriptor = Sce.Atf.Dom.PropertyDescriptor;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 namespace VisualScript
 {
@@ -23,7 +24,7 @@ namespace VisualScript
         {
             System.ComponentModel.PropertyDescriptor[] baseDescriptors = base.GetPropertyDescriptors();
 
-            IList<DomNode> dynamicPropertyChildren = DomNode.GetChildList(VisualScriptBasicSchema.groupType.dynamicPropertyChild);
+            IList<DomNode> dynamicPropertyChildren = DomNode.GetChildList(groupType.dynamicPropertyChild);
             if (dynamicPropertyChildren.Count == 0)
                 return baseDescriptors;
 
@@ -31,22 +32,22 @@ namespace VisualScript
             int childIndex = 0;
             foreach (var child in dynamicPropertyChildren)
             {
-                var displayName = (string)child.GetAttribute(VisualScriptBasicSchema.dynamicPropertyType.nameAttribute);
-                var category = (string)child.GetAttribute(VisualScriptBasicSchema.dynamicPropertyType.categoryAttribute);
-                var description = (string)child.GetAttribute(VisualScriptBasicSchema.dynamicPropertyType.descriptionAttribute);
+                var displayName = (string)child.GetAttribute(dynamicPropertyType.nameAttribute);
+                var category = (string)child.GetAttribute(dynamicPropertyType.categoryAttribute);
+                var description = (string)child.GetAttribute(dynamicPropertyType.descriptionAttribute);
                 bool readOnly = false;
-                var editorTypeAndParameters = (string)child.GetAttribute(VisualScriptBasicSchema.dynamicPropertyType.editorAttribute);
+                var editorTypeAndParameters = (string)child.GetAttribute(dynamicPropertyType.editorAttribute);
                 object editor = CreateObject(editorTypeAndParameters);
-                var typeConverterAndParameters = (string)child.GetAttribute(VisualScriptBasicSchema.dynamicPropertyType.converterAttribute);
+                var typeConverterAndParameters = (string)child.GetAttribute(dynamicPropertyType.converterAttribute);
                 var typeConverter = (TypeConverter)CreateObject(typeConverterAndParameters);
-                string valueType = (string)child.GetAttribute(VisualScriptBasicSchema.dynamicPropertyType.valueTypeAttribute);
+                string valueType = (string)child.GetAttribute(dynamicPropertyType.valueTypeAttribute);
                 PropertyDescriptor newDescriptor;
                 if (valueType == "stringValue")
                 {
                     newDescriptor = new ChildAttributePropertyDescriptor(
                         displayName,
-                        VisualScriptBasicSchema.dynamicPropertyType.stringValueAttribute,
-                        VisualScriptBasicSchema.moduleType.dynamicPropertyChild,
+                        dynamicPropertyType.stringValueAttribute,
+                        moduleType.dynamicPropertyChild,
                         childIndex,
                         category, description, readOnly, editor, typeConverter);
                 }
@@ -54,8 +55,8 @@ namespace VisualScript
                 {
                     newDescriptor = new ChildAttributePropertyDescriptor(
                         displayName,
-                        VisualScriptBasicSchema.dynamicPropertyType.floatValueAttribute,
-                        VisualScriptBasicSchema.moduleType.dynamicPropertyChild,
+                        dynamicPropertyType.floatValueAttribute,
+                        moduleType.dynamicPropertyChild,
                         childIndex,
                         category, description, readOnly, editor, typeConverter);
                 }
@@ -63,8 +64,8 @@ namespace VisualScript
                 {
                     newDescriptor = new ChildAttributePropertyDescriptor(
                         displayName,
-                        VisualScriptBasicSchema.dynamicPropertyType.vector3ValueAttribute,
-                        VisualScriptBasicSchema.moduleType.dynamicPropertyChild,
+                        dynamicPropertyType.vector3ValueAttribute,
+                        moduleType.dynamicPropertyChild,
                         childIndex,
                         category, description, readOnly, editor, typeConverter);
                 }
@@ -72,8 +73,8 @@ namespace VisualScript
                 {
                     newDescriptor = new ChildAttributePropertyDescriptor(
                         displayName,
-                        VisualScriptBasicSchema.dynamicPropertyType.boolValueAttribute,
-                        VisualScriptBasicSchema.moduleType.dynamicPropertyChild,
+                        dynamicPropertyType.boolValueAttribute,
+                        moduleType.dynamicPropertyChild,
                         childIndex,
                         category, description, readOnly, editor, typeConverter);
                 }
@@ -81,8 +82,8 @@ namespace VisualScript
                 {
                     newDescriptor = new ChildAttributePropertyDescriptor(
                         displayName,
-                        VisualScriptBasicSchema.dynamicPropertyType.intValueAttribute,
-                        VisualScriptBasicSchema.moduleType.dynamicPropertyChild,
+                        dynamicPropertyType.intValueAttribute,
+                        moduleType.dynamicPropertyChild,
                         childIndex,
                         category, description, readOnly, editor, typeConverter);
                 }

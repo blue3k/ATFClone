@@ -20,9 +20,6 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
     /// of a pin to preserve the internal pin/module which is connected to the outside circuit.</summary>
     public abstract class GroupPin : Pin, ICircuitGroupPin<Element>, IVisible
     {
-        /// <summary>
-        /// Gets index (pin order in its sub-graph owner) attribute for group pin</summary>
-        protected abstract AttributeInfo IndexAttribute { get; }
 
         /// <summary>
         /// Gets floating y-coordinate attribute for group pin. 
@@ -45,15 +42,6 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// Gets visible attribute for group pin</summary>
         protected abstract AttributeInfo VisibleAttribute { get; }
      
-        /// <summary>
-        /// Group pin index used for visual ordering
-        /// </summary>
-        public int Index
-        {
-            get;
-            set;
-        }
-
         /// <summary>
         /// Constructor that subscribes to Changed event</summary>
         public GroupPin()

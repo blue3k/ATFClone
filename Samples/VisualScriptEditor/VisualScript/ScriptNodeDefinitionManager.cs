@@ -11,6 +11,7 @@ using Sce.Atf.Applications;
 using Sce.Atf.Controls.Adaptable;
 using Sce.Atf.Controls.Adaptable.Graphs;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 using PropertyDescriptor = Sce.Atf.Dom.PropertyDescriptor;
 using System.IO;
@@ -29,6 +30,7 @@ namespace VisualScript
     public class ScriptNodeDefinitionManager : IPaletteClient, IInitializable
     {
         static readonly string stm_DefaultPath = "Data";
+        static readonly string NS = "VScript";
 
         static readonly string[] stm_DefaultModuleDefinitions = new string[]
         {
@@ -106,7 +108,7 @@ namespace VisualScript
         {
             // add palette info to annotation type, and register with palette
             var annotationItem = new NodeTypePaletteItem(
-                VisualScriptBasicSchema.annotationType.Type,
+                annotationType.Type,
                 "Comment".Localize(),
                 "Create a moveable resizable comment on the circuit canvas".Localize(),
                 Resources.AnnotationImage);
@@ -115,18 +117,18 @@ namespace VisualScript
                 m_paletteService.AddItem(annotationItem, "Misc".Localize("abbreviation for miscellaneous"), this);
 
             // define editable properties on annotation
-            VisualScriptBasicSchema.annotationType.Type.SetTag(
+            annotationType.Type.SetTag(
                 new PropertyDescriptorCollection(
                     new PropertyDescriptor[] {
                             new AttributePropertyDescriptor(
                                 "Text".Localize(),
-                                VisualScriptBasicSchema.annotationType.textAttribute,
+                                annotationType.textAttribute,
                                 null,
                                 "Comment Text".Localize(),
                                 false),
                             new AttributePropertyDescriptor(
                                 "Background Color".Localize(),  // name
-                                VisualScriptBasicSchema.annotationType.backcolorAttribute, //AttributeInfo
+                                annotationType.backcolorAttribute, //AttributeInfo
                                 null, // category
                                 "Comment's background color".Localize(), //description
                                 false, //isReadOnly
@@ -135,7 +137,7 @@ namespace VisualScript
                                 ),
                            new AttributePropertyDescriptor(
                                 "Foreground Color".Localize(),  // name
-                                VisualScriptBasicSchema.annotationType.foreColorAttribute, //AttributeInfo
+                                annotationType.foreColorAttribute, //AttributeInfo
                                 null, // category
                                 "Comment's foreground color".Localize(), //description
                                 false, //isReadOnly
@@ -652,7 +654,7 @@ namespace VisualScript
                 var nodeIcon = GetNodeIcon(nodeDef);
                 var nodeCategory = GetNodeCategory(nodeDef);
 
-                var domNodeType = DefineModuleType(new XmlQualifiedName(nodeDef.Name, VisualScriptBasicSchema.NS),
+                var domNodeType = DefineModuleType(new XmlQualifiedName(nodeDef.Name, NS),
                     nodeDef.Name,
                     nodeDef.Description,
                     nodeCategory,
@@ -708,7 +710,7 @@ namespace VisualScript
                 // create the type
                 domNodeType = new DomNodeType(
                 name.ToString(),
-                VisualScriptBasicSchema.moduleType.Type,
+                moduleType.Type,
                 EmptyArray<AttributeInfo>.Instance,
                 EmptyArray<ChildInfo>.Instance,
                 new ExtensionInfo[] { new ExtensionInfo<ScriptNodeElementType>() });
@@ -780,9 +782,9 @@ namespace VisualScript
         public static DomNodeType Type;
     };
 
-    static public class socketType
-    {
-        public static DomNodeType Type;
-    };
+    //static public class socketType
+    //{
+    //    public static DomNodeType Type;
+    //};
 
 }

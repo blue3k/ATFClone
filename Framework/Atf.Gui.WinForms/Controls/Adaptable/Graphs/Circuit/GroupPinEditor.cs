@@ -17,7 +17,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
     {
         /// <summary>
         /// Callback to compute group pin y offset</summary>
-        public Func<ICircuitElement, int, bool, int> GetPinOffset;
+        public Func<ICircuitElement, NameString, bool, int> GetPinOffset;
 
         /// <summary>
         /// Constructor</summary>
@@ -191,7 +191,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     {
                         // a floating pin node maps to a subnode and its pin index, needed to sort by both                      
                         var pinList = pinNodes.OrderBy(x => x.InternalElement.Position.Y)
-                                               .ThenBy(x => x.InternalElement.PinDisplayOrder(x.InternalPinName, inputSide)).ToList();
+                                               .ThenBy(x => x.InternalElement.PinDisplayOrder(x, inputSide)).ToList();
                         //bool initialOrder = pinList.All(n => n.PinY == int.MinValue);
 
                         //if (initialOrder && subGraph.DefaultPinOrder == Group.PinOrderStyle.DepthFirst)

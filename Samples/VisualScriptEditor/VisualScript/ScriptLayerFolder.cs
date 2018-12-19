@@ -1,6 +1,7 @@
 ﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 namespace VisualScript
 {
@@ -13,21 +14,21 @@ namespace VisualScript
         /// Gets name attribute for layer folder</summary>
         protected override AttributeInfo NameAttribute
         {
-            get { return VisualScriptBasicSchema.layerFolderType.nameAttribute; }
+            get { return layerFolderType.nameAttribute; }
         }
 
         /// <summary>
         /// Gets ChildInfo for folders in layer folder</summary>
         protected override ChildInfo LayerFolderChild
         {
-            get { return VisualScriptBasicSchema.layerFolderType.layerFolderChild; }
+            get { return layerFolderType.layerFolderChild; }
         }
 
         /// <summary>
         /// Gets ChildInfo for references to layers in layer folder</summary>
         protected override ChildInfo ElementRefChildInfo
         {
-            get { return VisualScriptBasicSchema.layerFolderType.moduleRefChild; }
+            get { return layerFolderType.moduleRefChild; }
         }
     }
 }

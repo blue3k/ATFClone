@@ -95,6 +95,17 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             return found;
         }
 
+        public int IndexOf(NameString pinName)
+        {
+            for(int iItem = 0; iItem < m_Pins.Count; iItem++)
+            {
+                if (m_Pins[iItem].Name == pinName)
+                    return iItem;
+            }
+
+            return -1;
+        }
+
         public int IndexOf(PinType item)
         {
             return m_Pins.IndexOf(item);

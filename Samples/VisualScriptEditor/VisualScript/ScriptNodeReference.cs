@@ -5,6 +5,8 @@ using Sce.Atf;
 using Sce.Atf.Adaptation;
 using Sce.Atf.Controls.Adaptable.Graphs;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
+
 
 namespace VisualScript
 {
@@ -14,7 +16,7 @@ namespace VisualScript
     {
         protected override AttributeInfo GuidRefAttribute
         {
-            get { return VisualScriptBasicSchema.moduleTemplateRefType.guidRefAttribute; }
+            get { return moduleTemplateRefType.guidRefAttribute; }
         }
 
         #region IReference<Module>  memebers
@@ -39,35 +41,35 @@ namespace VisualScript
         /// Gets the name attribute for module instance</summary>
         protected override AttributeInfo NameAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.nameAttribute; }
+            get { return moduleType.nameAttribute; }
         }
 
         /// <summary>
         /// Gets the label attribute for module instance</summary>
         protected override AttributeInfo LabelAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.labelAttribute; }
+            get { return moduleType.labelAttribute; }
         }
 
         /// <summary>
         /// Gets the x-coordinate position attribute for module instance</summary>
         protected override AttributeInfo XAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.xAttribute; }
+            get { return moduleType.xAttribute; }
         }
 
         /// <summary>
         /// Gets the y-coordinate position attribute for module instance</summary>
         protected override AttributeInfo YAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.yAttribute; }
+            get { return moduleType.yAttribute; }
         }
 
         /// <summary>
         /// Gets the visible attribute for module instance</summary>
         protected override AttributeInfo VisibleAttribute
         {
-            get { return VisualScriptBasicSchema.moduleType.visibleAttribute; }
+            get { return moduleType.visibleAttribute; }
         }
     }
 }

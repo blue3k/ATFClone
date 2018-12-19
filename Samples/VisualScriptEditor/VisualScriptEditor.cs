@@ -21,7 +21,10 @@ using Sce.Atf.Controls.PropertyEditing;
 using Sce.Atf.VectorMath;
 using Sce.Atf.Direct2D;
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
+
 using VisualScript;
+using VisualScript.VisualScriptBasicSchema;
 
 namespace VisualScriptEditor
 {
@@ -117,7 +120,7 @@ namespace VisualScriptEditor
 
         /// <summary>
         /// VScript clipboard data type</summary>
-        public static readonly string CircuitFormat = VisualScriptBasicSchema.NS + ":VScript";
+        public static readonly string CircuitFormat = ":VScript";
 
         // scripting related members
         [Import(AllowDefault = false)]
@@ -245,11 +248,11 @@ namespace VisualScriptEditor
             else
             {
                 // create new document by creating a Dom node of the root type defined by the schema
-                node = new DomNode(VisualScriptBasicSchema.visualScriptDocumentType.Type, VisualScriptBasicSchema.circuitRootElement);
+                node = new DomNode(visualScriptDocumentType.Type);
                 // create an empty root prototype folder
                 node.SetChild(
-                    VisualScriptBasicSchema.visualScriptDocumentType.prototypeFolderChild,
-                    new DomNode(VisualScriptBasicSchema.prototypeFolderType.Type));
+                    visualScriptDocumentType.prototypeFolderChild,
+                    new DomNode(prototypeFolderType.Type));
             }
 
             ScriptDocument circuitCircuitDocument = null;

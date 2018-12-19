@@ -22,5 +22,10 @@ namespace CircuitEditorSample
         {
             get { return Schema.pinType.nameAttribute; }
         }
+
+        protected override AttributeInfo IndexAttribute
+        {
+            get { return null; }
+        }
     }
 }

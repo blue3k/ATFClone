@@ -1,6 +1,8 @@
 ﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using Sce.Atf.Dom;
+using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
+
 
 namespace VisualScript
 {
@@ -13,21 +15,21 @@ namespace VisualScript
         /// Gets name attribute for prototype</summary>
         protected override AttributeInfo NameAttribute
         {
-            get { return VisualScriptBasicSchema.prototypeType.nameAttribute; }
+            get { return prototypeType.nameAttribute; }
         }
 
         /// <summary>
         /// Gets ChildInfo for modules in prototype</summary>
         protected override ChildInfo ElementChildInfo
         {
-            get { return VisualScriptBasicSchema.prototypeType.moduleChild; }
+            get { return prototypeType.moduleChild; }
         }
 
         /// <summary>
         /// Gets ChildInfo for connections (wires) in prototype</summary>
         protected override ChildInfo WireChildInfo
         {
-            get { return VisualScriptBasicSchema.prototypeType.connectionChild; }
+            get { return prototypeType.connectionChild; }
         }
     }
 }
