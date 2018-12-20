@@ -13,11 +13,11 @@ namespace Sce.Atf.Dom
         internal XmlSchemaTypeCollection(
             XmlQualifiedName[] namespaces,
             string targetNamespace,
-            XmlSchemaTypeLoader loader)
+            DomNodeTypeCollection typeCollection)
         {
             m_namespaces = namespaces;
             m_targetNamespace = targetNamespace;
-            m_loader = loader;
+            m_typeCollection = typeCollection;
 
             foreach (XmlQualifiedName ns in m_namespaces)
             {
@@ -66,29 +66,29 @@ namespace Sce.Atf.Dom
             return null;
         }
 
-        /// <summary>
-        /// Gets the attribute metadata defined in the target namespace</summary>
-        /// <returns>Attribute metadata</returns>
-        public IEnumerable<AttributeType> GetAttributeTypes()
-        {
-            return m_loader.GetAttributeTypes(m_targetNamespace);
-        }
+        ///// <summary>
+        ///// Gets the attribute metadata defined in the target namespace</summary>
+        ///// <returns>Attribute metadata</returns>
+        //public IEnumerable<AttributeType> GetAttributeTypes()
+        //{
+        //    return m_typeCollection.GetAttributeTypes(m_targetNamespace);
+        //}
 
-        /// <summary>
-        /// Gets an attribute type</summary>
-        /// <param name="name">Unqualified name of attribute type</param>
-        /// <returns>Attribute type or null if unknown name</returns>
-        public AttributeType GetAttributeType(string name)
-        {
-            return m_loader.GetAttributeType(m_targetNamespace + ":" + name);
-        }
+        ///// <summary>
+        ///// Gets an attribute type</summary>
+        ///// <param name="name">Unqualified name of attribute type</param>
+        ///// <returns>Attribute type or null if unknown name</returns>
+        //public AttributeType GetAttributeType(string name)
+        //{
+        //    return m_typeCollection.GetAttributeType(m_targetNamespace + ":" + name);
+        //}
 
         /// <summary>
         /// Gets the DomNodeType metadata that is defined in the target namespace</summary>
         /// <returns>DomNodeType metadata</returns>
         public IEnumerable<DomNodeType> GetNodeTypes()
         {
-            return m_loader.GetNodeTypes(m_targetNamespace);
+            return m_typeCollection.GetNodeTypes(m_targetNamespace);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Sce.Atf.Dom
         /// <returns>DomNodeType metadata</returns>
         public IEnumerable<DomNodeType> GetNodeTypes(string ns)
         {
-            return m_loader.GetNodeTypes(ns);
+            return m_typeCollection.GetNodeTypes(ns);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Sce.Atf.Dom
         /// <returns>Node type or null if unknown name</returns>
         public DomNodeType GetNodeType(string name)
         {
-            return m_loader.GetNodeType(m_targetNamespace + ":" + name);
+            return m_typeCollection.GetNodeType(m_targetNamespace + ":" + name);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Sce.Atf.Dom
         /// <returns>Node type or null if unknown name</returns>
         public DomNodeType GetNodeType(string targetNamespace, string name)
         {
-            return m_loader.GetNodeType(targetNamespace + ":" + name);
+            return m_typeCollection.GetNodeType(targetNamespace + ":" + name);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Sce.Atf.Dom
         /// <returns>Child info for root element or null if unknown name</returns>
         public ChildInfo GetRootElement(string name)
         {
-            return m_loader.GetRootElement(m_targetNamespace + ":" + name);
+            return m_typeCollection.GetRootElement(m_targetNamespace + ":" + name);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Sce.Atf.Dom
         /// <returns>Child info for root element or null if unknown name</returns>
         public ChildInfo GetRootElement(string targetNamespace, string name)
         {
-            return m_loader.GetRootElement(targetNamespace + ":" + name);
+            return m_typeCollection.GetRootElement(targetNamespace + ":" + name);
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Sce.Atf.Dom
         /// <returns>Enumeration of child info for all root elements</returns>
         public IEnumerable<ChildInfo> GetRootElements()
         {
-            return m_loader.GetRootElements();
+            return m_typeCollection.GetRootElements();
         }
 
         ///// <summary>
@@ -164,7 +164,7 @@ namespace Sce.Atf.Dom
 
         private readonly string m_targetNamespace;
         private readonly XmlQualifiedName[] m_namespaces;
-        private readonly XmlSchemaTypeLoader m_loader;
+        private readonly DomNodeTypeCollection m_typeCollection;
         private readonly string m_defaultNamespace = string.Empty;
     }
 }

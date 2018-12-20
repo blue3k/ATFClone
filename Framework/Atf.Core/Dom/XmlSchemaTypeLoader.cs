@@ -23,6 +23,9 @@ namespace Sce.Atf.Dom
             set { m_schemaResolver = value; }
         }
 
+        public DomNodeTypeCollection TypeCollection => m_nodeTypeCollection;
+
+
         /// <summary>Loads and registers a schema, given a schema file name. Searches culture-specific
         /// subdirectories first.</summary>
         /// <param name="schemaFileName">Schema file name</param>
@@ -141,10 +144,7 @@ namespace Sce.Atf.Dom
 
                     // only add root elements once; root element names must be globally unique
                     string name = element.QualifiedName.ToString();
-                    if (!m_rootElements.ContainsKey(name))
-                    {
-                        m_rootElements[name] = childInfo;
-                    }
+                    m_nodeTypeCollection.AddRootElement(name, childInfo);
                 }
 
                 // Get global complex type definitions
@@ -357,9 +357,7 @@ namespace Sce.Atf.Dom
         /// <returns>Node type or null if unknown name</returns>
         public DomNodeType GetNodeType(string name)
         {
-            DomNodeType nodeType;
-            m_nodeTypes.TryGetValue(name, out nodeType);
-            return nodeType;
+            return m_nodeTypeCollection.GetNodeType(name);
         }
 
         /// <summary>
@@ -368,10 +366,7 @@ namespace Sce.Atf.Dom
         /// <returns>Enumeration of all node types in the given namespace</returns>
         public IEnumerable<DomNodeType> GetNodeTypes(string ns)
         {
-            ns += ":";
-            foreach (KeyValuePair<string, DomNodeType> kvp in m_nodeTypes)
-                if (kvp.Key.StartsWith(ns))
-                    yield return kvp.Value;
+            return m_nodeTypeCollection.GetNodeTypes(ns);
         }
 
         /// <summary>
@@ -381,12 +376,7 @@ namespace Sce.Atf.Dom
         /// <returns>Enumeration of all node types derived from baseType</returns>
         public IEnumerable<DomNodeType> GetNodeTypes(DomNodeType baseType)
         {
-            if (baseType == null)
-                throw new ArgumentNullException("baseType");
-
-            foreach (DomNodeType type in m_nodeTypes.Values)
-                if (type != baseType && baseType.IsAssignableFrom(type))
-                    yield return type;
+            return m_nodeTypeCollection.GetNodeTypes(baseType);
         }
 
         /// <summary>
@@ -394,7 +384,7 @@ namespace Sce.Atf.Dom
         /// <returns>All node types</returns>
         public IEnumerable<DomNodeType> GetNodeTypes()
         {
-            return m_nodeTypes.Values;
+            return m_nodeTypeCollection.GetNodeTypes();
         }
 
         /// <summary>
@@ -404,7 +394,7 @@ namespace Sce.Atf.Dom
         /// <param name="type">New node type</param>
         public void AddNodeType(string name, DomNodeType type)
         {
-            m_nodeTypes[name] = type;
+            m_nodeTypeCollection.AddNodeType(name, type);
         }
 
         /// <summary>
@@ -416,7 +406,7 @@ namespace Sce.Atf.Dom
         /// </returns>
         public bool RemoveNodeType(string name)
         {
-           return m_nodeTypes.Remove(name);
+           return m_nodeTypeCollection.RemoveNodeType(name);
         }
 
         /// <summary>
@@ -675,12 +665,12 @@ namespace Sce.Atf.Dom
                 name = GetLocalTypeName(element);
 
             string typeName = name.ToString();
-            DomNodeType nodeType;
-            if (!m_nodeTypes.TryGetValue(typeName, out nodeType))
+            DomNodeType nodeType = m_nodeTypeCollection.GetNodeType(typeName);
+            if (nodeType == null)
             {
                 // build a new complex type and add it to the dictionary
                 nodeType = new DomNodeType(typeName);
-                m_nodeTypes.Add(typeName, nodeType);
+                m_nodeTypeCollection.AddNodeType(typeName, nodeType);
 
                 m_annotations.Add(nodeType, GetAnnotation(complexType));
 
@@ -849,13 +839,13 @@ namespace Sce.Atf.Dom
         private DomNodeType WrapSimpleType(XmlSchemaSimpleType simpleType, out bool firstTime)
         {
             string typeName = simpleType.QualifiedName.ToString();
-            DomNodeType nodeType;
             firstTime = false;
-            if (!m_nodeTypes.TryGetValue(typeName, out nodeType))
+            DomNodeType nodeType = m_nodeTypeCollection.GetNodeType(typeName);
+            if (nodeType == null)
             {
                 firstTime = true;
                 nodeType = new DomNodeType(typeName);
-                m_nodeTypes.Add(typeName, nodeType);
+                m_nodeTypeCollection.AddNodeType(typeName, nodeType);
 
                 m_annotations.Add(nodeType, GetAnnotation(simpleType));
             }
@@ -1036,8 +1026,8 @@ namespace Sce.Atf.Dom
                             "Type redefinition changes abstractness. (" + originalType.Name + ")");
 
                     string typeName = name.ToString();
-                    DomNodeType nodeType;
-                    if (m_nodeTypes.TryGetValue(typeName, out nodeType))
+                    DomNodeType nodeType = m_nodeTypeCollection.GetNodeType(typeName);
+                    if (nodeType != null)
                     {
                         IList<XmlNode> annotations;
                         if (m_annotations.TryGetValue(nodeType, out annotations))
@@ -1089,11 +1079,7 @@ namespace Sce.Atf.Dom
         private readonly Dictionary<string, XmlAttributeType> m_attributeTypes =
             new Dictionary<string, XmlAttributeType>();
 
-        private readonly Dictionary<string, DomNodeType> m_nodeTypes =
-            new Dictionary<string, DomNodeType>();
-
-        private readonly Dictionary<string, ChildInfo> m_rootElements =
-            new Dictionary<string, ChildInfo>();
+        private readonly DomNodeTypeCollection m_nodeTypeCollection = new DomNodeTypeCollection();
 
         private readonly Dictionary<ChildInfo, XmlQualifiedName> m_refElements =
             new Dictionary<ChildInfo, XmlQualifiedName>();

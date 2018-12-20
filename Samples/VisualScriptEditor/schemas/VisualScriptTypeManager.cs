@@ -12,6 +12,7 @@ using PropertyDescriptor = System.ComponentModel.PropertyDescriptor;
 using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
 using VisualScript.VisualScriptBasicSchema;
+using System.Xml;
 
 namespace VisualScript
 {
@@ -26,7 +27,13 @@ namespace VisualScript
         /// Constructor that loads the schema</summary>
         public VisualScriptTypeManager()
         {
-            m_typeCollection = new XmlSchemaTypeCollection();
+            m_typeCollection = new XmlSchemaTypeCollection(
+                new XmlQualifiedName[] {
+                    new XmlQualifiedName("http://www.blue3k.com/","VScript")
+                },
+                "VScript",
+
+            );
             m_typeCollection.Namespaces = new System.Xml.XmlQualifiedName("VScript");
             m_version = new Version("1.0");// string.IsNullOrEmpty(version) ? new Version("1.0") : new Version(version);
 
