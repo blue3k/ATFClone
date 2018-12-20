@@ -318,7 +318,7 @@ namespace VisualScriptEditor
                     // read existing document using standard XML reader
                     using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                     {
-                        var reader = new ScriptReader(m_schemaLoader);
+                        var reader = new ScriptReader();
                         var root = reader.Read(stream, uri);
                         var toFolder = CreateTemplateFolder();
                         reader.ImportTemplates(toFolder.DomNode, root, uri);
@@ -358,7 +358,7 @@ namespace VisualScriptEditor
                 {
                     using (FileStream stream = new FileStream(templateFolder.Url.LocalPath, FileMode.Open, FileAccess.Read))
                     {
-                        var reader = new ScriptReader(m_schemaLoader);
+                        var reader = new ScriptReader();
                         var rootNode = reader.Read(stream, templateFolder.Url);
 
                         foreach (var newnode in rootNode.Subtree)
@@ -434,8 +434,5 @@ namespace VisualScriptEditor
                 }
             }
         }
-
-        [Import]
-        private BasicSchemaLoader m_schemaLoader= null;
     }
 }

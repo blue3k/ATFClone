@@ -20,6 +20,11 @@ namespace Sce.Atf.Dom
             m_typeLoader = typeLoader;
         }
 
+        public DomXmlReader(ChildInfo rootNodeInfo)
+        {
+            m_rootNodeInfo = rootNodeInfo;
+        }
+
         /// <summary>
         /// Gets the type loader that defines DOM node types</summary>
         public XmlSchemaTypeLoader TypeLoader
@@ -99,19 +104,23 @@ namespace Sce.Atf.Dom
         /// <returns>Root element metadata for the reader's current XML node</returns>
         protected virtual ChildInfo CreateRootElement(XmlReader reader, Uri rootUri)
         {
-            string ns = reader.NamespaceURI;
-            if (string.IsNullOrEmpty(ns))
+            if(m_typeLoader != null)
             {
-                // no xmlns declaration in the file, so grab the first type collection's target namespace
-                foreach (XmlSchemaTypeCollection typeCollection in m_typeLoader.GetTypeCollections())
+                string ns = reader.NamespaceURI;
+                if (string.IsNullOrEmpty(ns))
                 {
-                    ns = typeCollection.DefaultNamespace;
-                    break;
+                    // no xmlns declaration in the file, so grab the first type collection's target namespace
+                    foreach (XmlSchemaTypeCollection typeCollection in m_typeLoader.GetTypeCollections())
+                    {
+                        ns = typeCollection.DefaultNamespace;
+                        break;
+                    }
                 }
+
+                m_rootNodeInfo = m_typeLoader.GetRootElement(ns + ":" + reader.LocalName);
             }
 
-            ChildInfo rootElement = m_typeLoader.GetRootElement(ns + ":" + reader.LocalName);
-            return rootElement;
+            return m_rootNodeInfo;
         }
 
 
@@ -402,6 +411,7 @@ namespace Sce.Atf.Dom
         private static readonly char[] s_trimChars = new[] { '|' };
 
         private readonly XmlSchemaTypeLoader m_typeLoader;
+        private ChildInfo m_rootNodeInfo;
 
         private DomNode m_root;
         private Uri m_uri;

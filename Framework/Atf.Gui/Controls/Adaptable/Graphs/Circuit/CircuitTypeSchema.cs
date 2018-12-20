@@ -15,7 +15,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
         {
             static circuitDocumentType()
             {
-                Type = new DomNodeType("CircuitDocumentType");
+                Type = new DomNodeType("CircuitDocumentType", circuitType.Type);
                 versionAttribute = Type.DefineNewAttributeInfo("version", AttributeType.StringType, "0.1");
                 moduleChild = Type.DefineNewChildInfo("module", moduleType.Type, true);
                 connectionChild = Type.DefineNewChildInfo("connection", connectionType.Type, true);
@@ -46,7 +46,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
         {
             static circuitType()
             {
-                Type = new DomNodeType("circuitType");
+                Type = new DomNodeType("circuitType", moduleType.Type);
                 moduleChild = Type.DefineNewChildInfo("module", moduleType.Type, true);
                 connectionChild = Type.DefineNewChildInfo("connection", connectionType.Type, true);
                 layerFolderChild = Type.DefineNewChildInfo("layerFolder", layerFolderType.Type, true);

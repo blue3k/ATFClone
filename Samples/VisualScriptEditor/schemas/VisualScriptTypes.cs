@@ -14,7 +14,7 @@ namespace VisualScript.VisualScriptBasicSchema
     {
             static visualScriptDocumentType()
             {
-                Type = new DomNodeType("CircuitDocumentType");
+                Type = new DomNodeType("visualScriptDocumentType", visualScriptType.Type);
                 versionAttribute = Type.DefineNewAttributeInfo("version", AttributeType.StringType, "0.1");
                 moduleChild = Type.DefineNewChildInfo("module", moduleType.Type, true);
                 connectionChild = Type.DefineNewChildInfo("connection", connectionType.Type, true);
@@ -45,7 +45,7 @@ namespace VisualScript.VisualScriptBasicSchema
     {
             static visualScriptType()
             {
-                Type = new DomNodeType("circuitType");
+                Type = new DomNodeType("visualScriptType", moduleType.Type);
                 moduleChild = Type.DefineNewChildInfo("module", moduleType.Type, true);
                 connectionChild = Type.DefineNewChildInfo("connection", connectionType.Type, true);
                 layerFolderChild = Type.DefineNewChildInfo("layerFolder", layerFolderType.Type, true);

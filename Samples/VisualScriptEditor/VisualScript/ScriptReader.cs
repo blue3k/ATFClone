@@ -10,19 +10,18 @@ using Sce.Atf;
 using Sce.Atf.Dom;
 using Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema;
 
+using VisualScript.VisualScriptBasicSchema;
 
 namespace VisualScript
 {
     internal class ScriptReader : DomXmlReader
     {
-        /// <summary>
-        /// Constructor</summary>
-        /// <param name="loader">Type loader to translate element names to DOM node types</param>
-        public ScriptReader(XmlSchemaTypeLoader loader)
-            : base(loader)
+        /// <summary>Constructor</summary>
+        public ScriptReader()
+            : base(new ChildInfo("VScript", visualScriptDocumentType.Type))
         {
-            var typeloader = loader as BasicSchemaLoader;
-            m_version = typeloader.Version; // tool's current schema version 
+            //XmlSchemaTypeLoader loader;
+            m_version = new Version("1.0");// loader.Version; // tool's current schema version 
         }
 
         /// <summary>
@@ -100,7 +99,7 @@ namespace VisualScript
                 // read the existing templates document
                 using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
-                    var newReader = new ScriptReader(TypeLoader);
+                    var newReader = new ScriptReader();
                     DomNode templatesRoot = newReader.Read(stream, uri);
                     ImportTemplates(toFolder, templatesRoot, uri);
                 }

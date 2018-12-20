@@ -65,7 +65,7 @@ namespace VisualScriptEditor
             IDocumentService documentService,
             PrototypeLister prototypeLister,
             LayerLister layerLister,
-            BasicSchemaLoader schemaLoader)
+            VisualScriptTypeManager schemaLoader)
         {
             m_controlHostService = controlHostService;
             m_commandService = commandService;
@@ -106,7 +106,7 @@ namespace VisualScriptEditor
         private IDocumentRegistry m_documentRegistry;
         private IDocumentService m_documentService;
         private LayerLister m_layerLister;
-        private BasicSchemaLoader m_schemaLoader;
+        private VisualScriptTypeManager m_schemaLoader;
 
         [Import(AllowDefault = true)]
         private IStatusService m_statusService = null;
@@ -241,7 +241,7 @@ namespace VisualScriptEditor
                 // read existing document using standard XML reader
                 using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
-                    ScriptReader reader = new ScriptReader(m_schemaLoader);
+                    ScriptReader reader = new ScriptReader();
                     node = reader.Read(stream, uri);
                 }
             }
@@ -286,7 +286,8 @@ namespace VisualScriptEditor
                 editingContext.GetSubContentOffset = GetSubContentOffset;
 
                 control.Context = editingContext;
-                editingContext.SchemaLoader = m_schemaLoader; // schema needed for cut and paste between applications
+                // Disabled
+                //editingContext.SchemaLoader = m_schemaLoader; // schema needed for cut and paste between applications
 
                 m_circuitControlRegistry.RegisterControl(node, control, controlInfo, this);
 
@@ -491,7 +492,8 @@ namespace VisualScriptEditor
                     editingContext.GetSubContentOffset = GetSubContentOffset;
 
                     subCircuitControl.Context = editingContext;
-                    editingContext.SchemaLoader = m_schemaLoader; // schema needed for cut and paste between applications
+                    // Disabled
+                    //editingContext.SchemaLoader = m_schemaLoader; // schema needed for cut and paste between applications
 
                     ControlInfo controlInfo = new ControlInfo(name, description, StandardControlGroup.Center);
                     //controlInfo.Docking = new ControlInfo.DockingInfo() // smart docking behavior

@@ -100,7 +100,7 @@ namespace VisualScriptEditor
                 typeof(DomRecorder),                    // records and displays changes to the DOM for diagnostic purposes
 
                 typeof(VisualScriptEditor),                         // editor which manages circuit documents and controls
-                typeof(BasicSchemaLoader),                   // loads circuit schema and extends types
+                typeof(VisualScriptTypeManager),                   // loads circuit schema and extends types
                 typeof(GroupingCommands),               // circuit group/ungroup commands
                 typeof(CircuitControlRegistry),         // circuit controls management
                 typeof(LayeringCommands),               // "Add Layer" command

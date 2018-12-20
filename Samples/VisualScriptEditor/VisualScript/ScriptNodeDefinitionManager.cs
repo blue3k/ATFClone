@@ -55,7 +55,7 @@ namespace VisualScript
         }
 
 
-        protected BasicSchemaLoader SchemaLoader
+        protected VisualScriptTypeManager SchemaLoader
         {
             get { return m_schemaLoader; }
         }
@@ -65,7 +65,7 @@ namespace VisualScript
         private IPaletteService m_paletteService = null;
 
         [Import(AllowDefault = false)]
-        private BasicSchemaLoader m_schemaLoader = null;
+        private VisualScriptTypeManager m_schemaLoader = null;
 
 
         /// <summary>
@@ -658,8 +658,8 @@ namespace VisualScript
                     nodeDef.Name,
                     nodeDef.Description,
                     nodeCategory,
-                    string.IsNullOrEmpty(nodeIcon) ? Resources.ButtonImage : nodeIcon,
-                    m_schemaLoader);
+                    string.IsNullOrEmpty(nodeIcon) ? Resources.ButtonImage : nodeIcon);
+                    //m_schemaLoader);
 
                 // Use node name as node type when node type isn't assigned
                 nodeDef.NodeType = string.IsNullOrEmpty(nodeDef.NodeType) ? nodeDef.Name : nodeDef.NodeType;
@@ -703,7 +703,7 @@ namespace VisualScript
             string description,
             string category,
             string imageName,
-            BasicSchemaLoader loader,
+            XmlSchemaTypeCollection loader,
             DomNodeType domNodeType = null)
         {
             if (domNodeType == null)

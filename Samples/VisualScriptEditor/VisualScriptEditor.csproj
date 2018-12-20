@@ -76,7 +76,7 @@
       <DependentUpon>VisualScriptNodeDefinitionSchema.xsd</DependentUpon>
     </Compile>
     <Compile Include="schemas\VisualScriptNodeDefinitionSchemaExt.cs" />
-    <Compile Include="schemas\VisualScriptTypeSchema.cs" />
+    <Compile Include="schemas\VisualScriptTypes.cs" />
     <Compile Include="VisualScript\ScriptAnnotation.cs" />
     <Compile Include="VisualScript\CategoryUniqueIdValidator.cs" />
     <Compile Include="VisualScript\ScriptNodeElementType.cs" />
@@ -135,7 +135,7 @@
     <Compile Include="PrintableDocument.cs" />
     <Compile Include="VisualScriptEditor.cs" />
     <Compile Include="VisualScript\ScriptNodeDefinitionManager.cs" />
-    <Compile Include="VisualScript\BasicSchemaLoader.cs" />
+    <Compile Include="schemas\VisualScriptTypeManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VisualScript\Resources.cs" />
