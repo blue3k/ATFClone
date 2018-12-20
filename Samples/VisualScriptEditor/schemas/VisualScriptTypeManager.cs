@@ -27,23 +27,27 @@ namespace VisualScript
         /// Constructor that loads the schema</summary>
         public VisualScriptTypeManager()
         {
-            m_typeCollection = new XmlSchemaTypeCollection(
-                new XmlQualifiedName[] {
-                    new XmlQualifiedName("http://www.blue3k.com/","VScript")
-                },
-                "VScript",
+            var nameSpaces = new XmlQualifiedName[] {
+                    new XmlQualifiedName("VScript", "http://www.blue3k.com/")
+                };
 
+            m_typeCollection = new XmlSchemaTypeCollection(
+                nameSpaces,
+                "VScript",
+                new DomNodeTypeCollection()
             );
-            m_typeCollection.Namespaces = new System.Xml.XmlQualifiedName("VScript");
             m_version = new Version("1.0");// string.IsNullOrEmpty(version) ? new Version("1.0") : new Version(version);
 
+            m_ChildInfoOfTheRoot = new ChildInfo("VScript", visualScriptDocumentType.Type);
+
+            RegisterExtensions();
         }
 
-        public XmlSchemaTypeCollection TypeCollection
-        {
-            get { return m_typeCollection; }
-        }
-        private XmlSchemaTypeCollection m_typeCollection;
+        public XmlSchemaTypeCollection TypeCollection => m_typeCollection;
+
+        public DomNodeTypeCollection DomNodeTypeCollection => m_typeCollection.DomNodeTypeCollection;
+
+        public ChildInfo ChildInfoOfTheRoot => m_ChildInfoOfTheRoot;
 
         /// <summary>
         /// Gets the schema version</summary>
@@ -176,5 +180,9 @@ namespace VisualScript
             // set document editor information(DocumentClientInfo) for visual script editor editor:
             visualScriptDocumentType.Type.SetTag(VisualScriptEditor.VisualScriptEditor.EditorInfo);
         }
+
+
+        private XmlSchemaTypeCollection m_typeCollection;
+        private ChildInfo m_ChildInfoOfTheRoot;
     }
 }

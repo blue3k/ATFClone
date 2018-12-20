@@ -843,6 +843,14 @@ namespace Sce.Atf.Dom
 
         /// <summary>
         /// Gets a generic AttributeType that specifies a CLR string</summary>
+        public static AttributeType UriType
+        {
+            get { return s_uriType; }
+        }
+        private static readonly AttributeType s_uriType = new AttributeType("uri", typeof(Uri), 1);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR string</summary>
         public static AttributeType StringType
         {
             get { return s_stringType; }

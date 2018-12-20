@@ -150,14 +150,14 @@ namespace VisualScriptEditor
                     if (connection.InputElement.DomNode == originalModule.DomNode)
                     {
                         // input pin, i.e. pin on element that receives connection as input
-                        int pinIndex = connection.InputPin.Index;
-                        connection.InputPin = replacedModule.ElementType.GetInputPin(pinIndex);
+                        var pinName = connection.InputPin.Name;
+                        connection.InputPin = replacedModule.ElementType.GetInputPin(pinName);
                         connection.InputElement = replacedModule;
                         connection.InputPinTarget = null; // reset
                     }
                     else if (connection.OutputElement.DomNode == originalModule.DomNode)//output pin, i.e., pin on element that receives connection as output
                     {
-                        connection.OutputPin = replacedModule.ElementType.GetOutputPin(connection.OutputPin.Index);
+                        connection.OutputPin = replacedModule.ElementType.GetOutputPin(connection.OutputPin.Name);
                         connection.OutputElement = replacedModule;
                         connection.OutputPinTarget = null; 
                    
@@ -247,14 +247,14 @@ namespace VisualScriptEditor
                     if (connection.InputElement.DomNode == originalRefs[i])
                     {
                         // input pin, i.e. pin on element that receives connection as input
-                        int pinIndex = connection.InputPin.Index;
-                        connection.InputPin = copy.Cast<ScriptNode>().ElementType.GetInputPin(pinIndex);
+                        var pinName = connection.InputPin.Name;
+                        connection.InputPin = copy.Cast<ScriptNode>().ElementType.GetInputPin(pinName);
                         connection.InputElement = copy.Cast<ScriptNode>();
                         connection.InputPinTarget = null; // reset
                     }
                     else if (connection.OutputElement.DomNode == originalRefs[i])//output pin, i.e., pin on element that receives connection as output
                     {
-                        connection.OutputPin = copy.Cast<ScriptNode>().ElementType.GetOutputPin(connection.OutputPin.Index);
+                        connection.OutputPin = copy.Cast<ScriptNode>().ElementType.GetOutputPin(connection.OutputPin.Name);
                         connection.OutputElement = copy.Cast<ScriptNode>();
                         connection.OutputPinTarget = null;
 
@@ -318,7 +318,7 @@ namespace VisualScriptEditor
                     // read existing document using standard XML reader
                     using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                     {
-                        var reader = new ScriptReader();
+                        var reader = new ScriptReader(m_nodeDefinitionManager.NodeTypeManager);
                         var root = reader.Read(stream, uri);
                         var toFolder = CreateTemplateFolder();
                         reader.ImportTemplates(toFolder.DomNode, root, uri);
@@ -358,7 +358,7 @@ namespace VisualScriptEditor
                 {
                     using (FileStream stream = new FileStream(templateFolder.Url.LocalPath, FileMode.Open, FileAccess.Read))
                     {
-                        var reader = new ScriptReader();
+                        var reader = new ScriptReader(m_nodeDefinitionManager.NodeTypeManager);
                         var rootNode = reader.Read(stream, templateFolder.Url);
 
                         foreach (var newnode in rootNode.Subtree)
@@ -434,5 +434,9 @@ namespace VisualScriptEditor
                 }
             }
         }
+
+        [Import]
+        protected ScriptNodeDefinitionManager m_nodeDefinitionManager;
+
     }
 }

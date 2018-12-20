@@ -477,7 +477,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     else
                         nestedSubGraph = edge.InputElement.Cast<Group>();         
                   
-                    var grpPin = nestedSubGraph.InputGroupPins.First(x => x.Index == edge.InputPin.Index);
+                    var grpPin = nestedSubGraph.InputGroupPins.First(x => x.Name == edge.InputPin.Name);
                     bool sameLeafNode = grpPin.PinTarget == edge.InputPinTarget;
                     if (!sameLeafNode) // could this be a valid case for (deep)copy group nodes
                     {
@@ -517,7 +517,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     else
                         nestedSubGraph = edge.OutputElement.Cast<Group>();                  
                    
-                    var grpPin = nestedSubGraph.OutputGroupPins.First(x => x.Index == edge.OutputPin.Index);
+                    var grpPin = nestedSubGraph.OutputGroupPins.First(x => x.Name == edge.OutputPin.Name);
                     bool sameLeafNode = grpPin.PinTarget == edge.OutputPinTarget;
                     if (!sameLeafNode) // could this be a valid case for (deep)copy group nodes
                     {

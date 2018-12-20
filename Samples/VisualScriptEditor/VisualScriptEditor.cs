@@ -180,13 +180,13 @@ namespace VisualScriptEditor
                 m_settingsService.RegisterSettings(this, settings);
             }
 
-            if (m_modulePlugin != null)
+            if (m_nodeDefinitionManager != null)
             {
                 // define pin/connection pens
                 var pen = D2dFactory.CreateSolidBrush(Color.LightSeaGreen);
-                m_theme.RegisterCustomBrush(m_modulePlugin.BooleanPinTypeName, pen);
+                m_theme.RegisterCustomBrush(m_nodeDefinitionManager.BooleanPinTypeName, pen);
                 pen = D2dFactory.CreateSolidBrush(Color.LightSeaGreen);
-                m_theme.RegisterCustomBrush(m_modulePlugin.FloatPinTypeName, pen);
+                m_theme.RegisterCustomBrush(m_nodeDefinitionManager.FloatPinTypeName, pen);
             }
 
             D2dGradientStop[] gradstops = 
@@ -241,14 +241,14 @@ namespace VisualScriptEditor
                 // read existing document using standard XML reader
                 using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
-                    ScriptReader reader = new ScriptReader();
+                    ScriptReader reader = new ScriptReader(m_nodeDefinitionManager.NodeTypeManager);
                     node = reader.Read(stream, uri);
                 }
             }
             else
             {
                 // create new document by creating a Dom node of the root type defined by the schema
-                node = new DomNode(visualScriptDocumentType.Type);
+                node = new DomNode(visualScriptDocumentType.Type, new ChildInfo("VScript", visualScriptDocumentType.Type));
                 // create an empty root prototype folder
                 node.SetChild(
                     visualScriptDocumentType.prototypeFolderChild,
@@ -787,8 +787,8 @@ namespace VisualScriptEditor
 
         /// <summary>
         /// Component that adds module types to the editor</summary>
-        [Import(AllowDefault = true)]
-        protected ScriptNodeDefinitionManager m_modulePlugin;
+        [Import]
+        protected ScriptNodeDefinitionManager m_nodeDefinitionManager;
 
         [Import]
         private CircuitControlRegistry m_circuitControlRegistry = null;

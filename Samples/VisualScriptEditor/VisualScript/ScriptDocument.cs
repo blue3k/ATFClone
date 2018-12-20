@@ -9,6 +9,6 @@ namespace VisualScript
     /// ControlInfo instance used to register the viewing control in the UI</summary>
     public class ScriptDocument : Sce.Atf.Controls.Adaptable.Graphs.CircuitDocument
     {
-  
+        
     }
 }

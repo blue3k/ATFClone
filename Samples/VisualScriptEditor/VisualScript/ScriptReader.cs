@@ -17,10 +17,10 @@ namespace VisualScript
     internal class ScriptReader : DomXmlReader
     {
         /// <summary>Constructor</summary>
-        public ScriptReader()
-            : base(new ChildInfo("VScript", visualScriptDocumentType.Type))
+        public ScriptReader(VisualScriptTypeManager typeManager)
+            : base(typeManager.ChildInfoOfTheRoot, typeManager.DomNodeTypeCollection)
         {
-            //XmlSchemaTypeLoader loader;
+            m_typeManager = typeManager;
             m_version = new Version("1.0");// loader.Version; // tool's current schema version 
         }
 
@@ -99,7 +99,7 @@ namespace VisualScript
                 // read the existing templates document
                 using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
-                    var newReader = new ScriptReader();
+                    var newReader = new ScriptReader(m_typeManager);
                     DomNode templatesRoot = newReader.Read(stream, uri);
                     ImportTemplates(toFolder, templatesRoot, uri);
                 }
@@ -213,6 +213,7 @@ namespace VisualScript
         }
 
         private Dictionary<string, DomNode> m_missingTemplates;
+        private VisualScriptTypeManager m_typeManager;
 
         private readonly Version m_version; 
     }

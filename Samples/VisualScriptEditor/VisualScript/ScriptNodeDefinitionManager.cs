@@ -55,9 +55,9 @@ namespace VisualScript
         }
 
 
-        protected VisualScriptTypeManager SchemaLoader
+        public VisualScriptTypeManager NodeTypeManager
         {
-            get { return m_schemaLoader; }
+            get { return m_nodeTypeManager; }
         }
 
 
@@ -65,7 +65,7 @@ namespace VisualScript
         private IPaletteService m_paletteService = null;
 
         [Import(AllowDefault = false)]
-        private VisualScriptTypeManager m_schemaLoader = null;
+        private VisualScriptTypeManager m_nodeTypeManager = null;
 
 
         /// <summary>
@@ -658,8 +658,8 @@ namespace VisualScript
                     nodeDef.Name,
                     nodeDef.Description,
                     nodeCategory,
-                    string.IsNullOrEmpty(nodeIcon) ? Resources.ButtonImage : nodeIcon);
-                    //m_schemaLoader);
+                    string.IsNullOrEmpty(nodeIcon) ? Resources.ButtonImage : nodeIcon,
+                    m_typeManager.DomNodeTypeCollection);
 
                 // Use node name as node type when node type isn't assigned
                 nodeDef.NodeType = string.IsNullOrEmpty(nodeDef.NodeType) ? nodeDef.Name : nodeDef.NodeType;
@@ -681,6 +681,8 @@ namespace VisualScript
 
                 domNodeType.SetTag(newDescs);
             }
+
+
         }
 
 
@@ -703,7 +705,7 @@ namespace VisualScript
             string description,
             string category,
             string imageName,
-            XmlSchemaTypeCollection loader,
+            DomNodeTypeCollection typeCollection,
             DomNodeType domNodeType = null)
         {
             if (domNodeType == null)
@@ -716,7 +718,7 @@ namespace VisualScript
                 new ExtensionInfo[] { new ExtensionInfo<ScriptNodeElementType>() });
 
             // add it to the schema-defined types
-            loader.AddNodeType(name.ToString(), domNodeType);
+            typeCollection.AddNodeType(name.ToString(), domNodeType);
 
             // add the type to the palette
             if (m_paletteService != null)
@@ -733,8 +735,10 @@ namespace VisualScript
 
             return domNodeType;
         }
-        
 
+
+        [Import]
+        VisualScriptTypeManager m_typeManager = null;
 
         EmbeddedCollectionEditor m_ChildCollectionEditor;
     }

@@ -23,7 +23,7 @@ namespace Sce.Atf.Dom
             set { m_schemaResolver = value; }
         }
 
-        public DomNodeTypeCollection TypeCollection => m_nodeTypeCollection;
+        public DomNodeTypeCollection DomNodeTypeCollection => m_nodeTypeCollection;
 
 
         /// <summary>Loads and registers a schema, given a schema file name. Searches culture-specific
@@ -104,7 +104,7 @@ namespace Sce.Atf.Dom
                 if (!m_typeCollections.ContainsKey(targetNamespace))
                 {
                     XmlQualifiedName[] nameSpaces = schema.Namespaces.ToArray();
-                    XmlSchemaTypeCollection typeCollection = new XmlSchemaTypeCollection(nameSpaces, targetNamespace, this);
+                    XmlSchemaTypeCollection typeCollection = new XmlSchemaTypeCollection(nameSpaces, targetNamespace, m_nodeTypeCollection);
                     m_typeCollections.Add(targetNamespace, typeCollection);
                 }
             }
@@ -415,9 +415,7 @@ namespace Sce.Atf.Dom
         /// <returns>Child info for root element or null if unknown name</returns>
         public ChildInfo GetRootElement(string name)
         {
-            ChildInfo childInfo;
-            m_rootElements.TryGetValue(name, out childInfo);
-            return childInfo;
+            return m_nodeTypeCollection.GetRootElement(name);
         }
 
         /// <summary>
@@ -426,10 +424,7 @@ namespace Sce.Atf.Dom
         /// <returns>Enumeration of child info for root elements in the given namespace</returns>
         public IEnumerable<ChildInfo> GetRootElements(string ns)
         {
-            ns += ":";
-            foreach (KeyValuePair<string, ChildInfo> kvp in m_rootElements)
-                if (kvp.Key.StartsWith(ns))
-                    yield return kvp.Value;
+            return m_nodeTypeCollection.GetRootElements(ns);
         }
 
         /// <summary>
@@ -437,7 +432,7 @@ namespace Sce.Atf.Dom
         /// <returns>Enumeration of child info for all root elements</returns>
         public IEnumerable<ChildInfo> GetRootElements()
         {
-            return m_rootElements.Values;
+            return m_nodeTypeCollection.GetRootElements();
         }
 
         /// <summary>

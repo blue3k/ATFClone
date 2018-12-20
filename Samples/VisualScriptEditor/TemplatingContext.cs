@@ -118,13 +118,13 @@ namespace VisualScriptEditor
                         if (wire.InputElement == templateInstance)
                         {
                             wire.InputElement = copyInstance;
-                            wire.InputPin = copyInstance.ElementType.GetInputPin(wire.InputPin.Index);
+                            wire.InputPin = copyInstance.ElementType.GetInputPin(wire.InputPin.Name);
                             wire.SetPinTarget();
                         }
                         if (wire.OutputElement == templateInstance)
                         {
                             wire.OutputElement = copyInstance;
-                            wire.OutputPin = copyInstance.ElementType.GetOutputPin(wire.OutputPin.Index);
+                            wire.OutputPin = copyInstance.ElementType.GetOutputPin(wire.OutputPin.Name);
                             wire.SetPinTarget();
                         }
                     }

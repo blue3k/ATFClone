@@ -10,7 +10,11 @@ namespace Sce.Atf.Dom
     /// associated with a target namespace from an XML schema file</summary>
     public class XmlSchemaTypeCollection
     {
-        internal XmlSchemaTypeCollection(
+        public DomNodeTypeCollection DomNodeTypeCollection => m_typeCollection;
+
+
+
+        public XmlSchemaTypeCollection(
             XmlQualifiedName[] namespaces,
             string targetNamespace,
             DomNodeTypeCollection typeCollection)

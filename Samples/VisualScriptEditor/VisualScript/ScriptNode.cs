@@ -13,6 +13,11 @@ namespace VisualScript
     /// circuit rendering during editing operations, like dragging modules and wires.</summary>
     public class ScriptNode : Element
     {
+        public ScriptNode()
+        {
+
+        }
+
         /// <summary>
         /// Gets name attribute for node
         /// </summary>

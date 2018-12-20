@@ -124,6 +124,11 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             }
 
             m_Pins.Insert(index, item);
+
+            // Fix up index
+            for (int iPin = index; iPin < m_Pins.Count; iPin++)
+                m_Pins[iPin].Index = iPin;
+
             m_pinByName[item.Name] = item;
 
         }
@@ -137,6 +142,11 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 System.Diagnostics.Debug.Assert(false);
                 return;
             }
+
+
+            // Fix up index
+            for (int iPin = index; iPin < m_Pins.Count; iPin++)
+                m_Pins[iPin].Index = iPin;
 
             m_pinByName.Remove(pin.Name);
         }
@@ -153,10 +163,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 return;
             }
 
+            item.Index = m_Pins.Count;
             m_Pins.Add(item);
             m_pinByName[item.Name] = item;
-
-            throw new System.NotImplementedException();
         }
 
         public void Clear()
@@ -186,6 +195,10 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
             m_pinByName.Remove(item.Name);
             m_Pins.Remove(item);
+
+            // Fix up index
+            for (int iPin = 0; iPin < m_Pins.Count; iPin++)
+                m_Pins[iPin].Index = iPin;
 
             return true;
         }

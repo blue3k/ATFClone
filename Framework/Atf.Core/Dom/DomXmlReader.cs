@@ -18,10 +18,12 @@ namespace Sce.Atf.Dom
         public DomXmlReader(XmlSchemaTypeLoader typeLoader)
         {
             m_typeLoader = typeLoader;
+            m_typeCollection = m_typeLoader.DomNodeTypeCollection;
         }
 
-        public DomXmlReader(ChildInfo rootNodeInfo)
+        public DomXmlReader(ChildInfo rootNodeInfo, DomNodeTypeCollection typeCollection)
         {
+            m_typeCollection = typeCollection;
             m_rootNodeInfo = rootNodeInfo;
         }
 
@@ -340,7 +342,7 @@ namespace Sce.Atf.Dom
         /// <returns>Derived node type</returns>
         protected virtual DomNodeType GetDerivedType(DomNodeType baseType, string ns, string typeName)
         {
-            return m_typeLoader.GetNodeType(ns + ":" + typeName);
+            return m_typeCollection.GetNodeType(ns + ":" + typeName);
         }
 
         /// <summary>
@@ -411,6 +413,7 @@ namespace Sce.Atf.Dom
         private static readonly char[] s_trimChars = new[] { '|' };
 
         private readonly XmlSchemaTypeLoader m_typeLoader;
+        private readonly DomNodeTypeCollection m_typeCollection;
         private ChildInfo m_rootNodeInfo;
 
         private DomNode m_root;

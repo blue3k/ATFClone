@@ -29,8 +29,7 @@ namespace UsingDom
         }
         private string m_namespace;
 
-        /// <summary>
-        /// Gets the game type collection</summary>
+        /// <summary>Gets the game type collection</summary>
         public XmlSchemaTypeCollection TypeCollection
         {
             get { return m_typeCollection; }
