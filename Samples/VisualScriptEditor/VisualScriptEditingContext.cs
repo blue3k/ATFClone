@@ -23,6 +23,11 @@ namespace VisualScriptEditor
     public class VisualScriptEditingContext : Sce.Atf.Controls.Adaptable.Graphs.CircuitEditingContext, 
         IEditableGraphContainer<ScriptNode, ScriptNodeConnection, ICircuitPin>
     {
+        public VisualScriptEditingContext()
+        {
+
+        }
+
         /// <summary>
         /// Gets DomNodeType of Wire</summary>
         protected override DomNodeType WireType

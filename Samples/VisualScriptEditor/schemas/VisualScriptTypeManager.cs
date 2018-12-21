@@ -162,12 +162,12 @@ namespace VisualScript
             connectionType.Type.Define(new ExtensionInfo<ScriptNodeConnection>());
             socketType.Type.Define(new ExtensionInfo<ScriptNodeSocket>());
             groupSocketType.Type.Define(new ExtensionInfo<ScriptGroupSocket>());
-            visualScriptType.Type.Define(new ExtensionInfo<VisualScript>());
             prototypeFolderType.Type.Define(new ExtensionInfo<ScriptPrototypeFolder>());
             prototypeType.Type.Define(new ExtensionInfo<ScriptPrototype>());
             layerFolderType.Type.Define(new ExtensionInfo<ScriptLayerFolder>());
             moduleRefType.Type.Define(new ExtensionInfo<ScriptNodeRef>());
             annotationType.Type.Define(new ExtensionInfo<ScriptAnnotation>());
+            visualScriptType.Type.Define(new ExtensionInfo<VisualScript>());
             visualScriptType.Type.Define(new ExtensionInfo<VisualScriptEditor.VisualScriptEditingContext>()); // main editable circuit adapter
 
             templateFolderType.Type.Define(new ExtensionInfo<ScriptTemplateFolder>());

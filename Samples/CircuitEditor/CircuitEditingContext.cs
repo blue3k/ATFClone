@@ -111,8 +111,7 @@ namespace CircuitEditorSample
             return editableGraphContainer.Connect(fromNode, fromRoute, toNode, toRoute, existingEdge).Cast<Connection>();
         }
 
-        /// <summary>
-        /// Gets whether the edge can be disconnected</summary>
+        /// <summary>Gets whether the edge can be disconnected</summary>
         /// <param name="edge">Edge to disconnect</param>
         /// <returns>Whether the edge can be disconnected</returns>
         public bool CanDisconnect(Connection edge)
@@ -122,8 +121,7 @@ namespace CircuitEditorSample
             return editableGraphContainer.CanDisconnect(edge);
         }
 
-        /// <summary>
-        /// Disconnects the edge</summary>
+        /// <summary>Disconnects the edge</summary>
         /// <param name="edge">Edge to disconnect</param>
         public void Disconnect(Connection edge)
         {
