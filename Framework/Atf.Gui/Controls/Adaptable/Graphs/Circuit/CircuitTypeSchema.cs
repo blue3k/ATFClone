@@ -71,8 +71,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
             labelAttribute = Type.DefineNewAttributeInfo("label", AttributeType.StringType);
             xAttribute = Type.DefineNewAttributeInfo("x", AttributeType.IntType);
             yAttribute = Type.DefineNewAttributeInfo("y", AttributeType.IntType);
-            visibleAttribute = Type.DefineNewAttributeInfo("visible", AttributeType.BooleanType);
-            showUnconnectedPinsAttribute = Type.DefineNewAttributeInfo("showUnconnectedPins", AttributeType.BooleanType);
+            visibleAttribute = Type.DefineNewAttributeInfo("visible", AttributeType.BooleanType, defaultValue:true);
+            showUnconnectedPinsAttribute = Type.DefineNewAttributeInfo("showUnconnectedPins", AttributeType.BooleanType, defaultValue: true);
             sourceGuidAttribute = Type.DefineNewAttributeInfo("sourceGuid", AttributeType.StringType);
             validatedAttribute = Type.DefineNewAttributeInfo("validated", AttributeType.BooleanType, true);
             dynamicPropertyChild = Type.DefineNewChildInfo("dynamicProperty", dynamicPropertyType.Type, true);
@@ -381,10 +381,10 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
             typeAttribute = socketType.typeAttribute;
             moduleAttribute = Type.DefineNewAttributeInfo("module", AttributeType.StringType);
             pinAttribute = Type.DefineNewAttributeInfo("pin", AttributeType.IntType);
-            visibleAttribute = Type.DefineNewAttributeInfo("visible", AttributeType.BooleanType);
+            visibleAttribute = Type.DefineNewAttributeInfo("visible", AttributeType.BooleanType, defaultValue: true);
             indexAttribute = Type.DefineNewAttributeInfo("index", AttributeType.IntType);
             pinNameAttribute = Type.DefineNewAttributeInfo("pinName", AttributeType.NameStringType);
-            pinnedAttribute = Type.DefineNewAttributeInfo("pinned", AttributeType.BooleanType);
+            pinnedAttribute = Type.DefineNewAttributeInfo("pinned", AttributeType.BooleanType, defaultValue: true);
             pinYAttribute = Type.DefineNewAttributeInfo("pinY", AttributeType.IntType);
             Type.SetTag(new System.ComponentModel.PropertyDescriptorCollection(new PropertyDescriptor[] {
                         new AttributePropertyDescriptor("name".Localize(), nameAttribute, null, "name".Localize(), false, null, null ),
@@ -426,8 +426,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
             showUnconnectedPinsAttribute = moduleType.showUnconnectedPinsAttribute;
             sourceGuidAttribute = moduleType.sourceGuidAttribute;
             validatedAttribute = moduleType.validatedAttribute;
-            expandedAttribute = Type.DefineNewAttributeInfo("expanded", AttributeType.BooleanType);
-            showExpandedGroupPinsAttribute = Type.DefineNewAttributeInfo("showExpandedGroupPins", AttributeType.BooleanType);
+            expandedAttribute = Type.DefineNewAttributeInfo("expanded", AttributeType.BooleanType, defaultValue: true);
+            showExpandedGroupPinsAttribute = Type.DefineNewAttributeInfo("showExpandedGroupPins", AttributeType.BooleanType, defaultValue: true);
             autosizeAttribute = Type.DefineNewAttributeInfo("autosize", AttributeType.BooleanType, defaultValue:true);
             widthAttribute = Type.DefineNewAttributeInfo("width", AttributeType.IntType);
             heightAttribute = Type.DefineNewAttributeInfo("height", AttributeType.IntType);

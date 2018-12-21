@@ -76,7 +76,7 @@ namespace VisualScriptEditor
 
             m_schemaLoader = schemaLoader;
 
-            string initialDirectory = Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\..\\components\\wws_atf\\Samples\\CircuitEditor\\data");
+            string initialDirectory = Path.Combine(Directory.GetCurrentDirectory(), "data\\samples");
             EditorInfo.InitialDirectory = initialDirectory;
             m_theme = new D2dDiagramTheme();
             m_circuitRenderer = new ScriptRenderer(m_theme, documentRegistry);
