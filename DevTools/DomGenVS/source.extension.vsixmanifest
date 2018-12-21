@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-  <Metadata>
-    <Identity Id="C24BBCC0-CC39-4C15-87D8-5EF312D29095" Version="1.0" Language="en-US" Publisher="Microsoft" />
-    <DisplayName>ATF Dom Generator</DisplayName>
-    <Description xml:space="preserve">Generate ATF DOM from schema</Description>
-    <MoreInfo>https://github.com/blue3k/ATF</MoreInfo>
-    <Icon>Package.ico</Icon>
-    <PreviewImage>Example.jpg</PreviewImage>
-  </Metadata>
-  <Installation>
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[12.0,17.0]" />
-  </Installation>
-  <Dependencies>
-    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="4.5" />
-    <Dependency Id="Microsoft.VisualStudio.MPF.14.0" DisplayName="Visual Studio MPF 14.0" d:Source="Installed" Version="[14.0,15.0)" />
-  </Dependencies>
-  <Assets>
-    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
-  </Assets>
+    <Metadata>
+        <Identity Id="C24BBCC0-CC39-4C15-87D8-5EF312D29095" Version="1.0" Language="en-US" Publisher="Microsoft" />
+        <DisplayName>ATF Dom Generator</DisplayName>
+        <Description xml:space="preserve">Generate ATF DOM from schema</Description>
+        <MoreInfo>https://github.com/blue3k/ATF</MoreInfo>
+        <Icon>Package.ico</Icon>
+        <PreviewImage>Example.jpg</PreviewImage>
+    </Metadata>
+    <Installation>
+        <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[12.0,17.0]" />
+    </Installation>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="4.6" />
+        <Dependency Id="Microsoft.VisualStudio.MPF.14.0" DisplayName="Visual Studio MPF 14.0" d:Source="Installed" Version="[14.0,15.0)" />
+    </Dependencies>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+    </Assets>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.Net.Component.4.6.TargetingPack" Version="[15.6.27406.0,16.0)" DisplayName=".NET Framework 4.6 targeting pack" />
+    </Prerequisites>
 </PackageManifest>
