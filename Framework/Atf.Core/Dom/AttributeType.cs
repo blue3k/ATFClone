@@ -16,6 +16,18 @@ namespace Sce.Atf.Dom
     public class AttributeType : NamedMetadata
     {
         /// <summary>
+        /// Type conversion helper.
+        /// TODO: might be better if we have converter approach
+        /// </summary>
+        /// <param name="stringValue">input string value</param>
+        /// <returns>Converted value object</returns>
+        public delegate object delParseString(string stringValue);
+        public delParseString ValueStringParser
+        {
+            get; set;
+        }
+
+        /// <summary>
         /// Constructs a simple type or an array of length 1 of a simple type</summary>
         /// <param name="name">Type name</param>
         /// <param name="type">CLR type. If this is an array type, then the length will be 1</param>
@@ -568,8 +580,11 @@ namespace Sce.Atf.Dom
                     result = Uri.EscapeUriString(Uri.UnescapeDataString(value.ToString()));
                     break;
 
-                //case AttributeTypes.Reference: // references require special handling by persisters
-                //    break;
+                // references require special handling by persisters
+                // However, it is good if we have generalized way. We are going to use unique name mapping as default implementation
+                case AttributeTypes.Reference: 
+                    result = ((DomNode)value).GetId();
+                    break;
 
                 // we need to convert "True" and "False" to lower case to be valid xs:boolean values
                 case AttributeTypes.Boolean:
@@ -635,6 +650,8 @@ namespace Sce.Atf.Dom
                         sb.Length -= 1; // remove trailing space
                     result = sb.ToString();
                     break;
+                default:
+                    throw new InvalidCastException("We don't know how to convert it");
             }
 
             return result;
@@ -738,8 +755,12 @@ namespace Sce.Atf.Dom
                     result = uri;
                     break;
 
-                //case AttributeTypes.Reference: // references require special handling by persisters
-                //    break;
+                // references require special handling by persisters
+                // However, it is good if we have generalized way. We are going to use unique name mapping as default implementation
+                case AttributeTypes.Reference:
+                    if (ValueStringParser != null)
+                        result = ValueStringParser(s);
+                    break;
 
                 case AttributeTypes.DateTime:
                     // Use local time in the client app.
@@ -836,6 +857,9 @@ namespace Sce.Atf.Dom
                 case AttributeTypes.StringArray:
                     result = ConvertStringToStringArray(s);
                     break;
+
+                default:
+                    throw new InvalidCastException("We don't know how to convert it");
             }
 
             return result;
@@ -1059,6 +1083,15 @@ namespace Sce.Atf.Dom
             get { return s_nameStringArrayType; }
         }
         private static readonly AttributeType s_nameStringArrayType = new AttributeType("NameString[]", typeof(NameString[]), Int32.MaxValue);
+
+        /// <summary>
+        /// Type for DomNodeRef
+        /// </summary>
+        public static AttributeType DomNodeRefType
+        {
+            get { return s_domNodeRefType; }
+        }
+        private static readonly AttributeType s_domNodeRefType = new AttributeType("DomNodeRef", typeof(DomNode), 1);
 
 
         private object GetDefaultArrayValue<T>()

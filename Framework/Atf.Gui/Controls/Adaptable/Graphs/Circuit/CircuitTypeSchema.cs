@@ -154,10 +154,11 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
         {
             Type = new DomNodeType("connectionType");
             labelAttribute = Type.DefineNewAttributeInfo("label", AttributeType.StringType);
-            outputModuleAttribute = Type.DefineNewAttributeInfo("outputModule", AttributeType.StringType);
+            outputModuleAttribute = Type.DefineNewAttributeInfo("outputModule", AttributeType.DomNodeRefType);
             outputPinAttribute = Type.DefineNewAttributeInfo("outputPin", AttributeType.NameStringType);
-            inputModuleAttribute = Type.DefineNewAttributeInfo("inputModule", AttributeType.StringType);
+            inputModuleAttribute = Type.DefineNewAttributeInfo("inputModule", AttributeType.DomNodeRefType);
             inputPinAttribute = Type.DefineNewAttributeInfo("inputPin", AttributeType.NameStringType);
+
             Type.SetTag(new System.ComponentModel.PropertyDescriptorCollection(new PropertyDescriptor[] {
                         new AttributePropertyDescriptor("label".Localize(), labelAttribute, null, "label".Localize(), false, null, null ),
                         new AttributePropertyDescriptor("outputModule".Localize(), outputModuleAttribute, null, "outputModule".Localize(), false, null, null ),
@@ -202,7 +203,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
         static moduleRefType()
         {
             Type = new DomNodeType("moduleRefType");
-            refAttribute = Type.DefineNewAttributeInfo("ref", AttributeType.StringType);
+            refAttribute = Type.DefineNewAttributeInfo("ref", AttributeType.DomNodeRefType);
             Type.SetTag(new System.ComponentModel.PropertyDescriptorCollection(new PropertyDescriptor[] {
                         new AttributePropertyDescriptor("ref".Localize(), refAttribute, null, "ref".Localize(), false, null, null ),
                 }));
@@ -379,7 +380,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
             Type = new DomNodeType("groupSocketType", socketType.Type);
             nameAttribute = socketType.nameAttribute;
             typeAttribute = socketType.typeAttribute;
-            moduleAttribute = Type.DefineNewAttributeInfo("module", AttributeType.StringType);
+            moduleAttribute = Type.DefineNewAttributeInfo("module", AttributeType.DomNodeRefType);
             pinAttribute = Type.DefineNewAttributeInfo("pin", AttributeType.IntType);
             visibleAttribute = Type.DefineNewAttributeInfo("visible", AttributeType.BooleanType, defaultValue: true);
             indexAttribute = Type.DefineNewAttributeInfo("index", AttributeType.IntType);
@@ -558,7 +559,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
             validatedAttribute = moduleType.validatedAttribute;
             dynamicPropertyChild = moduleType.dynamicPropertyChild;
 
-            guidRefAttribute = Type.DefineNewAttributeInfo("guidRef", AttributeType.StringType);
+            guidRefAttribute = Type.DefineNewAttributeInfo("guidRef", AttributeType.DomNodeRefType);
 
             Type.SetTag(new System.ComponentModel.PropertyDescriptorCollection(new PropertyDescriptor[] {
                         new AttributePropertyDescriptor("name".Localize(), nameAttribute, null, "name".Localize(), false, null, null ),
@@ -615,7 +616,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
             connectionChild = groupType.connectionChild;
             annotationChild = groupType.annotationChild;
 
-            guidRefAttribute = Type.DefineNewAttributeInfo("guidRef", AttributeType.StringType);
+            guidRefAttribute = Type.DefineNewAttributeInfo("guidRef", AttributeType.DomNodeRefType);
             refExpandedAttribute = Type.DefineNewAttributeInfo("refExpanded", AttributeType.BooleanType, defaultValue:false);
             refShowExpandedGroupPinsAttribute = Type.DefineNewAttributeInfo("refShowExpandedGroupPins", AttributeType.BooleanType, defaultValue:true);
 

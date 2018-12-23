@@ -23,24 +23,26 @@ namespace VisualScript
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class VisualScriptTypeManager
     {
-        /// <summary>
-        /// Constructor that loads the schema</summary>
+        public string NameSpaceName = "VScript";
+
+        /// <summary>Constructor that initialize the schema</summary>
+        /// [ImportingConstructor]
         public VisualScriptTypeManager()
         {
             var nameSpaces = new XmlQualifiedName[] {
-                    new XmlQualifiedName("VScript", "http://www.blue3k.com/")
+                    new XmlQualifiedName(NameSpaceName, "http://www.blue3k.com/")
                 };
 
             m_typeCollection = new XmlSchemaTypeCollection(
                 nameSpaces,
-                "VScript",
+                NameSpaceName,
                 new DomNodeTypeCollection()
             );
             m_version = new Version("1.0");// string.IsNullOrEmpty(version) ? new Version("1.0") : new Version(version);
 
             m_ChildInfoOfTheRoot = new ChildInfo("VScript", visualScriptDocumentType.Type);
 
-            RegisterExtensions();
+            Initialize();
         }
 
         public XmlSchemaTypeCollection TypeCollection => m_typeCollection;
@@ -64,6 +66,8 @@ namespace VisualScript
         /// Defines DOM adapters for types. Create PropertyDescriptors for types to use in property editors.</summary>
         protected void Initialize()
         {
+            RegisterTypes();
+
             RegisterExtensions();
 
             // types are initialized, register property descriptors on module, folder types
@@ -119,6 +123,38 @@ namespace VisualScript
                             false)
                 }));           
         } 
+
+        void RegisterType(DomNodeType nodeType)
+        {
+            var xmlName = string.Format("{0}:{1}", NameSpaceName, nodeType.Name);
+            DomNodeTypeCollection.AddNodeType(xmlName, nodeType);
+        }
+
+        void RegisterTypes()
+        {
+            RegisterType(visualScriptDocumentType.Type);
+            RegisterType(visualScriptType.Type);
+            RegisterType(moduleType.Type);
+            RegisterType(groupType.Type);
+            RegisterType(connectionType.Type);
+            RegisterType(expressionType.Type);
+            RegisterType(socketType.Type);
+            RegisterType(groupSocketType.Type);
+            RegisterType(prototypeFolderType.Type);
+            RegisterType(prototypeType.Type);
+            RegisterType(layerFolderType.Type);
+            RegisterType(moduleRefType.Type);
+            RegisterType(annotationType.Type);
+            RegisterType(visualScriptType.Type);
+            RegisterType(templateFolderType.Type);
+            RegisterType(templateType.Type);
+            RegisterType(moduleTemplateRefType.Type);
+            RegisterType(groupTemplateRefType.Type);
+            RegisterType(missingModuleType.Type);
+            RegisterType(moduleTemplateRefType.Type);
+            RegisterType(moduleTemplateRefType.Type);
+            RegisterType(moduleTemplateRefType.Type);
+        }
 
         private void RegisterExtensions()
         {

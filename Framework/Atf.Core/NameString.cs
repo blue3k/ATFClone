@@ -1,4 +1,4 @@
-//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+ï»¿//Copyright ?2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
 using System.Collections.Generic;
@@ -68,44 +68,44 @@ namespace Sce.Atf
 
         public static bool operator ==(NameString lhs, NameString rhs)
         {
-            if (lhs ==  null)
-                return rhs == null;
+            if ((object)lhs ==  null)
+                return (object)rhs == null;
             return lhs.Equals(rhs);
         }
 
         public static bool operator !=(NameString lhs, NameString rhs)
         {
-            if (lhs == null)
-                return rhs == null;
+            if ((object)lhs == null)
+                return (object)rhs == null;
             return !lhs.Equals(rhs);
         }
 
 
         public static bool operator ==(NameString lhs, string rhs)
         {
-            if (lhs == null)
-                return rhs == null;
+            if ((object)lhs == null)
+                return (object)rhs == null;
             return lhs.m_NameString.Equals(rhs);
         }
 
         public static bool operator !=(NameString lhs, string rhs)
         {
-            if (lhs == null)
-                return rhs == null;
+            if ((object)lhs == null)
+                return (object)rhs == null;
             return !lhs.m_NameString.Equals(rhs);
         }
 
         public static bool operator ==(string lhs, NameString rhs)
         {
-            if (lhs == null)
-                return rhs == null;
+            if ((object)lhs == null)
+                return (object)rhs == null;
             return lhs.Equals(rhs.m_NameString);
         }
 
         public static bool operator !=(string lhs, NameString rhs)
         {
-            if (lhs == null)
-                return rhs == null;
+            if ((object)lhs == null)
+                return (object)rhs == null;
             return !lhs.Equals(rhs.m_NameString);
         }
 
