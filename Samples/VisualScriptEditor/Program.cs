@@ -88,8 +88,7 @@ namespace VisualScriptEditor
                 typeof(MyPropertyEditor),               // property grid for editing selected objects; uses tooltips to show property descriptions
                 typeof(GridPropertyEditor),             // grid control for editing selected objects
                 typeof(PropertyEditingCommands),        // commands for PropertyEditor and GridPropertyEditor, like Reset,
-                typeof(DomNodeRefDictionary),        // commands for PropertyEditor and GridPropertyEditor, like Reset,
-                                                        //  Reset All, Copy Value, Paste Value, Copy All, Paste All
+                typeof(DomNodeRefDictionary),           // Reference dictionary
 
                 typeof(HistoryLister),                  // visual list of undo/redo stack
                 typeof(PrototypeLister),                // editable palette of instantiable item groups

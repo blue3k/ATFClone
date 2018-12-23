@@ -90,7 +90,6 @@
     <Compile Include="DisplayStringAttribute.cs" />
     <Compile Include="Dom\CustomTypeDescriptorNodeAdapter.cs" />
     <Compile Include="Dom\CategoryUniqueIdValidator.cs" />
-    <Compile Include="Dom\DomNodeManager.cs" />
     <Compile Include="Dom\DomNodeRefAdapter.cs" />
     <Compile Include="Dom\DomNodeRefDictionary.cs" />
     <Compile Include="Dom\DomNodeTypeCollection.cs" />
