@@ -37,6 +37,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             m_Pins = sourceList;
             m_pinByName = sourceMap;
+            System.Diagnostics.Debug.Assert(m_Pins.Count == m_pinByName.Count);
         }
 
         public int Count
@@ -130,7 +131,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 m_Pins[iPin].Index = iPin;
 
             m_pinByName[item.Name] = item;
-
+            System.Diagnostics.Debug.Assert(m_Pins.Count == m_pinByName.Count);
         }
 
         public void RemoveAt(int index)
@@ -166,6 +167,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             item.Index = m_Pins.Count;
             m_Pins.Add(item);
             m_pinByName[item.Name] = item;
+            System.Diagnostics.Debug.Assert(m_Pins.Count == m_pinByName.Count);
         }
 
         public void Clear()

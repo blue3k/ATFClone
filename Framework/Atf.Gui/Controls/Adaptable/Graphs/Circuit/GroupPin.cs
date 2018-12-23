@@ -95,7 +95,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 ? InternalElement.InputPin(InternalPinName).Name.ToString()
                 : InternalElement.OutputPin(InternalPinName).Name.ToString();
                    
-            return new NameString(InternalElement.Name + ":" + internalName);
+            return new NameString(InternalElement.Id + ":" + internalName);
         }
 
         /// <summary>

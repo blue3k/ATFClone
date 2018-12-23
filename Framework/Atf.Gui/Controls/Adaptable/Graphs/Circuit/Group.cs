@@ -780,11 +780,11 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                             groupPin.Position = new Point(0, (inputPin.Index + 1) * 16 + module.Bounds.Location.Y);
                             groupPin.Visible = inputPin.Is<IVisible>() ? inputPin.Cast<IVisible>().Visible : ShowExpandedGroupPins;
                             groupPin.IsDefaultName = true;
-                            m_inputs.Add(groupPin);
                             groupPin.SetPinTarget(true);
                             if (groupPin.InternalElement.Is<IReference<DomNode>>())
                                 groupPin.PinTarget.InstancingNode = groupPin.InternalElement.DomNode;
                             groupPin.Name = groupPin.DefaultName(true); //module.Name + ":" + inputPin.Name;
+                            m_inputs.Add(groupPin);
                         }
                         else
                         {
@@ -816,11 +816,11 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                             groupPin.Position = new Point(0, (outputPin.Index + 1) * 16 + module.Bounds.Location.Y);
                             groupPin.Visible = outputPin.Is<IVisible>() ? outputPin.Cast<IVisible>().Visible : ShowExpandedGroupPins;
                             groupPin.IsDefaultName = true;
-                            m_outputs.Add(groupPin);
                             groupPin.SetPinTarget(false);
                             if (groupPin.InternalElement.Is<IReference<DomNode>>())
                                 groupPin.PinTarget.InstancingNode = groupPin.InternalElement.DomNode;
                             groupPin.Name = groupPin.DefaultName(false); //module.Name + ":" + outputPin.Name;
+                            m_outputs.Add(groupPin);
                         }
                         else
                         {
@@ -1334,11 +1334,15 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             GroupPin pin;
             if (inputSide)
                 pin = m_inputs.FirstOrDefault(x => {
+                    if (x == null)
+                        return false;
                     var grpPin = x.Cast<GroupPin>();
                     return grpPin.InternalElement.DomNode == node.DomNode && grpPin.InternalPinName == pinName;
                 }).Cast<GroupPin>();
             else
                 pin = m_outputs.FirstOrDefault(x => {
+                    if (x == null)
+                        return false;
                     var grpPin = x.Cast<GroupPin>();
                     return grpPin.InternalElement.DomNode == node.DomNode && grpPin.InternalPinName == pinName;
                 }).Cast<GroupPin>();

@@ -111,6 +111,10 @@ namespace Sce.Atf.Adaptation
         public static T Cast<T>(this object reference)
             where T : class
         {
+            // If original pointer is null, result should be null as well
+            if (reference == null)
+                return null;
+
             T converted = As<T>(reference);
             if (converted == null)
                 throw new AdaptationException(typeof(T).Name + " adapter required");
@@ -126,6 +130,10 @@ namespace Sce.Atf.Adaptation
         public static T Cast<T>(this IAdaptable adaptable)
             where T : class
         {
+            // If original pointer is null, result should be null as well
+            if (adaptable == null)
+                return null;
+
             T converted = As<T>(adaptable);
             if (converted == null)
                 throw new AdaptationException(typeof(T).Name + " adapter required");

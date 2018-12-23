@@ -360,8 +360,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
         static socketType()
         {
             Type = new DomNodeType("socketType");
-            nameAttribute = socketType.Type.DefineNewAttributeInfo("name", AttributeType.StringType);
+            nameAttribute = socketType.Type.DefineNewAttributeInfo("name", AttributeType.NameStringType);
             typeAttribute = socketType.Type.DefineNewAttributeInfo("type", AttributeType.StringType);
+
             Type.SetTag(new System.ComponentModel.PropertyDescriptorCollection(new PropertyDescriptor[] {
                         new AttributePropertyDescriptor("name".Localize(), nameAttribute, null, "name".Localize(), false, null, null ),
                         new AttributePropertyDescriptor("type".Localize(), typeAttribute, null, "type".Localize(), false, null, null ),
