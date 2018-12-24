@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NodeTypeDefinitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://blue3k.com/1_0"
+           xsi:noNamespaceSchemaLocation="../schemas/VisualScriptNodeDefinitionSchema.xsd"
+           >
+
+  <!-- Control nodes -->
+
+  <NodeTypeInfo Name="Control" IsAbstract="true" Category="Control" NodeType="" Icon="alphabet.speech-balloon-green-a-icon_16.png" Description="">
+  </NodeTypeInfo>
+
+
+  <NodeTypeInfo Name="Sequence" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="Sequence Signal replicator">
+    <Property Name="In" Type="Signal" AllowMultipleInput="true" Socket="Input" />
+    <Property Name="Out" Type="Signal" Socket="Output" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="If" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="If branch">
+    <Property Name="Condition" Type="boolean" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="True" Type="Signal" Socket="Output" />
+    <Property Name="False" Type="Signal" Socket="Output" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="For" NodeType="VisualScriptArithmeticNEG" Base="Control" Icon="arithmetic.Minus-icon_16.png" Description="Negative">
+    <Property Name="StartIndex" Type="int" Socket="Input" />
+    <Property Name="Count" Type="int" Socket="Input" />
+	<Property Name="LoopTick" Type="Signal" Socket="Output" />
+	<Property Name="Finished" Type="Signal" Socket="Output" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="While" NodeType="VisualScriptArithmeticNEG" Base="Control" Icon="arithmetic.Minus-icon_16.png" Description="Negative">
+    <Property Name="Condition" Type="boolean" Socket="Input" />
+	<Property Name="LoopTick" Type="Signal" Socket="Output" />
+	<Property Name="Finished" Type="Signal" Socket="Output" />
+  </NodeTypeInfo>
+
+
+
+
+</NodeTypeDefinitions>

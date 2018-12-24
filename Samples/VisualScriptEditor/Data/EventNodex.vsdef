@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NodeTypeDefinitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://blue3k.com/1_0"
+           xsi:noNamespaceSchemaLocation="../schemas/VisualScriptNodeDefinitionSchema.xsd"
+           >
+
+  <!-- Control nodes -->
+
+  <NodeTypeInfo Name="Event" IsAbstract="true" Category="Event" NodeType="" Icon="alphabet.speech-balloon-green-a-icon_16.png" Description="">
+    <Property Name="Signal" Type="Signal" Socket="Output" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="NamedEvent" NodeType="VisualScriptArithmeticSUM" Base="Event" Icon="arithmetic.Add-icon_16.png" Description="Named event">
+    <Property Name="Name" Type="string" AllowMultipleInput="true" Socket="Input" />
+  </NodeTypeInfo>
+
+
+
+
+</NodeTypeDefinitions>
