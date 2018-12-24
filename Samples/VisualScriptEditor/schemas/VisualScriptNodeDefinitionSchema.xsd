@@ -30,6 +30,7 @@
       <xs:enumeration value="Socket"/>
       <xs:enumeration value="File"/>
       <xs:enumeration value="Asset"/>
+      <xs:enumeration value="Signal"/>
     </xs:restriction>
   </xs:simpleType>
 

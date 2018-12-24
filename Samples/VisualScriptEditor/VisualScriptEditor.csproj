@@ -71,8 +71,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="schemas\VisualScriptNodeDefinitionSchema.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>VisualScriptNodeDefinitionSchema.xsd</DependentUpon>
     </Compile>
     <Compile Include="schemas\VisualScriptNodeDefinitionSchemaExt.cs" />
@@ -333,7 +331,6 @@
       <Generator>XSDGenVS</Generator>
       <CustomToolNamespace>CS,VisualScriptSchema</CustomToolNamespace>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <LastGenOutput>VisualScriptNodeDefinitionSchema.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -1,1 +1,3 @@
-..\..\..\DevTools\DomGen\bin\DomGen.exe xsd cs "http://blue3k.com/1_0" VisualScript
+..\..\..\bin\ReleaseWin\DomGen.exe VisualScriptNodeDefinitionSchema.xsd VisualScriptNodeDefinitionSchema.cs "http://blue3k.com/1_0" VisualScript
+
+pause
