@@ -11,17 +11,17 @@ namespace CircuitEditorSample
     {
         /// <summary>
         /// Gets type attribute of Pin</summary>
-        protected override AttributeInfo TypeAttribute
-        {
-            get { return Schema.pinType.typeAttribute; }
-        }
+        protected override AttributeInfo TypeAttribute => Schema.pinType.typeAttribute;
 
         /// <summary>
         /// Gets name attribute of Pin</summary>
-        protected override AttributeInfo NameAttribute
-        {
-            get { return Schema.pinType.nameAttribute; }
-        }
+        protected override AttributeInfo NameAttribute => Schema.pinType.nameAttribute;
+
+        /// <summary>
+        /// Pint Type, is this input pin?
+        /// </summary>
+        protected override AttributeInfo IsInputAttribute => Schema.pinType.isInputAttribute;
+
 
         protected override AttributeInfo IndexAttribute
         {

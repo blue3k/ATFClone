@@ -22,11 +22,12 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// This method is for supporting list from outside. the synchronization should be made manually.
         /// </summary>
         /// <param name="sourceList"></param>
-        public PinList(IList<PinType> sourceList)
+        public PinList(IList<PinType> sourceList, bool manualUpdate = false)
         {
             m_Pins = sourceList;
             m_pinByName = new Dictionary<NameString, PinType>();
-            UpddateNameMap();
+            if(!manualUpdate)
+                UpddateNameMap();
         }
 
         /// <summary>
@@ -179,7 +180,10 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         public bool Contains(PinType item)
         {
             PinType found;
-            m_pinByName.TryGetValue(item.Name, out found);
+            if (m_pinByName.Count == m_Pins.Count) // In group pin,It need to check whether it's input or output pin, and call this function which will be before the group is fully is initialized.
+                m_pinByName.TryGetValue(item.Name, out found);
+            else
+                return m_Pins.Contains(item);
             return found != null;
         }
 

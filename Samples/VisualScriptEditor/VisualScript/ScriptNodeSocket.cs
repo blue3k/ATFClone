@@ -12,21 +12,17 @@ namespace VisualScript
     {
         /// <summary>
         /// Gets type attribute of Pin</summary>
-        protected override AttributeInfo TypeAttribute
-        {
-            get { return socketType.typeAttribute; }
-        }
+        protected override AttributeInfo TypeAttribute => socketType.typeAttribute;
 
         /// <summary>
         /// Gets name attribute of Pin</summary>
-        protected override AttributeInfo NameAttribute
-        {
-            get { return socketType.nameAttribute; }
-        }
+        protected override AttributeInfo NameAttribute => socketType.nameAttribute;
 
-        protected override AttributeInfo IndexAttribute
-        {
-            get { return null; }
-        }
+        /// <summary>
+        /// Pint Type, is this input pin?
+        /// </summary>
+        protected override AttributeInfo IsInputAttribute => socketType.isInputAttribute;
+
+        protected override AttributeInfo IndexAttribute => null;
     }
 }

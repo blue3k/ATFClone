@@ -95,7 +95,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             if (m_targetGroup == null) 
                 return false; // disallow connecting to a missing type
-            if (InputGroupPins.Contains(pin)) // check group pins in the proxy
+            if (AllInputGroupPins.Contains(pin)) // check group pins in the proxy
                 return true;
             return m_targetGroup.HasInputPin(pin); // check group pins in the original group target
         }

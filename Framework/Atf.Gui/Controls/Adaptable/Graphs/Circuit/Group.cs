@@ -142,6 +142,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             SetUpGraphData();
             base.OnNodeSet();
 
+
             DomNode.AttributeChanged += DomNode_AttributeChanged;
             DomNode.ChildInserted += DomNode_ChildInserted;
             DomNode.ChildRemoved += DomNode_ChildRemoved;
@@ -149,19 +150,22 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             Info.ShowExpandedGroupPins = ShowExpandedGroupPins;
 
             // fill in group pin's leaf DomNode
-            foreach (var grpPin in InputGroupPins)
+            foreach (var pin in AllInputGroupPins)
             {
+                var grpPin = pin.Cast<GroupPin>();
                 grpPin.SetPinTarget(true);
                 if (grpPin.InternalElement.Is<IReference<DomNode>>())
                     grpPin.PinTarget.InstancingNode = grpPin.InternalElement.DomNode;
             }
 
-            foreach (var grpPin in OutputGroupPins)
+            foreach (var pin in OutputGroupPins)
             {
+                var grpPin = pin.Cast<GroupPin>();
                 grpPin.SetPinTarget(false);
                 if (grpPin.InternalElement.Is<IReference<DomNode>>())
                     grpPin.PinTarget.InstancingNode = grpPin.InternalElement.DomNode;
             }
+
             foreach (var connection in Wires)
                 connection.SetPinTarget();
 
@@ -177,8 +181,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 Validated = true;
             }
 
-            Info.HiddenInputPins = m_inputs.Cast<GroupPin>().Where(x => !x.Visible).AsIEnumerable<ICircuitPin>();
-            Info.HiddenOutputPins = m_outputs.Cast<GroupPin>().Where(x => !x.Visible).AsIEnumerable<ICircuitPin>();
+            Info.HiddenInputPins = m_inputs.Where(x => !x.Cast<GroupPin>().Visible);
+            Info.HiddenOutputPins = m_outputs.Where(x => !x.Cast<GroupPin>().Visible);
 
             UpdateGroupPinInfo();
             UpdateOffset();
@@ -317,6 +321,12 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             get { return new PinList<ICircuitPin>(m_outputs.Where(n => n.Cast<GroupPin>().Visible).ToArray()); }
         }
+
+        /// <summary>All input pins includes invisible pins</summary>
+        public virtual PinList<ICircuitPin> AllInputGroupPins => m_inputs;
+
+        /// <summary>All output pins includes invisible pins</summary>
+        public virtual PinList<ICircuitPin> AllOutputGroupPins => m_outputs;
 
         /// <summary>
         /// Gets enumeration of all the input pins in this group</summary>
@@ -1422,8 +1432,11 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             m_wires = new DomNodeListAdapter<Wire>(DomNode, WireChildInfo);
             if (AnnotationChildInfo != null)
                 m_annotations = new DomNodeListAdapter<Annotation>(DomNode, AnnotationChildInfo);
-            m_inputs = new PinList<ICircuitPin>(new DomNodeListAdapter<ICircuitPin>(DomNode, InputChildInfo));
-            m_outputs = new PinList<ICircuitPin>(new DomNodeListAdapter<ICircuitPin>(DomNode, OutputChildInfo));
+            m_inputs = new PinList<ICircuitPin>(new DomNodeListAdapter<ICircuitPin>(DomNode, InputChildInfo), manualUpdate:true);
+            m_outputs = new PinList<ICircuitPin>(new DomNodeListAdapter<ICircuitPin>(DomNode, OutputChildInfo), manualUpdate: true);
+
+            m_inputs.UpddateNameMap();
+            m_outputs.UpddateNameMap();
         }
 
         private void BackDepthOrderVistor(Element outputNode, IEnumerable<Wire> internalConnections, List<GroupPin> grpPinVisited)

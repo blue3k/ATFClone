@@ -29,16 +29,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         protected abstract AttributeInfo IndexAttribute { get; }
 
         /// <summary>
-        /// pin index used for cached order access
+        /// Pint Type, is this input pin?
         /// </summary>
-        public int Index
-        {
-            get { return GetAttribute<int>(IndexAttribute); }
-            set
-            {
-                SetAttribute(IndexAttribute, value);
-            }
-        }
+        protected abstract AttributeInfo IsInputAttribute { get; }
 
         #region ICircuitPin Members
 
@@ -61,6 +54,30 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             set
             {
                 SetAttribute(TypeAttribute, value);
+            }
+        }
+
+        /// <summary>
+        /// pin index used for cached order access
+        /// </summary>
+        public int Index
+        {
+            get { return GetAttribute<int>(IndexAttribute); }
+            set
+            {
+                SetAttribute(IndexAttribute, value);
+            }
+        }
+
+        /// <summary>
+        /// Is input pin?
+        /// </summary>
+        public bool IsInput
+        {
+            get { return GetAttribute<bool>(IsInputAttribute); }
+            set
+            {
+                SetAttribute(IsInputAttribute, value);
             }
         }
 

@@ -308,7 +308,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             var group = GetParentAs<Group>();
             if (group != null)
             {
-                bool inputSide = group.InputGroupPins.Contains(this);
+                bool inputSide = group.AllInputGroupPins.Contains(this);
                 IsDefaultName = Name == DefaultName(inputSide);
             }
         }
@@ -376,8 +376,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 }
 
                 var childSubGraph = current.InternalElement.Cast<Group>();
-                current = inputSide ? childSubGraph.InputGroupPins.First(x => x.Name == current.InternalPinName) :
-                      childSubGraph.OutputGroupPins.First(x => x.Name == current.InternalPinName);               
+                current = inputSide ? childSubGraph.AllInputGroupPins.First(x => x.Name == current.InternalPinName).Cast<GroupPin>() :
+                      childSubGraph.AllOutputGroupPins.First(x => x.Name == current.InternalPinName).Cast<GroupPin>();
             }
 
             if ( current.InternalElement.Is<IReference<DomNode>>()) // case for plain node references

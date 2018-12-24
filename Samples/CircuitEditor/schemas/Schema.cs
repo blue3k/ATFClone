@@ -122,6 +122,7 @@ namespace CircuitEditorSample
             pinType.Type = getNodeType("http://sony.com/gametech/circuits/1_0", "pinType");
             pinType.nameAttribute = pinType.Type.GetAttributeInfo("name");
             pinType.typeAttribute = pinType.Type.GetAttributeInfo("type");
+            pinType.isInputAttribute = pinType.Type.GetAttributeInfo("isInput");
 
             groupPinType.Type = getNodeType("http://sony.com/gametech/circuits/1_0", "groupPinType");
             groupPinType.nameAttribute = groupPinType.Type.GetAttributeInfo("name");
@@ -348,6 +349,7 @@ namespace CircuitEditorSample
             public static DomNodeType Type;
             public static AttributeInfo nameAttribute;
             public static AttributeInfo typeAttribute;
+            public static AttributeInfo isInputAttribute;
         }
 
         public static class groupPinType

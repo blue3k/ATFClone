@@ -12,9 +12,12 @@ namespace Sce.Atf.Dom
     /// </summary>
     public class DomNodeTypeCollection
     {
+        private string m_defaultNameSpace;
+
         /// <summary>Constructor</summary>
-        public DomNodeTypeCollection()
+        public DomNodeTypeCollection(string defaultNameSpace)
         {
+            m_defaultNameSpace = defaultNameSpace;
         }
 
         /// <summary>
@@ -25,6 +28,22 @@ namespace Sce.Atf.Dom
         {
             DomNodeType nodeType;
             m_nodeTypes.TryGetValue(name, out nodeType);
+            return nodeType;
+        }
+
+        /// <summary>
+        /// Gets a node type</summary>
+        /// <param name="name">Qualified name of node type</param>
+        /// <returns>Node type or null if unknown name</returns>
+        public DomNodeType GetNodeType(string ns, string typeName)
+        {
+            DomNodeType nodeType;
+            if(!m_nodeTypes.TryGetValue(typeName, out nodeType))
+            {
+                ns = string.IsNullOrEmpty(ns) ? m_defaultNameSpace : ns;
+                var fullName = string.Format("{0}:{1}", ns, typeName);
+                m_nodeTypes.TryGetValue(fullName, out nodeType);
+            }
             return nodeType;
         }
 

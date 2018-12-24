@@ -36,7 +36,7 @@ namespace VisualScript
             m_typeCollection = new XmlSchemaTypeCollection(
                 nameSpaces,
                 NameSpaceName,
-                new DomNodeTypeCollection()
+                new DomNodeTypeCollection(NameSpaceName)
             );
             m_version = new Version("1.0");// string.IsNullOrEmpty(version) ? new Version("1.0") : new Version(version);
 
@@ -127,6 +127,7 @@ namespace VisualScript
         void RegisterType(DomNodeType nodeType)
         {
             var xmlName = string.Format("{0}:{1}", NameSpaceName, nodeType.Name);
+            DomNodeTypeCollection.AddNodeType(xmlName, nodeType);
             DomNodeTypeCollection.AddNodeType(xmlName, nodeType);
         }
 

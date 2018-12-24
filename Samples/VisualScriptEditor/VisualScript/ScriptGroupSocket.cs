@@ -17,60 +17,41 @@ namespace VisualScript
         // for bases class Pin
         /// <summary>
         /// Gets type attribute for group pin</summary>
-        protected override AttributeInfo TypeAttribute
-        {
-            get { return socketType.typeAttribute; }
-        }
+        protected override AttributeInfo TypeAttribute => socketType.typeAttribute;
 
         /// <summary>
         /// Gets name attribute for group pin</summary>
-        protected override AttributeInfo NameAttribute
-        {
-            get { return socketType.nameAttribute; }
-        }
+        protected override AttributeInfo NameAttribute => socketType.nameAttribute;
+
+        /// <summary>
+        /// Pint Type, is this input pin?
+        /// </summary>
+        protected override AttributeInfo IsInputAttribute => socketType.isInputAttribute;
 
         /// <summary>
         /// Gets index (pin order in its sub-graph owner) attribute for group pin</summary>
-        protected override AttributeInfo IndexAttribute
-        {
-            get { return groupSocketType.indexAttribute; }
-        }
+        protected override AttributeInfo IndexAttribute => groupSocketType.indexAttribute;
 
         /// <summary>
         /// Gets floating y-coordinate attribute for group pin. 
         /// Floating pin location y value is user defined (x value is auto-generated).</summary>
-        protected override AttributeInfo PinYAttribute
-        {
-            get { return groupSocketType.pinYAttribute; }
-        }
+        protected override AttributeInfo PinYAttribute => groupSocketType.pinYAttribute;
 
         /// <summary>
         /// Gets module (associated internal subelement) attribute for group pin</summary>
-        protected override AttributeInfo ElementAttribute
-        {
-            get { return groupSocketType.moduleAttribute; }
-        }
+        protected override AttributeInfo ElementAttribute => groupSocketType.moduleAttribute;
 
         /// <summary>
         /// Gets pin (associated internal subpin) attribute for group pin</summary>
-        protected override AttributeInfo PinAttribute
-        {
-            get { return groupSocketType.pinAttribute; }
-        }
+        protected override AttributeInfo PinAttribute => groupSocketType.pinAttribute;
 
         /// <summary>
         /// Gets pinned attribute for group pin</summary>
-        protected override AttributeInfo PinnedAttribute
-        {
-            get { return groupSocketType.pinnedAttribute; }
-        }
+        protected override AttributeInfo PinnedAttribute => groupSocketType.pinnedAttribute;
 
         /// <summary>
         /// Gets visible attribute for group pin</summary>
-        protected override AttributeInfo VisibleAttribute
-        {
-            get { return groupSocketType.visibleAttribute; }
-        }
+        protected override AttributeInfo VisibleAttribute => groupSocketType.visibleAttribute;
 
         #region ICircuitGroupPin members (needed for drawing)
 

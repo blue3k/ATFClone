@@ -1074,7 +1074,7 @@ namespace Sce.Atf.Dom
         private readonly Dictionary<string, XmlAttributeType> m_attributeTypes =
             new Dictionary<string, XmlAttributeType>();
 
-        private readonly DomNodeTypeCollection m_nodeTypeCollection = new DomNodeTypeCollection();
+        private readonly DomNodeTypeCollection m_nodeTypeCollection = new DomNodeTypeCollection("");
 
         private readonly Dictionary<ChildInfo, XmlQualifiedName> m_refElements =
             new Dictionary<ChildInfo, XmlQualifiedName>();

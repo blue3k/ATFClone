@@ -360,8 +360,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
         static socketType()
         {
             Type = new DomNodeType("socketType");
-            nameAttribute = socketType.Type.DefineNewAttributeInfo("name", AttributeType.NameStringType);
-            typeAttribute = socketType.Type.DefineNewAttributeInfo("type", AttributeType.StringType);
+            nameAttribute = Type.DefineNewAttributeInfo("name", AttributeType.NameStringType);
+            typeAttribute = Type.DefineNewAttributeInfo("type", AttributeType.StringType);
+            isInputAttribute = Type.DefineNewAttributeInfo("isInput", AttributeType.BooleanType);
 
             Type.SetTag(new System.ComponentModel.PropertyDescriptorCollection(new PropertyDescriptor[] {
                         new AttributePropertyDescriptor("name".Localize(), nameAttribute, null, "name".Localize(), false, null, null ),
@@ -372,6 +373,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
         public static DomNodeType Type;
         public static AttributeInfo nameAttribute;
         public static AttributeInfo typeAttribute;
+        public static AttributeInfo isInputAttribute;
     }
 
     public static class groupSocketType
@@ -382,7 +384,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
             nameAttribute = socketType.nameAttribute;
             typeAttribute = socketType.typeAttribute;
             moduleAttribute = Type.DefineNewAttributeInfo("module", AttributeType.DomNodeRefType);
-            pinAttribute = Type.DefineNewAttributeInfo("pin", AttributeType.IntType);
+            pinAttribute = Type.DefineNewAttributeInfo("pin", AttributeType.NameStringType);
             visibleAttribute = Type.DefineNewAttributeInfo("visible", AttributeType.BooleanType, defaultValue: true);
             indexAttribute = Type.DefineNewAttributeInfo("index", AttributeType.IntType);
             pinNameAttribute = Type.DefineNewAttributeInfo("pinName", AttributeType.NameStringType);

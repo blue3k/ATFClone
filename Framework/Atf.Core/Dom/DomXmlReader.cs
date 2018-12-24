@@ -342,7 +342,7 @@ namespace Sce.Atf.Dom
         /// <returns>Derived node type</returns>
         protected virtual DomNodeType GetDerivedType(DomNodeType baseType, string ns, string typeName)
         {
-            return m_typeCollection.GetNodeType(ns + ":" + typeName);
+            return m_typeCollection.GetNodeType(ns, typeName);
         }
 
         /// <summary>

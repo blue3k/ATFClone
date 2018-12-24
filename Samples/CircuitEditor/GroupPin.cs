@@ -34,6 +34,8 @@ namespace CircuitEditorSample
             get { return Schema.groupPinType.indexAttribute; }
         }
 
+        protected override AttributeInfo IsInputAttribute => Schema.pinType.isInputAttribute;
+
         /// <summary>
         /// Gets floating y-coordinate attribute for group pin. 
         /// Floating pin location y value is user defined (x value is auto-generated).</summary>

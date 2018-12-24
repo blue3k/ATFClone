@@ -92,6 +92,7 @@
   <xs:complexType name="pinType">
     <xs:attribute name="name" type="xs:string" use="required" />
     <xs:attribute name="type" type="xs:string" use="required" />
+    <xs:attribute name="isInput" type="xs:boolean" />
   </xs:complexType>
 
   <!--

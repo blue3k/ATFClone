@@ -182,8 +182,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 if (parent.Is<Group>())
                 {
                     var group = parent.Cast<Group>();
-                    foreach (var grpPin in group.InputGroupPins)
+                    foreach (var pin in group.AllInputGroupPins)
                     {
+                        var grpPin = pin.Cast<GroupPin>();
                         if (grpPin.InternalElement.Equals(currentElement) &&
                             grpPin.InternalElement.InputPin(grpPin.InternalPinName) == circuitPin)
                         {
@@ -193,8 +194,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     }
                     if (matchedPin == null)
                     {
-                        foreach (var grpPin in group.OutputGroupPins)
+                        foreach (var pin in group.OutputGroupPins)
                         {
+                            var grpPin = pin.Cast<GroupPin>();
                             if (grpPin.InternalElement.Equals(currentElement) &&
                                 grpPin.InternalElement.OutputPin(grpPin.InternalPinName) == circuitPin)
                             {
