@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="schemas\VisualScriptNodeDefinitionSchema.cs">
       <DependentUpon>VisualScriptNodeDefinitionSchema.xsd</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="schemas\VisualScriptNodeDefinitionSchemaExt.cs" />
     <Compile Include="schemas\VisualScriptTypes.cs" />
@@ -325,9 +326,17 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\ControlNodes.vsdef">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\EventNodex.vsdef">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\StateNodes.vsdef">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="schemas\GenSchemaDef.bat" />
     <None Include="schemas\VisualScriptNodeDefinitionSchema.xsd">
-      <SubType>Designer</SubType>
       <Generator>XSDGenVS</Generator>
       <CustomToolNamespace>CS,VisualScriptSchema</CustomToolNamespace>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -34,8 +34,9 @@ namespace VisualScript
 
         static readonly string[] stm_DefaultModuleDefinitions = new string[]
         {
+            Path.Combine(stm_DefaultPath, "ControlNodes.vsdef"),
             Path.Combine(stm_DefaultPath, "mathNodes.vsdef"),
-            Path.Combine(stm_DefaultPath, "buildPipelineNodes.vsdef"),
+            Path.Combine(stm_DefaultPath, "StateNodes.vsdef"),
         };
         public string[] DefaultModuleDefinitions
         {
@@ -422,6 +423,10 @@ namespace VisualScript
                     case VisualScriptSchema.PropertyType.Socket:
                         childNodeType = CreateDOMType(typeof(VisualScriptSchema.EditorSocket));
                         socketType.Type = childNodeType; // cache for global use
+                        break;
+                    case VisualScriptSchema.PropertyType.Signal:
+                        newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.NameStringType);
+                        newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.NameStringType);
                         break;
                     case VisualScriptSchema.PropertyType.File:
                     case VisualScriptSchema.PropertyType.Asset:
