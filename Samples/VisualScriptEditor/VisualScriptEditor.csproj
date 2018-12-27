@@ -329,7 +329,7 @@
     <Content Include="Data\ControlNodes.vsdef">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\EventNodex.vsdef">
+    <Content Include="Data\EventNodes.vsdef">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\StateNodes.vsdef">

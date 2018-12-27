@@ -37,6 +37,7 @@ namespace VisualScript
             Path.Combine(stm_DefaultPath, "ControlNodes.vsdef"),
             Path.Combine(stm_DefaultPath, "mathNodes.vsdef"),
             Path.Combine(stm_DefaultPath, "StateNodes.vsdef"),
+            Path.Combine(stm_DefaultPath, "EventNodes.vsdef"),
         };
         public string[] DefaultModuleDefinitions
         {

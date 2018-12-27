@@ -5,7 +5,7 @@
 
   <!-- State nodes -->
 
-  <NodeTypeInfo Name="State" IsAbstract="true" Category="Control" NodeType="" Icon="alphabet.speech-balloon-green-a-icon_16.png" Description="State nodes are">
+  <NodeTypeInfo Name="State" IsAbstract="true" Category="State" NodeType="" Icon="alphabet.speech-balloon-green-a-icon_16.png" Description="State nodes are">
   </NodeTypeInfo>
 
   <NodeTypeInfo Name="Walk" NodeType="VisualScriptArithmeticSUM" Base="State" Icon="arithmetic.Add-icon_16.png" Description="Sum">

@@ -6,12 +6,12 @@
   <!-- Control nodes -->
 
   <NodeTypeInfo Name="Control" IsAbstract="true" Category="Control" NodeType="" Icon="alphabet.speech-balloon-green-a-icon_16.png" Description="">
+    <Property Name="Activate" Type="Signal" AllowMultipleInput="true" Socket="Input" />
+    <Property Name="Finished" Type="Signal" Socket="Output" />
   </NodeTypeInfo>
 
 
   <NodeTypeInfo Name="Sequence" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="Sequence Signal replicator">
-    <Property Name="In" Type="Signal" AllowMultipleInput="true" Socket="Input" />
-    <Property Name="Out" Type="Signal" Socket="Output" />
   </NodeTypeInfo>
 
   <NodeTypeInfo Name="If" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="If branch">
