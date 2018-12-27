@@ -330,7 +330,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     g.DrawEllipse(m_theme.OutlinePen, bounds);
                 }
 
-                g.DrawString(node.Name, m_theme.Font, m_theme.TextBrush, bounds, m_theme.CenterStringFormat);
+                g.DrawString(node.TitleText, m_theme.Font, m_theme.TextBrush, bounds, m_theme.CenterStringFormat);
             }
         }
 

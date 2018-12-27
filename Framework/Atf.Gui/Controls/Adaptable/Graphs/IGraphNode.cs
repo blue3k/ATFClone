@@ -10,7 +10,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
     {
         /// <summary>
         /// Gets the node name</summary>
-        string Name
+        string TitleText
         {
             get;
         }

@@ -158,7 +158,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             Element element = item.As<Element>();
             if (element != null)
-                return element.Name;
+                return element.TitleText;
 
             Wire wire = item.As<Wire>();
             if (wire != null)
@@ -191,7 +191,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             Element element = item.As<Element>();
             if (element != null)
             {
-                element.Name = name;
+                element.TitleText = name;
                 return;
             }
 
@@ -922,7 +922,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             var control = m_viewingContext.Cast<AdaptableControl>();
 
             var group = container.Cast<Group>();
-            if (!string.IsNullOrEmpty(group.Name))
+            if (!string.IsNullOrEmpty(group.TitleText))
                 // Subtract the label height because this isn't a part of the CircuitGroupInfo.MinimumSize or group.Bounds.
                 // The label height is added back in by D2dCircuitRenderer.GetBounds(). http://tracker.ship.scea.com/jira/browse/WWSATF-1504
                 newHeight -= GetLabelHeight(control);

@@ -534,7 +534,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                             if (!target.Is<IReference<DomNode>>())
                             {
                             var group = target.Cast<Group>();
-                            state.Text = string.Format("Reset Pin Names on \"{0}\"".Localize(), group.Name);
+                            state.Text = string.Format("Reset Pin Names on \"{0}\"".Localize(), group.TitleText);
                         }
                     }
                 }
@@ -548,7 +548,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                         {
                             var group = target.Cast<Group>();
                             state.Check = group.Info.ShowExpandedGroupPins;
-                            state.Text = string.Format("Show Expanded Group Pins on \"{0}\"".Localize(), group.Name);
+                            state.Text = string.Format("Show Expanded Group Pins on \"{0}\"".Localize(), group.TitleText);
                         }
                     }
                 }
@@ -642,8 +642,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             var newGroup = new DomNode(GroupType).As<Group>();
             newGroup.DefaultPinOrder = DefaultPinOrderStyle;
             newGroup.DomNode.Type.SetTag<ICircuitElementType>(newGroup);
-            newGroup.Id = "Group".Localize("a noun");
-            newGroup.Name = newGroup.Id;
+            newGroup.Id = newGroup.Id;
+            newGroup.TitleText = "Group".Localize("a noun");
             newGroup.ShowExpandedGroupPins = CircuitDefaultStyle.ShowExpandedGroupPins;
 
             var selected = selectionContext.LastSelected.As<DomNode>();

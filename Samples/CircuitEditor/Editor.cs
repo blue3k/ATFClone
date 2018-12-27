@@ -469,11 +469,11 @@ namespace CircuitEditorSample
                         {
                             if (first)
                             {
-                                name = domNode.Cast<Group>().Name;
+                                name = domNode.Cast<Group>().TitleText;
                                 first = false;
                             }
                             else
-                                name += "/" + domNode.Cast<Group>().Name;
+                                name += "/" + domNode.Cast<Group>().TitleText;
                         }
                     }
 

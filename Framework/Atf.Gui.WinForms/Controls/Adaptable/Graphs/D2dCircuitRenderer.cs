@@ -78,7 +78,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <returns>String to use on title bar of circuit element</returns>
         protected virtual string GetElementTitle(TElement element)
         {
-            return element.ElementType.Name;
+            return element.ElementType.TitleText;
         }
 
         /// <summary>
@@ -89,8 +89,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         protected virtual string GetElementDisplayName(TElement element)
         {
             // try to get display name from the type first
-            string dispName = element.ElementType.DisplayName;
-            return string.IsNullOrEmpty(dispName) ? element.Name : dispName;
+            string dispName = element.ElementType.BottomDisplayName;
+            return string.IsNullOrEmpty(dispName) ? element.TitleText : dispName;
         }
 
         /// <summary>
@@ -438,7 +438,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         {
             RectangleF result = GetElementBounds(element, g);
 
-            if (!string.IsNullOrEmpty(element.Name))
+            if (!string.IsNullOrEmpty(element.TitleText))
                 // Add in the label at bottom. Keep in sync with CircuitEditingContext.Resize().
                 result.Height += LabelHeight;
 
@@ -768,12 +768,12 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
             var titleRect = new RectangleF(bounds.X, bounds.Y, bounds.Width, titleHeight);
 
-            var fillBrush = m_theme.GetCustomOrDefaultBrush(type.Name);
+            var fillBrush = m_theme.GetCustomOrDefaultBrush(type.TitleText);
             if (!element.ElementInfo.IsValid)
             {
                 fillBrush = m_theme.ErrorBrush;
             }
-            var titileFillBrush = m_theme.GetFillTitleBrush(type.Name);
+            var titileFillBrush = m_theme.GetFillTitleBrush(type.TitleText);
             var gradientBrush = fillBrush as D2dLinearGradientBrush;
             if (gradientBrush != null)
             {
@@ -1663,7 +1663,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             if (title != null)
                 typeNameSize = g.MeasureText(title, m_theme.TextFormat);
             else
-                g.MeasureText(type.Name, m_theme.TextFormat);
+                g.MeasureText(type.TitleText, m_theme.TextFormat);
 
             int width = (int)typeNameSize.Width + TitleBarPadding;
 

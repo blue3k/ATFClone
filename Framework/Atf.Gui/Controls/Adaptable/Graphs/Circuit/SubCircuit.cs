@@ -44,7 +44,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
         /// <summary>
         /// Gets the sub-circuit type name</summary>
-        public string Name
+        public string TitleText
         {
             get { return GetAttribute<string>(NameAttribute); }
             set { SetAttribute(NameAttribute, value); }
@@ -52,7 +52,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
         /// <summary>
         /// Gets the element display name</summary>
-        public string DisplayName
+        public string BottomDisplayName
         {
             get { return GetAttribute<string>(LabelAttribute); }
         }

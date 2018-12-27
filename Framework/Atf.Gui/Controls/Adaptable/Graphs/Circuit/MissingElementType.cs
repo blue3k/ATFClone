@@ -15,17 +15,17 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <param name="name">Name</param>
         public MissingElementType(  string name)
         {
-            Name = name;
+            TitleText = name;
         }
 
         /// <summary>
         /// Get missing element name</summary>
-        public string Name { get; private set; }
+        public string TitleText { get; private set; }
 
 
         /// <summary>
         /// Gets the element display name</summary>
-        public string DisplayName
+        public string BottomDisplayName
         {
             get { return null; }
         }

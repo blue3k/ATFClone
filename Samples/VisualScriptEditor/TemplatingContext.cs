@@ -76,7 +76,7 @@ namespace VisualScriptEditor
                 var groupReference = new DomNode(groupTemplateRefType.Type).Cast<VisualScript.ScriptGroupReference>();
                 groupReference.Template = template;
                 groupReference.Id = template.Name;
-                groupReference.Name = template.Name;
+                groupReference.TitleText = template.Name;
                 groupReference.Group.SourceGuid = template.Guid;
                 return groupReference;
             }
@@ -85,7 +85,7 @@ namespace VisualScriptEditor
                 var moduleReference = new DomNode(moduleTemplateRefType.Type).Cast<ScriptNodeReference>();
                 moduleReference.Template = template;
                 moduleReference.Id = template.Name;
-                moduleReference.Name = template.Name;
+                moduleReference.TitleText = template.Name;
                 moduleReference.Element.SourceGuid = template.Guid;
                 return moduleReference;
             }

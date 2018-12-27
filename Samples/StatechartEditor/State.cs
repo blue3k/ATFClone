@@ -40,7 +40,7 @@ namespace StatechartEditorSample
 
         /// <summary>
         /// Gets or sets the state name</summary>
-        public string Name
+        public string TitleText
         {
             get { return (string)DomNode.GetAttribute(Schema.stateType.labelAttribute); }
             set { DomNode.SetAttribute(Schema.stateType.labelAttribute, value); }

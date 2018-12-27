@@ -28,12 +28,12 @@ namespace CircuitEditorSample.Tests
 
             var inputFiles = new DomNode(Schema.groupType.Type).Cast<Group>();
             inputFiles.Id = "groupInputFiles";
-            inputFiles.Name = "Input Files".Localize();
+            inputFiles.TitleText = "Input Files".Localize();
             inputFiles.Bounds = new Rectangle(64, 96, 0, 0); // set node location, size will be auto-computed
  
             var firstWavgGroup = new DomNode(Schema.groupType.Type).Cast<Group>();
             firstWavgGroup.Id = "first.Wav";
-            firstWavgGroup.Name = "first".Localize("as in, 'the first file'") + ".wav";
+            firstWavgGroup.TitleText = "first".Localize("as in, 'the first file'") + ".wav";
 
             var buttonType = schemaLoader.GetNodeType(Schema.NS + ButtonTypeName);
             var button1 = new DomNode(buttonType).Cast<Module>();
@@ -52,7 +52,7 @@ namespace CircuitEditorSample.Tests
 
             var secondWavgGroup = new DomNode(Schema.groupType.Type).Cast<Group>();
             secondWavgGroup.Id = "second.Wav";
-            secondWavgGroup.Name = "second".Localize("as in, 'the second file'") + ".wav";
+            secondWavgGroup.TitleText = "second".Localize("as in, 'the second file'") + ".wav";
 
             var button3 = new DomNode(buttonType).Cast<Module>();
             button3.Id = "button3";
@@ -78,13 +78,13 @@ namespace CircuitEditorSample.Tests
 
             var structure = new DomNode(Schema.groupType.Type).Cast<Group>();
             structure.Id = "structure".Localize("this is the name of a group of circuit elements; the name is arbitrary");
-            structure.Name = "structure".Localize("this is the name of a group of circuit elements; the name is arbitrary");
+            structure.TitleText = "structure".Localize("this is the name of a group of circuit elements; the name is arbitrary");
             structure.Bounds = new Rectangle(352, 96, 0, 0); 
  
 
             var subStream0 = new DomNode(Schema.groupType.Type).Cast<Group>();
             subStream0.Id = "subStream0".Localize("this is the name of a group of circuit elements; the name is arbitrary");
-            subStream0.Name = "sub-stream 0".Localize("this is the name of a group of circuit elements; the name is arbitrary");
+            subStream0.TitleText = "sub-stream 0".Localize("this is the name of a group of circuit elements; the name is arbitrary");
 
             var lightType = schemaLoader.GetNodeType(Schema.NS + LightTypeName);
 

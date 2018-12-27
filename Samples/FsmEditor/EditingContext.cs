@@ -128,7 +128,7 @@ namespace FsmEditorSample
         {
             State state = item.As<State>();
             if (state != null)
-                return state.Name;
+                return state.TitleText;
 
             Transition transition = item.As<Transition>();
             if (transition != null)
@@ -162,7 +162,7 @@ namespace FsmEditorSample
             State state = item.As<State>();
             if (state != null)
             {
-                state.Name = name;
+                state.TitleText = name;
             }
             else
             {

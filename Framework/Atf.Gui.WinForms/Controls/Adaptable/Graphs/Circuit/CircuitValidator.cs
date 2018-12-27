@@ -230,14 +230,14 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             {
                 if (grpPin.InternalElement.DomNode != node) continue;
                 if (grpPin.IsDefaultName)
-                    grpPin.Name.SetString(grpPin.InternalElement.Name.ToString() + ":" + grpPin.InternalElement.InputPin(grpPin.InternalPinName).Name.ToString());
+                    grpPin.Name.SetString(grpPin.InternalElement.TitleText.ToString() + ":" + grpPin.InternalElement.InputPin(grpPin.InternalPinName).Name.ToString());
             }
 
             foreach (GroupPin grpPin in group.Outputs)
             {
                 if (grpPin.InternalElement.DomNode != node) continue;
                 if (grpPin.IsDefaultName)
-                    grpPin.Name.SetString(grpPin.InternalElement.Name.ToString() + ":" + grpPin.InternalElement.OutputPin(grpPin.InternalPinName).Name.ToString());
+                    grpPin.Name.SetString(grpPin.InternalElement.TitleText.ToString() + ":" + grpPin.InternalElement.OutputPin(grpPin.InternalPinName).Name.ToString());
             }
         }
 
@@ -481,9 +481,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     bool sameLeafNode = grpPin.PinTarget == edge.InputPinTarget;
                     if (!sameLeafNode) // could this be a valid case for (deep)copy group nodes
                     {
-                        var name1 = grpPin.PinTarget.LeafDomNode.Cast<Element>().Name;
-                        var name2 = edge.InputPinTarget.LeafDomNode.Cast<Element>().Name;
-                        sameLeafNode = name1 == name2;
+                        var Id1 = grpPin.PinTarget.LeafDomNode.Cast<Element>().Id;
+                        var Id2 = edge.InputPinTarget.LeafDomNode.Cast<Element>().Id;
+                        sameLeafNode = Id1 == Id2;
                     }
 
                     Debug.Assert(sameLeafNode, "Group pin references the same input pin target ");
@@ -521,9 +521,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     bool sameLeafNode = grpPin.PinTarget == edge.OutputPinTarget;
                     if (!sameLeafNode) // could this be a valid case for (deep)copy group nodes
                     {
-                        var name1 = grpPin.PinTarget.LeafDomNode.Cast<Element>().Name;
-                        var name2 = edge.OutputPinTarget.LeafDomNode.Cast<Element>().Name;
-                        sameLeafNode = name1 == name2;
+                        var id1 = grpPin.PinTarget.LeafDomNode.Cast<Element>().Id;
+                        var id2 = edge.OutputPinTarget.LeafDomNode.Cast<Element>().Id;
+                        sameLeafNode = id1 == id2;
                     }
                     Debug.Assert(sameLeafNode, "Group pin and edge pin reference the same output pin target");
                     

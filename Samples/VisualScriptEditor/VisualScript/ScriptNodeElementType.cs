@@ -18,38 +18,34 @@ namespace VisualScript
     /// circuit rendering during editing operations, like dragging ModuleDynamicSocketss and wires.</summary>
     public class ScriptNodeElementType : DomNodeAdapter, ICircuitElementType
     {
-        private AttributeInfo m_AttributeForTitle;
 
         /// <summary>
         /// Gets the element type name
-        ///  This is going to be title
+        ///  This is going to be drawn on the title bar
         /// </summary>
-        public string Name
+        public string TitleText
         {
             get
             {
-                //return m_TitleText;
-                return GetAttribute<string>(m_AttributeForTitle);
+                if (string.IsNullOrEmpty(m_cachedTitleText))
+                    UpdateTitleText();
+
+                return m_cachedTitleText;
             }
         }
+
 
         /// <summary>
         /// Gets the element display name
         ///  This show up at the bottom of the box
         /// </summary>
-        public string DisplayName
-        {
-            // I don't want to display bottom text
-            get { return " "; }
-        }
+        //public string DisplayName => GetAttribute<string>(moduleType.nameAttribute);
+        public string BottomDisplayName => GetAttribute<string>(moduleType.nameAttribute);
 
         /// <summary>
         /// Gets desired interior size, in pixels, of this element type
         /// </summary>
-        public Size InteriorSize
-        {
-            get { return (m_Image != null) ? new Size(32, 32) : new Size(); }
-        }
+        public Size InteriorSize => (m_Image != null) ? new Size(32, 32) : new Size();
 
         /// <summary>
         /// Gets image to draw for this element type</summary>
@@ -87,7 +83,23 @@ namespace VisualScript
             }
         }
 
-        
+
+        protected virtual void OnAttributeChanged(object sender, AttributeEventArgs e)
+        {
+            if (e.DomNode != DomNode)
+                return;
+
+            if (e.AttributeInfo == moduleType.labelAttribute)
+            {
+                m_labelText = GetAttribute<string>(moduleType.labelAttribute);
+                UpdateTitleText();
+            }
+            else if (e.AttributeInfo == moduleType.nameAttribute)
+            {
+                m_nameText = GetAttribute<string>(moduleType.nameAttribute);
+                UpdateTitleText();
+            }
+        }
 
         string GetBaseNameFor(ChildInfo childInfo, DomNode child)
         {
@@ -108,10 +120,6 @@ namespace VisualScript
 
             if(string.IsNullOrEmpty(GetAttribute<string>(moduleType.labelAttribute)))
                 SetAttribute(moduleType.labelAttribute, GetAttribute<string>(moduleType.nameAttribute));
-
-            m_AttributeForTitle = moduleType.labelAttribute;
-
-
 
             // Pull image icon image from node definition
             var nodeDef = DomNode.Type.GetTag<VisualScriptSchema.NodeTypeInfo>();
@@ -218,9 +226,25 @@ namespace VisualScript
                     }
                 }
             };
+
+            // For title text
+            UpdateTitleText();
+
+            DomNode.AttributeChanged += OnAttributeChanged;
         }
 
 
+
+        void UpdateTitleText()
+        {
+            m_labelText = GetAttribute<string>(moduleType.labelAttribute);
+            m_nameText = GetAttribute<string>(moduleType.nameAttribute);
+            m_cachedTitleText = string.Format("{0}:{1}", m_labelText, m_nameText);
+        }
+
+        private string m_labelText;
+        private string m_nameText;
+        private string m_cachedTitleText;
 
         Image m_Image;
 

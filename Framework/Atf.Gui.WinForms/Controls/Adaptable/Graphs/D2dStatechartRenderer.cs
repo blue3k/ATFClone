@@ -320,7 +320,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
                 if ((scaleX * m_fontHeight) > MinFontHeightInPixel)
                 {
-                    g.DrawText(complexState.Name, m_theme.TextFormat,
+                    g.DrawText(complexState.TitleText, m_theme.TextFormat,
                         new PointF(bounds.X + CornerRadius, bounds.Y + Margin), m_theme.TextBrush);
                 }
 

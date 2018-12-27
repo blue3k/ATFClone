@@ -348,7 +348,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 }
 
                 g.DrawString(
-                    complexState.Name,
+                    complexState.TitleText,
                     m_theme.Font,
                     m_theme.TextBrush,
                     bounds.X + CornerRadius,

@@ -31,9 +31,9 @@ namespace VisualScript
                 if (value != null) // initialize  model name
                 {
                     var module = Target.Cast<ScriptNode>();
-                    Name = module.Name;
+                    Name = module.TitleText;
                     if (string.IsNullOrEmpty(Name))
-                        Name = module.ElementType.Name;
+                        Name = module.ElementType.TitleText;
 
                 }
             }

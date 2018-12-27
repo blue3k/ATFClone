@@ -75,14 +75,14 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
         /// <summary>
         /// Gets the element type's name</summary>
-        public string Name
+        public string TitleText
         {
             get { return m_name; }
         }
 
         /// <summary>
         /// Gets the element display name</summary>
-        public string DisplayName
+        public string BottomDisplayName
         {
             get { return null; }
         }

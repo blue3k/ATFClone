@@ -256,7 +256,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             brush.EndPoint = new PointF(boundRect.Right, boundRect.Bottom);
             g.FillEllipse(bounds, brush);
             g.DrawEllipse(bounds, m_theme.OutlineBrush);
-            g.DrawText(node.Name, m_theme.TextFormat, boundRect, m_theme.TextBrush);
+            g.DrawText(node.TitleText, m_theme.TextFormat, boundRect, m_theme.TextBrush);
         }
 
         private void DrawGhost(TNode node, D2dGraphics g)

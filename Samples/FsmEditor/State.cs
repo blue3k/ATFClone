@@ -14,7 +14,7 @@ namespace FsmEditorSample
     {
         /// <summary>
         /// Gets or sets the user-visible name</summary>
-        public string Name
+        public string TitleText
         {
             get { return GetAttribute<string>(Schema.stateType.labelAttribute); }
             set { SetAttribute(Schema.stateType.labelAttribute, value); }

@@ -186,7 +186,7 @@ namespace StatechartEditorSample
         {
             State state = item.As<State>();
             if (state != null)
-                return state.Name;
+                return state.TitleText;
 
             Annotation annotation = item.As<Annotation>();
             if (annotation != null)
@@ -215,7 +215,7 @@ namespace StatechartEditorSample
             State state = item.As<State>();
             if (state != null)
             {
-                state.Name = name;
+                state.TitleText = name;
             }
             else
             {

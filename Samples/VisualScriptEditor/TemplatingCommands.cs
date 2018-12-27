@@ -103,7 +103,7 @@ namespace VisualScriptEditor
                         {
                             string message = string.Format(
                                 "Overwrite the existing \"{0}\"  Template with \"{1}\", or Add new one?\n".Localize(),
-                                    existingTemplate.Name, module.Name);
+                                    existingTemplate.Name, module.TitleText);
 
                             var dialog = new ConfirmationDialog("Overwrite / Add".Localize(), message);
                             dialog.YesButtonText = "Overwrite".Localize();

@@ -16,14 +16,14 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
         /// <summary>
         /// Gets the element type name</summary>
-        string Name
+        string TitleText
         {
             get;
         }
 
         /// <summary>
         /// Gets the element display name</summary>
-        string DisplayName
+        string BottomDisplayName
         {
             get;
         }

@@ -69,7 +69,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
         /// <summary>
         /// Gets or sets the user-visible name</summary>
-        public virtual string Name
+        public virtual string TitleText
         {
             get { return GetAttribute<string>(LabelAttribute); }
             set { SetAttribute(LabelAttribute, value); }

@@ -288,7 +288,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 info.Path.Transform(s_pathTransform);
 
                 // try to use custom brush if registered
-                Brush fillBrush = m_theme.GetCustomBrush(type.Name);
+                Brush fillBrush = m_theme.GetCustomBrush(type.TitleText);
                 if (fillBrush != null)
                 {
                     g.FillPath(fillBrush, info.Path);
@@ -309,7 +309,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
                 int titleHeight = m_rowSpacing + PinMargin;
                 g.DrawLine(m_theme.OutlinePen, p.X, p.Y + titleHeight, p.X + info.Size.Width, p.Y + titleHeight);
-                g.DrawString(type.Name, m_theme.Font, m_theme.TextBrush, p.X + PinMargin + 1, p.Y + PinMargin + 1);
+                g.DrawString(type.TitleText, m_theme.Font, m_theme.TextBrush, p.X + PinMargin + 1, p.Y + PinMargin + 1);
 
                 int pinY = p.Y + titleHeight + PinMargin;
                 foreach (TPin inputPin in type.Inputs)
@@ -341,12 +341,12 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 info.Path.Transform(s_pathTransform);
                 s_pathTransform.Reset();
 
-                string name = element.Name;
-                if (!string.IsNullOrEmpty(name))
+                string titleText = element.TitleText;
+                if (!string.IsNullOrEmpty(titleText))
                 {
                     RectangleF alignRect = new RectangleF(
                         bounds.Left - MaxNameOverhang, bounds.Bottom + PinMargin, bounds.Width + 2 * MaxNameOverhang, m_rowSpacing);
-                    g.DrawString(name, m_theme.Font, m_theme.TextBrush, alignRect, m_theme.CenterStringFormat);
+                    g.DrawString(titleText, m_theme.Font, m_theme.TextBrush, alignRect, m_theme.CenterStringFormat);
                 }
             }
         }
@@ -496,7 +496,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// to adjust sizes accordingly. These sizes will be used by drag-fram picking.</remarks>
         protected virtual ElementSizeInfo GetElementSizeInfo(ICircuitElementType type, Graphics g)
         {
-            SizeF typeNameSize = g.MeasureString(type.Name, m_theme.Font);
+            SizeF typeNameSize = g.MeasureString(type.TitleText, m_theme.Font);
             int width = (int)typeNameSize.Width + 2 * PinMargin;
 
             IList<ICircuitPin> inputPins = type.Inputs;

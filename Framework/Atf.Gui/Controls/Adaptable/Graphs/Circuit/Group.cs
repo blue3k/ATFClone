@@ -382,14 +382,14 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// and the element name is displayed underneath the element. 
         /// A generic "Group" is the default type name, but derived class can customize a group's type name 
         /// by reimplementing this explicit interface member</remarks>
-        string ICircuitElementType.Name
+        string ICircuitElementType.TitleText
         {
             get { return "Group".Localize(); }
         }
 
         /// <summary>
         /// Gets the element display name</summary>
-        string ICircuitElementType.DisplayName
+        string ICircuitElementType.BottomDisplayName
         {
             get { return null; }
         }
@@ -1085,32 +1085,32 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             var outputGroupPins = m_outputs.Where(p => p.Cast<GroupPin>().Visible).ToList();
             // no self duplications
             var duplicates = inputGroupPins.GroupBy(g => g).Where(w => w.Count() > 1);
-            Debug.Assert(!duplicates.Any(), "SubGraph " + Name + " has duplicated input group pins");
+            Debug.Assert(!duplicates.Any(), "SubGraph " + TitleText + " has duplicated input group pins");
             duplicates = outputGroupPins.GroupBy(g => g).Where(w => w.Count() > 1);
-            Debug.Assert(!duplicates.Any(), "SubGraph " + Name + " has duplicated output group pins");
+            Debug.Assert(!duplicates.Any(), "SubGraph " + TitleText + " has duplicated output group pins");
             // each group pin points to different internal module and pin 
             {
                 var byInternalElements = inputGroupPins.GroupBy(g => g.Cast<GroupPin>().InternalElement);
                 foreach (var grpPins in byInternalElements)
                 {
                     var duplicatedPins = grpPins.GroupBy(g => g.Index).Where(w => w.Count() > 1);
-                    Debug.Assert(!duplicatedPins.Any(), "SubGraph " + Name + " module " + grpPins.Key.Name + " has duplicated output group pins");
+                    Debug.Assert(!duplicatedPins.Any(), "SubGraph " + TitleText + " module " + grpPins.Key.TitleText + " has duplicated output group pins");
                 }
 
                 byInternalElements = outputGroupPins.GroupBy(g => g.Cast<GroupPin>().InternalElement);
                 foreach (var grpPins in byInternalElements)
                 {
                     var duplicatedPins = grpPins.GroupBy(g => g.Index).Where(w => w.Count() > 1);
-                    Debug.Assert(!duplicatedPins.Any(), "SubGraph " + Name + " has duplicated output group pins");
+                    Debug.Assert(!duplicatedPins.Any(), "SubGraph " + TitleText + " has duplicated output group pins");
                 }
             }
 
             foreach (var grpPin in InputGroupPins)
             {
-                Debug.Assert(grpPin.PinTarget != null, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "LeaveNode not set");
+                Debug.Assert(grpPin.PinTarget != null, "SubGraph " + TitleText + " Input Group Pin" + grpPin.Name + "LeaveNode not set");
                 // pins of proxy group parent not set 
                 //Debug.Assert(grpPin.DomNode.Parent != null, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "Parent  not set");
-                Debug.Assert(grpPin.Index < InputGroupPins.Count(), "SubGraph " + Name + " Input Group Pin" + grpPin.Name +
+                Debug.Assert(grpPin.Index < InputGroupPins.Count(), "SubGraph " + TitleText + " Input Group Pin" + grpPin.Name +
                     " Index invalid " + grpPin.Index + " Count=" + InputGroupPins.Count());
                 //Debug.Assert(grpPin.Position.Y >= 0, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "has negative Y");
                 //Debug.Assert(grpPin.Position.Y <= 4096 && grpPin.Position.Y >= -4096, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "has suspicious large Y greater than 4k");
@@ -1120,10 +1120,10 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             }
             foreach (var grpPin in OutputGroupPins)
             {
-                Debug.Assert(grpPin.PinTarget != null, "SubGraph " + Name + " Output Group Pin" + grpPin.Name + "LeaveNode not set");
+                Debug.Assert(grpPin.PinTarget != null, "SubGraph " + TitleText + " Output Group Pin" + grpPin.Name + "LeaveNode not set");
                 // pins of proxy group parent not set 
                 //Debug.Assert(grpPin.DomNode.Parent != null, "SubGraph " + Name + " Output Group Pin" + grpPin.Name + "Parent  not set");
-                Debug.Assert(grpPin.Index < OutputGroupPins.Count(), "SubGraph " + Name + " Output Group Pin" + grpPin.Name +
+                Debug.Assert(grpPin.Index < OutputGroupPins.Count(), "SubGraph " + TitleText + " Output Group Pin" + grpPin.Name +
                     " Index invalid " + grpPin.Index + " Count=" + OutputGroupPins.Count());
                 //Debug.Assert(grpPin.Position.Y >= 0, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "has negative Y");
                 //Debug.Assert(grpPin.Position.Y <= 4096 && grpPin.Position.Y >= -4096, "SubGraph " + Name + " Input Group Pin" + grpPin.Name + "has suspicious large Y greater than 4k");
@@ -1134,11 +1134,11 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
             var pinIndexes = inputGroupPins.GroupBy(g => g.Index).Where(w => w.Count() > 1);
             Debug.Assert(!pinIndexes.Any(),
-                               "SubGraph " + Name + " Input Group Pin Indexes Duplicated");
+                               "SubGraph " + TitleText + " Input Group Pin Indexes Duplicated");
 
             pinIndexes = outputGroupPins.GroupBy(g => g.Index).Where(w => w.Count() > 1);
             Debug.Assert(!pinIndexes.Any(),
-                               "SubGraph " + Name + " Output Group Pin Indexes Duplicated");
+                               "SubGraph " + TitleText + " Output Group Pin Indexes Duplicated");
 
             foreach (var module in Elements)
             {
@@ -1148,12 +1148,12 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     if (CanExposePin(module, inputPin, Wires, true))
                     {
                         var grpPin = MatchedGroupPin(module, inputPin, true);
-                        Debug.Assert(grpPin != null, "SubGraph " + Name + " missed an input group pin for " + module.Name + ":" + inputPin.Name);
+                        Debug.Assert(grpPin != null, "SubGraph " + TitleText + " missed an input group pin for " + module.TitleText + ":" + inputPin.Name);
                     }
                     else
                     {
                         var grpPin = MatchedGroupPin(module, inputPin, true);
-                        Debug.Assert(grpPin == null, "SubGraph " + Name + " should not expose an input group pin for " + module.Name + ":" + inputPin.Name);
+                        Debug.Assert(grpPin == null, "SubGraph " + TitleText + " should not expose an input group pin for " + module.TitleText + ":" + inputPin.Name);
                     }
                 }
 
@@ -1163,12 +1163,12 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                     if (CanExposePin(module, outputPin, Wires, false))
                     {
                         var grpPin = MatchedGroupPin(module, outputPin, false);
-                        Debug.Assert(grpPin != null, "SubGraph " + Name + " missed an output group pin for " + module.Name + ":" + outputPin.Name);
+                        Debug.Assert(grpPin != null, "SubGraph " + TitleText + " missed an output group pin for " + module.TitleText + ":" + outputPin.Name);
                     }
                     else
                     {
                         var grpPin = MatchedGroupPin(module, outputPin, false);
-                        Debug.Assert(grpPin == null, "SubGraph " + Name + " should not expose an output group pin for " + module.Name + ":" + outputPin.Name);
+                        Debug.Assert(grpPin == null, "SubGraph " + TitleText + " should not expose an output group pin for " + module.TitleText + ":" + outputPin.Name);
                     }
                 }
 

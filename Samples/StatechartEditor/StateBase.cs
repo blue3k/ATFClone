@@ -102,7 +102,7 @@ namespace StatechartEditorSample
 
         /// <summary>
         /// Gets the node name</summary>
-        string IGraphNode.Name
+        string IGraphNode.TitleText
         {
             get { return null; }
         }

@@ -474,11 +474,11 @@ namespace VisualScriptEditor
                         {
                             if (first)
                             {
-                                name = domNode.Cast<VisualScript.ScriptGroup>().Name;
+                                name = domNode.Cast<VisualScript.ScriptGroup>().TitleText;
                                 first = false;
                             }
                             else
-                                name += "/" + domNode.Cast<VisualScript.ScriptGroup>().Name;
+                                name += "/" + domNode.Cast<VisualScript.ScriptGroup>().TitleText;
                         }
                     }
 

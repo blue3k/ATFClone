@@ -63,7 +63,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             string result = string.Empty;
 
             if (domNode.Is<Element>())
-                result = domNode.Cast<Element>().Name;
+                result = domNode.Cast<Element>().TitleText;
             else if (domNode.Is<GroupPin>())
                 result = "Group Pin : " + domNode.Cast<GroupPin>().Name;
             else if (domNode.Is<Wire>())
@@ -72,11 +72,11 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 NameString inputPinIndex, outputPinIndex;
                 // during undo/redo, the pin index may temporarily out of range, need to check index before call OutputPin|InputPin
                 if (connection.IsValid(out inputPinIndex, out outputPinIndex))
-                    result = "Edge from " + connection.OutputElement.Name + "[" + connection.OutputPin.Name + "]" +
-                    " to " + connection.InputElement.Name + "[" + connection.InputPin.Name + "]";
+                    result = "Edge from " + connection.OutputElement.TitleText + "[" + connection.OutputPin.Name + "]" +
+                    " to " + connection.InputElement.TitleText + "[" + connection.InputPin.Name + "]";
                 else
-                    result = "Edge from " + connection.OutputElement.Name + "[" + outputPinIndex + "]" +
-                       " to " + connection.InputElement.Name + "[" + inputPinIndex + "]";
+                    result = "Edge from " + connection.OutputElement.TitleText + "[" + outputPinIndex + "]" +
+                       " to " + connection.InputElement.TitleText + "[" + inputPinIndex + "]";
 
             }
             else if (domNode.Is<Circuit>())
@@ -135,7 +135,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
                 if (domNode.Is<IDocument>())
                     sb.Append(Path.GetFileNameWithoutExtension(domNode.Cast<IDocument>().Uri.LocalPath));
                 else if (domNode.Is<Element>())
-                    sb.Append(domNode.Cast<Element>().Name);
+                    sb.Append(domNode.Cast<Element>().TitleText);
                 sb.Append(":");      
             }
             if (sb.Length >0)
