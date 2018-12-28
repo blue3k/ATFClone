@@ -33,6 +33,8 @@
 	<Property Name="Finished" Type="Signal" Socket="Output" />
   </NodeTypeInfo>
 
+  <!-- Control nodes -->
+
 
 
 

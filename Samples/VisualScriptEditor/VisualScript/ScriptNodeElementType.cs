@@ -49,39 +49,21 @@ namespace VisualScript
 
         /// <summary>
         /// Gets image to draw for this element type</summary>
-        public Image Image
-        {
-            get
-            {
-                return m_Image;
-            }
-        }
+        public Image Image => m_Image;
 
         /// <summary>
         /// Gets a read-only list of input pins for this element type. For Groups, this list
         /// only includes pins whose Info.Visible property is true. Consider using GetAllInputPins()
         /// or GetInputPin() when using ICircuitGroupPin's InternalPinName to look for the
         /// corresponding pin.</summary>
-        public PinList<ICircuitPin> Inputs
-        {
-            get
-            {
-                return m_Inputs;
-            }
-        }
+        public PinList<ICircuitPin> Inputs => m_Inputs;
 
         /// <summary>
         /// Gets a read-only list of output pins for this element type. For Groups, this list
         /// only includes pins whose Info.Visible property is true. Consider using GetAllOutputPins()
         /// or GetOutputPin() when using ICircuitGroupPin's InternalPinName to look for the
         /// corresponding pin.</summary>
-        public PinList<ICircuitPin> Outputs
-        {
-            get
-            {
-                return m_Outputs;
-            }
-        }
+        public PinList<ICircuitPin> Outputs => m_Outputs;
 
 
         protected virtual void OnAttributeChanged(object sender, AttributeEventArgs e)

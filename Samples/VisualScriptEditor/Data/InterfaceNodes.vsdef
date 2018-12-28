@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NodeTypeDefinitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://blue3k.com/1_0"
+           xsi:noNamespaceSchemaLocation="../schemas/VisualScriptNodeDefinitionSchema.xsd"
+           >
+
+
+  <NodeTypeInfo Name="Interface" IsAbstract="true" Category="Interface" NodeType="" Icon="alphabet.speech-balloon-green-a-icon_16.png" Description="">
+    <Property Name="Name" Type="string" AllowMultipleInput="true" Socket="Input" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="Function" NodeType="VisualScriptArithmeticSUM" Base="Interface" Icon="arithmetic.Add-icon_16.png" Description="Named event">
+    <Property Name="Signal" Type="Signal" Socket="Output" />
+  </NodeTypeInfo>
+
+
+
+
+</NodeTypeDefinitions>
