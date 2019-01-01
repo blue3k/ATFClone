@@ -131,14 +131,14 @@ namespace VisualScript
                     switch (attrRule.SchemaProperty.Socket)
                     {
                         case VisualScriptSchema.SocketType.Input:
-                            m_Inputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type.Name, m_Outputs.Count));
+                            m_Inputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type, m_Outputs.Count));
                             break;
                         case VisualScriptSchema.SocketType.Output:
-                            m_Outputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type.Name, m_Outputs.Count));
+                            m_Outputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type, m_Outputs.Count));
                             break;
                         case VisualScriptSchema.SocketType.InOut:
-                            m_Inputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type.Name, m_Outputs.Count));
-                            m_Outputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type.Name, m_Outputs.Count));
+                            m_Inputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type, m_Outputs.Count));
+                            m_Outputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type, m_Outputs.Count));
                             break;
                         default:
                             break;
@@ -157,7 +157,7 @@ namespace VisualScript
                     string socketName = GetBaseNameFor(child.ChildInfo, child);
 
                     // Only output can vary
-                    var newPin = new ElementType.Pin(socketName, VisualScriptSchema.PropertyType.boolean.ToString(), m_Outputs.Count);
+                    var newPin = new ElementType.Pin(socketName, AttributeType.BooleanType, m_Outputs.Count);
                     m_Outputs.Add(newPin);
 
                 }
@@ -174,7 +174,7 @@ namespace VisualScript
                     string socketName = GetBaseNameFor(args.ChildInfo, args.Child);
 
                     // Only output can vary
-                    var newPin = new ElementType.Pin(socketName, VisualScriptSchema.PropertyType.boolean.ToString(), m_Outputs.Count);
+                    var newPin = new ElementType.Pin(socketName, AttributeType.BooleanType, m_Outputs.Count);
                     m_Outputs.Add(newPin);
                 }
             };
@@ -221,7 +221,7 @@ namespace VisualScript
         {
             m_labelText = GetAttribute<string>(moduleType.labelAttribute);
             m_nameText = GetAttribute<string>(moduleType.nameAttribute);
-            m_cachedTitleText = string.Format("{0}:{1}", m_labelText, m_nameText);
+            m_cachedTitleText = m_labelText;// string.Format("{0}:{1}", m_labelText, m_nameText);
         }
 
         private string m_labelText;

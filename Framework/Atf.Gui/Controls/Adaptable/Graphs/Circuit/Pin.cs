@@ -16,7 +16,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <summary>
         /// Gets type attribute of Pin
         /// </summary>
-        protected abstract AttributeInfo TypeAttribute { get; }
+        protected abstract AttributeInfo TypeNameAttribute { get; }
 
         /// <summary>
         /// Gets name attribute of Pin
@@ -48,12 +48,25 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
         /// <summary>
         /// Gets pin type name
         /// </summary>
-        public virtual string TypeName
+        public virtual NameString TypeName
         {
-            get { return GetAttribute<string>(TypeAttribute); }
+            get { return GetAttribute<NameString>(TypeNameAttribute); }
             set
             {
-                SetAttribute(TypeAttribute, value);
+                PinType = AttributeType.GetAttributeType(value.ToString());
+            }
+        }
+
+        public virtual AttributeType PinType
+        {
+            get { return m_attributeType; }
+            set
+            {
+                m_attributeType = value;
+                if (m_attributeType != null)
+                    SetAttribute(TypeNameAttribute, new NameString(m_attributeType.Name));
+                else
+                    SetAttribute(TypeNameAttribute, null);
             }
         }
 
@@ -102,5 +115,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
         #endregion
 
+
+        private AttributeType m_attributeType; // cached value
     }
 }

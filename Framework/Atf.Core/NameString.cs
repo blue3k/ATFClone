@@ -66,6 +66,9 @@ namespace Sce.Atf
             return m_Hash32;
         }
 
+
+        #region compare operators
+
         public static bool operator ==(NameString lhs, NameString rhs)
         {
             if ((object)lhs ==  null)
@@ -109,7 +112,7 @@ namespace Sce.Atf
             return !lhs.Equals(rhs.m_NameString);
         }
 
-
+        #endregion
 
 
         public static explicit operator string(NameString name)

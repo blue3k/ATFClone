@@ -15,7 +15,7 @@ namespace CircuitEditorSample
         // for bases class Pin
         /// <summary>
         /// Gets type attribute for group pin</summary>
-        protected override AttributeInfo TypeAttribute
+        protected override AttributeInfo TypeNameAttribute
         {
             get { return Schema.pinType.typeAttribute; }
         }

@@ -361,7 +361,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
         {
             Type = new DomNodeType("socketType");
             nameAttribute = Type.DefineNewAttributeInfo("name", AttributeType.NameStringType);
-            typeAttribute = Type.DefineNewAttributeInfo("type", AttributeType.StringType);
+            typeAttribute = Type.DefineNewAttributeInfo("type", AttributeType.NameStringType);
             isInputAttribute = Type.DefineNewAttributeInfo("isInput", AttributeType.BooleanType);
 
             Type.SetTag(new System.ComponentModel.PropertyDescriptorCollection(new PropertyDescriptor[] {

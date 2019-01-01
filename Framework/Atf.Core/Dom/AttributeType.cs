@@ -27,6 +27,96 @@ namespace Sce.Atf.Dom
             get; set;
         }
 
+        static AttributeType()
+        {
+            // These should be match
+            //System.Diagnostics.Debug.Assert(Enum.GetValues(typeof(AttributeTypes)).Length == stm_TypeMap.Length);
+            stm_TypeNameMap = new Dictionary<string, AttributeType>();
+
+            stm_TypeNameMap.Add("boolean", BooleanType);
+            stm_TypeNameMap.Add("Boolean", BooleanType);
+            stm_TypeNameMap.Add("booleanarray", BooleanArrayType);
+            stm_TypeNameMap.Add("BooleanArray", BooleanArrayType);
+            stm_TypeNameMap.Add("int8", Int8Type);
+            stm_TypeNameMap.Add("Int8", Int8Type);
+            stm_TypeNameMap.Add("int8array", Int8ArrayType);
+            stm_TypeNameMap.Add("Int8Array", Int8ArrayType);
+            stm_TypeNameMap.Add("uint8", UInt8Type);
+            stm_TypeNameMap.Add("UInt8", UInt8Type);
+            stm_TypeNameMap.Add("uint8array", UInt8ArrayType);
+            stm_TypeNameMap.Add("UInt8Array", UInt8ArrayType);
+            stm_TypeNameMap.Add("int16", Int16Type);
+            stm_TypeNameMap.Add("Int16", Int16Type);
+            stm_TypeNameMap.Add("int16array", Int16ArrayType);
+            stm_TypeNameMap.Add("Int16Array", Int16ArrayType);
+            stm_TypeNameMap.Add("uint16", UInt16Type);
+            stm_TypeNameMap.Add("UInt16", UInt16Type);
+            stm_TypeNameMap.Add("uint16array", UInt16ArrayType);
+            stm_TypeNameMap.Add("UInt16Array", UInt16ArrayType);
+            stm_TypeNameMap.Add("int32", IntType);
+            stm_TypeNameMap.Add("Int32", IntType);
+            stm_TypeNameMap.Add("int32array", IntArrayType);
+            stm_TypeNameMap.Add("Int32Array", IntArrayType);
+            stm_TypeNameMap.Add("uint32", UIntType);
+            stm_TypeNameMap.Add("UInt32", UIntType);
+            stm_TypeNameMap.Add("uint32array", UIntArrayType);
+            stm_TypeNameMap.Add("UInt32Array", UIntArrayType);
+            stm_TypeNameMap.Add("int", IntType);
+            stm_TypeNameMap.Add("Int", IntType);
+            stm_TypeNameMap.Add("intarray", IntArrayType);
+            stm_TypeNameMap.Add("IntArray", IntArrayType);
+            stm_TypeNameMap.Add("uint", UIntType);
+            stm_TypeNameMap.Add("UInt", UIntType);
+            stm_TypeNameMap.Add("uintarray", UIntArrayType);
+            stm_TypeNameMap.Add("UIntArray", UIntArrayType);
+            stm_TypeNameMap.Add("int64", Int64Type);
+            stm_TypeNameMap.Add("Int64", Int64Type);
+            stm_TypeNameMap.Add("int64array", Int64ArrayType);
+            stm_TypeNameMap.Add("Int64Array", Int64ArrayType);
+            stm_TypeNameMap.Add("uint64", UInt64Type);
+            stm_TypeNameMap.Add("UInt64", UInt64Type);
+            stm_TypeNameMap.Add("uint64array", UInt64ArrayType);
+            stm_TypeNameMap.Add("UInt64Array", UInt64ArrayType);
+            stm_TypeNameMap.Add("float", FloatType);
+            stm_TypeNameMap.Add("Float", FloatType);
+            stm_TypeNameMap.Add("floatarray", FloatArrayType);
+            stm_TypeNameMap.Add("FloatArray", FloatArrayType);
+            stm_TypeNameMap.Add("single", FloatType);
+            stm_TypeNameMap.Add("Single", FloatType);
+            stm_TypeNameMap.Add("singlearray", FloatArrayType);
+            stm_TypeNameMap.Add("SingleArray", FloatArrayType);
+            stm_TypeNameMap.Add("double", DoubleType);
+            stm_TypeNameMap.Add("Double", DoubleType);
+            stm_TypeNameMap.Add("doublearray", DoubleArrayType);
+            stm_TypeNameMap.Add("DoubleArray", DoubleArrayType);
+            //stm_TypeNameMap.Add("decimal", DecimalType);
+            //stm_TypeNameMap.Add("Decimal", DecimalType);
+            stm_TypeNameMap.Add("string", StringType);
+            stm_TypeNameMap.Add("String", StringType);
+            stm_TypeNameMap.Add("stringarray", StringArrayType);
+            stm_TypeNameMap.Add("StringArray", StringArrayType);
+            stm_TypeNameMap.Add("namestring", NameStringType);
+            stm_TypeNameMap.Add("NameString", NameStringType);
+            stm_TypeNameMap.Add("namestringarray", NameStringArrayType);
+            stm_TypeNameMap.Add("NameStringArray", NameStringArrayType);
+
+            stm_TypeNameMap.Add("datetime", DateTimeType);
+            stm_TypeNameMap.Add("DateTime", DateTimeType);
+            //stm_TypeNameMap.Add("datetimearray", DateTimeArrayType);
+            //stm_TypeNameMap.Add("DateTimeArray", DateTimeArrayType);
+
+            stm_TypeNameMap.Add("uri", UriType);
+            stm_TypeNameMap.Add("Uri", UriType);
+            //stm_TypeNameMap.Add("uriarray", UriArrayType);
+            //stm_TypeNameMap.Add("UriArray", UriArrayType);
+
+            stm_TypeNameMap.Add("reference", DomNodeRefType);
+            stm_TypeNameMap.Add("Reference", DomNodeRefType);
+            stm_TypeNameMap.Add(DomNodeRefType.Name, DomNodeRefType);
+            //stm_TypeNameMap.Add("referencearray", ReferenceArrayType);
+            //stm_TypeNameMap.Add("ReferenceArray", ReferenceArrayType);
+        }
+
         /// <summary>
         /// Constructs a simple type or an array of length 1 of a simple type</summary>
         /// <param name="name">Type name</param>
@@ -867,14 +957,6 @@ namespace Sce.Atf.Dom
 
         /// <summary>
         /// Gets a generic AttributeType that specifies a CLR string</summary>
-        public static AttributeType UriType
-        {
-            get { return s_uriType; }
-        }
-        private static readonly AttributeType s_uriType = new AttributeType("uri", typeof(Uri), 1);
-
-        /// <summary>
-        /// Gets a generic AttributeType that specifies a CLR string</summary>
         public static AttributeType StringType
         {
             get { return s_stringType; }
@@ -1085,6 +1167,23 @@ namespace Sce.Atf.Dom
         private static readonly AttributeType s_nameStringArrayType = new AttributeType("NameString[]", typeof(NameString[]), Int32.MaxValue);
 
         /// <summary>
+        /// Type for DateTime
+        /// </summary>
+        public static AttributeType DateTimeType
+        {
+            get { return s_dateTimeType; }
+        }
+        private static readonly AttributeType s_dateTimeType = new AttributeType("DateTime", typeof(DateTime), 1);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR string</summary>
+        public static AttributeType UriType
+        {
+            get { return s_uriType; }
+        }
+        private static readonly AttributeType s_uriType = new AttributeType("uri", typeof(Uri), 1);
+
+        /// <summary>
         /// Type for DomNodeRef
         /// </summary>
         public static AttributeType DomNodeRefType
@@ -1245,6 +1344,20 @@ namespace Sce.Atf.Dom
             return true;
         }
 
+        public static AttributeType GetAttributeType(string typeName)
+        {
+            AttributeType typeValue;
+            if (stm_TypeNameMap.TryGetValue(typeName, out typeValue))
+            {
+                return typeValue;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
         private readonly Type m_clrType;
         private readonly AttributeTypes m_type;
         private readonly int m_length;
@@ -1267,5 +1380,9 @@ namespace Sce.Atf.Dom
         private static readonly DateTime s_defaultDateTime = new DateTime(0);
 
         private static readonly char[] s_arraySeparator = new[] { ' ', '\n', '\t' };
+
+        // 
+        private static Dictionary<string, AttributeType> stm_TypeNameMap;
+
     }
 }

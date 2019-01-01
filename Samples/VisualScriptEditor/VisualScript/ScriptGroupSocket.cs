@@ -17,7 +17,7 @@ namespace VisualScript
         // for bases class Pin
         /// <summary>
         /// Gets type attribute for group pin</summary>
-        protected override AttributeInfo TypeAttribute => socketType.typeAttribute;
+        protected override AttributeInfo TypeNameAttribute => socketType.typeAttribute;
 
         /// <summary>
         /// Gets name attribute for group pin</summary>

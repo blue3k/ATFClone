@@ -12,7 +12,7 @@ namespace VisualScript
     {
         /// <summary>
         /// Gets type attribute of Pin</summary>
-        protected override AttributeInfo TypeAttribute => socketType.typeAttribute;
+        protected override AttributeInfo TypeNameAttribute => socketType.typeAttribute;
 
         /// <summary>
         /// Gets name attribute of Pin</summary>

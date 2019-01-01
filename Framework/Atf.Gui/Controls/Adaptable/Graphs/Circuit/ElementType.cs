@@ -1,5 +1,6 @@
 //Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
+using Sce.Atf.Dom;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -125,10 +126,11 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             /// <param name="name">Pin's name</param>
             /// <param name="typeName">Pin's type's name</param>
             /// <param name="index">Index of pin on module</param>
-            public Pin(string name, string typeName, int index, bool allowFanIn = false, bool allowFanOut = true)
+            public Pin(string name, AttributeType attributeType, int index, bool allowFanIn = false, bool allowFanOut = true)
             {
                 m_name.SetString(name);
-                m_typeName = typeName;
+                m_attributeType = attributeType;
+                m_typeName.SetString(attributeType.Name);
                 m_index = index;
                 m_allowFanIn = allowFanIn;
                 m_allowFanOut = allowFanOut;
@@ -143,10 +145,18 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
             /// <summary>
             /// Gets pin's type's name</summary>
-            public string TypeName
+            public NameString TypeName
             {
                 get { return m_typeName; }
             }
+
+            /// <summary>
+            /// Gets pin's type</summary>
+            public AttributeType PinType
+            {
+                get { return m_attributeType; }
+            }
+
             public int Index
             {
                 get { return m_index; }
@@ -170,7 +180,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             private bool m_allowFanIn = true;
             private bool m_allowFanOut = true;
             private NameString m_name;
-            private string m_typeName;
+            private NameString m_typeName;
+            private AttributeType m_attributeType;
             private int m_index;
         }
 

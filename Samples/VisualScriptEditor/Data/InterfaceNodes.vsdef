@@ -9,7 +9,7 @@
   </NodeTypeInfo>
 
   <NodeTypeInfo Name="Function" NodeType="VisualScriptArithmeticSUM" Base="Interface" Icon="arithmetic.Add-icon_16.png" Description="Named event">
-    <Property Name="Signal" Type="Signal" Socket="Output" />
+    <Property Name="Start" Type="Signal" Socket="Output" />
   </NodeTypeInfo>
 
 

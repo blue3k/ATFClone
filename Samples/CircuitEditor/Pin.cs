@@ -11,7 +11,7 @@ namespace CircuitEditorSample
     {
         /// <summary>
         /// Gets type attribute of Pin</summary>
-        protected override AttributeInfo TypeAttribute => Schema.pinType.typeAttribute;
+        protected override AttributeInfo TypeNameAttribute => Schema.pinType.typeAttribute;
 
         /// <summary>
         /// Gets name attribute of Pin</summary>

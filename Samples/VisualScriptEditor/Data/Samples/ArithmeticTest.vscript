@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<_p0:VScript xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:VScript="http://www.blue3k.com/" xmlns:_p0="VScript">
+	<_p0:module xsi:type="_p0:Function" name="Function" label="Func:TestSum" x="192" y="96" />
+	<_p0:module xsi:type="_p0:Function" name="Function_1" label="Func:TestSub" x="192" y="224" />
+	<_p0:module xsi:type="_p0:Function" name="Function_2" label="Func:TestDiv" x="192" y="352" />
+	<_p0:module xsi:type="_p0:Function" name="Function_3" label="Func:TestMul" x="192" y="512" />
+	<_p0:prototypeFolder />
+	<_p0:templateFolder name="_TemplateRoot_" />
+</_p0:VScript>
