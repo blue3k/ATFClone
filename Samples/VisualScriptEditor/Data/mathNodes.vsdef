@@ -48,7 +48,7 @@
     <Property Name="Value" Type="boolean" Default="false" AllowMultipleInput="true" Socket="Output" />
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="Numeric" NodeType="VisualScriptVariableFloat" Base="Variable" Icon="alphabet.speech-balloon-orange-f-icon_16.png" Description="Numeric type">
+  <NodeTypeInfo Name="Numeric" NodeType="VisualScriptVariableFloat" Base="Variable" Icon="alphabet.speech-balloon-orange-n-icon_16.png" Description="Numeric type">
     <Property Name="Value" Type="decimal" Default="0" AllowMultipleInput="true" Socket="Output" />
   </NodeTypeInfo>
 

@@ -862,6 +862,13 @@
     <EmbeddedResource Include="Resources\Button-2-stop-icon_16.png" />
     <EmbeddedResource Include="Resources\Button-2-stop-icon_32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\func_16.png" />
+    <EmbeddedResource Include="Resources\func_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\func_24.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

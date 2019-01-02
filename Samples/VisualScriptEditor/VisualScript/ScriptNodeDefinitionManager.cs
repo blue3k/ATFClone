@@ -566,7 +566,13 @@ namespace VisualScript
         string GetNodeIcon(VisualScriptSchema.NodeTypeInfo nodeDef, string nodeIcon = null)
         {
             if (!string.IsNullOrEmpty(nodeDef.Icon))
-                nodeIcon = typeof(Resources).FullName + "." + nodeDef.Icon;
+            {
+                var systemIconList = ResourceUtil.GetImageList16();
+                if (!systemIconList.Images.ContainsKey(nodeDef.Icon))
+                    nodeIcon = typeof(Resources).FullName + "." + nodeDef.Icon;
+                else
+                    nodeIcon = nodeDef.Icon;
+            }
 
             if (!string.IsNullOrEmpty(nodeIcon))
                 return nodeIcon;

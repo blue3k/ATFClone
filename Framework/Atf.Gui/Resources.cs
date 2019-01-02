@@ -53,6 +53,11 @@ namespace Sce.Atf
 
 
         /// <summary>
+        ///  Function icon name</summary>
+        [ImageResource("func_16.png", "func_24.png", "func_32.png")]
+        public static readonly string FunctionImage;
+
+        /// <summary>
         /// Document icon name</summary>
         [ImageResource("Document16.png", "Document24.png", "Document32.png")]
         public static readonly string DocumentImage;
