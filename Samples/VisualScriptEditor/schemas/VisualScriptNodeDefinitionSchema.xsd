@@ -21,9 +21,8 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="Event"/>
       <xs:enumeration value="boolean"/>
-      <xs:enumeration value="int"/>
-      <xs:enumeration value="float"/>
-      <xs:enumeration value="double"/>
+	  <xs:enumeration value="int"/>
+      <xs:enumeration value="decimal"/>
       <xs:enumeration value="string"/>
       <xs:enumeration value="FixedString"/>
       <xs:enumeration value="vector3"/>

@@ -93,8 +93,12 @@ namespace Sce.Atf.Dom
             stm_TypeNameMap.Add("Double", DoubleType);
             stm_TypeNameMap.Add("doublearray", DoubleArrayType);
             stm_TypeNameMap.Add("DoubleArray", DoubleArrayType);
-            //stm_TypeNameMap.Add("decimal", DecimalType);
-            //stm_TypeNameMap.Add("Decimal", DecimalType);
+
+            stm_TypeNameMap.Add("decimal", DecimalType);
+            stm_TypeNameMap.Add("Decimal", DecimalType);
+            stm_TypeNameMap.Add("decimalarray", DecimalArrayType);
+            stm_TypeNameMap.Add("DecimalArray", DecimalArrayType);
+
             stm_TypeNameMap.Add("string", StringType);
             stm_TypeNameMap.Add("String", StringType);
             stm_TypeNameMap.Add("stringarray", StringArrayType);
@@ -224,12 +228,6 @@ namespace Sce.Atf.Dom
                 m_clrType = typeof(string); // unrecognized type, so treat it as a string, as in normal DOM
                 m_type = AttributeTypes.String;
             }
-        }
-
-        public AttributeType(string name, Type type, int length, IList<string> canconvertables)
-            : this(name, type, length)
-        {
-            // TODO: canconvertables
         }
 
         /// <summary>
@@ -546,15 +544,6 @@ namespace Sce.Atf.Dom
             return result;
         }
 
-        public bool CanConvertFrom(AttributeType typeFrom)
-        {
-            if (this == typeFrom || ClrType == typeFrom.ClrType)
-                return true;
-
-            // TODO: working on type conversion map
-
-            return false;
-        }
 
         /// <summary>
         /// Clones a value of the simple type</summary>
@@ -1150,6 +1139,22 @@ namespace Sce.Atf.Dom
             get { return s_doubleArrayType; }
         }
         private static readonly AttributeType s_doubleArrayType = new AttributeType("double[]", typeof(double[]), Int32.MaxValue);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR decimal</summary>
+        public static AttributeType DecimalType
+        {
+            get { return s_decimalType; }
+        }
+        private static readonly AttributeType s_decimalType = new AttributeType("decimal", typeof(decimal), 1);
+
+        /// <summary>
+        /// Gets a generic AttributeType that specifies a CLR decimal</summary>
+        public static AttributeType DecimalArrayType
+        {
+            get { return s_decimalArrayType; }
+        }
+        private static readonly AttributeType s_decimalArrayType = new AttributeType("decimal[]", typeof(decimal[]), Int32.MaxValue);
 
         /// <summary>
         /// Gets a generic AttributeType that specifies a CLR Boolean</summary>

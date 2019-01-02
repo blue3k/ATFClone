@@ -339,11 +339,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="schemas\GenSchemaDef.bat" />
-    <None Include="schemas\VisualScriptNodeDefinitionSchema.xsd">
+    <Content Include="schemas\VisualScriptNodeDefinitionSchema.xsd">
       <Generator>XSDGenVS</Generator>
       <CustomToolNamespace>CS,VisualScriptSchema</CustomToolNamespace>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DocVersionTransforms\downgrades\" />

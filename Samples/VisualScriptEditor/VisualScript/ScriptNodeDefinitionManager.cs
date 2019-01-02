@@ -401,11 +401,15 @@ namespace VisualScript
                         newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.IntType);
                         newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.IntArrayType);
                         break;
-                    case VisualScriptSchema.PropertyType.@float:
-                        newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.FloatType);
-                        newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.FloatArrayType);
-                        break;
-                    case VisualScriptSchema.PropertyType.@double:
+                    //case VisualScriptSchema.PropertyType.@float:
+                    //    newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.FloatType);
+                    //    newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.FloatArrayType);
+                    //    break;
+                    //case VisualScriptSchema.PropertyType.@double:
+                    //    newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.DoubleType);
+                    //    newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.DoubleArrayType);
+                    //    break;
+                    case VisualScriptSchema.PropertyType.@decimal:
                         newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.DoubleType);
                         newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.DoubleArrayType);
                         break;

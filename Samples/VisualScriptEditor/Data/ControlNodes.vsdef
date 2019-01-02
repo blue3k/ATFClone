@@ -33,6 +33,16 @@
 	<Property Name="Finished" Type="Signal" Socket="Output" />
   </NodeTypeInfo>
 
+  <NodeTypeInfo Name="SetBoolean" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="If branch">
+    <Property Name="Value" Type="boolean" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="To" Type="boolean" AllowMultipleInput="false" Socket="Input" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="SetNumeric" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="If branch">
+    <Property Name="Value" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="To" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+  </NodeTypeInfo>
+
   <!-- Control nodes -->
 
 

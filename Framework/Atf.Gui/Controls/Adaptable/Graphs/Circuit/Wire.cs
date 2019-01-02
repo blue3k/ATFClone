@@ -72,8 +72,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             }
             set
             {
-                var pin = InputElement.InputPin(value.Name);
-                DomNode.SetAttribute(InputPinAttribute, pin.Name);
+                DomNode.SetAttribute(InputPinAttribute, value.Name);
             }
         }
 

@@ -687,12 +687,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
 
             // allowed type conversion
             if (outputPin.PinType != inputPin.PinType)
-            {
-                if (inputPin.PinType.CanConvertFrom(outputPin.PinType))
-                    return true;
-
                 return false;
-            }
 
             // Prevent recursive connections
             if (fromNode.HasOutputPin(outputPin) && toNode.HasInputPin(inputPin))
