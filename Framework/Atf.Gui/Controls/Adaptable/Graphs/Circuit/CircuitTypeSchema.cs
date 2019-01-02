@@ -67,7 +67,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
         static moduleType()
         {
             Type = new DomNodeType("moduleType");
-            nameAttribute = Type.DefineNewAttributeInfo("name", AttributeType.StringType);
+            nameAttribute = Type.DefineNewAttributeInfo("name", AttributeType.StringType, defaultValue:"module");
             labelAttribute = Type.DefineNewAttributeInfo("label", AttributeType.StringType);
             xAttribute = Type.DefineNewAttributeInfo("x", AttributeType.IntType);
             yAttribute = Type.DefineNewAttributeInfo("y", AttributeType.IntType);
@@ -341,6 +341,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
             guidAttribute = Type.DefineNewAttributeInfo("guid", AttributeType.StringType);
             labelAttribute = Type.DefineNewAttributeInfo("label", AttributeType.StringType);
             moduleChild = Type.DefineNewChildInfo("module", moduleType.Type);
+
+            Type.SetIdAttribute(guidAttribute);
             Type.SetTag(new System.ComponentModel.PropertyDescriptorCollection(
                 new PropertyDescriptor[] {
                     new AttributePropertyDescriptor("guid".Localize(), templateType.guidAttribute, null, "guid".Localize(), false, null, null ),
@@ -422,7 +424,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
         {
 
             Type = new DomNodeType("groupType", moduleType.Type);
-            nameAttribute = moduleType.nameAttribute;
+            nameAttribute = Type.DefineNewAttributeInfo("name", AttributeType.StringType, defaultValue: "group");
+            //nameAttribute = moduleType.nameAttribute;
             labelAttribute = moduleType.labelAttribute;
             xAttribute = moduleType.xAttribute;
             yAttribute = moduleType.yAttribute;
@@ -443,6 +446,9 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
             moduleChild = Type.DefineNewChildInfo("module", moduleType.Type, true);
             connectionChild = Type.DefineNewChildInfo("connection", connectionType.Type, true);
             annotationChild = Type.DefineNewChildInfo("annotation", annotationType.Type, true);
+
+
+            Type.SetIdAttribute(nameAttribute);
             Type.SetTag(new System.ComponentModel.PropertyDescriptorCollection(new PropertyDescriptor[] {
                         new AttributePropertyDescriptor("name".Localize(), nameAttribute, null, "name".Localize(), false, null, null ),
                         new AttributePropertyDescriptor("label".Localize(), labelAttribute, null, "label".Localize(), false, null, null ),
@@ -512,7 +518,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
         static missingModuleType()
         {
             Type = new DomNodeType("missingModuleType", moduleType.Type);
-            nameAttribute = moduleType.nameAttribute;
+            nameAttribute = Type.DefineNewAttributeInfo("name", AttributeType.StringType, defaultValue: "missingType");
+            //nameAttribute = moduleType.nameAttribute;
             labelAttribute = moduleType.labelAttribute;
             xAttribute = moduleType.xAttribute;
             yAttribute = moduleType.yAttribute;
@@ -522,6 +529,7 @@ namespace Sce.Atf.Controls.Adaptable.Graphs.CircuitBasicSchema
             validatedAttribute = moduleType.validatedAttribute;
             dynamicPropertyChild = moduleType.dynamicPropertyChild;
 
+            Type.SetIdAttribute(nameAttribute);
             Type.SetTag(new System.ComponentModel.PropertyDescriptorCollection(new PropertyDescriptor[] {
                         new AttributePropertyDescriptor("name".Localize(), nameAttribute, null, "name".Localize(), false, null, null ),
                         new AttributePropertyDescriptor("label".Localize(), labelAttribute, null, "label".Localize(), false, null, null ),
