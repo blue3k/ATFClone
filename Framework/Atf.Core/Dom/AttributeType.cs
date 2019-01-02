@@ -37,6 +37,7 @@ namespace Sce.Atf.Dom
             stm_TypeNameMap.Add("Boolean", BooleanType);
             stm_TypeNameMap.Add("booleanarray", BooleanArrayType);
             stm_TypeNameMap.Add("BooleanArray", BooleanArrayType);
+
             stm_TypeNameMap.Add("int8", Int8Type);
             stm_TypeNameMap.Add("Int8", Int8Type);
             stm_TypeNameMap.Add("int8array", Int8ArrayType);
@@ -45,6 +46,7 @@ namespace Sce.Atf.Dom
             stm_TypeNameMap.Add("UInt8", UInt8Type);
             stm_TypeNameMap.Add("uint8array", UInt8ArrayType);
             stm_TypeNameMap.Add("UInt8Array", UInt8ArrayType);
+
             stm_TypeNameMap.Add("int16", Int16Type);
             stm_TypeNameMap.Add("Int16", Int16Type);
             stm_TypeNameMap.Add("int16array", Int16ArrayType);
@@ -53,6 +55,7 @@ namespace Sce.Atf.Dom
             stm_TypeNameMap.Add("UInt16", UInt16Type);
             stm_TypeNameMap.Add("uint16array", UInt16ArrayType);
             stm_TypeNameMap.Add("UInt16Array", UInt16ArrayType);
+
             stm_TypeNameMap.Add("int32", IntType);
             stm_TypeNameMap.Add("Int32", IntType);
             stm_TypeNameMap.Add("int32array", IntArrayType);
@@ -61,6 +64,7 @@ namespace Sce.Atf.Dom
             stm_TypeNameMap.Add("UInt32", UIntType);
             stm_TypeNameMap.Add("uint32array", UIntArrayType);
             stm_TypeNameMap.Add("UInt32Array", UIntArrayType);
+
             stm_TypeNameMap.Add("int", IntType);
             stm_TypeNameMap.Add("Int", IntType);
             stm_TypeNameMap.Add("intarray", IntArrayType);
@@ -220,6 +224,12 @@ namespace Sce.Atf.Dom
                 m_clrType = typeof(string); // unrecognized type, so treat it as a string, as in normal DOM
                 m_type = AttributeTypes.String;
             }
+        }
+
+        public AttributeType(string name, Type type, int length, IList<string> canconvertables)
+            : this(name, type, length)
+        {
+            // TODO: canconvertables
         }
 
         /// <summary>
@@ -534,6 +544,16 @@ namespace Sce.Atf.Dom
             }
 
             return result;
+        }
+
+        public bool CanConvertFrom(AttributeType typeFrom)
+        {
+            if (this == typeFrom || ClrType == typeFrom.ClrType)
+                return true;
+
+            // TODO: working on type conversion map
+
+            return false;
         }
 
         /// <summary>
