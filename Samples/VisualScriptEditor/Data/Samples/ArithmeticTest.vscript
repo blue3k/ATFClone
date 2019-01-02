@@ -26,7 +26,7 @@
 	<_p0:module xsi:type="_p0:SetNumeric" name="SetNumeric_3" label="SetNumeric" x="736" y="1408" />
 	<_p0:module xsi:type="_p0:Sum" name="Sum_1" label="Sum" x="544" y="1344" />
 	<_p0:module xsi:type="_p0:Neg" name="Neg" label="Neg" x="384" y="1280" />
-	<_p0:module xsi:type="groupType" label="Group" x="320" y="64" showExpandedGroupPins="false">
+	<_p0:module xsi:type="groupType" name="group1" label="Group" x="320" y="64" showExpandedGroupPins="false">
 		<_p0:dynamicProperty name="Emitter Vector" category="Custom Properties" description="The speed and the direction that the emitter travels when it is created" converter="Sce.Atf.Controls.PropertyEditing.FloatArrayConverter, Atf.Gui" editor="Sce.Atf.Controls.PropertyEditing.NumericTupleEditor, Atf.Gui.WinForms:System.Single,x,y,z" valueType="vector3Value" vector3Value="0 0 0" />
 		<_p0:dynamicProperty name="Debug Mode" category="Custom Properties" description="Whether or not debug mode visualizations should be used" editor="Sce.Atf.Controls.PropertyEditing.BoolEditor, Atf.Gui.WinForms" valueType="boolValue" />
 		<_p0:dynamicProperty name="Tester Name" category="Custom Properties" description="The name of the person who is testing this particle effect object" valueType="stringValue" />
@@ -47,7 +47,7 @@
 		<_p0:connection outputModule="Sum" outputPin="Output" inputModule="SetNumeric" inputPin="Value" />
 		<_p0:connection outputModule="Numeric_2" outputPin="Value" inputModule="SetNumeric" inputPin="To" />
 	</_p0:module>
-	<_p0:connection outputModule="Function" outputPin="Start" inputModule="" inputPin="SetNumeric:Activate" />
+	<_p0:connection outputModule="Function" outputPin="Start" inputModule="group1" inputPin="SetNumeric:Activate" />
 	<_p0:connection outputModule="Numeric_5" outputPin="Value" inputModule="SetNumeric_2" inputPin="To" />
 	<_p0:connection outputModule="Function_1" outputPin="Start" inputModule="SetNumeric_2" inputPin="Activate" />
 	<_p0:connection outputModule="Numeric_3" outputPin="Value" inputModule="Sub" inputPin="a" />
