@@ -1,41 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <_p0:VScript xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:VScript="http://www.blue3k.com/" xmlns:_p0="VScript">
 	<_p0:module xsi:type="_p0:Function" name="Function" label="TestAdd" x="96" y="64" />
-	<_p0:module xsi:type="_p0:Sum" name="Sum" label="Sum" x="480" y="-64" />
-	<_p0:module xsi:type="_p0:Numeric" name="Numeric" label="a" x="288" y="-96" Value="10" />
-	<_p0:module xsi:type="_p0:Numeric" name="Numeric_1" label="b" x="288" y="-32" Value="11" />
-	<_p0:module xsi:type="_p0:Numeric" name="Numeric_2" label="c" x="480" y="128" />
-	<_p0:module xsi:type="_p0:SetNumeric" name="SetNumeric" label="SetNumeric" x="608" y="32" />
 	<_p0:module xsi:type="_p0:Function" name="Function_1" label="TestSub" x="96" y="352" />
-	<_p0:module xsi:type="_p0:Numeric" name="Numeric_3" label="a" x="288" y="224" Value="10" />
-	<_p0:module xsi:type="_p0:Numeric" name="Numeric_4" label="b" x="288" y="288" Value="11" />
-	<_p0:module xsi:type="_p0:Numeric" name="Numeric_5" label="c" x="480" y="448" />
-	<_p0:module xsi:type="_p0:SetNumeric" name="SetNumeric_2" label="SetNumeric" x="608" y="352" />
-	<_p0:module xsi:type="_p0:Sub" name="Sub" label="Sub" x="448" y="256" />
+	<_p0:module xsi:type="_p0:Numeric" name="Numeric_3" label="a" x="256" y="224" Value="10" />
+	<_p0:module xsi:type="_p0:Numeric" name="Numeric_4" label="b" x="256" y="288" Value="11" />
+	<_p0:module xsi:type="_p0:Numeric" name="Numeric_5" label="c" x="384" y="416" />
+	<_p0:module xsi:type="_p0:SetNumeric" name="SetNumeric_2" label="SetNumeric" x="544" y="352" />
+	<_p0:module xsi:type="_p0:Sub" name="Sub" label="Sub" x="384" y="256" />
 	<_p0:module xsi:type="_p0:Function" name="Function_2" label="TestMul" x="96" y="704" />
-	<_p0:module xsi:type="_p0:Numeric" name="Numeric_6" label="a" x="288" y="576" Value="10" />
-	<_p0:module xsi:type="_p0:Numeric" name="Numeric_7" label="b" x="288" y="640" Value="11" />
-	<_p0:module xsi:type="_p0:Numeric" name="Numeric_8" label="c" x="480" y="800" />
-	<_p0:module xsi:type="_p0:SetNumeric" name="SetNumeric_4" label="SetNumeric" x="608" y="704" />
-	<_p0:module xsi:type="_p0:Mul" name="Mul" label="Mul" x="448" y="576" />
+	<_p0:module xsi:type="_p0:Numeric" name="Numeric_6" label="a" x="256" y="576" Value="10" />
+	<_p0:module xsi:type="_p0:Numeric" name="Numeric_7" label="b" x="256" y="640" Value="11" />
+	<_p0:module xsi:type="_p0:Numeric" name="Numeric_8" label="c" x="384" y="768" />
+	<_p0:module xsi:type="_p0:SetNumeric" name="SetNumeric_4" label="SetNumeric" x="544" y="704" />
+	<_p0:module xsi:type="_p0:Mul" name="Mul" label="Mul" x="384" y="576" />
 	<_p0:module xsi:type="_p0:Function" name="Function_3" label="TestDiv" x="96" y="1056" />
-	<_p0:module xsi:type="_p0:Numeric" name="Numeric_9" label="a" x="288" y="928" Value="10" />
-	<_p0:module xsi:type="_p0:Numeric" name="Numeric_10" label="b" x="288" y="992" Value="11" />
-	<_p0:module xsi:type="_p0:Numeric" name="Numeric_11" label="c" x="480" y="1152" />
-	<_p0:module xsi:type="_p0:SetNumeric" name="SetNumeric_1" label="SetNumeric" x="608" y="1056" />
-	<_p0:module xsi:type="_p0:Div" name="Div" label="Div" x="448" y="960" />
-	<_p0:module xsi:type="_p0:Function" name="Function_4" label="TestNeg" x="64" y="1376" />
-	<_p0:module xsi:type="_p0:Numeric" name="Numeric_12" label="a" x="256" y="1248" Value="10" />
-	<_p0:module xsi:type="_p0:Numeric" name="Numeric_13" label="b" x="256" y="1312" Value="11" />
-	<_p0:module xsi:type="_p0:Numeric" name="Numeric_14" label="c" x="736" y="1472" />
-	<_p0:module xsi:type="_p0:SetNumeric" name="SetNumeric_3" label="SetNumeric" x="864" y="1376" />
-	<_p0:module xsi:type="_p0:Sum" name="Sum_1" label="Sum" x="640" y="1248" />
-	<_p0:module xsi:type="_p0:Neg" name="Neg" label="Neg" x="416" y="1248" />
-	<_p0:connection outputModule="Numeric" outputPin="Value" inputModule="Sum" inputPin="a" />
-	<_p0:connection outputModule="Numeric_1" outputPin="Value" inputModule="Sum" inputPin="b" />
-	<_p0:connection outputModule="Function" outputPin="Start" inputModule="SetNumeric" inputPin="Activate" />
-	<_p0:connection outputModule="Sum" outputPin="Output" inputModule="SetNumeric" inputPin="Value" />
-	<_p0:connection outputModule="Numeric_2" outputPin="Value" inputModule="SetNumeric" inputPin="To" />
+	<_p0:module xsi:type="_p0:Numeric" name="Numeric_9" label="a" x="256" y="928" Value="10" />
+	<_p0:module xsi:type="_p0:Numeric" name="Numeric_10" label="b" x="256" y="992" Value="11" />
+	<_p0:module xsi:type="_p0:Numeric" name="Numeric_11" label="c" x="384" y="1120" />
+	<_p0:module xsi:type="_p0:SetNumeric" name="SetNumeric_1" label="SetNumeric" x="544" y="1056" />
+	<_p0:module xsi:type="_p0:Div" name="Div" label="Div" x="384" y="960" />
+	<_p0:module xsi:type="_p0:Function" name="Function_4" label="TestNeg" x="96" y="1408" />
+	<_p0:module xsi:type="_p0:Numeric" name="Numeric_12" label="a" x="256" y="1280" Value="10" />
+	<_p0:module xsi:type="_p0:Numeric" name="Numeric_13" label="b" x="256" y="1344" Value="11" />
+	<_p0:module xsi:type="_p0:Numeric" name="Numeric_14" label="c" x="576" y="1472" />
+	<_p0:module xsi:type="_p0:SetNumeric" name="SetNumeric_3" label="SetNumeric" x="736" y="1408" />
+	<_p0:module xsi:type="_p0:Sum" name="Sum_1" label="Sum" x="544" y="1344" />
+	<_p0:module xsi:type="_p0:Neg" name="Neg" label="Neg" x="384" y="1280" />
+	<_p0:module xsi:type="groupType" label="Group" x="320" y="64" showExpandedGroupPins="false">
+		<_p0:dynamicProperty name="Emitter Vector" category="Custom Properties" description="The speed and the direction that the emitter travels when it is created" converter="Sce.Atf.Controls.PropertyEditing.FloatArrayConverter, Atf.Gui" editor="Sce.Atf.Controls.PropertyEditing.NumericTupleEditor, Atf.Gui.WinForms:System.Single,x,y,z" valueType="vector3Value" vector3Value="0 0 0" />
+		<_p0:dynamicProperty name="Debug Mode" category="Custom Properties" description="Whether or not debug mode visualizations should be used" editor="Sce.Atf.Controls.PropertyEditing.BoolEditor, Atf.Gui.WinForms" valueType="boolValue" />
+		<_p0:dynamicProperty name="Tester Name" category="Custom Properties" description="The name of the person who is testing this particle effect object" valueType="stringValue" />
+		<_p0:dynamicProperty name="# of Emitters" category="Custom Properties" description="The number of emitter objects spawned by this emitter" valueType="intValue" />
+		<_p0:input name="SetNumeric:Activate" type="NameString" module="SetNumeric" pin="Activate" />
+		<_p0:output name="Sum:Output" type="double" module="Sum" pin="Output" visible="false" index="1" pinY="56" />
+		<_p0:output name="Numeric:Value" type="double" module="Numeric" pin="Value" visible="false" />
+		<_p0:output name="Numeric_1:Value" type="double" module="Numeric_1" pin="Value" visible="false" index="2" pinY="112" />
+		<_p0:output name="Numeric_2:Value" type="double" module="Numeric_2" pin="Value" visible="false" index="4" pinY="224" />
+		<_p0:output name="SetNumeric:Finished" type="NameString" module="SetNumeric" pin="Finished" visible="false" index="3" pinY="168" />
+		<_p0:module xsi:type="_p0:Sum" name="Sum" label="Sum" x="192" y="32" />
+		<_p0:module xsi:type="_p0:Numeric" name="Numeric" label="a" Value="10" />
+		<_p0:module xsi:type="_p0:Numeric" name="Numeric_1" label="b" y="64" Value="11" />
+		<_p0:module xsi:type="_p0:Numeric" name="Numeric_2" label="c" x="192" y="224" />
+		<_p0:module xsi:type="_p0:SetNumeric" name="SetNumeric" label="SetNumeric" x="320" y="128" />
+		<_p0:connection outputModule="Numeric" outputPin="Value" inputModule="Sum" inputPin="a" />
+		<_p0:connection outputModule="Numeric_1" outputPin="Value" inputModule="Sum" inputPin="b" />
+		<_p0:connection outputModule="Sum" outputPin="Output" inputModule="SetNumeric" inputPin="Value" />
+		<_p0:connection outputModule="Numeric_2" outputPin="Value" inputModule="SetNumeric" inputPin="To" />
+	</_p0:module>
+	<_p0:connection outputModule="Function" outputPin="Start" inputModule="" inputPin="SetNumeric:Activate" />
 	<_p0:connection outputModule="Numeric_5" outputPin="Value" inputModule="SetNumeric_2" inputPin="To" />
 	<_p0:connection outputModule="Function_1" outputPin="Start" inputModule="SetNumeric_2" inputPin="Activate" />
 	<_p0:connection outputModule="Numeric_3" outputPin="Value" inputModule="Sub" inputPin="a" />

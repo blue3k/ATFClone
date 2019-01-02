@@ -67,7 +67,7 @@ namespace VisualScript
         {
             get
             {
-                  return m_connections.Where(x => x.InputElement.Visible && x.OutputElement.Visible);
+                  return m_connections.Where(x => x.InputElement != null && x.OutputElement != null && x.InputElement.Visible && x.OutputElement.Visible);
             }
         }
 

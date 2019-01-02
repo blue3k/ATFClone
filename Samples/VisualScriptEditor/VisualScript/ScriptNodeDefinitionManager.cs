@@ -410,8 +410,8 @@ namespace VisualScript
                     //    newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.DoubleArrayType);
                     //    break;
                     case VisualScriptSchema.PropertyType.@decimal:
-                        newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.DoubleType);
-                        newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.DoubleArrayType);
+                        newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.DecimalType);
+                        newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.DecimalArrayType);
                         break;
                     case VisualScriptSchema.PropertyType.@string:
                         newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.StringType);
@@ -603,7 +603,6 @@ namespace VisualScript
             return nodeCategory;
         }
 
-        Dictionary<string, VisualScriptSchema.NodeTypeInfo> m_NodeDefines = new Dictionary<string, VisualScriptSchema.NodeTypeInfo>();
 
         void LoadNodeDefinition()
         {
@@ -645,6 +644,7 @@ namespace VisualScript
                 m_NodeDefines.Add(nodeDef.Name, nodeDef);
             }
 
+            // Link parents
             foreach (var nodeDef in nodeData.NodeTypeInfo)
             {
                 VisualScriptSchema.NodeTypeInfo parent;
@@ -656,10 +656,10 @@ namespace VisualScript
 
             foreach (var nodeDef in nodeData.NodeTypeInfo)
             {
+                // We don't register parent node type
                 if (nodeDef.IsAbstract) continue;
 
-                var inputs = new List<ElementType.Pin>();
-                var outputs = new List<ElementType.Pin>();
+                // Search all properties(input, output and simple properties)
                 var properties = new Dictionary<string, VisualScriptSchema.Property>();
                 RecursiveCreateProperties(nodeDef, properties);
 
@@ -753,6 +753,7 @@ namespace VisualScript
         VisualScriptTypeManager m_typeManager = null;
 
         EmbeddedCollectionEditor m_ChildCollectionEditor;
+        Dictionary<string, VisualScriptSchema.NodeTypeInfo> m_NodeDefines = new Dictionary<string, VisualScriptSchema.NodeTypeInfo>();
     }
 
 

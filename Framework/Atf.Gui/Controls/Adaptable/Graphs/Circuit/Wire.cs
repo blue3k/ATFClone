@@ -68,7 +68,8 @@ namespace Sce.Atf.Controls.Adaptable.Graphs
             get
             {
                 NameString pinName = GetAttribute<NameString>(InputPinAttribute);
-                return InputElement.InputPin(pinName);              
+                var inputElement = InputElement;
+                return inputElement != null ? inputElement.InputPin(pinName) : null;
             }
             set
             {
