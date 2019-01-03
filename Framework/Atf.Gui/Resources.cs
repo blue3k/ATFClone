@@ -697,6 +697,59 @@ namespace Sce.Atf
         #endregion
 
 
+        #region Additional icons
+
+        /// <summary>
+        /// Wait blue icon
+        /// </summary>
+        [ImageResource("wait_blue_16.png", "wait_blue_24.png", "wait_blue_32.png")]
+        public static readonly string WaitBlueImage;
+
+        /// <summary>
+        /// Wait red icon
+        /// </summary>
+        [ImageResource("wait_red_16.png", "wait_red_24.png", "wait_red_32.png")]
+        public static readonly string WaitRedImage;
+
+        /// <summary>
+        /// Graph branch icon
+        /// </summary>
+        [ImageResource("graph_branch_16.png", "graph_branch_24.png", "graph_branch_32.png")]
+        public static readonly string GraphBranchImage;
+
+        /// <summary>
+        /// Graph loop icon
+        /// </summary>
+        [ImageResource("graph_self_loop_16.png", "graph_self_loop_24.png", "graph_self_loop_32.png")]
+        public static readonly string GraphSelfLoopImage;
+
+        /// <summary>
+        /// Graph To icon
+        /// </summary>
+        [ImageResource("graph_to_16.png", "graph_to_24.png", "graph_to_32.png")]
+        public static readonly string GraphToImage;
+
+        /// <summary>
+        /// Graph From icon
+        /// </summary>
+        [ImageResource("graph_from_16.png", "graph_from_24.png", "graph_from_32.png")]
+        public static readonly string GraphFromImage;
+
+        /// <summary>
+        /// Graph To icon
+        /// </summary>
+        [ImageResource("location_pin_16.png", "location_pin_24.png", "location_pin_32.png")]
+        public static readonly string LocationPinImage;
+
+        /// <summary>
+        /// Speech balloon question icon
+        /// </summary>
+        [ImageResource("speech_balloon_question_16.png", "speech_balloon_question_24.png", "speech_balloon_question_32.png")]
+        public static readonly string BalloonQuestionImage;
+
+        #endregion
+
+
         /// <summary>
         /// Constructor</summary>
         static Resources()

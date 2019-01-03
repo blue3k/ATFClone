@@ -37,25 +37,61 @@
 	<Property Name="Output" Type="decimal" Socket="Output" />
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="Max" NodeType="VisualScriptArithmeticNEG" Base="Arithmetic" Icon="arithmetic.Minus-icon_16.png" Description="Negative">
+  <NodeTypeInfo Name="Max" NodeType="VisualScriptArithmeticNEG" Base="Arithmetic" Icon="alphabet.speech-balloon-green-m-icon_16.png" Description="Negative">
     <Property Name="Input" Type="decimal" Socket="Input" />
 	<Property Name="Max" Type="decimal" Socket="Input" />
 	<Property Name="Output" Type="decimal" Socket="Output" />
   </NodeTypeInfo>
   
-  <NodeTypeInfo Name="Min" NodeType="VisualScriptArithmeticNEG" Base="Arithmetic" Icon="arithmetic.Minus-icon_16.png" Description="Negative">
+  <NodeTypeInfo Name="Min" NodeType="VisualScriptArithmeticNEG" Base="Arithmetic" Icon="alphabet.speech-balloon-green-m-icon_16.png" Description="Negative">
     <Property Name="Input" Type="decimal" Socket="Input" />
 	<Property Name="Min" Type="decimal" Socket="Input" />
 	<Property Name="Output" Type="decimal" Socket="Output" />
   </NodeTypeInfo>
   
-  <NodeTypeInfo Name="Clamp" NodeType="VisualScriptArithmeticNEG" Base="Arithmetic" Icon="arithmetic.Minus-icon_16.png" Description="Negative">
+  <NodeTypeInfo Name="Clamp" NodeType="VisualScriptArithmeticNEG" Base="Arithmetic" Icon="alphabet.speech-balloon-green-c-icon_16.png" Description="Negative">
     <Property Name="Input" Type="decimal" Socket="Input" />
 	<Property Name="Min" Type="decimal" Socket="Input" />
 	<Property Name="Max" Type="decimal" Socket="Input" />
 	<Property Name="Output" Type="decimal" Socket="Output" />
   </NodeTypeInfo>
   
+  <!-- Condition check nodes -->
+
+  <NodeTypeInfo Name="Compare" IsAbstract="true" Category="Compare" NodeType="" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="">
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="&lt;" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="less">
+    <Property Name="a" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="b" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="Result" Type="boolean" Socket="Output" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="&lt;=" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="less or equal">
+    <Property Name="a" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="b" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="Result" Type="boolean" Socket="Output" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="==" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="equal">
+    <Property Name="a" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="b" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="Result" Type="boolean" Socket="Output" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="&gt;=" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="Greater or equal">
+    <Property Name="a" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="b" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="Result" Type="boolean" Socket="Output" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="&gt;" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="Greater">
+    <Property Name="a" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="b" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="Result" Type="boolean" Socket="Output" />
+  </NodeTypeInfo>
+
+
 
   <!-- Variable nodes -->
 

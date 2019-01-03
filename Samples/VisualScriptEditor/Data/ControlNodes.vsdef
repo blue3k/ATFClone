@@ -11,35 +11,35 @@
   </NodeTypeInfo>
 
 
-  <NodeTypeInfo Name="Sequence" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="Sequence Signal replicator">
+  <NodeTypeInfo Name="Sequence" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="Sce.Atf.Resources.location_pin_16.png" Description="Sequence Signal replicator">
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="If" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="If branch">
+  <NodeTypeInfo Name="If" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="Sce.Atf.Resources.graph_branch_16.png" Description="If branch">
     <Property Name="Condition" Type="boolean" AllowMultipleInput="false" Socket="Input" />
     <Property Name="True" Type="Signal" Socket="Output" />
     <Property Name="False" Type="Signal" Socket="Output" />
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="For" NodeType="VisualScriptArithmeticNEG" Base="Control" Icon="arithmetic.Minus-icon_16.png" Description="Negative">
+  <NodeTypeInfo Name="For" NodeType="VisualScriptArithmeticNEG" Base="Control" Icon="Sce.Atf.Resources.graph_self_loop_16.png" Description="Negative">
     <Property Name="StartIndex" Type="decimal" Socket="Input" />
     <Property Name="Count" Type="decimal" Socket="Input" />
 	<Property Name="LoopTick" Type="Signal" Socket="Output" />
 	<Property Name="Finished" Type="Signal" Socket="Output" />
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="While" NodeType="VisualScriptArithmeticNEG" Base="Control" Icon="arithmetic.Minus-icon_16.png" Description="Negative">
+  <NodeTypeInfo Name="While" NodeType="VisualScriptArithmeticNEG" Base="Control" Icon="Sce.Atf.Resources.graph_self_loop_16.png" Description="Negative">
     <Property Name="Condition" Type="boolean" Socket="Input" />
 	<Property Name="LoopTick" Type="Signal" Socket="Output" />
 	<Property Name="Finished" Type="Signal" Socket="Output" />
   </NodeTypeInfo>
 
 
-  <NodeTypeInfo Name="SetBoolean" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="If branch">
+  <NodeTypeInfo Name="SetBoolean" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="Sce.Atf.Resources.graph_to_16.png" Description="If branch">
     <Property Name="Value" Type="boolean" AllowMultipleInput="false" Socket="Input" />
     <Property Name="To" Type="boolean" AllowMultipleInput="false" Socket="Input" />
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="SetNumeric" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="If branch">
+  <NodeTypeInfo Name="SetNumeric" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="Sce.Atf.Resources.graph_to_16.png" Description="If branch">
     <Property Name="Value" Type="decimal" AllowMultipleInput="false" Socket="Input" />
     <Property Name="To" Type="decimal" AllowMultipleInput="false" Socket="Input" />
   </NodeTypeInfo>
@@ -50,46 +50,16 @@
 
   <!-- Waiting nodes -->
 
-  <NodeTypeInfo Name="Sleep" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="Sleep">
+  <NodeTypeInfo Name="Sleep" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="Sce.Atf.Resources.wait_blue_16.png" Description="Sleep">
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="WaitAny" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="Wait any input signal">
+  <NodeTypeInfo Name="WaitAny" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="Sce.Atf.Resources.wait_blue_16.png" Description="Wait any input signal">
     <Property Name="Signal" Type="Signal" AllowMultipleInput="true" Socket="Input" />
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="WaitAll" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="Wait all input signals">
+  <NodeTypeInfo Name="WaitAll" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="Sce.Atf.Resources.wait_blue_16.png" Description="Wait all input signals">
     <Property Name="Signal" Type="Signal" AllowMultipleInput="true" Socket="Input" />
   </NodeTypeInfo>
-
-  <!-- Conditional branch nodes -->
-
-  <NodeTypeInfo Name="Compare" IsAbstract="true" Category="Compare" NodeType="" Icon="alphabet.speech-balloon-green-a-icon_16.png" Description="">
-  </NodeTypeInfo>
-
-  <NodeTypeInfo Name="&lt;" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="arithmetic.Add-icon_16.png" Description="If branch">
-    <Property Name="a" Type="decimal" AllowMultipleInput="false" Socket="Input" />
-    <Property Name="b" Type="decimal" AllowMultipleInput="false" Socket="Input" />
-    <Property Name="Result" Type="boolean" Socket="Output" />
-  </NodeTypeInfo>
-
-  <NodeTypeInfo Name="&lt;=" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="arithmetic.Add-icon_16.png" Description="If branch">
-    <Property Name="a" Type="decimal" AllowMultipleInput="false" Socket="Input" />
-    <Property Name="b" Type="decimal" AllowMultipleInput="false" Socket="Input" />
-    <Property Name="Result" Type="boolean" Socket="Output" />
-  </NodeTypeInfo>
-
-  <NodeTypeInfo Name="&gt;=" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="arithmetic.Add-icon_16.png" Description="If branch">
-    <Property Name="a" Type="decimal" AllowMultipleInput="false" Socket="Input" />
-    <Property Name="b" Type="decimal" AllowMultipleInput="false" Socket="Input" />
-    <Property Name="Result" Type="boolean" Socket="Output" />
-  </NodeTypeInfo>
-
-  <NodeTypeInfo Name="&gt;" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="arithmetic.Add-icon_16.png" Description="If branch">
-    <Property Name="a" Type="decimal" AllowMultipleInput="false" Socket="Input" />
-    <Property Name="b" Type="decimal" AllowMultipleInput="false" Socket="Input" />
-    <Property Name="Result" Type="boolean" Socket="Output" />
-  </NodeTypeInfo>
-
 
 
 </NodeTypeDefinitions>

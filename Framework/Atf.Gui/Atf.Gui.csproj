@@ -619,9 +619,6 @@
     <EmbeddedResource Include="Resources\ZoomOut32.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Thumbs.db" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\add.png" />
     <EmbeddedResource Include="Resources\arrow_down_blue.png" />
     <EmbeddedResource Include="Resources\arrow_up_blue.png" />
@@ -873,6 +870,40 @@
     <EmbeddedResource Include="Resources\database_16.png" />
     <EmbeddedResource Include="Resources\database_24.png" />
     <EmbeddedResource Include="Resources\database_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\wait_blue_16.png" />
+    <EmbeddedResource Include="Resources\wait_blue_24.png" />
+    <EmbeddedResource Include="Resources\wait_blue_32.png" />
+    <EmbeddedResource Include="Resources\wait_red_16.png" />
+    <EmbeddedResource Include="Resources\wait_red_24.png" />
+    <EmbeddedResource Include="Resources\wait_red_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\graph_branch_16.png" />
+    <EmbeddedResource Include="Resources\graph_branch_24.png" />
+    <EmbeddedResource Include="Resources\graph_branch_32.png" />
+    <EmbeddedResource Include="Resources\graph_self_loop_16.png" />
+    <EmbeddedResource Include="Resources\graph_self_loop_24.png" />
+    <EmbeddedResource Include="Resources\graph_self_loop_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\graph_from_16.png" />
+    <EmbeddedResource Include="Resources\graph_from_24.png" />
+    <EmbeddedResource Include="Resources\graph_from_32.png" />
+    <EmbeddedResource Include="Resources\graph_to_16.png" />
+    <EmbeddedResource Include="Resources\graph_to_24.png" />
+    <EmbeddedResource Include="Resources\graph_to_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\location_pin_16.png" />
+    <EmbeddedResource Include="Resources\location_pin_24.png" />
+    <EmbeddedResource Include="Resources\location_pin_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\speech_balloon_question_16.png" />
+    <EmbeddedResource Include="Resources\speech_balloon_question_24.png" />
+    <EmbeddedResource Include="Resources\speech_balloon_question_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
