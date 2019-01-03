@@ -10,7 +10,6 @@
   </NodeTypeInfo>
 
   <NodeTypeInfo Name="NamedEvent" NodeType="VisualScriptArithmeticSUM" Base="Event" Icon="arithmetic.Add-icon_16.png" Description="Named event">
-    <Property Name="Name" Type="string" AllowMultipleInput="true" Socket="Input" />
   </NodeTypeInfo>
 
 

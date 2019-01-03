@@ -9,7 +9,7 @@
   </NodeTypeInfo>
 
   <NodeTypeInfo Name="Function" NodeType="VisualScriptArithmeticSUM" Base="Interface" Icon="Sce.Atf.Resources.func_16.png" Description="Function interface">
-    <Property Name="Start" Type="Signal" Socket="Output" />
+    <Property Name="Start" Type="Signal" Socket="Output" AllowMultipleOutput="true" />
   </NodeTypeInfo>
 
 

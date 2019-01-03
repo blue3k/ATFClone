@@ -39,6 +39,7 @@ namespace VisualScript
             Path.Combine(stm_DefaultPath, "StateNodes.vsdef"),
             Path.Combine(stm_DefaultPath, "EventNodes.vsdef"),
             Path.Combine(stm_DefaultPath, "InterfaceNodes.vsdef"),
+            Path.Combine(stm_DefaultPath, "GameRequest.vsdef"),
         };
 
         public string[] DefaultModuleDefinitions

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NodeTypeDefinitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://blue3k.com/1_0"
+           xsi:noNamespaceSchemaLocation="../schemas/VisualScriptNodeDefinitionSchema.xsd"
+           >
+
+
+  <NodeTypeInfo Name="GameRequest" IsAbstract="true" Category="SampleGame" NodeType="" Icon="func_16.png" Description="">
+    <Property Name="Name" Type="string" Default="" />
+    <Property Name="Start" Type="Signal" AllowMultipleOutput="true" Socket="Output" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="GameLogin" NodeType="VisualScriptArithmeticSUM" Base="GameRequest" Icon="Sce.Atf.Resources.func_16.png" Description="Function interface">
+    <Property Name="ID" Type="string" AllowMultipleOutput="true" Socket="Output" />
+    <Property Name="PW" Type="string" AllowMultipleOutput="true" Socket="Output" />
+  </NodeTypeInfo>
+
+
+
+
+</NodeTypeDefinitions>
