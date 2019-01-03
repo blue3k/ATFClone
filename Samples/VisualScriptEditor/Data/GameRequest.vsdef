@@ -9,11 +9,22 @@
     <Property Name="Start" Type="Signal" AllowMultipleOutput="true" Socket="Output" />
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="GameLogin" NodeType="VisualScriptArithmeticSUM" Base="GameRequest" Icon="Sce.Atf.Resources.func_16.png" Description="Function interface">
-    <Property Name="ID" Type="string" AllowMultipleOutput="true" Socket="Output" />
-    <Property Name="PW" Type="string" AllowMultipleOutput="true" Socket="Output" />
+  <NodeTypeInfo Name="GameGetRankingList" NodeType="VisualScriptArithmeticSUM" Base="GameRequest" Icon="Sce.Atf.Resources.database_16.png" Description="Function interface">
+    <Property Name="StartRank" Type="string" AllowMultipleOutput="true" Socket="Output" />
+    <Property Name="Count" Type="string" AllowMultipleOutput="true" Socket="Output" />
   </NodeTypeInfo>
 
+
+  <NodeTypeInfo Name="GameUser" NodeType="VisualScriptArithmeticSUM" Category="SampleGame" Icon="Sce.Atf.Resources.database_16.png" Description="Function interface">
+    <Property Name="ID" Type="string" AllowMultipleOutput="true" Socket="Output" />
+    <Property Name="Money" Type="string" AllowMultipleOutput="true" Socket="Output" />
+  </NodeTypeInfo>
+
+
+  <NodeTypeInfo Name="GameCharacter" NodeType="VisualScriptArithmeticSUM" Category="SampleGame" Icon="Sce.Atf.Resources.database_16.png" Description="Function interface">
+    <Property Name="Name" Type="string" AllowMultipleOutput="true" Socket="Output" />
+    <Property Name="Gold" Type="string" AllowMultipleOutput="true" Socket="Output" />
+  </NodeTypeInfo>
 
 
 

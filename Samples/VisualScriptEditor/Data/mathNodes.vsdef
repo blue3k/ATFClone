@@ -37,6 +37,25 @@
 	<Property Name="Output" Type="decimal" Socket="Output" />
   </NodeTypeInfo>
 
+  <NodeTypeInfo Name="Max" NodeType="VisualScriptArithmeticNEG" Base="Arithmetic" Icon="arithmetic.Minus-icon_16.png" Description="Negative">
+    <Property Name="Input" Type="decimal" Socket="Input" />
+	<Property Name="Max" Type="decimal" Socket="Input" />
+	<Property Name="Output" Type="decimal" Socket="Output" />
+  </NodeTypeInfo>
+  
+  <NodeTypeInfo Name="Min" NodeType="VisualScriptArithmeticNEG" Base="Arithmetic" Icon="arithmetic.Minus-icon_16.png" Description="Negative">
+    <Property Name="Input" Type="decimal" Socket="Input" />
+	<Property Name="Min" Type="decimal" Socket="Input" />
+	<Property Name="Output" Type="decimal" Socket="Output" />
+  </NodeTypeInfo>
+  
+  <NodeTypeInfo Name="Clamp" NodeType="VisualScriptArithmeticNEG" Base="Arithmetic" Icon="arithmetic.Minus-icon_16.png" Description="Negative">
+    <Property Name="Input" Type="decimal" Socket="Input" />
+	<Property Name="Min" Type="decimal" Socket="Input" />
+	<Property Name="Max" Type="decimal" Socket="Input" />
+	<Property Name="Output" Type="decimal" Socket="Output" />
+  </NodeTypeInfo>
+  
 
   <!-- Variable nodes -->
 

@@ -93,6 +93,11 @@ namespace Sce.Atf
         public static readonly string DataImage;
 
         /// <summary>
+        /// "Database" icon name</summary>
+        [ImageResource("database_16.png", "database_24.png", "database_32.png")]
+        public static readonly string DatabaseImage;
+
+        /// <summary>
         /// "Select" icon name</summary>
         [ImageResource("Selection16.png", "Selection24.png", "Selection32.png")]
         public static readonly string SelectionImage;

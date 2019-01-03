@@ -48,6 +48,19 @@
     <Property Name="FunctionToCall" Type="string" Default="" />
   </NodeTypeInfo>
 
+  <!-- Waiting nodes -->
+
+  <NodeTypeInfo Name="Sleep" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="Sleep">
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="WaitAny" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="Wait any input signal">
+    <Property Name="Signal" Type="Signal" AllowMultipleInput="true" Socket="Input" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="WaitAll" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="Wait all input signals">
+    <Property Name="Signal" Type="Signal" AllowMultipleInput="true" Socket="Input" />
+  </NodeTypeInfo>
+
   <!-- Conditional branch nodes -->
 
   <NodeTypeInfo Name="Compare" IsAbstract="true" Category="Compare" NodeType="" Icon="alphabet.speech-balloon-green-a-icon_16.png" Description="">
