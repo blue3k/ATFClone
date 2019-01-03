@@ -59,8 +59,8 @@ namespace VisualScriptEditor
                 typeof(ControlHostService),             // docking control host
                 typeof(WindowLayoutService),            // multiple window layout support
                 typeof(WindowLayoutServiceCommands),    // window layout commands
-                typeof(AtfUsageLogger),                 // logs computer info to an ATF server
-                typeof(CrashLogger),                    // logs unhandled exceptions to an ATF server
+                //typeof(AtfUsageLogger),                 // logs computer info to an ATF server
+                //typeof(CrashLogger),                    // logs unhandled exceptions to an ATF server
                 typeof(UnhandledExceptionService),      // catches unhandled exceptions, displays info, and gives user a chance to save
                 typeof(FileDialogService),              // standard Windows file dialogs
 

@@ -568,6 +568,7 @@ namespace VisualScript
             if (!string.IsNullOrEmpty(nodeDef.Icon))
             {
                 var systemIconList = ResourceUtil.GetImageList16();
+                // If the path is full path, use it
                 if (!systemIconList.Images.ContainsKey(nodeDef.Icon))
                     nodeIcon = typeof(Resources).FullName + "." + nodeDef.Icon;
                 else

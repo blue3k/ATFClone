@@ -21,8 +21,8 @@
   </NodeTypeInfo>
 
   <NodeTypeInfo Name="For" NodeType="VisualScriptArithmeticNEG" Base="Control" Icon="arithmetic.Minus-icon_16.png" Description="Negative">
-    <Property Name="StartIndex" Type="int" Socket="Input" />
-    <Property Name="Count" Type="int" Socket="Input" />
+    <Property Name="StartIndex" Type="decimal" Socket="Input" />
+    <Property Name="Count" Type="decimal" Socket="Input" />
 	<Property Name="LoopTick" Type="Signal" Socket="Output" />
 	<Property Name="Finished" Type="Signal" Socket="Output" />
   </NodeTypeInfo>
@@ -32,6 +32,7 @@
 	<Property Name="LoopTick" Type="Signal" Socket="Output" />
 	<Property Name="Finished" Type="Signal" Socket="Output" />
   </NodeTypeInfo>
+
 
   <NodeTypeInfo Name="SetBoolean" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="arithmetic.Add-icon_16.png" Description="If branch">
     <Property Name="Value" Type="boolean" AllowMultipleInput="false" Socket="Input" />
@@ -43,8 +44,40 @@
     <Property Name="To" Type="decimal" AllowMultipleInput="false" Socket="Input" />
   </NodeTypeInfo>
 
-  <!-- Control nodes -->
+  <NodeTypeInfo Name="CallFunction" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="Sce.Atf.Resources.func_16.png" Description="If branch">
+    <Property Name="FunctionToCall" Type="string" Default="" />
+  </NodeTypeInfo>
 
+  <!-- Conditional branch nodes -->
+
+  <NodeTypeInfo Name="Compare" IsAbstract="true" Category="Compare" NodeType="" Icon="alphabet.speech-balloon-green-a-icon_16.png" Description="">
+    <Property Name="Activate" Type="Signal" AllowMultipleInput="true" Socket="Input" />
+    <Property Name="Finished" Type="Signal" Socket="Output" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="&lt;" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="arithmetic.Add-icon_16.png" Description="If branch">
+    <Property Name="a" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="b" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="Result" Type="boolean" Socket="Output" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="&lt;=" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="arithmetic.Add-icon_16.png" Description="If branch">
+    <Property Name="a" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="b" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="Result" Type="boolean" Socket="Output" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="&gt;=" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="arithmetic.Add-icon_16.png" Description="If branch">
+    <Property Name="a" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="b" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="Result" Type="boolean" Socket="Output" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="&gt;" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="arithmetic.Add-icon_16.png" Description="If branch">
+    <Property Name="a" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="b" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="Result" Type="boolean" Socket="Output" />
+  </NodeTypeInfo>
 
 
 

@@ -131,14 +131,14 @@ namespace VisualScript
                     switch (attrRule.SchemaProperty.Socket)
                     {
                         case VisualScriptSchema.SocketType.Input:
-                            m_Inputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type, m_Outputs.Count));
+                            m_Inputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type, m_Inputs.Count, allowFanIn:attrRule.SchemaProperty.AllowMultipleInput));
                             break;
                         case VisualScriptSchema.SocketType.Output:
-                            m_Outputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type, m_Outputs.Count));
+                            m_Outputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type, m_Outputs.Count, allowFanOut: attrRule.SchemaProperty.AllowMultipleOutput));
                             break;
                         case VisualScriptSchema.SocketType.InOut:
-                            m_Inputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type, m_Outputs.Count));
-                            m_Outputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type, m_Outputs.Count));
+                            m_Inputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type, m_Inputs.Count, allowFanIn: attrRule.SchemaProperty.AllowMultipleInput));
+                            m_Outputs.Add(new ElementType.Pin(attrInfo.Name, attrInfo.Type, m_Outputs.Count, allowFanOut: attrRule.SchemaProperty.AllowMultipleOutput));
                             break;
                         default:
                             break;
