@@ -48,17 +48,17 @@ namespace Sce.Atf
         /// with the format "EnumName=X" are parsed so that EnumName gets the value X, where X is
         /// an int.</remarks>
         public static void ParseEnumDefinitions(
-            string[] enumDefinitions,
+            IList<string> enumDefinitions,
             out string[] names,
             out string[] displayNames,
             out int[] values)
         {
-            names = new string[enumDefinitions.Length];
-            displayNames = new string[enumDefinitions.Length];
-            values = new int[enumDefinitions.Length];
+            names = new string[enumDefinitions.Count];
+            displayNames = new string[enumDefinitions.Count];
+            values = new int[enumDefinitions.Count];
 
             int enumValue = 0;
-            for (int i = 0; i < enumDefinitions.Length; i++)
+            for (int i = 0; i < enumDefinitions.Count; i++)
             {
                 string displayName;
 
@@ -79,7 +79,7 @@ namespace Sce.Atf
         /// with the format "EnumName=X" are parsed so that EnumName gets the value X, where X is
         /// an int.</remarks>
         public static void ParseEnumDefinitions(
-            string[] enumDefinitions,
+            IList<string> enumDefinitions,
             out string[] names,
             out int[] values)
         {

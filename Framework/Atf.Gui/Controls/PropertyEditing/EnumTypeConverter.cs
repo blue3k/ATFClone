@@ -44,7 +44,16 @@ namespace Sce.Atf.Controls.PropertyEditing
         /// with the format "EnumName=X" are parsed so that EnumName gets the value X, where X is an int.</remarks>
         public void DefineEnum(string[] names)
         {
-            EnumUtil.ParseEnumDefinitions(names, out m_names, out m_values);
+            string[] parsedNames;
+            int[] values;
+            EnumUtil.ParseEnumDefinitions(names, out parsedNames, out values);
+            m_names.Clear();
+            foreach (var name in parsedNames)
+                m_names.Add(name);
+
+            m_values.Clear();
+            foreach (var value in values)
+                m_values.Add(value);
         }
 
         /// <summary>
@@ -58,6 +67,23 @@ namespace Sce.Atf.Controls.PropertyEditing
 
             m_names = names;
             m_values = values;
+        }
+
+        /// <summary>
+        /// Define & add single enum value
+        /// </summary>
+        /// <param name="enumName"></param>
+        public void DefineEnum(string enumName)
+        {
+            string[] parsedNames;
+            int[] values;
+            EnumUtil.ParseEnumDefinitions(new string[] { enumName }, out parsedNames, out values);
+
+            foreach (var name in parsedNames)
+                m_names.Add(name);
+
+            foreach (var value in values)
+                m_values.Add(value);
         }
 
         /// <summary>
@@ -95,7 +121,7 @@ namespace Sce.Atf.Controls.PropertyEditing
             {
                 // int to string
                 int enumValue = (int)value;
-                for (int i = 0; i < m_values.Length; i++)
+                for (int i = 0; i < m_values.Count; i++)
                 {
                     if (enumValue == m_values[i])
                         return m_names[i];
@@ -133,7 +159,7 @@ namespace Sce.Atf.Controls.PropertyEditing
             get { return m_values; }
         }
 
-        private string[] m_names = EmptyArray<string>.Instance;
-        private int[] m_values = EmptyArray<int>.Instance;
+        private IList<string> m_names = new List<string>();
+        private IList<int> m_values = new List<int>();
     }
 }

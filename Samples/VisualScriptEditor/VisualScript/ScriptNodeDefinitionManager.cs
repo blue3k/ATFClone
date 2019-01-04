@@ -39,6 +39,9 @@ namespace VisualScript
             Path.Combine(stm_DefaultPath, "StateNodes.vsdef"),
             Path.Combine(stm_DefaultPath, "EventNodes.vsdef"),
             Path.Combine(stm_DefaultPath, "InterfaceNodes.vsdef"),
+            Path.Combine(stm_DefaultPath, "ListNodes.vsdef"),
+            Path.Combine(stm_DefaultPath, "ObjectNodes.vsdef"),
+            Path.Combine(stm_DefaultPath, "TransactionNodes.vsdef"),
             Path.Combine(stm_DefaultPath, "GameRequest.vsdef"),
         };
 
@@ -448,6 +451,12 @@ namespace VisualScript
                         newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.DomNodeRefType);
                         newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.DomNodeRefArrayType);
                         break;
+                    case VisualScriptSchema.PropertyType.@ObjectType:
+                        newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.StringType);
+                        newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.StringArrayType);
+                        editor = m_ObjectTypeEditor;
+                        converter = m_ObjectTypeConverter;
+                        break;
                     default:
                         throw new InvalidDataException("There is a not-handled property type");
                 }
@@ -652,6 +661,49 @@ namespace VisualScript
                 AddNodeDefinition(definitionFile);
         }
 
+        void HandleEnumDefinitions(string nodeDefinitionPath, VisualScriptSchema.EnumTypeInfo[] enumInfos)
+        {
+            if (enumInfos == null)
+                return;
+
+            foreach (var enumDef in enumInfos)
+            {
+                VisualScriptSchema.EnumTypeInfo oldDef;
+                if (m_EnumDefines.TryGetValue(enumDef.Name, out oldDef))
+                    throw new InvalidDataException(string.Format("Duplicated enum type name, {0} is already taken in {1}", enumDef.Name, oldDef.DefinitionFile));
+
+                if (enumDef.Value == null)
+                    throw new InvalidDataException(string.Format("Empty enum type value list, {0}", enumDef.Name));
+
+                enumDef.SingleValueType = new AttributeType(enumDef.Name, typeof(string));
+                enumDef.ArrayValueType = new AttributeType(enumDef.Name + "[]", typeof(string[]), Int32.MaxValue);
+                enumDef.EnumRule = new StringEnumRule(enumDef.Value);
+                enumDef.DefinitionFile = nodeDefinitionPath;
+
+                m_EnumDefines.Add(enumDef.Name, enumDef);
+            }
+        }
+
+        void HandleObjectDefinitions(string nodeDefinitionPath, VisualScriptSchema.ObjectTypeInfo[] objectInfos)
+        {
+            if (objectInfos == null)
+                return;
+
+            foreach (var objectDef in objectInfos)
+            {
+                VisualScriptSchema.ObjectTypeInfo oldDef;
+                if (m_ObjectDefines.TryGetValue(objectDef.Name, out oldDef))
+                    throw new InvalidDataException(string.Format("Duplicated enum type name, {0} is already taken in {1}", objectDef.Name, oldDef.DefinitionFile));
+
+                objectDef.DefinitionFile = nodeDefinitionPath;
+
+                m_ObjectTypeEditor.DefineEnum(objectDef.Name);
+                m_ObjectTypeConverter.DefineEnum(objectDef.Name);
+                m_ObjectTypeEnumRule.DefineEnum(objectDef.Name);
+                m_ObjectDefines.Add(objectDef.Name, objectDef);
+            }
+        }
+
         void AddNodeDefinition(string nodeDefinitionPath)
         {
             if (nodeDefinitionPath == null)
@@ -672,25 +724,11 @@ namespace VisualScript
                 throw new InvalidDataException("Failed to load Node definition data");
 
             // cache all enum types
-            if(nodeData.EnumTypeInfo != null)
-            {
-                foreach (var enumDef in nodeData.EnumTypeInfo)
-                {
-                    VisualScriptSchema.EnumTypeInfo oldDef;
-                    if (m_EnumDefines.TryGetValue(enumDef.Name, out oldDef))
-                        throw new InvalidDataException(string.Format("Duplicated enum type name, {0} is already taken in {1}", enumDef.Name, oldDef.DefinitionFile));
+            HandleEnumDefinitions(nodeDefinitionPath, nodeData.EnumTypeInfo);
 
-                    if(enumDef.Value == null)
-                        throw new InvalidDataException(string.Format("Empty enum type value list, {0}", enumDef.Name));
+            // cache all object types
+            HandleObjectDefinitions(nodeDefinitionPath, nodeData.ObjectTypeInfo);
 
-                    enumDef.SingleValueType = new AttributeType(enumDef.Name, typeof(string));
-                    enumDef.ArrayValueType = new AttributeType(enumDef.Name + "[]", typeof(string[]), Int32.MaxValue);
-                    enumDef.EnumRule = new StringEnumRule(enumDef.Value);
-                    enumDef.DefinitionFile = nodeDefinitionPath;
-
-                    m_EnumDefines.Add(enumDef.Name, enumDef);
-                }
-            }
             // cache all node types
             foreach (var nodeDef in nodeData.NodeTypeInfo)
             {
@@ -814,6 +852,11 @@ namespace VisualScript
 
         EmbeddedCollectionEditor m_ChildCollectionEditor;
 
+        EnumUITypeEditor m_ObjectTypeEditor = new EnumUITypeEditor();
+        EnumTypeConverter m_ObjectTypeConverter = new EnumTypeConverter();
+        StringEnumRule m_ObjectTypeEnumRule = new StringEnumRule();
+
+        Dictionary<string, VisualScriptSchema.ObjectTypeInfo> m_ObjectDefines = new Dictionary<string, VisualScriptSchema.ObjectTypeInfo>();
         Dictionary<string, VisualScriptSchema.EnumTypeInfo> m_EnumDefines = new Dictionary<string, VisualScriptSchema.EnumTypeInfo>();
         Dictionary<string, VisualScriptSchema.NodeTypeInfo> m_NodeDefines = new Dictionary<string, VisualScriptSchema.NodeTypeInfo>();
     }

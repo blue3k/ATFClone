@@ -26,6 +26,8 @@ namespace VisualScriptSchema {
         
         private EnumTypeInfo[] enumTypeInfoField;
         
+        private ObjectTypeInfo[] objectTypeInfoField;
+        
         private NodeTypeInfo[] nodeTypeInfoField;
         
         /// <remarks/>
@@ -36,6 +38,17 @@ namespace VisualScriptSchema {
             }
             set {
                 this.enumTypeInfoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ObjectTypeInfo")]
+        public ObjectTypeInfo[] ObjectTypeInfo {
+            get {
+                return this.objectTypeInfoField;
+            }
+            set {
+                this.objectTypeInfoField = value;
             }
         }
         
@@ -165,6 +178,137 @@ namespace VisualScriptSchema {
             }
             set {
                 this.socketField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.81.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://blue3k.com/1_0")]
+    public partial class NodeTypeInfo {
+        
+        private Property[] propertyField;
+        
+        private EditorSocket[] outputsField;
+        
+        private string nameField;
+        
+        private bool isAbstractField;
+        
+        private string baseField;
+        
+        private string categoryField;
+        
+        private string nodeTypeField;
+        
+        private string iconField;
+        
+        private string descriptionField;
+        
+        public NodeTypeInfo() {
+            this.isAbstractField = false;
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Property")]
+        public Property[] Property {
+            get {
+                return this.propertyField;
+            }
+            set {
+                this.propertyField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Outputs")]
+        public EditorSocket[] Outputs {
+            get {
+                return this.outputsField;
+            }
+            set {
+                this.outputsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool IsAbstract {
+            get {
+                return this.isAbstractField;
+            }
+            set {
+                this.isAbstractField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Base {
+            get {
+                return this.baseField;
+            }
+            set {
+                this.baseField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Category {
+            get {
+                return this.categoryField;
+            }
+            set {
+                this.categoryField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string NodeType {
+            get {
+                return this.nodeTypeField;
+            }
+            set {
+                this.nodeTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Icon {
+            get {
+                return this.iconField;
+            }
+            set {
+                this.iconField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
             }
         }
     }
@@ -367,6 +511,9 @@ namespace VisualScriptSchema {
         
         /// <remarks/>
         Object,
+        
+        /// <remarks/>
+        ObjectType,
     }
     
     /// <remarks/>
@@ -394,11 +541,9 @@ namespace VisualScriptSchema {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://blue3k.com/1_0")]
-    public partial class NodeTypeInfo {
+    public partial class ObjectTypeInfo {
         
         private Property[] propertyField;
-        
-        private EditorSocket[] outputsField;
         
         private string nameField;
         
@@ -414,7 +559,7 @@ namespace VisualScriptSchema {
         
         private string descriptionField;
         
-        public NodeTypeInfo() {
+        public ObjectTypeInfo() {
             this.isAbstractField = false;
         }
         
@@ -426,17 +571,6 @@ namespace VisualScriptSchema {
             }
             set {
                 this.propertyField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Outputs")]
-        public EditorSocket[] Outputs {
-            get {
-                return this.outputsField;
-            }
-            set {
-                this.outputsField = value;
             }
         }
         

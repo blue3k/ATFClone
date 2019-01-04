@@ -32,6 +32,7 @@
       <xs:enumeration value="Signal"/>
       <xs:enumeration value="Enum"/>
 	  <xs:enumeration value="Object"/>
+	  <xs:enumeration value="ObjectType"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -71,6 +72,24 @@
     <xs:attribute name="Description" type="xs:string" />
   </xs:complexType>
 
+
+
+  <xs:complexType name="ObjectTypeInfo">
+    <xs:sequence>
+      <xs:element name="Property" type="Property" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+
+    <xs:attribute name="Name" type="xs:string" />
+    <xs:attribute name="IsAbstract" type="xs:boolean" default="false" use="optional" />
+    <xs:attribute name="Base" type="xs:string" use="optional" />
+    <xs:attribute name="Category" type="xs:string" use="optional" />
+    <xs:attribute name="NodeType" type="xs:string" use="required" />
+    <xs:attribute name="Icon" type="xs:string" use="required" />
+    <xs:attribute name="Description" type="xs:string" />
+  </xs:complexType>
+
+
+
   <xs:complexType name="NodeTypeInfo">
     <xs:sequence>
       <xs:element name="Property" type="Property" minOccurs="0" maxOccurs="unbounded" />
@@ -91,6 +110,7 @@
     <xs:complexType >
       <xs:sequence>
         <xs:element name="EnumTypeInfo" type="EnumTypeInfo" minOccurs="0" maxOccurs="unbounded" />
+		<xs:element name="ObjectTypeInfo" type="ObjectTypeInfo" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="NodeTypeInfo" type="NodeTypeInfo" minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
     </xs:complexType>

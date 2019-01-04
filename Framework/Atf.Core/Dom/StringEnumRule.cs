@@ -9,6 +9,11 @@ namespace Sce.Atf.Dom
     /// Attribute rule that constrains a string value to one of a set of given string values</summary>
     public class StringEnumRule : AttributeRule
     {
+        public StringEnumRule()
+        {
+            m_values = new List<string>();
+        }
+
         /// <summary>
         /// Constructor</summary>
         /// <param name="values">Enumeration values</param>
@@ -21,12 +26,17 @@ namespace Sce.Atf.Dom
         /// <summary>
         /// Constructor</summary>
         /// <param name="values">Enumeration values</param>
-        public StringEnumRule(string[] values)
+        public StringEnumRule(IList<string> values)
         {
-            if (values == null || values.Length == 0)
+            if (values == null || values.Count == 0)
                 throw new ArgumentException("values must be an array with at least one element");
 
             m_values = values;
+        }
+
+        public void DefineEnum(string value)
+        {
+            m_values.Add(value);
         }
 
         /// <summary>
@@ -56,6 +66,6 @@ namespace Sce.Atf.Dom
         }
 
         private readonly string m_EnumTypeName = null;
-        private readonly string[] m_values;
+        private readonly IList<string> m_values;
     }
 }

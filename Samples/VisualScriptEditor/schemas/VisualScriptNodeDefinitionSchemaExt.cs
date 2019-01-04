@@ -37,6 +37,14 @@ namespace VisualScriptSchema
         public StringEnumRule EnumRule { get; set; }
     }
 
+    public partial class ObjectTypeInfo
+    {
+        [IgnoreDataMember]
+        [System.Xml.Serialization.XmlIgnore]
+        public string DefinitionFile { get; set; }
+
+    }
+
     public partial class NodeTypeInfo
     {
         [IgnoreDataMember]

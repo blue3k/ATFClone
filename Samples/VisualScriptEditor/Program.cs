@@ -86,7 +86,7 @@ namespace VisualScriptEditor
                 typeof(PaletteService),                 // global palette, for drag/drop instancing
 
                 typeof(MyPropertyEditor),               // property grid for editing selected objects; uses tooltips to show property descriptions
-                typeof(GridPropertyEditor),             // grid control for editing selected objects
+                //typeof(GridPropertyEditor),             // grid control for editing selected objects
                 typeof(PropertyEditingCommands),        // commands for PropertyEditor and GridPropertyEditor, like Reset,
                 typeof(DomNodeRefDictionary),           // Reference dictionary
 
@@ -105,7 +105,7 @@ namespace VisualScriptEditor
                 typeof(CircuitControlRegistry),         // circuit controls management
                 typeof(LayeringCommands),               // "Add Layer" command
                 typeof(GraphViewCommands),              // zooming with presets
-                typeof(PerformanceMonitor),             // displays the frame rate and memory usage
+                //typeof(PerformanceMonitor),             // displays the frame rate and memory usage
                 typeof(DefaultTabCommands),             // provides the default commands related to document tab Controls
                 typeof(ScriptNodeDefinitionManager),                   // component that defines circuit module types
                 typeof(TemplateLister),                 // template library for subgraph referencing or instancing 

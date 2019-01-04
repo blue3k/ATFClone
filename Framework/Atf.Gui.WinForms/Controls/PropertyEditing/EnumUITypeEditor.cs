@@ -1,6 +1,7 @@
 ﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
@@ -61,7 +62,36 @@ namespace Sce.Atf.Controls.PropertyEditing
         /// an int.</remarks>
         public void DefineEnum(string[] names)
         {
-            EnumUtil.ParseEnumDefinitions(names, out m_names, out m_values);
+            string[] parsedNames;
+            int[] values;
+            EnumUtil.ParseEnumDefinitions(names, out parsedNames, out values);
+            m_names.Clear();
+            foreach (var name in parsedNames)
+                m_names.Add(name);
+
+            m_values.Clear();
+            foreach (var value in values)
+                m_values.Add(value);
+        }
+
+        /// <summary>
+        /// Defines the enum names and values</summary>
+        /// <param name="names">Enum names array</param>
+        /// <remarks>Enum values default to successive integers, starting with 0. Enum names
+        /// with the format "EnumName=X" are parsed so that EnumName gets the value X, where X is
+        /// an int.</remarks>
+        public void DefineEnum(IList<string> names)
+        {
+            string[] parsedNames;
+            int[] values;
+            EnumUtil.ParseEnumDefinitions(names, out parsedNames, out values);
+            m_names.Clear();
+            foreach (var name in parsedNames)
+                m_names.Add(name);
+
+            m_values.Clear();
+            foreach (var value in values)
+                m_values.Add(value);
         }
 
         /// <summary>
@@ -75,6 +105,23 @@ namespace Sce.Atf.Controls.PropertyEditing
 
             m_names = names;
             m_values = values;
+        }
+
+        /// <summary>
+        /// Define & add single enum value
+        /// </summary>
+        /// <param name="enumName"></param>
+        public void DefineEnum(string enumName)
+        {
+            string[] parsedNames;
+            int[] values;
+            EnumUtil.ParseEnumDefinitions(new string[] { enumName }, out parsedNames, out values);
+
+            foreach (var name in parsedNames)
+                m_names.Add(name);
+
+            foreach (var value in values)
+                m_values.Add(value);
         }
 
         /// <summary>
@@ -112,7 +159,7 @@ namespace Sce.Atf.Controls.PropertyEditing
                 listBox.DrawItem += listBox_DrawItem;
                 listBox.MouseMove += listBox_MouseMove;
 
-                for (int i = 0; i < m_names.Length; i++)
+                for (int i = 0; i < m_names.Count; i++)
                 {
                     listBox.Items.Add(m_names[i]);
                     if (m_names[i].Equals(value) ||
@@ -133,7 +180,7 @@ namespace Sce.Atf.Controls.PropertyEditing
                         width = Math.Max(width, w);
                     }
 
-                    float height = m_names.Length * listBox.ItemHeight;
+                    float height = m_names.Count * listBox.ItemHeight;
                     int scrollBarThickness = SystemInformation.VerticalScrollBarWidth;
                     if (height > listBox.Height - 4) // vertical scrollbar?
                         width += SystemInformation.VerticalScrollBarWidth;
@@ -229,7 +276,7 @@ namespace Sce.Atf.Controls.PropertyEditing
         {
 
             ListBox listBox = sender as ListBox;
-            if (e.Y <= m_names.Length * listBox.ItemHeight)
+            if (e.Y <= m_names.Count * listBox.ItemHeight)
             {
                 int hoverIndex = e.Y / listBox.ItemHeight + listBox.TopIndex;
                 if (hoverIndex != m_hoverIndex)
@@ -274,8 +321,8 @@ namespace Sce.Atf.Controls.PropertyEditing
             }
         }
 
-        private string[] m_names = EmptyArray<string>.Instance;
-        private int[] m_values = EmptyArray<int>.Instance;
+        private IList<string> m_names = new List<string>();
+        private IList<int> m_values = new List<int>();
         private IWindowsFormsEditorService m_editorService;
         private int m_hoverIndex = -1;
         private bool m_listBoxMouseDown;

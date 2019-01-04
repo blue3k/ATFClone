@@ -25,7 +25,6 @@
     <Property Name="StartIndex" Type="Decimal" Socket="Input" />
     <Property Name="Count" Type="Decimal" Socket="Input" />
 	<Property Name="LoopTick" Type="Signal" Socket="Output" />
-	<Property Name="Finished" Type="Signal" Socket="Output" />
   </NodeTypeInfo>
 
   <NodeTypeInfo Name="While" Base="Control" Icon="Sce.Atf.Resources.graph_self_loop_16.png" Description="Negative">

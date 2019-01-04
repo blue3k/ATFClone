@@ -8,48 +8,48 @@
   <NodeTypeInfo Name="Arithmetic" IsAbstract="true" Category="Arithmetic" NodeType="" Icon="alphabet.speech-balloon-green-a-icon_16.png" Description="Null NodeType means abstract">
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="Sum" NodeType="VisualScriptArithmeticSUM" Base="Arithmetic" Icon="arithmetic.Add-icon_16.png" Description="Sum">
+  <NodeTypeInfo Name="Sum" Base="Arithmetic" Icon="arithmetic.Add-icon_16.png" Description="Sum">
     <Property Name="a" Type="Decimal" AllowMultipleInput="true" Socket="Input" />
     <Property Name="b" Type="Decimal" AllowMultipleInput="true" Socket="Input" />
     <Property Name="Output" Type="Decimal" Socket="Output" />
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="Neg" NodeType="VisualScriptArithmeticNEG" Base="Arithmetic" Icon="arithmetic.Minus-icon_16.png" Description="Negative">
+  <NodeTypeInfo Name="Neg" Base="Arithmetic" Icon="arithmetic.Minus-icon_16.png" Description="Negative">
     <Property Name="Input" Type="Decimal" Socket="Input" />
 	<Property Name="Output" Type="Decimal" Socket="Output" />
   </NodeTypeInfo>
   
-  <NodeTypeInfo Name="Sub" NodeType="VisualScriptArithmeticSUB" Base="Arithmetic" Icon="arithmetic.Minus-icon_16.png" Description="Subtract">
+  <NodeTypeInfo Name="Sub" Base="Arithmetic" Icon="arithmetic.Minus-icon_16.png" Description="Subtract">
     <Property Name="a" Type="Decimal" Socket="Input" />
     <Property Name="b" Type="Decimal" Socket="Input" />
 	<Property Name="Output" Type="Decimal" Socket="Output" />
   </NodeTypeInfo>
   
-  <NodeTypeInfo Name="Div" NodeType="VisualScriptArithmeticDIV" Base="Arithmetic" Icon="arithmetic.Divide-icon_16.png" Description="Divide">
+  <NodeTypeInfo Name="Div" Base="Arithmetic" Icon="arithmetic.Divide-icon_16.png" Description="Divide">
     <Property Name="a" Type="Decimal" Socket="Input"/>
     <Property Name="b" Type="Decimal" Socket="Input"/>
 	<Property Name="Output" Type="Decimal" Socket="Output"/>
   </NodeTypeInfo>
   
-  <NodeTypeInfo Name="Mul" NodeType="VisualScriptArithmeticMUL" Base="Arithmetic" Icon="arithmetic.Cross-icon_16.png" Description="Multiply">
+  <NodeTypeInfo Name="Mul" Base="Arithmetic" Icon="arithmetic.Cross-icon_16.png" Description="Multiply">
     <Property Name="a" Type="Decimal" AllowMultipleInput="true" Socket="Input" />
     <Property Name="b" Type="Decimal" AllowMultipleInput="true" Socket="Input" />
 	<Property Name="Output" Type="Decimal" Socket="Output" />
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="Max" NodeType="VisualScriptArithmeticNEG" Base="Arithmetic" Icon="alphabet.speech-balloon-green-m-icon_16.png" Description="Negative">
+  <NodeTypeInfo Name="Max" Base="Arithmetic" Icon="alphabet.speech-balloon-green-m-icon_16.png" Description="Negative">
     <Property Name="Input" Type="Decimal" Socket="Input" />
 	<Property Name="Max" Type="Decimal" Socket="Input" />
 	<Property Name="Output" Type="Decimal" Socket="Output" />
   </NodeTypeInfo>
   
-  <NodeTypeInfo Name="Min" NodeType="VisualScriptArithmeticNEG" Base="Arithmetic" Icon="alphabet.speech-balloon-green-m-icon_16.png" Description="Negative">
+  <NodeTypeInfo Name="Min" Base="Arithmetic" Icon="alphabet.speech-balloon-green-m-icon_16.png" Description="Negative">
     <Property Name="Input" Type="Decimal" Socket="Input" />
 	<Property Name="Min" Type="Decimal" Socket="Input" />
 	<Property Name="Output" Type="Decimal" Socket="Output" />
   </NodeTypeInfo>
   
-  <NodeTypeInfo Name="Clamp" NodeType="VisualScriptArithmeticNEG" Base="Arithmetic" Icon="alphabet.speech-balloon-green-c-icon_16.png" Description="Negative">
+  <NodeTypeInfo Name="Clamp" Base="Arithmetic" Icon="alphabet.speech-balloon-green-c-icon_16.png" Description="Negative">
     <Property Name="Input" Type="Decimal" Socket="Input" />
 	<Property Name="Min" Type="Decimal" Socket="Input" />
 	<Property Name="Max" Type="Decimal" Socket="Input" />
@@ -61,31 +61,31 @@
   <NodeTypeInfo Name="Compare" IsAbstract="true" Category="Compare" NodeType="" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="">
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="&lt;" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="less">
+  <NodeTypeInfo Name="&lt;" Base="Compare" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="less">
     <Property Name="a" Type="Decimal" AllowMultipleInput="false" Socket="Input" />
     <Property Name="b" Type="Decimal" AllowMultipleInput="false" Socket="Input" />
     <Property Name="Result" Type="Boolean" Socket="Output" />
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="&lt;=" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="less or equal">
+  <NodeTypeInfo Name="&lt;=" Base="Compare" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="less or equal">
     <Property Name="a" Type="Decimal" AllowMultipleInput="false" Socket="Input" />
     <Property Name="b" Type="Decimal" AllowMultipleInput="false" Socket="Input" />
     <Property Name="Result" Type="Boolean" Socket="Output" />
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="==" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="equal">
+  <NodeTypeInfo Name="==" Base="Compare" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="equal">
     <Property Name="a" Type="Decimal" AllowMultipleInput="false" Socket="Input" />
     <Property Name="b" Type="Decimal" AllowMultipleInput="false" Socket="Input" />
     <Property Name="Result" Type="Boolean" Socket="Output" />
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="&gt;=" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="Greater or equal">
+  <NodeTypeInfo Name="&gt;=" Base="Compare" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="Greater or equal">
     <Property Name="a" Type="Decimal" AllowMultipleInput="false" Socket="Input" />
     <Property Name="b" Type="Decimal" AllowMultipleInput="false" Socket="Input" />
     <Property Name="Result" Type="Boolean" Socket="Output" />
   </NodeTypeInfo>
 
-  <NodeTypeInfo Name="&gt;" NodeType="VisualScriptArithmeticSUM" Base="Compare" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="Greater">
+  <NodeTypeInfo Name="&gt;" Base="Compare" Icon="Sce.Atf.Resources.speech_balloon_question_16.png" Description="Greater">
     <Property Name="a" Type="Decimal" AllowMultipleInput="false" Socket="Input" />
     <Property Name="b" Type="Decimal" AllowMultipleInput="false" Socket="Input" />
     <Property Name="Result" Type="Boolean" Socket="Output" />
@@ -114,11 +114,6 @@
   <NodeTypeInfo Name="FixedString" NodeType="VisualScriptVariableFixedString" Base="Variable" Icon="alphabet.speech-balloon-orange-s-icon_16.png" Description="FixedString(hashed string)">
     <Property Name="Value" Type="FixedString" Default="" AllowMultipleInput="true" Socket="Output" />
   </NodeTypeInfo>
-
-  <NodeTypeInfo Name="Object" NodeType="VisualScriptVariableFloat" Base="Variable" Icon="alphabet.speech-balloon-orange-o-icon_16.png" Description="Object">
-    <Property Name="Value" Type="Object" Default="0" AllowMultipleInput="true" Socket="Output" />
-  </NodeTypeInfo>
-
 
 
 </NodeTypeDefinitions>

@@ -1,8 +1,8 @@
-ATF for VS2017
+ATF
 ===
 
 ### Note ###
-This implementation is based on https://github.com/SonyWWS/ATF. I modified some stuff, and it's getting too far from original.
+This repository is based on https://github.com/SonyWWS/ATF. I modified some stuff, and it's getting too far from original.
 If you are interested in stuffs below, you can try.
 
 1. Projects are converted for VS2017.
@@ -11,6 +11,8 @@ If you are interested in stuffs below, you can try.
 4. And some minor changes.
 5. TitleTab control - you can separete editors with title tab.
 6. ElementType of graph can be added as an adaptor so that you can override all property by element.
+7. Visual script(Tong script) editor sample
+8. And more
 
 
 NOTE: Build & Install DevTool\DomGenVS Visual Studio 2017 plug-in.
