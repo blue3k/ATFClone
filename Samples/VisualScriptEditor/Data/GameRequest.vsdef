@@ -4,6 +4,9 @@
            >
 
 
+  <EnumTypeInfo Name="Result" Description="Result enumeration">
+    <Value>SUCCESS</Value>
+  </EnumTypeInfo>
 
   <!-- Basic types -->
 
@@ -12,7 +15,7 @@
 	</NodeTypeInfo>
 
 	<NodeTypeInfo Name="GameObject" IsAbstract="true" Category="SampleGame" NodeType="" Icon="Sce.Atf.Resources.database_16.png" Description="Game object base">
-    <Property Name="Ptr" Type="Object" AllowMultipleOutput="false" Socket="Input" /> <!--If this field is assigned, then name path will be ignored-->
+    <!--<Property Name="Ptr" Type="Object" AllowMultipleOutput="false" Socket="Input" /> --><!--If this field is assigned, then name path will be ignored-->
 	</NodeTypeInfo>
 
 
@@ -31,10 +34,28 @@
 
   <!-- Transactions -->
 
-	<NodeTypeInfo Name="GameGetRankingList" NodeType="VisualScriptArithmeticSUM" Base="ClientRequest" Description="Function interface">
+  <NodeTypeInfo Name="Transaction" NodeType="VisualScriptTransaction" Base="ClientRequest" Description="Base transaction">
+    <Property Name="StartRank" Type="String" AllowMultipleOutput="true" Socket="Output" />
+    <Property Name="Count" Type="String" AllowMultipleOutput="true" Socket="Output" />
+  </NodeTypeInfo>
+
+  <NodeTypeInfo Name="TransactionFinish" NodeType="VisualScriptTransactionFinish" Description="Base transaction finish">
+    <Property Name="Activate" Type="Signal" AllowMultipleInput="true" Socket="Input" />
+    <Property Name="Result" Type="Enum" TypeName="Result" AllowMultipleInput="true" Socket="Input" />
+  </NodeTypeInfo>
+
+
+  <!-- Message handling -->
+
+  <NodeTypeInfo Name="GameGetRankingList" Base="Transaction" Description="Function interface">
 		<Property Name="StartRank" Type="String" AllowMultipleOutput="true" Socket="Output" />
 		<Property Name="Count" Type="String" AllowMultipleOutput="true" Socket="Output" />
 	</NodeTypeInfo>
+
+  <NodeTypeInfo Name="Result:GameGetRankingList" Base="TransactionFinish" Description="Function interface">
+    <Property Name="StartRank" Type="String" AllowMultipleOutput="true" Socket="Output" />
+    <Property Name="Count" Type="String" AllowMultipleOutput="true" Socket="Output" />
+  </NodeTypeInfo>
 
 
 
