@@ -1217,6 +1217,15 @@ namespace Sce.Atf.Dom
         }
         private static readonly AttributeType s_domNodeRefType = new AttributeType("DomNodeRef", typeof(DomNode), 1);
 
+        /// <summary>
+        /// Type for DomNodeRef
+        /// </summary>
+        public static AttributeType DomNodeRefArrayType
+        {
+            get { return s_domNodeRefArrayType; }
+        }
+        private static readonly AttributeType s_domNodeRefArrayType = new AttributeType("DomNodeRef[]", typeof(DomNode[]), int.MaxValue);
+
 
         private object GetDefaultArrayValue<T>()
         {

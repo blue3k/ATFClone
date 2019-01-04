@@ -3,6 +3,7 @@
            xsi:noNamespaceSchemaLocation="../schemas/VisualScriptNodeDefinitionSchema.xsd"
            >
 
+  
   <!-- Control nodes -->
 
   <NodeTypeInfo Name="Control" IsAbstract="true" Category="Control" NodeType="" Icon="alphabet.speech-balloon-green-a-icon_16.png" Description="">
@@ -15,37 +16,37 @@
   </NodeTypeInfo>
 
   <NodeTypeInfo Name="If" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="Sce.Atf.Resources.graph_branch_16.png" Description="If branch">
-    <Property Name="Condition" Type="boolean" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="Condition" Type="Boolean" AllowMultipleInput="false" Socket="Input" />
     <Property Name="True" Type="Signal" Socket="Output" />
     <Property Name="False" Type="Signal" Socket="Output" />
   </NodeTypeInfo>
 
   <NodeTypeInfo Name="For" NodeType="VisualScriptArithmeticNEG" Base="Control" Icon="Sce.Atf.Resources.graph_self_loop_16.png" Description="Negative">
-    <Property Name="StartIndex" Type="decimal" Socket="Input" />
-    <Property Name="Count" Type="decimal" Socket="Input" />
+    <Property Name="StartIndex" Type="Decimal" Socket="Input" />
+    <Property Name="Count" Type="Decimal" Socket="Input" />
 	<Property Name="LoopTick" Type="Signal" Socket="Output" />
 	<Property Name="Finished" Type="Signal" Socket="Output" />
   </NodeTypeInfo>
 
   <NodeTypeInfo Name="While" NodeType="VisualScriptArithmeticNEG" Base="Control" Icon="Sce.Atf.Resources.graph_self_loop_16.png" Description="Negative">
-    <Property Name="Condition" Type="boolean" Socket="Input" />
+    <Property Name="Condition" Type="Boolean" Socket="Input" />
 	<Property Name="LoopTick" Type="Signal" Socket="Output" />
 	<Property Name="Finished" Type="Signal" Socket="Output" />
   </NodeTypeInfo>
 
 
   <NodeTypeInfo Name="SetBoolean" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="Sce.Atf.Resources.graph_to_16.png" Description="If branch">
-    <Property Name="Value" Type="boolean" AllowMultipleInput="false" Socket="Input" />
-    <Property Name="To" Type="boolean" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="Value" Type="Boolean" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="To" Type="Boolean" AllowMultipleInput="false" Socket="Input" />
   </NodeTypeInfo>
 
   <NodeTypeInfo Name="SetNumeric" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="Sce.Atf.Resources.graph_to_16.png" Description="If branch">
-    <Property Name="Value" Type="decimal" AllowMultipleInput="false" Socket="Input" />
-    <Property Name="To" Type="decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="Value" Type="Decimal" AllowMultipleInput="false" Socket="Input" />
+    <Property Name="To" Type="Decimal" AllowMultipleInput="false" Socket="Input" />
   </NodeTypeInfo>
 
   <NodeTypeInfo Name="CallFunction" NodeType="VisualScriptArithmeticSUM" Base="Control" Icon="Sce.Atf.Resources.func_16.png" Description="If branch">
-    <Property Name="FunctionToCall" Type="string" Default="" />
+    <Property Name="FunctionToCall" Type="String" Default="" />
   </NodeTypeInfo>
 
   <!-- Waiting nodes -->

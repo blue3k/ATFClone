@@ -240,7 +240,7 @@ namespace VisualScript
                 {
                     if (propType.IsArray)
                     {
-                        newAttr = new AttributeInfo(prop.Name, new AttributeType(AttributeTypes.SingleArray.ToString(), typeof(string[])));
+                        newAttr = new AttributeInfo(prop.Name, AttributeType.StringArrayType);
                         newAttr.AddRule(new StringEnumRule(Enum.GetNames(propType)));
                     }
                     else
@@ -394,11 +394,11 @@ namespace VisualScript
                         newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.BooleanType);
                         newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.BooleanArrayType);
                         break;
-                    case VisualScriptSchema.PropertyType.boolean:
+                    case VisualScriptSchema.PropertyType.Boolean:
                         newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.BooleanType);
                         newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.BooleanArrayType);
                         break;
-                    case VisualScriptSchema.PropertyType.@int:
+                    case VisualScriptSchema.PropertyType.@Int:
                         newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.IntType);
                         newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.IntArrayType);
                         break;
@@ -410,11 +410,11 @@ namespace VisualScript
                     //    newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.DoubleType);
                     //    newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.DoubleArrayType);
                     //    break;
-                    case VisualScriptSchema.PropertyType.@decimal:
+                    case VisualScriptSchema.PropertyType.@Decimal:
                         newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.DecimalType);
                         newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.DecimalArrayType);
                         break;
-                    case VisualScriptSchema.PropertyType.@string:
+                    case VisualScriptSchema.PropertyType.@String:
                         newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.StringType);
                         newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.StringArrayType);
                         break;
@@ -424,7 +424,7 @@ namespace VisualScript
                         newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.StringArrayType);
                         newListAttr.AddRule(new StringHashRule());
                         break;
-                    case VisualScriptSchema.PropertyType.vector3:
+                    case VisualScriptSchema.PropertyType.Vector3:
                         newAttr = new AttributeInfo(enumValue.ToString(), new AttributeType(enumValue.ToString(), typeof(float[]), 3));
                         editor = new Sce.Atf.Controls.PropertyEditing.NumericTupleEditor(typeof(float), new string[] { "x", "y", "z" });
                         break;
@@ -438,9 +438,15 @@ namespace VisualScript
                         break;
                     case VisualScriptSchema.PropertyType.File:
                     case VisualScriptSchema.PropertyType.Asset:
-                        // TODO: add new type
+                        // TODO: add new types for them
+                    case VisualScriptSchema.PropertyType.Enum:
+                        // We don't actually use Enum here. just assign string for now
                         newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.StringType);
                         newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.StringArrayType);
+                        break;
+                    case VisualScriptSchema.PropertyType.@Object:
+                        newAttr = new AttributeInfo(enumValue.ToString(), AttributeType.DomNodeRefType);
+                        newListAttr = new AttributeInfo(enumValue.ToString() + "[]", AttributeType.DomNodeRefArrayType);
                         break;
                     default:
                         throw new InvalidDataException("There is a not-handled property type");
@@ -481,6 +487,32 @@ namespace VisualScript
 
         void AddProperty(DomNodeType domNodeType, VisualScriptSchema.Property prop, PropertyDescriptorCollection newDescs)
         {
+            if(prop.Type == VisualScriptSchema.PropertyType.Enum)
+            {
+                VisualScriptSchema.EnumTypeInfo enumInfo;
+                if (!m_EnumDefines.TryGetValue(prop.TypeName, out enumInfo))
+                {
+                    Outputs.WriteLine(OutputMessageType.Error, "Invalid enum type {1} for property {0}", prop.Name, prop.TypeName);
+                    return;
+                }
+
+                AttributeInfo newAttr = null;
+                if (prop.IsArray)
+                    newAttr = new AttributeInfo(prop.Name, enumInfo.ArrayValueType);
+                else
+                    newAttr = new AttributeInfo(prop.Name, enumInfo.SingleValueType);
+
+                if (prop.Default == null)
+                    newAttr.DefaultValue = enumInfo.Value[0];
+                else
+                    newAttr.DefaultValue = prop.Default;
+                newAttr.AddRule(enumInfo.EnumRule);
+                var newDesc = new AttributePropertyDescriptor(newAttr.Name, newAttr, "Node", newAttr.Name, false, new EnumUITypeEditor(enumInfo.Value), new EnumTypeConverter(enumInfo.Value));
+                newDescs.Add(newDesc);
+                domNodeType.Define(newAttr);
+                return;
+            }
+
             var propTypeInfo = m_PropertyInfos[(int)prop.Type];
             if (propTypeInfo.AttributeInfo != null)
             {
@@ -639,6 +671,26 @@ namespace VisualScript
             if (nodeData == null || nodeData.NodeTypeInfo == null)
                 throw new InvalidDataException("Failed to load Node definition data");
 
+            // cache all enum types
+            if(nodeData.EnumTypeInfo != null)
+            {
+                foreach (var enumDef in nodeData.EnumTypeInfo)
+                {
+                    VisualScriptSchema.EnumTypeInfo oldDef;
+                    if (m_EnumDefines.TryGetValue(enumDef.Name, out oldDef))
+                        throw new InvalidDataException(string.Format("Duplicated enum type name, {0} is already taken in {1}", enumDef.Name, oldDef.DefinitionFile));
+
+                    if(enumDef.Value == null)
+                        throw new InvalidDataException(string.Format("Empty enum type value list, {0}", enumDef.Name));
+
+                    enumDef.SingleValueType = new AttributeType(enumDef.Name, typeof(string));
+                    enumDef.ArrayValueType = new AttributeType(enumDef.Name + "[]", typeof(string[]), Int32.MaxValue);
+                    enumDef.EnumRule = new StringEnumRule(enumDef.Value);
+                    enumDef.DefinitionFile = nodeDefinitionPath;
+
+                    m_EnumDefines.Add(enumDef.Name, enumDef);
+                }
+            }
             // cache all node types
             foreach (var nodeDef in nodeData.NodeTypeInfo)
             {
@@ -761,6 +813,8 @@ namespace VisualScript
         VisualScriptTypeManager m_typeManager = null;
 
         EmbeddedCollectionEditor m_ChildCollectionEditor;
+
+        Dictionary<string, VisualScriptSchema.EnumTypeInfo> m_EnumDefines = new Dictionary<string, VisualScriptSchema.EnumTypeInfo>();
         Dictionary<string, VisualScriptSchema.NodeTypeInfo> m_NodeDefines = new Dictionary<string, VisualScriptSchema.NodeTypeInfo>();
     }
 

@@ -9,14 +9,14 @@
   </NodeTypeInfo>
 
   <NodeTypeInfo Name="Walk" NodeType="VisualScriptArithmeticSUM" Base="State" Icon="arithmetic.Add-icon_16.png" Description="Sum">
-    <Property Name="a" Type="decimal" AllowMultipleInput="true" Socket="Input" />
-    <Property Name="b" Type="decimal" AllowMultipleInput="true" Socket="Input" />
-    <Property Name="Output" Type="decimal" Socket="Output" />
+    <Property Name="a" Type="Decimal" AllowMultipleInput="true" Socket="Input" />
+    <Property Name="b" Type="Decimal" AllowMultipleInput="true" Socket="Input" />
+    <Property Name="Output" Type="Decimal" Socket="Output" />
   </NodeTypeInfo>
 
   <NodeTypeInfo Name="Idle" NodeType="VisualScriptArithmeticNEG" Base="State" Icon="arithmetic.Minus-icon_16.png" Description="Negative">
-    <Property Name="Input" Type="decimal" Socket="Input" />
-	<Property Name="Output" Type="decimal" Socket="Output" />
+    <Property Name="Input" Type="Decimal" Socket="Input" />
+	<Property Name="Output" Type="Decimal" Socket="Output" />
   </NodeTypeInfo>
 
 

@@ -5,7 +5,7 @@
 
 
   <NodeTypeInfo Name="Interface" IsAbstract="true" Category="Interface" NodeType="" Icon="func_16.png" Description="">
-    <Property Name="Name" Type="string" Default="" />
+    <Property Name="Name" Type="String" Default="" />
   </NodeTypeInfo>
 
   <NodeTypeInfo Name="Function" NodeType="VisualScriptArithmeticSUM" Base="Interface" Icon="Sce.Atf.Resources.func_16.png" Description="Function interface">

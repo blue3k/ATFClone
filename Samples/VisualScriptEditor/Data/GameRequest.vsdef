@@ -4,27 +4,37 @@
            >
 
 
-  <NodeTypeInfo Name="GameRequest" IsAbstract="true" Category="SampleGame" NodeType="" Icon="func_16.png" Description="">
-    <Property Name="Name" Type="string" Default="" />
-    <Property Name="Start" Type="Signal" AllowMultipleOutput="true" Socket="Output" />
-  </NodeTypeInfo>
 
-  <NodeTypeInfo Name="GameGetRankingList" NodeType="VisualScriptArithmeticSUM" Base="GameRequest" Icon="Sce.Atf.Resources.database_16.png" Description="Function interface">
-    <Property Name="StartRank" Type="string" AllowMultipleOutput="true" Socket="Output" />
-    <Property Name="Count" Type="string" AllowMultipleOutput="true" Socket="Output" />
-  </NodeTypeInfo>
+  <!-- Basic types -->
 
+	<NodeTypeInfo Name="ClientRequest" IsAbstract="true" Category="SampleGame" NodeType="" Icon="alphabet.speech-balloon-orange-t-icon_16.png" Description="Game client request">
+		<Property Name="Start" Type="Signal" AllowMultipleOutput="true" Socket="Output" />
+	</NodeTypeInfo>
 
-  <NodeTypeInfo Name="GameUser" NodeType="VisualScriptArithmeticSUM" Category="SampleGame" Icon="Sce.Atf.Resources.database_16.png" Description="Function interface">
-    <Property Name="ID" Type="string" AllowMultipleOutput="true" Socket="Output" />
-    <Property Name="Money" Type="string" AllowMultipleOutput="true" Socket="Output" />
-  </NodeTypeInfo>
+	<NodeTypeInfo Name="GameObject" IsAbstract="true" Category="SampleGame" NodeType="" Icon="Sce.Atf.Resources.database_16.png" Description="Game object base">
+    <Property Name="Ptr" Type="Object" AllowMultipleOutput="false" Socket="Input" /> <!--If this field is assigned, then name path will be ignored-->
+	</NodeTypeInfo>
 
 
-  <NodeTypeInfo Name="GameCharacter" NodeType="VisualScriptArithmeticSUM" Category="SampleGame" Icon="Sce.Atf.Resources.database_16.png" Description="Function interface">
-    <Property Name="Name" Type="string" AllowMultipleOutput="true" Socket="Output" />
-    <Property Name="Gold" Type="string" AllowMultipleOutput="true" Socket="Output" />
-  </NodeTypeInfo>
+	<!-- Game objects -->
+
+	<NodeTypeInfo Name="GameUser" Base="GameObject" Description="Function interface">
+		<Property Name="ID" Type="String" AllowMultipleOutput="true" Socket="Output" />
+		<Property Name="Money" Type="String" AllowMultipleOutput="true" Socket="Output" />
+	</NodeTypeInfo>
+
+	<NodeTypeInfo Name="GameCharacter" Base="GameObject" Description="Function interface">
+		<Property Name="Name" Type="String" AllowMultipleOutput="true" Socket="Output" />
+		<Property Name="Gold" Type="String" AllowMultipleOutput="true" Socket="Output" />
+	</NodeTypeInfo>
+
+
+  <!-- Transactions -->
+
+	<NodeTypeInfo Name="GameGetRankingList" NodeType="VisualScriptArithmeticSUM" Base="ClientRequest" Description="Function interface">
+		<Property Name="StartRank" Type="String" AllowMultipleOutput="true" Socket="Output" />
+		<Property Name="Count" Type="String" AllowMultipleOutput="true" Socket="Output" />
+	</NodeTypeInfo>
 
 
 
