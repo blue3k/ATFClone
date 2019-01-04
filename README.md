@@ -9,13 +9,12 @@ If you are interested in stuffs below, you can try.
 2. DOM generator for VS2017 is update. See readme in DevTools\DomGenVS.
 3. XSDgen is integrated for regular xsd dom generation for load/save xml.
 4. And some minor changes.
-5. TitleTab control - you can separete editors with title tab.
-6. ElementType of graph can be added as an adaptor so that you can override all property by element.
-7. Visual script(Tong script) editor sample
-8. And more
+5. TitleTab control - you can separate editors with title tab.
+6. ElementType of graph can be added as an adapter so that you can override all property by element.
+7. Tong script editor sample. Tong script is a script engine for my in-house game engine base
+8. And more...
 
 
-NOTE: Build & Install DevTool\DomGenVS Visual Studio 2017 plug-in.
 
 
 ### [What's New](https://github.com/SonyWWS/ATF/wiki/ATF-News) ###
