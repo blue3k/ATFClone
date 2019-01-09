@@ -208,7 +208,7 @@ namespace Sce.Atf.Applications.NetworkTargetServices
         /// <returns>Target dialog result</returns>
         public virtual DialogResult ShowTargetDialog()
         {
-            return ShowTargetDialog(m_mainWindow.DialogOwner);
+            return ShowTargetDialog(m_mainWindow.DialogOwner as IWin32Window);
         }
 
         /// <summary>

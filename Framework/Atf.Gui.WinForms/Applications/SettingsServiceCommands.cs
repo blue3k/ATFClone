@@ -107,7 +107,7 @@ namespace Sce.Atf.Applications
                         if(m_mainWindow != null)
                         {
                             var settingsLoadSaveDialog = new SettingsLoadSaveDialog(m_settingService);
-                            settingsLoadSaveDialog.ShowDialog(m_mainWindow.DialogOwner);
+                            settingsLoadSaveDialog.ShowDialog(m_mainWindow.DialogOwner as IWin32Window);
                         }
                         break;
                 }

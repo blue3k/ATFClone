@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
+using Sce.Atf;
 using Sce.Atf.Controls.PropertyEditing;
 
 namespace Sce.Atf.Applications

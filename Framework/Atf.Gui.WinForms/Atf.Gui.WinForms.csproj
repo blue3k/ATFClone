@@ -93,7 +93,6 @@
     <Compile Include="Applications\ILayoutConstraint.cs" />
     <Compile Include="Applications\ILayoutContext.cs" />
     <Compile Include="Applications\ImageThumbnailResolver.cs" />
-    <Compile Include="Applications\IMainWindow.cs" />
     <Compile Include="Applications\Listers\FilteredTreeControlEditor.cs" />
     <Compile Include="Applications\Listers\FilteredTreeListControlEditor.cs" />
     <Compile Include="Applications\Listers\FilteredTreeView.cs">

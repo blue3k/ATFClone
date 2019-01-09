@@ -850,7 +850,7 @@ namespace Sce.Atf.Applications
 
         private IWin32Window GetDialogOwner()
         {
-            return m_mainWindow != null ? m_mainWindow.DialogOwner : m_mainForm;
+            return m_mainWindow != null ? m_mainWindow.DialogOwner as IWin32Window : m_mainForm;
         }
 
         private enum SourceControlCommandGroup

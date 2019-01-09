@@ -3,8 +3,9 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Windows.Interop;
 
-namespace Sce.Atf.Applications
+namespace Sce.Atf
 {
     /// <summary>
     /// Interface that abstracts the idea of a main window for the application. This allows
@@ -21,7 +22,7 @@ namespace Sce.Atf.Applications
 
         /// <summary>
         /// Gets a Win32 handle for displaying WinForms dialogs with an owner</summary>
-        IWin32Window DialogOwner
+        object DialogOwner
         {
             get;
         }

@@ -40,7 +40,7 @@ namespace Sce.Atf.Applications
 
         /// <summary>
         /// Gets a Win32 handle for displaying WinForms dialogs with an owner</summary>
-        public IWin32Window DialogOwner
+        public object DialogOwner
         {
             get { return m_mainForm; }
         }

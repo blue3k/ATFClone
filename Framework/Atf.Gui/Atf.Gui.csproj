@@ -56,6 +56,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\IronPython\Microsoft.Scripting.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="SharpDX, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\SharpDX\SharpDX.dll</HintPath>
@@ -78,6 +79,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +184,7 @@
     <Compile Include="Collections\PriorityQueue.cs" />
     <Compile Include="Collections\ReferenceCollectionAdapter.cs" />
     <Compile Include="Collections\SortedObservableCollection.cs" />
+    <Compile Include="ConsoleMainForm.cs" />
     <Compile Include="Controls\Adaptable\D2dDiagramTheme.cs" />
     <Compile Include="Controls\Adaptable\DiagramBorder.cs" />
     <Compile Include="Controls\Adaptable\DiagramDrawingStyle.cs" />
@@ -360,6 +363,7 @@
     <Compile Include="ColorUtil.cs" />
     <Compile Include="Controls\FindFileAction.cs" />
     <Compile Include="GroupAttribute.cs" />
+    <Compile Include="IMainWindow.cs" />
     <Compile Include="Input\DragEventArgs.cs" />
     <Compile Include="Input\KeyEventArgs.cs" />
     <Compile Include="Input\KeyPressEventArgs.cs" />

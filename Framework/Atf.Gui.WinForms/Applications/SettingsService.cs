@@ -290,7 +290,7 @@ namespace Sce.Atf.Applications
                     settingsDialog.TreeControl.ToggleOnDoubleClick = false;
 
                 }
-                if (settingsDialog.ShowDialog(MainWindow.DialogOwner) == DialogResult.OK)
+                if (settingsDialog.ShowDialog(MainWindow.DialogOwner as IWin32Window) == DialogResult.OK)
                 {
                     SaveSettings();
                 }
@@ -808,7 +808,7 @@ namespace Sce.Atf.Applications
         private IWin32Window GetDialogOwner()
         {
             if (MainWindow != null)
-                return MainWindow.DialogOwner;
+                return MainWindow.DialogOwner as IWin32Window;
             else if (MainForm != null)
                 return MainForm;
 

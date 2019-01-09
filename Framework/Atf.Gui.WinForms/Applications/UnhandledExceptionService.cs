@@ -48,7 +48,7 @@ namespace Sce.Atf.Applications
             if (DialogOwner != null)
             {
                 if (m_mainWindow != null)
-                    DialogOwner = m_mainWindow.DialogOwner;
+                    DialogOwner = m_mainWindow.DialogOwner as IWin32Window;
                 else if (m_mainForm != null)
                     DialogOwner = m_mainForm;
             }

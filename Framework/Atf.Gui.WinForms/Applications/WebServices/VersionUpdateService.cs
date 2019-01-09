@@ -42,7 +42,7 @@ namespace Sce.Atf.Applications.WebServices
             if (m_mainWindow == null)
                 throw new InvalidOperationException("Can't get main window");
 
-            m_dialogOwner = m_mainWindow.DialogOwner;
+            m_dialogOwner = m_mainWindow.DialogOwner as IWin32Window;
             m_mainWindow.Loaded += mainWindow_Loaded;
         }
 

@@ -165,7 +165,7 @@ namespace Sce.Atf.Applications
         private IWin32Window GetDialogOwner()
         {
             if (m_mainWindow != null)
-                return m_mainWindow.DialogOwner;
+                return m_mainWindow.DialogOwner as IWin32Window;
             else if (m_mainForm != null)
                 return m_mainForm;
 
