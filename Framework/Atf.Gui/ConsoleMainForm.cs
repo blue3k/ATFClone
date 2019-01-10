@@ -11,14 +11,18 @@ using System.Linq;
 using Sce.Atf.Adaptation;
 using System.ComponentModel.Composition.Hosting;
 
+using Sce.Atf.Applications;
+
+
 namespace Sce.Atf
 {
     /// <summary>Console main frame for console program</summary>
     [Export(typeof(IMainWindow))]
     [Export(typeof(IInitializable))]
+    [Export(typeof(IBatchTaskManager))]
     [Export(typeof(ISynchronizeInvoke))]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    public class ConsoleMainForm : IMainWindow, IInitializable, IDisposable
+    public class ConsoleMainForm : IMainWindow, IInitializable, IDisposable, IBatchTaskManager
     {
         /// <summary>
         /// Gets or sets the main window text</summary>
@@ -42,6 +46,41 @@ namespace Sce.Atf
                 Closing(this, new CancelEventArgs(false));
             Closed.Raise(this, new EventArgs());
         }
+
+        public void Run()
+        {
+            try
+            {
+                Loading.Raise(this, new EventArgs());
+                Loaded.Raise(this, new EventArgs());
+            }
+            finally
+            {
+            }
+
+            ExecuteBatchTask();
+        }
+
+
+        #region IBatchTaskManager
+
+        // Batch task
+        public void RegisterBatchTask(IBatchTask task)
+        {
+            m_batchTasks.Add(task);
+        }
+
+        // Execute all registered batch task
+        public void ExecuteBatchTask()
+        {
+            foreach(var batch in m_batchTasks)
+            {
+                batch.Execute();
+            }
+        }
+
+
+        #endregion
 
         #region IMainWindow Members
 
@@ -77,51 +116,9 @@ namespace Sce.Atf
         /// <param name="e">Event args</param>
         public void Initialize()
         {
-            try
-            {
-                m_loading = true;                
-                m_showen = false;  // used to test if OnShown is called before finishing OnLoad.
-                
-                // TODO:  m_settingsService is intended to be initialized via MEF for ATF 3.0 applications.
-                //        For legacy applications which don't use MEF, it appears these same settings are registered explicitly
-                //        much earlier in ApplicationHostService.cs.  The problem is that we need to ensure we don't try to 
-                //        apply settings until this point, which is an open issue for legacy applications, although the default 
-                //        ISettingsService "gets lucky" and defers callbacks long enough to get by.
-                //        See also other comments in this file labled SCREAM_TOOLBAR_STATE_ISSUE
-                if (m_settingsService != null)
-                {
-                }
-
-                // deserialize  mainform WindowState here works better with DockPanelSuite; 
-                // this fixes an issue to restore window size causes the form to span dual monitors   
-                // when the program starts maximized
-                //m_mainFormLoaded = true;
-
-                Loading.Raise(this, new EventArgs());
-
-                // if OnShown already called then we need raise OnLoaded event here.
-                if (m_showen)
-                    Loaded.Raise(this, new EventArgs());
-            }
-            finally
-            {
-                m_loading = false;
-            }
+            
         }
 
-        /// <summary>
-        /// Raises the form Shown event</summary>
-        /// <param name="e">Event args</param>
-        protected void OnShown(EventArgs e)
-        {
-            m_showen = true;
-            //base.OnShown(e);            
-            // if m_loading is true then this is called before
-            // OnLoad finshed, so in this case don't raise
-            // Loaded event because we still processing Loading event.
-            if (!m_loading)
-                Loaded.Raise(this, e);
-        }
 
         public virtual void Dispose()
         {
@@ -136,9 +133,9 @@ namespace Sce.Atf
         {
             if (disposing)
             {
-                if (components != null)
+                if (m_components != null)
                 {
-                    components.Dispose();
+                    m_components.Dispose();
                 }
             }
         }
@@ -189,18 +186,15 @@ namespace Sce.Atf
         }
 
 
-        // Note: in some cases OnShown method will be called while still 
-        // inside OnLoad which will mess up the order of Loading and Loaded events.
-        // The following two boolean variables 
-        private bool m_loading;
-        private bool m_showen; // shown is called.
 
         /// <summary>
         /// Required designer variable</summary>
-        private readonly System.ComponentModel.IContainer components = null;
+        private readonly System.ComponentModel.IContainer m_components = null;
 
-        [Import(AllowDefault = true)]
-        private Sce.Atf.Applications.ISettingsService m_settingsService = null;
+        //[Import(AllowDefault = true)]
+        //private Sce.Atf.Applications.ISettingsService m_settingsService = null;
+
+        private List<IBatchTask> m_batchTasks = new List<IBatchTask>();
 
         //private bool m_mainFormLoaded;
 

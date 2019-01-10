@@ -363,6 +363,7 @@
     <Compile Include="ColorUtil.cs" />
     <Compile Include="Controls\FindFileAction.cs" />
     <Compile Include="GroupAttribute.cs" />
+    <Compile Include="Applications\IBatchTask.cs" />
     <Compile Include="IMainWindow.cs" />
     <Compile Include="Input\DragEventArgs.cs" />
     <Compile Include="Input\KeyEventArgs.cs" />
