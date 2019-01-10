@@ -1,17 +1,28 @@
 ﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
 
+using System.ComponentModel.Composition;
+
 namespace Sce.Atf.Applications
 {
     /// <summary>
-    /// Batch Task interface
+    /// Batch Task interface. mainly interface with a bit of automation.
     /// </summary>
-    public interface IBatchTask
+    public abstract class IBatchTask
     {
+        public IBatchTask(IBatchTaskManager manager)
+        {
+            manager.RegisterBatchTask(this);
+        }
+
         // TODO: add priority
 
-        // Run
-        void Execute();
+        /// <summary>
+        /// Execute the task
+        /// </summary>
+        public abstract void Execute();
     }
+
+
 
     /// <summary>
     /// Interface for Batch task collection
