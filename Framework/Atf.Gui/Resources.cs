@@ -272,6 +272,11 @@ namespace Sce.Atf
         #region Misc Images
 
         /// <summary>
+        /// Annotation image resource resource filename</summary>
+        [ImageResource("annotation.png")]
+        public static readonly string AnnotationImage;
+
+        /// <summary>
         /// Alphabetical icon name</summary>
         [ImageResource("Alphabetical.png")]
         public static readonly string AlphabeticalImage;
