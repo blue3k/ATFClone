@@ -171,7 +171,7 @@ namespace TitleTabEditor
         /// <summary>
         /// Gets a Win32 handle for displaying WinForms dialogs with an owner</summary>
         /// <summary>
-        public IWin32Window DialogOwner
+        public object DialogOwner
         {
             get { return this; }
         }

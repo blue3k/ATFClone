@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Interop;
 
+using Sce.Atf;
 using Sce.Atf.Applications;
 using Sce.Atf.Controls.PropertyEditing;
 
@@ -73,7 +74,7 @@ namespace Sce.Atf.Wpf.Interop
 
         /// <summary>
         /// Gets a Win32 handle for displaying WinForms dialogs with an owner</summary>
-        public System.Windows.Forms.IWin32Window DialogOwner
+        public object DialogOwner
         {
             get
             {

@@ -11,7 +11,7 @@ namespace FileExplorerSample
     /// Customized MainForm with a split panel for our two views</summary>
     [Export(typeof(Form))]
     [Export(typeof(MainForm))]
-    [Export(typeof(Sce.Atf.Applications.IMainWindow))]
+    [Export(typeof(Sce.Atf.IMainWindow))]
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class MainForm : Sce.Atf.Applications.MainForm
     {
