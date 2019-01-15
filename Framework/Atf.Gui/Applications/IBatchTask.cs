@@ -14,7 +14,10 @@ namespace Sce.Atf.Applications
             manager.RegisterBatchTask(this);
         }
 
-        // TODO: add priority
+        /// <summary>
+        /// Priority, lower number executed first
+        /// </summary>
+        public abstract int Priority { get; }
 
         /// <summary>
         /// Execute the task

@@ -67,7 +67,14 @@ namespace Sce.Atf
         // Batch task
         public void RegisterBatchTask(IBatchTask task)
         {
-            m_batchTasks.Add(task);
+            int iTask = 0;
+            for (; iTask < m_batchTasks.Count; iTask++)
+            {
+                if (m_batchTasks[iTask].Priority >= task.Priority)
+                    break;
+            }
+
+            m_batchTasks.Insert(iTask, task);
         }
 
         // Execute all registered batch task
